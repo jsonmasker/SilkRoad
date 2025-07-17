@@ -1,0 +1,23 @@
+﻿.boxBlog {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+
+    .avatar {
+        width: 100%;
+        aspect-ratio: 5/3;
+        border: 1px solid #ddd;
+        overflow: hidden;
+        background-position: center;
+        background-size: cover;
+    }
+
+    .infor {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        //h3 {
+        //    border-bottom: 1px solid #ddd;
+        //    padding-bottom: 0.25rem;
+        //}
+    }
+}

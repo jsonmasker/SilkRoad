@@ -1,0 +1,203 @@
+﻿@model LayoutViewModel
+@{
+    ViewData["Title"] = "Productions Page";
+    IEnumerable<ProductClientViewModel>? products = new List<ProductClientViewModel>();
+}
+<header class="headerContainer">
+    <section class="topHeader">
+        <div class="nav">
+            <div>
+                <a href="@Model.GithubLink" target="_blank" class="text-uppercase">Github</a>
+                <span>|</span>
+                <a href="@Model.FacebookLink" target="_blank" class="text-uppercase">Facebook</a>
+                <span>|</span>
+                <a href="@Model.YoutubeLink" target="_blank" class="text-uppercase">Youtube</a>
+            </div>
+            <div>
+                <a class="d-none d-sm-inline" asp-action="index" asp-controller="AboutUs" class="text-capitalize">@_localizer["aboutUs"]</a>
+                <span class="d-none d-sm-inline">|</span>
+                <a class="d-none d-sm-inline" asp-action="index" asp-controller="Contact" class="text-capitalize">@_localizer["contact"]</a>
+                <span class="d-none d-sm-inline">|</span>
+                <a class="text-uppercase" asp-action="SetLanguage" asp-controller="Home" id="setLanguageByCookei"></a>
+            </div>
+        </div>
+    </section>
+    <div class="headerMain">
+        <div class="row h-100">
+            <div class="col-2 col-md-4">
+                <div class="d-flex justify-content-start align-items-center h-100">
+                    <div class="d-md-none">
+                        <span class="ti-menu iconMenuMobile" onclick="menuMobile()"></span>
+                    </div>
+                    <div class="searchBox d-none d-md-block position-relative">
+                        <input type="text" id="searchInput" autocomplete="off" class="inputSearch" placeholder="@_localizer["search"]" />
+                        <span class="ti-search" onclick="search()"></span>
+                        <div id="searchResult" class="d-none">
+                            @await Html.PartialAsync("~/Views/Shared/PartialViews/_SearchProductPartialView.cshtml", products)
+                            @* <div class="mb-1">
+                                <a href="#" class="suggest">
+                                    <img src="https://lipstick.vn/wp-content/uploads/2024/08/mau-son-dep-nhat-1-247x300.jpg" />
+                                    <span>Top 27 màu son đẹp nhất tặng bạn gái ngày 20 10</span>
+                                </a>
+                            </div>
+                            <div class="mb-1">
+                                <a href="#" class="suggest">
+                                    <img src="https://lipstick.vn/wp-content/uploads/2024/08/mau-son-dep-nhat-1-247x300.jpg" />
+                                    <span>Top 27 màu son đẹp nhất tặng bạn gái ngày 20 10</span>
+                                </a>
+                            </div> *@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8 col-md-4">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <a asp-action="index" asp-controller="home">
+                        <img class="logo" src="~/assets/images/lulusia1.png" alt="..." />
+                    </a>
+                </div>
+            </div>
+            <div class="col-2 col-md-4">
+                <div class="d-flex justify-content-end align-items-center h-100">
+                    <div class="boxCard">
+                        <a class="call d-none d-md-flex" href="tel:@Model.PhoneNumber">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4.244 5.12133C4.86956 6.22032 5.77968 7.13044 6.87867 7.756L7.468 6.93067C7.56277 6.79796 7.7029 6.70459 7.86187 6.66822C8.02084 6.63186 8.18762 6.65502 8.33067 6.73333C9.27355 7.24862 10.3148 7.55852 11.386 7.64267C11.5532 7.65592 11.7092 7.73169 11.823 7.85488C11.9368 7.97807 12 8.13963 12 8.30733V11.282C12 11.4471 11.9388 11.6063 11.8282 11.7288C11.7177 11.8513 11.5655 11.9285 11.4013 11.9453C11.048 11.982 10.692 12 10.3333 12C4.62667 12 0 7.37333 0 1.66667C0 1.308 0.018 0.952 0.0546667 0.598667C0.0715031 0.434465 0.148656 0.282347 0.271193 0.171756C0.39373 0.0611648 0.552937 -3.55718e-05 0.718 1.55115e-08H3.69267C3.86037 -2.10123e-05 4.02193 0.0631677 4.14512 0.176967C4.26831 0.290767 4.34408 0.446816 4.35733 0.614C4.44148 1.68519 4.75138 2.72645 5.26667 3.66933C5.34498 3.81238 5.36814 3.97916 5.33178 4.13813C5.29541 4.2971 5.20204 4.43723 5.06933 4.532L4.244 5.12133ZM2.56267 4.68333L3.82933 3.77867C3.46986 3.00273 3.22357 2.17923 3.098 1.33333H1.34C1.336 1.444 1.334 1.55533 1.334 1.66667C1.33333 6.63733 5.36267 10.6667 10.3333 10.6667C10.4447 10.6667 10.556 10.6647 10.6667 10.66V8.902C9.82077 8.77643 8.99727 8.53014 8.22133 8.17067L7.31667 9.43733C6.95244 9.29581 6.59867 9.12873 6.258 8.93733L6.21933 8.91533C4.91172 8.17115 3.82885 7.08828 3.08467 5.78067L3.06267 5.742C2.87127 5.40133 2.70419 5.04756 2.56267 4.68333Z" fill="#272624" />
+                            </svg>
+                            @Model.PhoneNumber
+                        </a>
+                            <div class="cart">
+                                @* <span class="font-bold text-16 font-weight-600 d-none d-md-block"> *@
+                                @*     @_localizer["cart") / 0 <sup>VND</sup> *@
+                                @* </span> *@
+                                <a asp-action="index" asp-controller="cart" class="text-decoration-none text-color-black position-relative ms-4">
+                                    <div class="numberProductInCard">
+                                        <span id="numberProductInCard">0</span>
+                                    </div>
+                                    <img class="cartImage" src="~/assets/icons/cart.svg" alt="..." />
+                                </a>
+                                <a asp-action="index" asp-controller="Login" class="text-decoration-none text-color-black ms-4">
+                                    <img class="cartImage" src="~/assets/icons/user.svg" alt="..." />
+                                </a>
+                            </div>
+                        <span class="ti-search d-md-none" id="iconSearchMobile" onclick="searchBoxMobile()"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="headerBottom">
+        <ul class="menuGroup">
+            @if (Model.Categories != null && Model.Categories.Count() > 0)
+            {
+                var data = Model.Categories.ToList();
+                foreach (var category in data)
+                {
+                    <li>
+                        <a asp-action="index" asp-controller="product" asp-route-categoryId="@category.Id" class="text-uppercase font-weight-500 text-14">@category.Name</a>
+                        @if (category.SubCategories != null && category.SubCategories.Count() > 0)
+                        {
+                            <ul class="menuItem">
+                                @foreach (var subCategory in category.SubCategories)
+                                {
+                                    <li>
+                                        <a asp-action="index" asp-controller="product" asp-route-categoryId="@category.Id" asp-route-subCategoryId="@subCategory.Id">@subCategory.Name</a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+            }
+            <li>
+                <a asp-action="index" asp-controller="Brand" class="text-uppercase font-weight-500 text-14">@_localizer["brand"]</a>
+            </li>
+            <li>
+                <a asp-action="index" asp-controller="Blog" class="text-uppercase font-weight-500 text-14">@_localizer["blog"]</a>
+            </li>
+        </ul>
+    </div>
+    <div id="menuMobile">
+        <div class="btnClose" onclick="menuMobile()">
+            <span class="ti-close"></span>
+        </div>
+        <div class="menuBox">
+            <div class="w-100 d-flex justify-content-center logoMobile pb-1">
+                <img src="~/assets/images/lulusia1.png" alt="..." />
+            </div>
+            <div class="menu">
+                @if (Model.Categories != null && Model.Categories.Count() > 0)
+                {
+                    var data = Model.Categories.ToList();
+                    foreach (var category in data)
+                    {
+                        @if (category.SubCategories != null && category.SubCategories.Count() > 0)
+                        {
+                            <div class="menuGroup" id="menuGroupMobile@(category.Id)">
+                                <div class="col-10">
+                                    <a asp-action="index" asp-controller="product" asp-route-categoryId="@category.Id" class="text-uppercase font-weight-500 text-14">@category.Name</a>
+                                </div>
+                                <div class="col-2">
+                                    <button onclick="showMenuItemMobile('menuGroupMobile@(category.Id)')" class="w-100" type="button" data-bs-toggle="collapse" data-bs-target="#menuMobile@(category.Id)" aria-expanded="false" aria-controls="collapseExample">
+                                        @* <span class="ti-arrow-circle-down"></span> *@
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M7.293 4.707 14.586 12l-7.293 7.293 1.414 1.414L17.414 12 8.707 3.293 7.293 4.707z" /></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="collapse mb-2" id="menuMobile@(category.Id)">
+                                <ul class="menuItem">
+                                    @foreach (var subCategory in category.SubCategories)
+                                    {
+                                        <li>
+                                            <a asp-action="index" asp-controller="product" asp-route-categoryId="@category.Id" asp-route-subCateryId="@subCategory.Id">@subCategory.Name</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="menuGroup">
+                                <a asp-action="index" asp-controller="product" asp-route-categoryId="@category.Id" class="text-uppercase font-weight-500 text-14">@category.Name</a>
+                            </div>
+                        }
+
+                    }
+                }
+                <div class="menuGroup">
+                    <a asp-action="index" asp-controller="Brand" class="text-uppercase font-weight-500 text-14">THƯƠNG HIỆU</a>
+                </div>
+                <div class="menuGroup">
+                    <a asp-action="index" asp-controller="Blog" class="text-uppercase font-weight-500 text-14">Blog</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="searchBoxMobile">
+        <div class="searchContainer">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <div class="searchBox mb-3">
+                        <input type="text" class="inputSearch" placeholder="@_localizer["search"]" />
+                        <span class="ti-search"></span>
+                    </div>
+                    <h3>Hotkey : <span>abc</span> <span>abc</span></h3>
+                    <h5>Lich su tim kiem: </h5>
+                    <ul>
+                        <li>acn</li>
+                        <li>acn</li>
+                        <li>acn</li>
+                    </ul>
+                </div>
+                <div class="d-none d-sm-block col-sm-6">
+                    <h4 class="fw-bold">Can su giup do ?</h4>
+                    <p class="mb-0">Hotline : <a href="tel:">0704469xxx</a></p>
+                    <p class="mb-0">Email: <a href="email:">nguyenhoangtai2k@gmail.com</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="virtualSearchBoxMobile" onclick="searchBoxMobile()"></div>
+    </div>
+</header>
+<div class="virtualHeader"></div>

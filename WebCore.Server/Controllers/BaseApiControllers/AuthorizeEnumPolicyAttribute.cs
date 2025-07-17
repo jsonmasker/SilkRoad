@@ -3,8 +3,9 @@ using Common.Custom.CustomObjectResults;
 using Common.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Localization;
+using WebCore.Server;
 
-namespace LulusiaAdmin.Server.Controllers.BaseApiControllers
+namespace WebCore.Server.Controllers.BaseApiControllers
 {
     public class AuthorizeEnumPolicyAttribute : ActionFilterAttribute
     {

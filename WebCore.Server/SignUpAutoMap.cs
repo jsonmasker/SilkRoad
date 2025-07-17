@@ -2,7 +2,7 @@
 using Common.ViewModels.SystemViewModels;
 using DataAccess.DTOs;
 
-namespace LulusiaAdmin.Server
+namespace WebCore.Server
 {
     public class SignUpAutoMap : Profile
     {

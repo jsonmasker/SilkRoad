@@ -1,0 +1,131 @@
+﻿@model OrderClientViewModel
+@if (Model != null && Model.Cart != null && Model.Cart.CartItems.Count > 0)
+{
+    int index = 0;
+    if(Model.UserId <= 0)
+    {
+        <p>Ban dang nhap truoc khi dac hang de co the tich diem! <a asp-action="index" asp-controller="Login" asp-route-returnUrl="cart/order">@_localizer["login"]</a> </p>
+    }
+    <form asp-action="Order" asp-controller="Cart" method="post" onsubmit="return submitOrderForm(this)">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="UserId" />
+        <input type="hidden" asp-for="Cart.TotalPrice" />
+        <input type="hidden" asp-for="Cart.TotalQuantity" />
+        <input type="hidden" id="initialProvinceId" value="@Model.ProvinceId" />
+        <input type="hidden" id="initialDistrictId" value="@Model.DistrictId" />
+        <span id="labelProvince" class="d-none">@_localizer["selectProvince"]</span>
+        <span id="labelDistrict" class="d-none">@_localizer["selectDistrict"]</span>
+        <div class="row">
+            <div class="col-12 col-md-8">
+                <div class="form-group mb-2">
+                    <label asp-for="FullName" class="control-label text-capitalize">
+                        @_localizer["fullName"]: <span class="text-danger">(*)</span>
+                    </label>
+                    <input asp-for="FullName" class="form-control" autocomplete="off" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-2">
+                    <label asp-for="PhoneNumber" class="control-label text-capitalize ">
+                        @_localizer["phoneNumber"]: <span class="text-danger">(*)</span>
+                    </label>
+                    <input asp-for="PhoneNumber" class="form-control disable" autocomplete="off" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-2">
+                    <label asp-for="Email" class="control-label text-capitalize">
+                        @_localizer["email"]:
+                    </label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="row mb-2">
+                    <div class="form-group col-6">
+                        <label asp-for="ProvinceId" class="control-label text-capitalize">@_localizer["city"]:</label>
+                        <select asp-for="ProvinceId" class="form-control" onchange="onChangeProvinceId(event)"></select>
+                        <span asp-validation-for="ProvinceId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-6">
+                        <label asp-for="DistrictId" class="control-label text-capitalize">@_localizer["district"]:</label>
+                        <select asp-for="DistrictId" class="form-control"></select>
+                        <span asp-validation-for="DistrictId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-2">
+                    <label asp-for="ShippingAddress" class="control-label text-capitalize">
+                        @_localizer["address"]: <span class="text-danger">(*)</span>
+                    </label>
+                    <input asp-for="ShippingAddress" class="form-control" maxlength="1000" autocomplete="on" />
+                    <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-2">
+                    <label class="control-label text-capitalize mb-2">
+                        @_localizer["seclectPaymentMethod"]: <span class="text-danger">(*)</span>
+                    </label>
+                    <div class="d-flex justify-content-start align-items-center">
+                        <input type="radio" asp-for="PaymentMethodId" id="bankTransfer" name="PaymentMethodId" value="@((int)EPaymentTypes.BankTransfer)" />
+                        <label for="bankTransfer" class="mx-2 fw-bold">
+                            @_localizer["bankTransfer"]
+                        </label>
+                        <input class="ms-2" type="radio" asp-for="PaymentMethodId" id="cashOnDelivery" name="PaymentMethodId" value="@((int)EPaymentTypes.CashOnDelivery)" />
+                        <label for="cashOnDelivery" class="mx-2 fw-bold">
+                            @_localizer["cashOnDelivery"]
+                        </label>
+                    </div>
+                    <span asp-validation-for="PaymentMethodId" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="Note" class="control-label text-capitalize">@_localizer["note"]:</label>
+                    <textarea asp-for="Note" class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btnOrder btn text-capitalize mb-3 w-100">@_localizer["order"]</button>
+            </div>
+            <div class="orderItemList col-12 col-md-4" id="orderItemListContainer">
+                @foreach (var item in Model.Cart.CartItems)
+                {
+                    <input type="hidden" asp-for="Cart.CartItems[index].ImageUrl"/>
+                    <input type="hidden" asp-for="Cart.CartItems[index].Price"/>
+                    <input type="hidden" asp-for="Cart.CartItems[index].ProductId" />
+                    <input type="hidden" asp-for="Cart.CartItems[index].ProductName" />
+                    <input type="hidden" asp-for="Cart.CartItems[index].Quantity" />
+                    <input type="hidden" asp-for="Cart.CartItems[index].SaleOff"/>
+                    <input type="hidden" asp-for="Cart.CartItems[index].SalePrice"/>
+                    <input type="hidden" asp-for="Cart.CartItems[index].TotalPrice"/>
+                    <div class="orderItem">
+                        <div class="itemImage me-2">
+                            <img src="@item.ImageUrl" alt="Product Image" class="img-fluid" />
+                        </div>
+                        <div class="itemDetails">
+                            <div class="itemName">@item.ProductName</div>
+                            <div class="d-flex justify-content-between">
+                                <div class="itemPrice">
+                                    @if (item.SaleOff)
+                                    {
+                                        <span><s>@string.Format("{0:#,0}", item.Price) VND</s></span>
+                                        <br />
+                                        <span>@string.Format("{0:#,0}", item.SalePrice) VND</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@string.Format("{0:#,0}", item.Price) VND</span>
+                                    }
+                                </div>
+                                <div class="itemQuantity">@("x" + item.Quantity)</div>
+                            </div>
+                        </div>
+                    </div>
+                    index++;
+                }
+                <div class="d-flex justify-content-end">
+                    <b>@_localizer["total"]: <span id="orderTotalPrice">@string.Format("{0:#,0}", Model.Cart.TotalPrice)</span></b>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <div>
+        no data
+    </div>
+}
+

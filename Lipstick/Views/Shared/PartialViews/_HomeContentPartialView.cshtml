@@ -1,0 +1,107 @@
+﻿@model HomePageViewModel
+<link rel="stylesheet" href="~/css/owlcarousel/owl.carousel.min.css" />
+<link rel="stylesheet" href="~/css/owlcarousel/owl.theme.default.min.css" />
+<script src="~/js/owlcarousel/owl.carousel.min.js" asp-append-version="true"></script>
+<div class="homeContent mb-3">
+    @if (Model.LatestProducts != null && Model.LatestProducts.Count() > 0)
+    {
+        <h1 class="text-32 font-weight-600 mt-3 text-capitalize">@_localizer["latestProducts"]</h1>
+        <div id="newProductList" class="owl-carousel owl-theme customCarousel">
+            @foreach (var item in Model.LatestProducts)
+            {
+                @await Html.PartialAsync("~/Views/Shared/PartialViews/_ProductPartialView.cshtml", item)
+            }
+        </div>
+    
+    }
+
+    @if (Model.BestSellerProducts != null && Model.BestSellerProducts.Count() > 0)
+    {
+        <h1 class="text-32 font-weight-600 mt-3 text-capitalize">@_localizer["popularProducts"]</h1>
+        <div id="trendingProductList" class="owl-carousel owl-theme customCarousel">
+            @foreach (var item in Model.BestSellerProducts)
+            {
+                @await Html.PartialAsync("~/Views/Shared/PartialViews/_ProductPartialView.cshtml", item)
+            }
+        </div>
+    }
+
+    @if (Model.SaleOffProducts != null && Model.SaleOffProducts.Count() > 0)
+    {
+        <h1 class="text-32 font-weight-600 mt-3 text-capitalize">@_localizer["discountedProducts"]</h1>
+        <div id="promotionalProductList" class="owl-carousel owl-theme customCarousel">
+            @foreach (var item in Model.SaleOffProducts)
+            {
+                @await Html.PartialAsync("~/Views/Shared/PartialViews/_ProductPartialView.cshtml", item)
+            }
+        </div>
+    }
+
+    @if (Model.Topics != null)
+    {
+        <div class="div-line mt-4"></div>
+        <div class="blog row mt-4 mb-2">
+            @foreach (var item in Model.Topics)
+            {
+                <div class="col-12 col-sm-4">
+                    <a asp-action="Index" asp-controller="Blog" asp-route-topicId="@item.Id" class="text-decoration-none">
+                        <img class="w-100" src="@item.AvatarUrl" />
+                        <div class="text-center text-18 fw-bold text-black mb-2 mb-sm-0">@item.Name</div>
+                    </a>
+                </div>
+            }
+        </div>
+        <div class="div-line mt-4"></div>
+    }
+
+</div>
+<script>
+    $('#newProductList').owlCarousel({
+        margin: 10,
+        loop: false,
+        nav: true,
+        responsive: {
+            0:{
+                items: 2
+            },
+            576: {
+                items: 3
+            },
+            992: {
+                items: 4
+            }
+        }
+    });
+    $('#trendingProductList').owlCarousel({
+        margin: 10,
+        loop: false,
+        nav: true,
+        responsive: {
+            0:{
+                items: 2
+            },
+            576: {
+                items: 3
+            },
+            992: {
+                items: 4
+            }
+        }
+    });
+    $('#promotionalProductList').owlCarousel({
+        margin: 10,
+        loop: false,
+        nav: true,
+        responsive: {
+            0:{
+                items: 2
+            },
+            576: {
+                items: 3
+            },
+            992: {
+                items: 4
+            }
+        }
+    });
+</script>

@@ -1,0 +1,89 @@
+﻿@import "VariableGlobal.scss";
+
+.cartPage {
+    max-width: $maxWidthContent;
+    min-height: 300px;
+    margin: auto;
+
+
+    @include respond(map-get($breakPoint,"lg")) {
+        padding: 0 1rem;
+    }
+
+    .tableHeader {
+        background: $color_black_1e1e1e;
+        color: $color_white_fff;
+    }
+
+    .quantityGroup {
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid #3c3c3c;
+        max-width: 120px;
+
+        .reduceQuantity {
+            border-right: 1px solid #3c3c3c;
+        }
+
+        .increaseQuantity {
+            border-left: 1px solid #3c3c3c;
+        }
+
+        .reduceQuantity, .increaseQuantity {
+            padding: 0 0.5rem;
+        }
+
+        .reduceQuantity, .increaseQuantity {
+
+            &:hover {
+                background: #e1e1e1;
+                cursor: pointer;
+            }
+        }
+
+        .quantity .quantityInput {
+            border: none;
+            width: 100%;
+            max-width: 100px;
+        }
+    }
+
+    .removeCartItemBtn {
+        background: $color_black_1e1e1e;
+        color: $color_white_fff;
+        border-radius: 0.5rem;
+        padding: 0 1rem;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+            background: #3c3c3c;
+            color: $color_white_fff;
+        }
+    }
+
+    .buyNow {
+        background-color: #e72f8b;
+        padding: 4px 6px;
+        border-radius: 8%;
+        color: #fff;
+        text-decoration: unset;
+    }
+
+    .backToProduct {
+        background-color: #e72f8b;
+        padding: 4px 6px;
+        color: #fff;
+        text-decoration: unset;
+    }
+
+    .avatar {
+        max-width: 60px;
+        border: 1px solid #d5d5d5;
+    }
+
+    tbody td {
+        vertical-align: middle;
+    }
+  
+}

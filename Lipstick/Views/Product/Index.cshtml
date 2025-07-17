@@ -1,0 +1,106 @@
+﻿@model Pagination<ProductClientViewModel>
+@{
+    // ViewData["Title"] = _localizer["productPage"];
+    ViewData["Title"] = ViewBag.Layout.PageIntro.Title;
+    ViewData["Description"] = ViewBag.Layout.PageIntro.Content;
+    ViewData["Image"] = ViewBag.Layout.PageIntro.ImageUrl ?? "/assets/images/lulusia1.png";
+    IEnumerable<CategoryClientViewModel>? categories = ViewBag.Categories as IEnumerable<CategoryClientViewModel>;
+}
+
+<div class="productPage my-3">
+    <div class="filter d-flex flex-row justify-content-between">
+        <input id="categoryId" hidden value="@ViewBag.CategoryId" />
+        <input id="subCategoryId" hidden value="@ViewBag.SubCategoryId" />
+        <p class="m-0">TRANG CHỦ / CỬA HÀNG / SẢN PHẨM</p>
+        <select>
+            <option selected>Bộ lọc</option>
+            <option value="1">Mới nhất</option>
+            <option value="2">Gía tăng dần</option>
+            <option value="3">Gía giảm dần</option>
+        </select>
+    </div>
+    <div class="row mt-4">
+        <div class="categories col-lg-3 d-none d-lg-block">
+            <h3>Danh Mục Sản Phẩm</h3>
+            <div class="accordion" id="accordionExample">
+                @if (categories != null)
+                {
+                    foreach (var category in categories)
+                    {
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading_@category.Id">
+                                <button class="accordion-button @(category.Id == ViewBag.CategoryId ? "" : "collapsed")" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapse_@category.Id" aria-expanded="@(category.Id == ViewBag.CategoryId ? true : false)"
+                                        aria-controls="collapse_@category.Id">
+                                    @category.Name
+                                </button>
+                            </h2>
+                            <div id="collapse_@category.Id" class="accordion-collapse collapse @(category.Id == ViewBag.CategoryId ? "show":"")"
+                                 aria-labelledby="heading_@category.Id"
+                                 data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <ul>
+                                        @foreach (var subCategory in category.SubCategories)
+                                        {
+                                            <li class="subCategoryMenu @((subCategory.Id == ViewBag.SubCategoryId) ? "menuActice" : "")">
+                                                <a asp-action="index" asp-controller="product" asp-route-categoryId="@category.Id" asp-route-subCategoryId="@subCategory.Id">
+                                                    @subCategory.Name
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="productList col-12 col-lg-9">
+            <div id="dataContainer" class="row">
+                @if (Model.Items != null && Model.TotalItems > 0)
+                {
+                    @foreach (var item in Model.Items)
+                    {
+                        <div class="col-6 col-sm-4 col-md-3 mb-4">
+                            @await Html.PartialAsync("~/Views/Shared/PartialViews/_ProductPartialView.cshtml", item)
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="text-center">@_localizer["noData"]</div>
+                }
+            </div>
+
+            @await Html.PartialAsync("~/Views/Shared/PartialViews/_PaginationPartialView.cshtml")
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        function loadData(pageIndex) {
+            let parameters = {
+                    categoryId: document.getElementById("categoryId").value,
+                    subCategoryId: document.getElementById("subCategoryId").value,
+                    pageIndex: pageIndex,
+                    pageSize: '@Model.PageSize'
+                };
+
+            $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetData", "Product")',
+                    data: parameters,
+                    success: function (res) {
+                        if (res.ok) {
+                            $('#dataContainer').html(res.data);
+                            goTop();
+                        }
+                    }
+                });
+        }
+        $(document).ready(() => {
+            createPagination(@Model.TotalPages, @Model.PageIndex, loadData, true);
+        });
+    </script>
+}

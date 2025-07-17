@@ -1,7 +1,6 @@
 using Common;
 using Common.Models;
 using DataAccess.DTOs;
-using LulusiaAdmin.Server;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -12,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
+using WebCore.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 var applicationconfig = builder.Configuration.GetSection("AppConfig");;

@@ -1,0 +1,59 @@
+﻿@model UserClientViewModel
+<form asp-action="UpdateUserInformation" asp-controller="MyAccount" method="post" onsubmit="return SubmitForm(this,updateAccount)">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" id="initialProvinceId" value="@Model.ProvinceId" />
+    <input type="hidden" id="initialDistrictId" value="@Model.DistrictId" />
+    <span id="labelProvince" class="d-none">@_localizer["selectProvince"]</span>
+    <span id="labelDistrict" class="d-none">@_localizer["selectDistrict"]</span>
+    <div class="form-group mb-2">
+        <label asp-for="FullName" class="control-label text-capitalize">
+            @_localizer["fullName"]: <span class="text-danger">(*)</span>
+        </label>
+        <input asp-for="FullName" class="form-control" autocomplete="off" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-2">
+        <label asp-for="PhoneNumber" class="control-label text-capitalize ">@_localizer["phoneNumber"]:</label>
+        <input asp-for="PhoneNumber" class="form-control disable" readonly />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-2">
+        <label asp-for="Email" class="control-label text-capitalize">@_localizer["email"]:</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="row mb-2">
+        <div class="form-group col-6">
+            <label asp-for="GenderId" class="control-label text-capitalize">@_localizer["gender"]:</label>
+            <select asp-for="GenderId" class="form-control" asp-items="@ViewBag.Genders">
+                <option value="-1" disabled>Select Gender</option>
+            </select>
+            <span asp-validation-for="GenderId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-6">
+            <label asp-for="Birthday" class="control-label text-capitalize">@_localizer["birthday"]:</label>
+            <input type="date" asp-for="Birthday" class="form-control" />
+            <span asp-validation-for="Birthday" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="form-group col-6">
+            <label asp-for="ProvinceId" class="control-label text-capitalize">@_localizer["city"]:</label>
+            <select asp-for="ProvinceId" class="form-control" onchange="onChangeProvinceId(event)">
+            </select>
+            <span asp-validation-for="ProvinceId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-6">
+            <label asp-for="DistrictId" class="control-label text-capitalize">@_localizer["district"]:</label>
+            <select asp-for="DistrictId" class="form-control">
+            </select>
+            <span asp-validation-for="DistrictId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group mb-4">
+        <label asp-for="Address" class="control-label text-capitalize">@_localizer["address"]:</label>
+        <input asp-for="Address" class="form-control" maxlength="1000" autocomplete="on" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-submit text-capitalize mb-3">@_localizer["submit"]</button>
+</form>

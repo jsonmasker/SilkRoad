@@ -1,0 +1,100 @@
+﻿@model CartClientViewModel
+
+@if (Model != null &&  Model.CartItems.Count > 0)
+{
+    <table class="table">
+        <thead class="tableHeader">
+            <tr>
+                <th scope="col">@_localizer["product"]</th>
+                <th scope="col">@_localizer["price"]</th>
+                <th scope="col">@_localizer["quantity"]</th>
+                <th scope="col">@_localizer["amount"]</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                double amount = item.SaleOff
+                ? (item.SalePrice ?? 0)
+                : item.Price;
+                <tr>
+                    <td>
+                        <div>
+                            <img class="avatar" src="@item.ImageUrl" alt="@item.ProductName" />
+                            <span>
+                                @item.ProductName
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        @if (item.SaleOff)
+                        {
+                            <span><s>@string.Format("{0:#,0}", item.Price) VND</s></span>
+                            <br />
+                            <span>@string.Format("{0:#,0}", item.SalePrice) VND</span>
+                        }
+                        else
+                        {
+                            <span>@string.Format("{0:#,0}", item.Price) VND</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="quantityGroup">
+                            <div class="reduceQuantity"
+                                 onclick="reduceQuantityOfProductInCart(@item.ProductId, @amount)">
+                                <span class="ti-minus font-blod"></span>
+                            </div>
+                            <div class="quantity">
+                                <input id="quantityInput_@item.ProductId"
+                                       class="quantityInput" value="@item.Quantity"
+                                       type="number"
+                                       onfocusout="onchangeQuantity(@item.ProductId, @amount)"
+                                       onkeypress="handleEnterQuantityInput(event, @item.ProductId, @amount)" />
+                            </div>
+                            <div class="increaseQuantity"
+                                 onclick="increaseQuantityOfProductInCart(@item.ProductId, @amount)">
+                                <span class="ti-plus font-blod"></span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span id="price_@item.ProductId">
+                            @string.Format("{0:#,0}", item.TotalPrice)
+                        </span> VND
+                    </td>
+                    <td>
+                        <button class="removeCartItemBtn"
+                                onclick="removeFromCart(@item.ProductId)">
+                            @_localizer["delete"]
+                        </button>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="2">
+                    @* <input type="checkbox" /> Chọn tất cả sản phẩm *@
+                </td>
+                <td colspan="4">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <span class="me-2 fw-bold">
+                            @_localizer["total"]: <span id="cartTotalPrice" class="ms-2">@string.Format("{0:#,0}", Model.TotalPrice)</span><span>VND</span>
+                        </span>
+                        <a asp-action="Order" asp-controller="Cart" class="buyNow">
+                            @_localizer["buyNow"]
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+else
+{
+
+    <h6 class="text-center mb-2">@_localizer["cartEmptyMess"]</h6>
+    <p class="text-center">
+        <a class="backToProduct btn" asp-action="Index" asp-controller="Product" asp-route-categoryId="-1">@_localizer["backToProductPage"]</a>
+    </p>
+
+}

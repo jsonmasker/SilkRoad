@@ -1,0 +1,62 @@
+﻿@model ProductClientViewModel
+@{
+    bool isAuthenticated = User.Identity?.IsAuthenticated ?? false;
+}
+@if (Model != null)
+{
+
+    <div class="item">
+        @if (Model.SaleOff)
+        {
+            <div class="coupon text-14">
+                @_localizer["discount"] @Model.DiscountPercent %
+            </div>
+        }
+        @if (isAuthenticated)
+        {
+            <div class="myFavoriteProduct">
+                <span class="productId@(Model.Id) @(Model.IsFavorited ? "love" : "")" onclick="addFavoriteProduct(@Model.Id)">
+                    <svg width="34px" height="34px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g stroke-width="0"></g>
+                        <g stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g>
+                            <path d="M4.3314 12.0474L12 20L19.6686 12.0474C20.5211 11.1633 21 9.96429 21 8.71405C21 6.11055 18.9648 4 16.4543 4C15.2487 4 14.0925 4.49666 13.24 5.38071L12 6.66667L10.76 5.38071C9.90749 4.49666 8.75128 4 7.54569 4C5.03517 4 3 6.11055 3 8.71405C3 9.96429 3.47892 11.1633 4.3314 12.0474Z"
+                                  fill="#ffffff"></path>
+                            <path d="M4.3314 12.0474L12 20L19.6686 12.0474C20.5211 11.1633 21 9.96429 21 8.71405C21 6.11055 18.9648 4 16.4543 4C15.2487 4 14.0925 4.49666 13.24 5.38071L12 6.66667L10.76 5.38071C9.90749 4.49666 8.75128 4 7.54569 4C5.03517 4 3 6.11055 3 8.71405C3 9.96429 3.47892 11.1633 4.3314 12.0474Z"
+                                  stroke="#e72f8b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                    </svg>
+                </span>
+            </div>
+        }
+        <img src="@Model.Avatar" class="showImg squareImage w-100" alt="item" />
+        <img src="@Model.BackgroundImage" class="showImgHover squareImage w-100" alt="item" />
+        <div class="position-relative">
+            <div class="addToCart" onclick="addToCart(@Model.Id, '@Url.Action("ShowToastAddToCartSuccess", "Cart")')">
+                <span class="ti-shopping-cart-full"></span>
+            </div>
+            <div class="buyNow  bg-dark  text-14 font-weight-600 text-color-white  text-capitalize" onclick="buyNow(@Model.Id,'@Url.Action("Index", "Cart")')">
+                <span class="ti-shopping-cart-full me-2"></span>@_localizer["buyNow"]
+            </div>
+        </div>
+        <div class="itemInfor">
+            <a asp-action="Detail" asp-controller="Product" asp-route-ID="@Model.Id">
+                <p class="font-weight-600 text-16 ">@Model.BrandName</p>
+                <p class="nameProduction font-italic">@Model?.Name</p>
+                @if (Model.SaleOff)
+                {
+                    <p>
+                        <span class="priceOld text-14 font-weight-600"><s>@string.Format("{0:#,0}", Model.Price) VND</s></span><br />
+                        <span class="discount text-14 font-weight-600"> @string.Format("{0:#,0}", Model.SalePrice) VND</span>
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        <span class="priceNormal text-14 font-weight-600">@string.Format("{0:#,0}", Model.Price) VND</span>
+                    </p>
+                }
+            </a>
+        </div>
+    </div>
+}

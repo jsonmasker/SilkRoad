@@ -1,0 +1,16 @@
+﻿@model HomePageViewModel
+@{
+    ViewData["Title"] = ViewBag.Layout.PageIntro.Title;
+    ViewData["Description"] = ViewBag.Layout.PageIntro.Content;
+    ViewData["Image"] = ViewBag.Layout.PageIntro.ImageUrl ?? "/assets/images/lulusia1.png";
+
+    // ViewData["Title"] = _localizer["homePage"];
+    // ViewData["Description"] = "“Đem đến cho khách hàng những sản phẩm tốt nhất” từ những thương hiệu danh tiếng trên thế giới.Ngoài ra LULUSIA mang đến cho khách hàng các sản phẩm đảm bảo uy tín chất lượng, giá cả tốt nhất cùng với dịch vụ chuyên nghiệp, tận tình thân thiện nhất. Nhằm đem lại cho khách hàng những giá trị cũng như trải nghiệm tuyệt vời về vẻ đẹp từ các sản phẩm authentics mà công ty cung cấp.";
+
+}
+<div class="homePage">
+    @if(Model != null){
+        @await Html.PartialAsync("~/Views/Shared/PartialViews/_HomeBannerPartialView.cshtml",Model)
+        @await Html.PartialAsync("~/Views/Shared/PartialViews/_HomeContentPartialView.cshtml", Model)
+    }
+</div>

@@ -1,0 +1,42 @@
+﻿@model LoginClientViewModel
+@{
+    // ViewData["Title"] = _localizer["signIn"];
+    ViewData["Title"] = ViewBag.Layout.PageIntro.Title;
+    ViewData["Description"] = ViewBag.Layout.PageIntro.Content;
+    ViewData["Image"] = ViewBag.Layout.PageIntro.ImageUrl ?? "/assets/images/lulusia1.png";
+}
+<div class="page-container">
+    <div class="loginForm">
+        <h4 class="text-center font-weight-600 text-uppercase mb-3">@_localizer["signIn"]</h4>
+        <p class="opacity-75">@_localizer["loginMessage"]</p>
+        <form asp-action="Index" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ReturnUrl"/>
+            <div class="form-group mb-2">
+                <label asp-for="PhoneNumber" class="control-label text-capitalize"><span class="ti-lock"></span> @_localizer["phoneNumber"]:</label> 
+                <input asp-for="PhoneNumber" class="form-control" autocomplete="off" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2 position-relative">
+                <label asp-for="Password" class="control-label text-capitalize"><span class="ti-key"></span> @_localizer["password"]:</label>
+                <input asp-for="Password" type="password" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <span onclick="showPass('Password','PasswordIcon')" id="PasswordIcon" class="ti-eye icon-password"></span>
+
+            </div>
+            <div class="form-group mb-3">
+                <a asp-action="RecoverPassword" asp-controller="login">@_localizer["forgotPassword"]</a>
+            </div>
+            <button type="submit" class="btn btn-submit text-capitalize mb-3">@_localizer["login"]</button>
+            <div class="text-center mb-2">
+                <span> @_localizer["noAccount"]</span>
+               <a asp-action="index" asp-controller="register">@_localizer["register"]</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

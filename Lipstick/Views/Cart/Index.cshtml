@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = ViewBag.Layout.PageIntro.Title;
+    ViewData["Description"] = ViewBag.Layout.PageIntro.Content;
+    ViewData["Image"] = ViewBag.Layout.PageIntro.ImageUrl ?? "/assets/images/lulusia1.png";
+}
+<div class="cartPage my-4" id="cartContainer"></div>
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            getCart && getCart();
+        });
+    </script>
+}

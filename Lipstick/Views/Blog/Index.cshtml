@@ -1,0 +1,67 @@
+﻿@model Pagination<BlogClientViewModel>
+@{
+    IEnumerable<BlogClientViewModel> latestBlogs = ViewBag.LastestBlogs as IEnumerable<BlogClientViewModel>;
+    // ViewData["Title"] = _localizer["blogPage"];
+    ViewData["Title"] = ViewBag.Layout.PageIntro.Title;
+    ViewData["Description"] = ViewBag.Layout.PageIntro.Content;
+    ViewData["Image"] = ViewBag.Layout.PageIntro.ImageUrl ?? "/assets/images/lulusia1.png";
+}
+@*<script src="https://cdn.jsdelivr.net/npm/choices.js@11.0.3/public/assets/scripts/choices.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/choices.js@11.0.3/public/assets/styles/choices.min.css" rel="stylesheet"> *@
+<div class="page-container">
+    <div class="row flex-column-reverse flex-md-row">
+        <div class="col-12 col-md-9 blogContainer">
+            <div id="dataContainer">
+                @await Html.PartialAsync("~/Views/Shared/PartialViews/_BlogListPartialView.cshtml", Model.Items)
+            </div>
+            @await Html.PartialAsync("~/Views/Shared/PartialViews/_PaginationPartialView.cshtml")
+        </div>
+        <div class="col-12 col-md-3 mb-4 mb-md-0">
+            <h3 class="text-end text-md-start">@_localizer["topic"]</h3>
+            <div class="is-divider d-none d-md-block"></div>
+            <div class="d-flex justify-content-end d-md-block">
+                <select id="selectTopicId" class="form-select mb-2 w-75 w-sm-50  w-md-100" asp-items="@ViewBag.Topics" onchange="changeTopic(this.value)">
+                    <option value="-1">@_localizer["all"]</option>
+                </select>
+            </div>
+            <div class="is-divider d-none d-md-block"></div>
+            @if (latestBlogs != null)
+            {
+                <div class="d-none d-md-block">
+                    <h3 class="">@_localizer["newBlog"]</h3>
+                    @foreach (var item in latestBlogs)
+                    {
+                        <a asp-action="Details" asp-controller="Blog" asp-route-id="@item.Id" class=" d-block text-black fw-bold text-decoration-none border-md-bottom mb-2">@item.Subject</a>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+<script>
+    function loadData(pageIndex) {
+        let parameters = {
+                topicId: document.getElementById("selectTopicId").value,
+                pageIndex: pageIndex,
+                pageSize: '@Model.PageSize'
+            };
+        
+        $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetData", "Blog")',
+                data: parameters,
+                success: function (res) {
+                    if (res.ok) {
+                        $('#dataContainer').html(res.data);
+                        goTop();
+                    }
+                }
+            });
+    }
+    function changeTopic(id) {
+        window.location.href  = `@Url.Action("Index", "Blog")?topicId=${id}`;
+    }
+    createPagination(@Model.TotalPages, @Model.PageIndex, loadData, true);
+</script>
+}

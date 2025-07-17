@@ -1,0 +1,26 @@
+﻿@using Lipstick.ViewModels
+@using Lulusia.ViewModels
+@model ToastItem
+<div id="#toastTemplateId#" class="toast bg-white" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header toast-header-@Model.BackgroundStyle">
+        <span class="ti-bell font-blod me-1"></span> <span class="me-auto text-capitalize fw-bold text-16"> @_localizer["notification"]</span>
+        <button type="button" class="btn" data-bs-dismiss="toast"><span class="ti-close fw-bold"></span></button>
+    </div>
+    <div class="toast-body">
+        <div class="mb-2">
+            <span>@Model.Message</span>
+        </div>
+        <div class="d-flex">
+            @if (Model.ImageUrl != null)
+            {
+                <img class="toastImage" src="@Model.ImageUrl" alt="" />
+            }
+            @if(Model.ProductName != null)
+            {
+                <div class="ms-2 align-self-center">
+                    <span>@Model.ProductName</span>
+                </div>
+            }
+        </div>
+    </div>
+</div>

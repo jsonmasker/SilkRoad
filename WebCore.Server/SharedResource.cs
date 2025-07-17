@@ -1,4 +1,4 @@
-﻿namespace LulusiaAdmin.Server
+﻿namespace WebCore.Server
 {
     public class SharedResource
     {

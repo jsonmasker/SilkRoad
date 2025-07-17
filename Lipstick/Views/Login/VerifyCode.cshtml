@@ -1,0 +1,71 @@
+﻿@model SecurityCodeClientViewModel
+@{
+    // ViewData["Title"] = _localizer["verifyCode"];
+    ViewData["Title"] = ViewBag.Layout.PageIntro.Title;
+    ViewData["Description"] = ViewBag.Layout.PageIntro.Content;
+    ViewData["Image"] = ViewBag.Layout.PageIntro.ImageUrl ?? "/assets/images/lulusia1.png";
+}
+
+<div class="page-container">
+    <div class="verifyCodeForm">
+        <h4 class="text-center font-weight-600 text-uppercase mb-3">@_localizer["verifyCode"]</h4>
+        <p class="opacity-75">@_localizer["verifyCodeMessage"]</p>
+        <p class="opacity-75">@TempData["OTP"]</p>
+        <form id="verifyForm" asp-action="verifycode" method="post">
+            <input type="hidden" asp-for="PhoneNumber" />
+            <input type="hidden" asp-for="Code" id="hiddenCode" />
+
+            <div class="form-group mb-2">
+                <p class="control-label text-capitalize mb-1 w-100">@_localizer["securityCode"]:</p>
+                <div class="d-flex justify-content-between  gap-2">
+                    <input type="text" maxlength="1" class="form-control code-input" autocomplete="off" />
+                    <input type="text" maxlength="1" class="form-control code-input" autocomplete="off" />
+                    <input type="text" maxlength="1" class="form-control code-input" autocomplete="off" />
+                    <input type="text" maxlength="1" class="form-control code-input" autocomplete="off" />
+                </div>
+            </div>
+            <p class="mb-4">
+                <span>@_localizer["notReceivedCode"]</span>
+                <a href="#">@_localizer["resend"]</a>
+            </p>
+            <div class="d-flex">
+                <div class="col-6">
+                    <a asp-action="index" asp-controller="login" class="btn me-1 btn-primary w-100 fw-bold text-capitalize mb-2">@_localizer["cancel"]</a>
+                </div>
+                <div class="col-6">
+                    <button type="submit" class="btn ms-1 btn-submit text-capitalize col-6 mb-3">@_localizer["continue"]</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        const inputs = document.querySelectorAll('.code-input');
+        const hiddenCodeInput = document.getElementById('hiddenCode');
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                if (input.value.length > 0 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && input.value === '' && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
+        document.getElementById('verifyForm').addEventListener('submit', (e) => {
+            let code = '';
+            inputs.forEach(input => code += input.value);
+            hiddenCodeInput.value = code;
+        });
+    </script>
+}

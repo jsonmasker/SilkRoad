@@ -1,0 +1,75 @@
+﻿@import "VariableGlobal.scss";
+.orderPage {
+    max-width: $maxWidthContent;
+    margin: auto;
+    padding: 1.25rem 1rem;
+    min-height: 65vh;
+
+    .btnOrder {
+        background: $color_black_1e1e1e;
+        color: $color_white_fff;
+        border-radius: 0.5rem;
+        font-weight: bold;
+
+        &:hover {
+            background: #3c3c3c;
+            color: $color_white_fff;
+        }
+    }
+
+    .orderItemList {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+
+        .orderItem {
+            display: flex;
+            padding: 4px;
+            margin-bottom: 2px;
+            border-bottom: 1px solid #e6e2e2;
+
+            .itemImage img {
+                width: 80px;
+                height: 80px;
+                object-fit: cover;
+                border: 1px solid #a5a1a1;
+                border-radius: 10px;
+                aspect-ratio: 1/1;
+            }
+
+            .itemDetails {
+                width: 100%;
+
+                .itemName {
+                    font-weight: bold;
+                    font-size: 120%;
+                }
+
+                .itemPrice, .itemQuantity {
+                    color: #767676;
+                }
+
+                .itemQuantity {
+                    font-style: italic;
+                }
+            }
+        }
+    }
+
+    .choices {
+        margin: 0;
+    }
+
+    .choices__list--dropdown, .choices__list[aria-expanded] {
+        z-index: 10;
+    }
+}
+
+/*.paymentContainer {
+    display: flex;
+    justify-content: center;
+}*/
+
+.paymentContainer .paymentQRCode {
+    max-width: 300px;
+}

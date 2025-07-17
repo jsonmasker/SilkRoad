@@ -1,0 +1,52 @@
+﻿@model RegisterClientViewModel
+@{
+    // ViewData["Title"] = _localizer["register"];
+    ViewData["Title"] = ViewBag.Layout.PageIntro.Title;
+    ViewData["Description"] = ViewBag.Layout.PageIntro.Content;
+    ViewData["Image"] = ViewBag.Layout.PageIntro.ImageUrl ?? "/assets/images/lulusia1.png";
+}
+<div class="page-container">
+    <div class="registerForm">
+        <h4 class="text-center font-weight-600 text-uppercase">@_localizer["register"]</h4>
+        <form asp-action="Index" method="post">
+            <div class="form-group mb-2">
+                <label asp-for="FullName" class="control-label text-capitalize">@_localizer["fullName"]: <span class="text-danger">(*)</span></label>
+                <input asp-for="FullName" minlength="2" maxlength="255" class="form-control" autocomplete="off" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="PhoneNumber" class="control-label text-capitalize">@_localizer["phoneNumber"]: <span class="text-danger">(*)</span></label>
+                <input asp-for="PhoneNumber" maxlength="10"  class="form-control" autocomplete="off" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="Email" class="control-label text-capitalize">Email: </label>
+                <input asp-for="Email" maxlength="255" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2 position-relative">
+                <label asp-for="Password" class="control-label text-capitalize">@_localizer["password"]: <span class="text-danger">(*)</span></label>
+                <input asp-for="Password" type="password" maxlength="12" minlength="6" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Password" class="text-danger"></span>       
+                <span onclick="showPass('Password','PasswordIcon')" id="PasswordIcon" class="ti-eye icon-password"></span>
+            </div>
+            <div class="form-group mb-3 position-relative">
+                <label asp-for="ConfirmPassword" class="control-label text-capitalize">@_localizer["password"]: <span class="text-danger">(*)</span></label>
+                <input asp-for="ConfirmPassword" type="password" maxlength="12" minlength="6" class="form-control" autocomplete="off" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                <span onclick="showPass('ConfirmPassword','ConfirmPasswordIcon')" id="ConfirmPasswordIcon" class="ti-eye icon-password"></span>
+            </div>
+
+            <button type="submit" class="btn btn-submit text-capitalize mb-3">@_localizer["submit"]</button>
+            <div class="text-center mb-2">
+                <span> @_localizer["haveAccount"]</span>
+                <a asp-action="index" asp-controller="login">@_localizer["login"]</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{
+         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

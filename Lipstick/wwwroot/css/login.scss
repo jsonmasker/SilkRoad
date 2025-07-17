@@ -1,0 +1,33 @@
+@import "VariableGlobal.scss";
+.verifyCodeForm,
+.registerForm,
+.loginForm {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px 25px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+
+    .btn-submit {
+        border: 1px solid $color_black_000000;
+        background-color: $color_black_000000;
+        color: $color_white_fff;
+        width: 100%;
+        font-weight: 600;
+    }
+
+    .btn-submit:hover {
+        color: $color_pink_e72f8b;
+        //background-color: $color_white_fff;
+    }
+
+    .icon-password {
+        position: absolute;
+        top: 29px;
+        right: 10px;
+        padding: 5px;
+    }
+}

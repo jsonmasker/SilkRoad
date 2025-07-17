@@ -1,0 +1,20 @@
+﻿@import "VariableGlobal.scss";
+.productPage {
+    max-width: $maxWidthContent;
+    margin: auto;
+
+    @include respond(map-get($breakPoint,"lg")) {
+        padding: 0 1rem;
+    }
+
+    .subCategoryMenu a {
+        text-decoration: unset;
+        color: #000;
+    }
+
+    .subCategoryMenu:hover a, .menuActice a, .menuActice {
+        cursor: pointer;
+        color: $color_pink_e72f8b;
+        font-weight: bold;
+    }
+}

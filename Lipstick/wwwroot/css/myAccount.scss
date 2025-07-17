@@ -1,0 +1,105 @@
+@import "VariableGlobal.scss";
+
+.myAccountPage {
+    max-width: $maxWidthContent;
+    margin: auto;
+    padding: 1.25rem 1rem;
+    min-height: 65vh;
+
+    .menu {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+
+        .navLink {
+            background-color: transparent;
+            border: none;
+            text-align: start;
+            margin: 0.5rem 0 0.5rem 0.5rem;
+            display: flex;
+            align-items: center;
+            text-decoration: unset;
+            color: $color_black_000000;
+        }
+
+        .navLink:hover,
+        .navLink.active {
+            color: $color_pink_e72f8b;
+            font-weight: bold;
+
+            path {
+                fill: $color_pink_e72f8b;
+            }
+        }
+    }
+
+    .btn-submit {
+        border: 1px solid $color_black_000000;
+        background-color: $color_black_000000;
+        color: $color_white_fff;
+        width: 100%;
+        font-weight: 600;
+    }
+
+    .btn-submit:hover {
+        color: $color_pink_e72f8b;
+        //background-color: $color_white_fff;
+    }
+
+    .icon-password {
+        position: absolute;
+        top: 29px;
+        right: 10px;
+        padding: 5px;
+    }
+
+    .orderBox {
+        position: relative;
+        width: 100%;
+        border: 1px solid #000;
+
+        .tag {
+            padding: 6px 10px;
+            position: absolute;
+            right: -9px;
+            top: -1px;
+            color: #FFFFFF;
+            background: #E32E2D;
+            z-index: 1;
+        }
+
+        .tag::after {
+            content: "";
+            z-index: 2;
+            position: absolute;
+            right: 0px;
+            bottom: -8px;
+            border-top: 8px solid #AF0000;
+            border-right: 8px solid transparent;
+        }
+
+        .btnBuyAgain {
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            padding: 4px 6px;
+            font-weight: bold;
+        }
+    }
+
+    .choices {
+        margin: 0;
+        //.choices__inner {
+        //    padding: .375rem .75rem;
+        //}
+    }
+
+    .disable {
+        cursor: not-allowed;
+        background-color: #e8e8e8;
+    }
+
+    .choices__list--dropdown, .choices__list[aria-expanded] {
+        z-index: 10;
+    }
+}

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<ProductClientViewModel>
+@foreach (var item in Model)
+{
+    <div class="mb-1">
+        <a asp-action="index" asp-controller="productDetails" asp-route-ID="@item.Id" class="suggest">
+            <img src="@item.Avatar" />
+            <span>@item.Name</span>
+        </a>
+    </div>
+}

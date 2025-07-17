@@ -9,7 +9,7 @@ using Common.Services.FileStorageServices;
 using Common.Services.JwtServices;
 using Common.Services.QRCodeServices;
 
-namespace LulusiaAdmin.Server
+namespace WebCore.Server
 {
     public static class SignUpService
     {

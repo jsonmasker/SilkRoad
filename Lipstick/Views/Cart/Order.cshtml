@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = ViewBag.Layout.PageIntro.Title;
+    ViewData["Description"] = ViewBag.Layout.PageIntro.Content;
+    ViewData["Image"] = ViewBag.Layout.PageIntro.ImageUrl ?? "/assets/images/lulusia1.png";
+}
+<!-- Choices includes -->
+<link rel="stylesheet" href="~/lib/choices/styles/choices.min.css" />
+<!-- End Choices includes -->
+<div class="orderPage" id="orderContainer"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="paymentModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="staticBackdropLabel">@_localizer["bankTransfer"]</h1>
+			</div>
+			<div class="modal-body paymentContainer">
+				<div class="text-center">
+					<img src="" id="paymentQRCode" class="paymentQRCode" />
+				</div>
+				@* <div class="text-center">
+					<h3 id="countdownTimer">60</h3>
+					<div id="finalButtons" class="mt-4" style="display: none;">
+						<div class="d-flex justify-content-center align-items-center">
+							<button class="btn btn-success me-2">Đã chuyển khoản</button>
+							<button class="btn btn-primary">Làm mới mã QR</button>
+						</div>
+					</div>
+				</div> *@
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@_localizer["cancel"]</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/choices/scripts/choices.js"></script>
+    <script src="~/js/order.js"></script>
+}

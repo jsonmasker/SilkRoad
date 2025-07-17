@@ -1,0 +1,16 @@
+﻿@model InforPageClientViewModel
+@{
+    // ViewData["Title"] = _localizer["exchangeNReturn"];
+    ViewData["Title"] = ViewBag.Layout.PageIntro.Title;
+    ViewData["Description"] = ViewBag.Layout.PageIntro.Content;
+    ViewData["Image"] = ViewBag.Layout.PageIntro.ImageUrl ?? "/assets/images/lulusia1.png";
+}
+@if (Model != null)
+{
+    <div class="page-container">
+        <h1 class="text-center font-weight-600 text-uppercase">@Model.Title</h1>
+        <div>
+            @Html.Raw(Model.Content)
+        </div>
+    </div>
+}

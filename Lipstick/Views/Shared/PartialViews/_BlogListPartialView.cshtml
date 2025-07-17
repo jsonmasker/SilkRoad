@@ -1,0 +1,30 @@
+﻿@model IEnumerable<BlogClientViewModel>
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="row boxBlog">
+            <div class="col-12 col-sm-4 mb-2 mb-sm-0">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <a asp-action="Details" asp-controller="Blog" asp-route-id="@item.Id" 
+                    class="text-decoration-none text-black w-100">
+                        <div class="avatar" style="background-image:url(@item.AvatarUrl)"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-sm-8 infor">
+                <a asp-action="Details" asp-controller="Blog" asp-route-id="@item.Id" class="text-decoration-none text-black">
+                    <h4 class="m-0">@item.Subject</h4>
+                    <div class="is-divider"></div>
+                    <p class="m-0">
+                        @item.Description
+                    </p>
+                </a>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="text-center">@_localizer["noData"]</div>
+}
