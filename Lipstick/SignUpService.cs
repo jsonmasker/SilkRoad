@@ -1,6 +1,6 @@
 ﻿using Common.Services.SMSServices;
-using Lulusia._Convergence.Helpers;
-using Lulusia._Convergence.Services;
+using Lipstick._Convergence.Helpers;
+using Lipstick._Convergence.Services;
 using MemberBusinessLogic.Helpers;
 using MemberBusinessLogic.IHelpers;
 using MemberDataAccess;
