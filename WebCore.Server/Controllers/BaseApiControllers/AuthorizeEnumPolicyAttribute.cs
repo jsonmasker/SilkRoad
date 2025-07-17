@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Localization;
 using WebCore.Server;
 
-namespace WebCore.Server.Controllers.BaseApiControllers
+namespace LulusiaAdmin.Server.Controllers.BaseApiControllers
 {
     public class AuthorizeEnumPolicyAttribute : ActionFilterAttribute
     {

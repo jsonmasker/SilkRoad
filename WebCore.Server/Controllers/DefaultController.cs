@@ -1,9 +1,9 @@
 ﻿using Common;
 using Common.Services.ConvertWordToPdfServices;
+using LulusiaAdmin.Server.Controllers.BaseApiControllers;
 using Microsoft.AspNetCore.Mvc;
-using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace WebCore.Server.Controllers
+namespace LulusiaAdmin.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

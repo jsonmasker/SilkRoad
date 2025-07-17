@@ -1,7 +1,7 @@
 ﻿using Common;
 using Common.Models;
 using Lipstick._Convergence.Helpers;
-using Lulusia.ViewModels;
+using Lipstick.ViewModels;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

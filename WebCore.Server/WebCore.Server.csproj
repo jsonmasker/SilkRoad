@@ -14,10 +14,14 @@
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
       <Version>9.*-*</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="OpenAI" Version="2.2.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.4" />
   </ItemGroup>
 
@@ -25,6 +29,14 @@
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\LipstickBusinessLogic\LipstickBusinessLogic.csproj" />
+    <ProjectReference Include="..\LipstickDataAccess\LipstickDataAccess.csproj" />
+    <ProjectReference Include="..\SlideshowBusinessLogic\SlideshowBusinessLogic.csproj" />
+    <ProjectReference Include="..\SlideshowDataAccess\SlideshowDataAccess.csproj" />
+    <ProjectReference Include="..\StockBusinessLogic\StockBusinessLogic.csproj" />
+    <ProjectReference Include="..\StockDataAccess\StockDataAccess.csproj" />
+    <ProjectReference Include="..\SurveyBusinessLogic\SurveyBusinessLogic.csproj" />
+    <ProjectReference Include="..\SurveyDataAccess\SurveyDataAccess.csproj" />
     <ProjectReference Include="..\webcore.client\webcore.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
