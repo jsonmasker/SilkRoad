@@ -17,7 +17,7 @@ import { StockPriceService } from '@services/stock-services/stock-price.service'
 @Component({
   selector: 'app-company',
   imports: [ModalBodyComponent, NgFor, NgIf, FormControlDirective, FormLabelDirective,
-    FormSelectDirective, DatePipe,
+    FormSelectDirective,
     ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule,FormCheckComponent,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent, IconDirective],
   templateUrl: './company.component.html',
