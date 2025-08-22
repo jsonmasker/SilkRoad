@@ -1,29 +1,35 @@
-import { NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormCheckInputDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective } from '@coreui/angular';
+import { IconDirective } from '@coreui/icons-angular';
 import { SizeViewModel } from '@models/lipstick-shop-models/size.model';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { SizeService } from '@services/lipstick-shop-services/size.service';
 import { DataTableComponent } from "@components/data-table/data-table.component";
 import { EColors } from '@common/global';
+import { cilPlus, cilTrash, cilPen, cilLoopCircular, cilSave, cilExitToApp } from '@coreui/icons';
 
 @Component({
   selector: 'app-sizes',
   templateUrl: './sizes.component.html',
   styleUrl: './sizes.component.scss',
-  imports: [ ModalBodyComponent, NgFor, NgIf, FormControlDirective, FormLabelDirective,
+  imports: [ ModalBodyComponent, FormControlDirective, FormLabelDirective, IconDirective,
     ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent]
 })
 export class SizesComponent implements OnInit {
+  icons = { cilPlus, cilTrash, cilPen, cilLoopCircular, cilSave, cilExitToApp };
   pageInformation: PageInformation = new PageInformation();
   visibleCreateModal: boolean = false;
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
+  visibleTrashModal: boolean = false;
   deleteById: number = 0;
   data: Pagination<SizeViewModel> = new Pagination<SizeViewModel>();
+  deletedData: Pagination<SizeViewModel> = new Pagination<SizeViewModel>();
+  deletedPageInformation: PageInformation = new PageInformation();
+
   createForm: FormGroup = new FormGroup({
     nameEN: new FormControl('', Validators.required),
     nameVN: new FormControl('', Validators.required),
@@ -138,5 +144,56 @@ toggleLiveDelete() {
 handleLiveDeleteChange(event: any) {
   this.visibleDelete = event;
 }
+//#endregion
+//#region Trash Modal
+  toggleLiveTrashModal() {
+    this.visibleTrashModal = !this.visibleTrashModal;
+    if (this.visibleTrashModal) {
+      this.getDeletedData();
+    }
+  }
+
+  handleLiveTrashModalChange(event: any) {
+    this.visibleTrashModal = event;
+  }
+
+  getDeletedData() {
+    this.sizeService.getAllDeleted(this.deletedPageInformation.pageIndex, this.deletedPageInformation.pageSize).subscribe((res) => {
+      this.deletedData = res.data;
+      this.deletedPageInformation.currentPage = res.data.currentPage;
+      this.deletedPageInformation.totalItems = res.data.totalItems;
+      this.deletedPageInformation.totalPages = res.data.totalPages;
+    });
+  }
+
+  onDeletedPageIndexChange(index: any) {
+    this.deletedPageInformation.pageIndex = index;
+    this.getDeletedData();
+  }
+
+  onDeletedPageSizeChange(size: any) {
+    this.deletedPageInformation.pageSize = size;
+    this.deletedPageInformation.pageIndex = 1;
+    this.getDeletedData();
+  }
+
+  restoreData(id: number) {
+    this.sizeService.restore(id).subscribe((res) => {
+      this.toastService.showToast(EColors.success, res.message);
+      this.getDeletedData();
+      this.getData();
+    }, (failure) => {
+      this.toastService.showToast(EColors.danger, failure.error.message);
+    });
+  }
+
+  permanentDeleteData(id: number) {
+    this.sizeService.delete(id).subscribe((res) => {
+      this.toastService.showToast(EColors.success, res.message);
+      this.getDeletedData();
+    }, (failure) => {
+      this.toastService.showToast(EColors.danger, failure.error.message);
+    });
+  }
 //#endregion
 }

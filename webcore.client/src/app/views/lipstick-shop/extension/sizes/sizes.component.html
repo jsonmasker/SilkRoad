@@ -1,6 +1,11 @@
 <h1>Size List</h1>
 <div class="d-flex justify-content-end mb-2">
-  <button (click)="toggleLiveCreateModel()" class="btn btn-success">Create</button>
+  <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
+    <svg cIcon [cIcon]="icons.cilTrash" class="me-1"></svg>
+  </button>
+  <button (click)="toggleLiveCreateModel()" class="btn btn-success">
+    <svg cIcon [cIcon]="icons.cilPlus" class="me-1"></svg>
+  </button>
 </div>
 <app-data-table [data]="pageInformation"
 (changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
@@ -9,30 +14,38 @@
     <th scope="col" i18n="@@thSTT">STT</th>
     <th scope="col">NameEn</th>
     <th scope="col">NameVN</th>
+    <th scope="col">Priority</th>
     <th scope="col" i18n="@@thActive">Active</th>
     <th></th>
   </tr>
 </thead>
 <tbody>
-  <tr *ngFor="let item of data.items; index as i ">
-        <td>{{ i+1 }}</td>
-        <td>{{ item.nameEN }}</td>
-        <td>{{ item.nameVN }}</td>
-        <td>{{ item.isActive }}</td>
-        <td>
-          <div class="d-flex justify-content-end">
-            <button (click)="updateData(item.id)" class="btn btn-primary me-2">Update</button>
-            <button (click)="deleteData(item.id)" class="btn btn-danger" i18n="@@delete">Delete</button>
-          </div>
-        </td>
+  @for (item of data.items; track item.id; let i = $index) {
+    <tr>
+      <td>{{ i+1 }}</td>
+      <td>{{ item.nameEN }}</td>
+      <td>{{ item.nameVN }}</td>
+      <td>{{ item.priority }}</td>
+      <td>{{ item.isActive }}</td>
+      <td>
+        <div class="d-flex justify-content-end">
+          <button (click)="updateData(item.id)" class="btn btn-primary me-2">
+            <svg cIcon [cIcon]="icons.cilPen" class="me-1"></svg>
+          </button>
+          <button (click)="deleteData(item.id)" class="btn btn-danger" i18n="@@delete">
+            <svg cIcon [cIcon]="icons.cilTrash" class="me-1"></svg>
+          </button>
+        </div>
+      </td>
     </tr>
+  }
 </tbody>
 </app-data-table>
 
 <!-- Create Modal -->
 <c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)" id="verticallyCenteredCreateModal" size="lg">
   <c-modal-header>
-    <h5 cModalTitle>Create Unit</h5>
+    <h5 cModalTitle>Create Size</h5>
     <button (click)="toggleLiveCreateModel()" cButtonClose></button>
   </c-modal-header>
   <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
@@ -45,31 +58,37 @@
         <div>
           <label for="priority" class="me-2">Priority: </label>
           <input formControlName="priority" type="number" class="me-2 number-control">
-          <div *ngIf="priorityCreateForm?.invalid && (priorityCreateForm?.dirty || priorityCreateForm?.touched)" class="text-danger">
-            <div *ngIf="priorityCreateForm?.hasError('min') || priorityCreateForm?.hasError('max')">
-              Priority must be between 1 and 9999.
+          @if (priorityCreateForm?.invalid && (priorityCreateForm?.dirty || priorityCreateForm?.touched)) {
+            <div class="text-danger">
+              @if (priorityCreateForm?.hasError('min') || priorityCreateForm?.hasError('max')) {
+                <div>Priority must be between 1 and 100.</div>
+              }
             </div>
-          </div>
+          }
         </div>
       </div>
       <div class="mb-2 row">
         <div class="col-6">
           <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
           <input cFormControl formControlName="nameEN">
-          <div *ngIf="nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)" class="text-danger">
-            <div *ngIf="nameENCreateForm?.hasError('required')">
-              NameEN is required.
+          @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
+            <div class="text-danger">
+              @if (nameENCreateForm?.hasError('required')) {
+                <div>NameEN is required.</div>
+              }
             </div>
-          </div>
+          }
         </div>
         <div class="col-6">
           <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
           <input cFormControl formControlName="nameVN">
-          <div *ngIf="nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)" class="text-danger">
-            <div *ngIf="nameVNCreateForm?.hasError('required')">
-              NameVN is required.
+          @if (nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)) {
+            <div class="text-danger">
+              @if (nameVNCreateForm?.hasError('required')) {
+                <div>NameVN is required.</div>
+              }
             </div>
-          </div>
+          }
         </div>
       </div>
     </c-modal-body>
@@ -84,44 +103,50 @@
 <!--Update Model-->
 <c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)" id="verticallyCenteredUpdateModal" size="lg">
   <c-modal-header>
-    <h5 cModalTitle>Update Unit</h5>
+    <h5 cModalTitle>Update Size</h5>
     <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
   </c-modal-header>
   <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
     <c-modal-body>
       <div class="mb-2 d-flex flex-row">
         <c-form-check class="me-2 d-flex align-items-center">
-          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-          <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+          <input cFormCheckInput formControlName="isActive" id="isActiveUpdate" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActiveUpdate" class="me-2" i18n="@@active">Active </label>
         </c-form-check>
         <div>
-          <label for="priority" class="me-2">Priority: </label>
+          <label for="priorityUpdate" class="me-2">Priority: </label>
           <input formControlName="priority" type="number" class="me-2 number-control">
-          <div *ngIf="priorityUpdateForm?.invalid && (priorityUpdateForm?.dirty || priorityUpdateForm?.touched)" class="text-danger">
-            <div *ngIf="priorityUpdateForm?.hasError('min') || priorityUpdateForm?.hasError('max')">
-              Priority must be between 1 and 9999.
+          @if (priorityUpdateForm?.invalid && (priorityUpdateForm?.dirty || priorityUpdateForm?.touched)) {
+            <div class="text-danger">
+              @if (priorityUpdateForm?.hasError('min') || priorityUpdateForm?.hasError('max')) {
+                <div>Priority must be between 1 and 100.</div>
+              }
             </div>
-          </div>
+          }
         </div>
       </div>
       <div class="mb-2 row">
         <div class="col-6">
-          <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
+          <label cLabel for="nameENUpdate" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
           <input cFormControl formControlName="nameEN">
-          <div *ngIf="nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)" class="text-danger">
-            <div *ngIf="nameENUpdateForm?.hasError('required')">
-              NameEN is required.
+          @if (nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)) {
+            <div class="text-danger">
+              @if (nameENUpdateForm?.hasError('required')) {
+                <div>NameEN is required.</div>
+              }
             </div>
-          </div>
+          }
         </div>
         <div class="col-6">
-          <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
+          <label cLabel for="nameVNUpdate">NameVN: <span class="text-danger">(*)</span></label>
           <input cFormControl formControlName="nameVN">
-          <div *ngIf="nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)" class="text-danger">
-            <div *ngIf="nameVNUpdateForm?.hasError('required')">
-              NameVN is required.
+          @if (nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)) {
+            <div class="text-danger">
+              @if (nameVNUpdateForm?.hasError('required')) {
+                <div>NameVN is required.</div>
+              }
             </div>
-          </div>
+          }
         </div>
       </div>
     </c-modal-body>
@@ -140,12 +165,63 @@
     <button (click)="toggleLiveDelete()" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
-    <p>Are you sure you want to delete this category?</p>
+    <p>Are you sure you want to delete this size?</p>
   </c-modal-body>
   <c-modal-footer>
     <button (click)="toggleLiveDelete()" cButton color="secondary">
       Close
     </button>
-    <button cButton color="primary">Confirm</button>
+    <button (click)="deleteDataConfirm()" cButton color="primary">Confirm</button>
+  </c-modal-footer>
+</c-modal>
+
+<!-- Trash Modal -->
+<c-modal backdrop="static" [visible]="visibleTrashModal" (visibleChange)="handleLiveTrashModalChange($event)" id="trashModal" size="xl">
+  <c-modal-header>
+    <h5 cModalTitle>Deleted Sizes</h5>
+    <button (click)="toggleLiveTrashModal()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <app-data-table [data]="deletedPageInformation"
+    (changePageIndex)="onDeletedPageIndexChange($event)" (changePageSize)="onDeletedPageSizeChange($event)">
+      <thead class="text-nowrap text-truncate">
+        <tr>
+          <th scope="col" i18n="@@thSTT">STT</th>
+          <th scope="col">NameEn</th>
+          <th scope="col">NameVN</th>
+          <th scope="col">Priority</th>
+          <th scope="col" i18n="@@thActive">Active</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of deletedData.items; track item.id; let i = $index) {
+          <tr>
+            <td>{{ i+1 }}</td>
+            <td>{{ item.nameEN }}</td>
+            <td>{{ item.nameVN }}</td>
+            <td>{{ item.priority }}</td>
+            <td>{{ item.isActive }}</td>
+            <td>
+              <div class="d-flex justify-content-end">
+                <button (click)="restoreData(item.id)" class="btn btn-success me-2">
+                  <svg cIcon [cIcon]="icons.cilLoopCircular" class="me-1"></svg>
+                  Restore
+                </button>
+                <button (click)="permanentDeleteData(item.id)" class="btn btn-danger">
+                  <svg cIcon [cIcon]="icons.cilTrash" class="me-1"></svg>
+                  Delete Permanently
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </app-data-table>
+  </c-modal-body>
+  <c-modal-footer>
+    <button (click)="toggleLiveTrashModal()" cButton color="secondary">
+      Close
+    </button>
   </c-modal-footer>
 </c-modal>

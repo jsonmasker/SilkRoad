@@ -117,6 +117,7 @@ export enum EUrl {
     updateUrlSize = "/api/size/update",
     restoreUrlSize = "/api/size/restore",
     softDeleteUrlSize = "/api/size/softDelete",
+    deleteUrlSize = "/api/size/delete",
     //PageType
     getAllUrlPageType = "/api/pageType/getAll",
     getAllActiveUrlPageType = "/api/pageType/getAllActive",

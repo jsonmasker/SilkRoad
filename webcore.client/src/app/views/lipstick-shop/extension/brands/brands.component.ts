@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective } from '@coreui/angular';
@@ -13,7 +12,7 @@ import { DataTableComponent } from "@components/data-table/data-table.component"
 
 @Component({
   selector: 'app-brands',
-  imports: [ModalBodyComponent, CommonModule, FormControlDirective, FormLabelDirective,
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective,
     ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, IconDirective, DataTableComponent],
   templateUrl: './brands.component.html',

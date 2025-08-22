@@ -124,4 +124,19 @@ export class SizeService {
       })
     );
   }
+
+  delete(id: number): Observable<BaseAPIResponse> {
+    const url = EUrl.deleteUrlSize.concat('/', id.toString());
+    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
 }

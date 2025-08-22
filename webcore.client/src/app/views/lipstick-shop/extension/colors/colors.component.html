@@ -1,7 +1,7 @@
 <h1>Color List</h1>
 <div class="d-flex justify-content-end mb-2">
-  <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2"><svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg> Trash</button>
-  <button (click)="toggleLiveCreateModel()" class="btn btn-success" i18n="@@create"><svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg> Create</button>
+  <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2"><svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg> </button>
+  <button (click)="toggleLiveCreateModel()" class="btn btn-success" ><svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg> </button>
 </div>
 <app-data-table [data]="pageInformation"
 (changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
@@ -23,8 +23,8 @@
         <td>{{ item.isActive }}</td>
         <td>
           <div class="d-flex justify-content-end">
-            <button (click)="updateData(item.id)" class="btn btn-primary me-2"><svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg> Update</button>
-            <button (click)="softDeleteData(item.id)" class="btn btn-danger" i18n="@@delete"><svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg> Delete</button>
+            <button (click)="updateData(item.id)" class="btn btn-primary me-2"><svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg> </button>
+            <button (click)="softDeleteData(item.id)" class="btn btn-danger"><svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg> </button>
           </div>
         </td>
     </tr>
