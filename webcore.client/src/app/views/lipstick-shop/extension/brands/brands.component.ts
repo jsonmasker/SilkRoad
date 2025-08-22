@@ -1,10 +1,10 @@
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective } from '@coreui/angular';
 import { BrandViewModel } from '@models/lipstick-shop-models/brand.model';
 import { BrandService } from '@services/lipstick-shop-services/brand.service';
-import { cilCloudUpload } from '@coreui/icons';
+import { cilCloudUpload, cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
@@ -13,7 +13,7 @@ import { DataTableComponent } from "@components/data-table/data-table.component"
 
 @Component({
   selector: 'app-brands',
-  imports: [ModalBodyComponent, NgFor, NgIf, FormControlDirective, FormLabelDirective,
+  imports: [ModalBodyComponent, CommonModule, FormControlDirective, FormLabelDirective,
     ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, IconDirective, DataTableComponent],
   templateUrl: './brands.component.html',
@@ -21,15 +21,18 @@ import { DataTableComponent } from "@components/data-table/data-table.component"
 })
 export class BrandsComponent implements OnInit {
   pageInformation: PageInformation = new PageInformation();
+  trashPageInformation: PageInformation = new PageInformation();
   baseUrl: string = baseUrl;
   visibleCreateModal: boolean = false;
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
+  visibleTrashModal: boolean = false;
   deleteById: number = 0;
   data: Pagination<BrandViewModel> = new Pagination<BrandViewModel>();
+  trashData: Pagination<BrandViewModel> = new Pagination<BrandViewModel>();
   reviewCreateUploadImage: string = '';
   reviewUpdateUploadImage: string = '';
-  icons : any = {cilCloudUpload};
+  icons : any = {cilCloudUpload, cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular};
   createForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
     note: new FormControl('',Validators.maxLength(500)),
@@ -181,14 +184,17 @@ get noteUpdateForm() { return this.updateForm.get('note'); }
 
 //#endregion
 //#region Delete
-deleteData(id: number) {
+softDeleteData(id: number) {
   this.deleteById = id;
   this.toggleLiveDelete();
 }
 deleteDataConfirm() {
-  this.brandService.softDelete(this.deleteById).subscribe(() => {
+  this.brandService.softDelete(this.deleteById).subscribe((res) => {
     this.toggleLiveDelete();
     this.getData();
+    this.toastService.showToast(EColors.success, res.message);
+  }, (failure) => {
+    this.toastService.showToast(EColors.danger, failure.error.message);
   });
 }
 toggleLiveDelete() {
@@ -197,6 +203,46 @@ toggleLiveDelete() {
 
 handleLiveDeleteChange(event: any) {
   this.visibleDelete = event;
+}
+//#endregion
+
+//#region Trash
+getTrashData() {
+  this.brandService.getAllDeleted(this.trashPageInformation.pageIndex, this.trashPageInformation.pageSize).subscribe((res) => {
+    this.trashData = res.data;
+    this.trashPageInformation.currentPage = this.trashData.currentPage;
+    this.trashPageInformation.totalItems = this.trashData.totalItems;
+    this.trashPageInformation.totalPages = this.trashData.totalPages;
+  });
+}
+onTrashPageIndexChange(index: any) {
+  this.trashPageInformation.pageIndex = index;
+  this.getTrashData();
+}
+onTrashPageSizeChange(size: any) {
+  this.trashPageInformation.pageSize = size;
+  this.trashPageInformation.pageIndex = 1;
+  this.getTrashData();
+}
+toggleLiveTrashModal() {
+  this.getTrashData();
+  this.visibleTrashModal = !this.visibleTrashModal;
+}
+handleLiveTrashModalChange(event: any) {
+  this.visibleTrashModal = event;
+}
+restoreData(id: number) {
+  this.brandService.restore(id).subscribe((res) => {
+    this.getTrashData();
+    this.getData();
+    this.toastService.showToast(EColors.success, res.message);
+  });
+}
+deleteDataTrash(id: number) {
+  this.brandService.delete(id).subscribe((res) => {
+    this.getTrashData();
+    this.toastService.showToast(EColors.success, res.message);
+  });
 }
 //#endregion
 }

@@ -1,7 +1,8 @@
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormCheckInputDirective, FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TableDirective } from '@coreui/angular';
+import { IconDirective } from '@coreui/icons-angular';
 import { PageTypeViewModel } from '@models/lipstick-shop-models/page-type.model';
 import { CkeditorComponent } from '@components/ckeditor/ckeditor.component';
 import { DataTableComponent } from "@components/data-table/data-table.component";
@@ -11,26 +12,31 @@ import { PageContentViewModel } from '@models/lipstick-shop-models/page-content.
 import { PageTypeService } from '@services/lipstick-shop-services/page-type.service';
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
+import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular } from '@coreui/icons';
 
 @Component({
   selector: 'app-page-contents',
   templateUrl: './page-contents.component.html',
   styleUrl: './page-contents.component.scss',
-  imports: [ ModalBodyComponent, NgFor, NgIf, FormControlDirective, FormLabelDirective,
+  imports: [ ModalBodyComponent, CommonModule, FormControlDirective, FormLabelDirective,
     ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule, FormSelectDirective,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, CkeditorComponent, DataTableComponent],
+    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, IconDirective, CkeditorComponent, DataTableComponent],
 })
 export class PageContentsComponent implements OnInit {
   pageInformation: PageInformation = new PageInformation();
+  trashPageInformation: PageInformation = new PageInformation();
   visibleCreateModal: boolean = false;
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
+  visibleTrashModal: boolean = false;
   pageTypeId: number = -1;
   deleteById: number = 0;
   pageTypeList: PageTypeViewModel[] = [];
   data: Pagination<PageContentViewModel> = new Pagination<PageContentViewModel>();
+  trashData: Pagination<PageContentViewModel> = new Pagination<PageContentViewModel>();
   updateContentVN: string = '';
   updateContentEN: string = '';
+  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular };
 
   createForm: FormGroup = new FormGroup({
     pageTypeId: new FormControl(-1, Validators.min(0)),
@@ -167,7 +173,7 @@ get contentVNUpdateForm() { return this.updateForm.get('contentVN'); }
 get priorityUpdateForm() { return this.updateForm.get('priority'); }
 //#endregion
 //#region Delete
-deleteData(id: number) {
+softDeleteData(id: number) {
   this.deleteById = id;
   this.toggleLiveDelete();
 }
@@ -186,6 +192,46 @@ toggleLiveDelete() {
 
 handleLiveDeleteChange(event: any) {
   this.visibleDelete = event;
+}
+//#endregion
+
+//#region Trash
+getTrashData() {
+  this.pageContentService.getAllDeleted(this.trashPageInformation.pageIndex, this.trashPageInformation.pageSize).subscribe((res) => {
+    this.trashData = res.data;
+    this.trashPageInformation.currentPage = this.trashData.currentPage;
+    this.trashPageInformation.totalItems = this.trashData.totalItems;
+    this.trashPageInformation.totalPages = this.trashData.totalPages;
+  });
+}
+onTrashPageIndexChange(index: any) {
+  this.trashPageInformation.pageIndex = index;
+  this.getTrashData();
+}
+onTrashPageSizeChange(size: any) {
+  this.trashPageInformation.pageSize = size;
+  this.trashPageInformation.pageIndex = 1;
+  this.getTrashData();
+}
+toggleLiveTrashModal() {
+  this.getTrashData();
+  this.visibleTrashModal = !this.visibleTrashModal;
+}
+handleLiveTrashModalChange(event: any) {
+  this.visibleTrashModal = event;
+}
+restoreData(id: number) {
+  this.pageContentService.restore(id).subscribe((res) => {
+    this.getTrashData();
+    this.getData();
+    this.toastService.showToast(EColors.success, res.message);
+  });
+}
+deleteDataTrash(id: number) {
+  this.pageContentService.delete(id).subscribe((res: any) => {
+    this.getTrashData();
+    this.toastService.showToast(EColors.success, res.message);
+  });
 }
 //#endregion
 }

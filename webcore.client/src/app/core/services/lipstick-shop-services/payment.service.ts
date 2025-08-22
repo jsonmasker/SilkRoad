@@ -21,7 +21,7 @@ export class PaymentService {
             switchMap(() => this.http.get<APIResponse<Pagination<PaymentViewModel>>>(EUrl.getAllUrlPayment, { headers: this.authenticationService.GetHeaders(), params: query }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -35,7 +35,7 @@ export class PaymentService {
             switchMap(() => this.http.get<APIResponse<PaymentViewModel>>(EUrl.getByIdUrlPayment + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );

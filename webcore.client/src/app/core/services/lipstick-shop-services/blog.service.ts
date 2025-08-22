@@ -80,6 +80,21 @@ export class BlogService {
       })
     );
   }
+  getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<BlogViewModel>>> {
+    const url = EUrl.getAllDeletedUrlBlog.concat(`/${pageIndex}/${pageSize}`);
+    return this.http.get<APIResponse<Pagination<BlogViewModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<BlogViewModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
+
   softDelete(id:number):Observable<BaseAPIResponse>{
   return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlBlog+`/${id}`,{headers:this.authenticationService.GetHeaders()}).pipe(
     catchError(error=>{
@@ -92,6 +107,21 @@ export class BlogService {
       }
     })
   );
+  }
+
+  restore(id: number): Observable<BaseAPIResponse> {
+    const url = EUrl.restoreUrlBlog.concat('/', id.toString());
+    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
   }
 }
 

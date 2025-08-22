@@ -1,29 +1,35 @@
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormCheckInputDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective } from '@coreui/angular';
+import { IconDirective } from '@coreui/icons-angular';
 import { ColorViewModel } from '@models/lipstick-shop-models/color.model';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { ColorService } from '@services/lipstick-shop-services/color.service';
 import { DataTableComponent } from "@components/data-table/data-table.component";
 import { EColors } from '@common/global';
+import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular } from '@coreui/icons';
 
 @Component({
   selector: 'app-colors',
   templateUrl: './colors.component.html',
   styleUrl: './colors.component.scss',
-  imports: [ ModalBodyComponent, NgFor, NgIf, FormControlDirective, FormLabelDirective,
+  imports: [ModalBodyComponent, CommonModule, FormControlDirective, FormLabelDirective,
     ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent]
+    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, IconDirective, DataTableComponent]
 })
 export class ColorsComponent implements OnInit {
   pageInformation: PageInformation = new PageInformation();
+  trashPageInformation: PageInformation = new PageInformation();
   visibleCreateModal: boolean = false;
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
+  visibleTrashModal: boolean = false;
   deleteById: number = 0;
   data: Pagination<ColorViewModel> = new Pagination<ColorViewModel>();
+  trashData: Pagination<ColorViewModel> = new Pagination<ColorViewModel>();
+  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular };
   createForm: FormGroup = new FormGroup({
     nameEN: new FormControl('', Validators.required),
     nameVN: new FormControl('', Validators.required),
@@ -121,7 +127,7 @@ get priorityUpdateForm() { return this.updateForm.get('priority'); }
 
 //#endregion
 //#region Delete
-deleteData(id: number) {
+softDeleteData(id: number) {
   this.deleteById = id;
   this.toggleLiveDelete();
 }
@@ -140,6 +146,46 @@ toggleLiveDelete() {
 
 handleLiveDeleteChange(event: any) {
   this.visibleDelete = event;
+}
+//#endregion
+
+//#region Trash
+getTrashData() {
+  this.ColorService.getAllDeleted(this.trashPageInformation.pageIndex, this.trashPageInformation.pageSize).subscribe((res) => {
+    this.trashData = res.data;
+    this.trashPageInformation.currentPage = this.trashData.currentPage;
+    this.trashPageInformation.totalItems = this.trashData.totalItems;
+    this.trashPageInformation.totalPages = this.trashData.totalPages;
+  });
+}
+onTrashPageIndexChange(index: any) {
+  this.trashPageInformation.pageIndex = index;
+  this.getTrashData();
+}
+onTrashPageSizeChange(size: any) {
+  this.trashPageInformation.pageSize = size;
+  this.trashPageInformation.pageIndex = 1;
+  this.getTrashData();
+}
+toggleLiveTrashModal() {
+  this.getTrashData();
+  this.visibleTrashModal = !this.visibleTrashModal;
+}
+handleLiveTrashModalChange(event: any) {
+  this.visibleTrashModal = event;
+}
+restoreData(id: number) {
+  this.ColorService.restore(id).subscribe((res) => {
+    this.getTrashData();
+    this.getData();
+    this.toastService.showToast(EColors.success, res.message);
+  });
+}
+deleteDataTrash(id: number) {
+  this.ColorService.delete(id).subscribe((res: any) => {
+    this.getTrashData();
+    this.toastService.showToast(EColors.success, res.message);
+  });
 }
 //#endregion
 }

@@ -21,7 +21,7 @@ export class ProductService {
             switchMap(() => this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -35,7 +35,7 @@ export class ProductService {
             switchMap(() => this.http.get<APIResponse<ProductViewModel>>(EUrl.getByIdUrlProduct + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -48,7 +48,7 @@ export class ProductService {
             switchMap(() => this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct, { headers: this.authenticationService.GetHeaders(), params: query }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -62,7 +62,7 @@ export class ProductService {
             switchMap(() => this.http.get<APIResponse<ProductViewModel[]>>(EUrl.getBySearchTextUrlProduct + `/${searchText}`, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -76,7 +76,7 @@ export class ProductService {
             switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlProduct, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -90,7 +90,7 @@ export class ProductService {
             switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlProduct, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -103,7 +103,7 @@ export class ProductService {
           switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlProduct+`/${id}`,{headers:this.authenticationService.GetHeaders()}))
         );
       }else{
-        return throwError(error);
+        return throwError(() => error);
       }
     })
   );

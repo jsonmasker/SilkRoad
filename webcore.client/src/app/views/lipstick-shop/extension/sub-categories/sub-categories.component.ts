@@ -1,8 +1,9 @@
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EColors } from '@common/global';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormCheckInputDirective, FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective } from '@coreui/angular';
+import { IconDirective } from '@coreui/icons-angular';
 import { CategoryViewModel } from '@models/lipstick-shop-models/category.model';
 import { SubCategoryViewModel } from '@models/lipstick-shop-models/sub-category.model';
 import { PageInformation, Pagination } from '@models/pagination.model';
@@ -10,26 +11,30 @@ import { ToastService } from '@services/helper-services/toast.service';
 import { CategoryService } from '@services/lipstick-shop-services/category.service';
 import { SubCategoryService } from '@services/lipstick-shop-services/sub-category.service';
 import { DataTableComponent } from "@components/data-table/data-table.component";
+import { cilPlus, cilTrash, cilPen, cilLoopCircular } from '@coreui/icons';
 
 @Component({
   selector: 'app-sub-categories',
-  imports: [ModalBodyComponent, NgFor, NgIf, FormControlDirective, FormLabelDirective,
+  imports: [ModalBodyComponent, CommonModule, FormControlDirective, FormLabelDirective,
     ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule, FormSelectDirective,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent],
+    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent, IconDirective],
   templateUrl: './sub-categories.component.html',
   styleUrl: './sub-categories.component.scss'
 })
 export class SubCategoriesComponent implements OnInit {
   pageInformation: PageInformation = new PageInformation();
-  
+  trashPageInformation: PageInformation = new PageInformation();
 
   visibleCreateModal: boolean = false;
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
+  visibleTrashModal: boolean = false;
   categoryId: number = -1;
   deleteById: number = 0;
   data: Pagination<SubCategoryViewModel> = new Pagination<SubCategoryViewModel>();
+  trashData: Pagination<SubCategoryViewModel> = new Pagination<SubCategoryViewModel>();
   categoryList: CategoryViewModel[] = [];
+  icons: any = { cilPlus, cilTrash, cilPen, cilLoopCircular };
   createForm: FormGroup = new FormGroup({
     categoryId: new FormControl(-1, Validators.min(1)),
     nameEN: new FormControl('', Validators.required),
@@ -144,7 +149,7 @@ get noteUpdateForm() { return this.updateForm.get('note'); }
 
 //#endregion
 //#region Delete
-deleteData(id: number) {
+softDeleteData(id: number) {
   this.deleteById = id;
   this.toggleLiveDelete();
 }
@@ -163,6 +168,52 @@ toggleLiveDelete() {
 
 handleLiveDeleteChange(event: any) {
   this.visibleDelete = event;
+}
+//#endregion
+
+//#region Trash
+getTrashData() {
+  this.subCategoryService.getAllDeleted(this.trashPageInformation.pageIndex, this.trashPageInformation.pageSize).subscribe((res) => {
+    this.trashData = res.data;
+    this.trashPageInformation.currentPage = this.trashData.currentPage;
+    this.trashPageInformation.totalItems = this.trashData.totalItems;
+    this.trashPageInformation.totalPages = this.trashData.totalPages;
+  });
+}
+
+onTrashPageIndexChange(index: any) {
+  this.trashPageInformation.pageIndex = index;
+  this.getTrashData();
+}
+
+onTrashPageSizeChange(size: any) {
+  this.trashPageInformation.pageSize = size;
+  this.trashPageInformation.pageIndex = 1;
+  this.getTrashData();
+}
+
+toggleLiveTrashModal() {
+  this.getTrashData();
+  this.visibleTrashModal = !this.visibleTrashModal;
+}
+
+handleLiveTrashModalChange(event: any) {
+  this.visibleTrashModal = event;
+}
+
+restoreData(id: number) {
+  this.subCategoryService.restore(id).subscribe((res) => {
+    this.getTrashData();
+    this.getData();
+    this.toastService.showToast(EColors.success, res.message);
+  });
+}
+
+deleteDataTrash(id: number) {
+  this.subCategoryService.delete(id).subscribe((res) => {
+    this.getTrashData();
+    this.toastService.showToast(EColors.success, res.message);
+  });
 }
 //#endregion
 }

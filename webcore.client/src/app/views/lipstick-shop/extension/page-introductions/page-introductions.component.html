@@ -4,10 +4,19 @@
         <span class="me-2" i18n="@@filter">Filter: </span>
         <select class="form-control" id="slideTheme" cSelect (change)="filter($event)">
           <option value="-1" i18n="@@all">All</option>
-          <option *ngFor="let item of pageTypeList" [value]="item.id">{{ item.name }}</option>
+          @for (item of pageTypeList; track item.id) {
+          <option [value]="item.id">{{ item.name }}</option>
+          }
         </select>
       </div>
-  <button (click)="toggleLiveCreateModel()" class="btn btn-success" i18n="@@create">Create</button>
+          <div class="justify-content-end d-flex">
+        <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
+            <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
+        </button>
+        <button (click)="toggleLiveCreateModel()" class="btn btn-success me-2">
+            <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+        </button>
+    </div>
 </div>
 <app-data-table [data]="pageInformation"
 (changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
@@ -21,21 +30,80 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of data.items; index as i ">
+    @for (item of data.items; track item.id; let i = $index) {
+    <tr>
           <td>{{ i+1 }}</td>
           <td>{{ item.titleEN }}</td>
           <td>{{ item.titleVN }}</td>
           <td>{{ item.isActive }}</td>
           <td>
             <div class="d-flex justify-content-end">
-              <button (click)="updateData(item.id)" class="btn btn-primary me-2">Update</button>
-              <button (click)="deleteData(item.id)" class="btn btn-danger" i18n="@@delete">Delete</button>
+              <button (click)="updateData(item.id)" class="btn btn-primary me-2">
+                <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Update Icon"></svg>
+              </button>
+              <button (click)="softDeleteData(item.id)" class="btn btn-danger">
+                <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+              </button>
             </div>
           </td>
       </tr>
+    }
   </tbody>
 </app-data-table>
-
+<!-- Trash Modal -->
+<c-modal backdrop="static" [visible]="visibleTrashModal" (visibleChange)="handleLiveTrashModalChange($event)"
+    id="verticallyCenteredTrashModal" size="lg">
+    <c-modal-header>
+        <h5 cModalTitle>Trash Bin</h5>
+        <button (click)="toggleLiveTrashModal()" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+        <app-data-table [data]="trashPageInformation" (changePageIndex)="onTrashPageIndexChange($event)"
+            (changePageSize)="onTrashPageSizeChange($event)">
+                        <thead class="text-nowrap text-truncate">
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">TitleEN</th>
+                    <th scope="col">TitleVN</th>
+                    <th scope="col">Active</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of trashData.items; track item.id; let i = $index) {
+                <tr>
+                    <td>{{ i+1 }}</td>
+                    <td>
+                        @if (item.imageUrl) {
+                        <img [src]="baseUrl + item.imageUrl" alt="image" class="img-thumbnail"
+                            style="max-width: 150px; height: auto;">
+                        }
+                    </td>
+                    <td>{{ item.titleEN }}</td>
+                    <td>{{ item.titleVN }}</td>
+                    <td>{{ item.isActive }}</td>
+                    <td>
+                        <div class="d-flex justify-content-end">
+                            <button (click)="restoreData(item.id)" class="btn btn-success me-2">
+                                <svg [cIcon]="icons.cilLoopCircular" width="25" class="text-white" title="Restore Icon"></svg>
+                            </button>
+                            <button (click)="deleteDataTrash(item.id)" class="btn btn-danger">
+                                <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </app-data-table>
+        <div class="d-flex justify-content-center">
+            @if (trashData.items.length === 0) {
+            <h3 class="opacity-75">No data!</h3>
+            }
+        </div>
+    </c-modal-body>
+</c-modal>
 <!-- Create Modal -->
 <c-modal backdrop="static" [fullscreen]="true"  scrollable [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)" id="verticallyCenteredCreateModal">
   <c-modal-header>
@@ -53,52 +121,74 @@
       <div class="mb-2 row">
         <div class="col-12 col-md-4">
             <label cLabel for="pageTypeId" class="me-2">Select page type: <span class="text-danger">(*)</span></label>
-            <select cFormControl formControlName="pageTypeId" cSelect class="me-2">
+                        <select cFormControl formControlName="pageTypeId" cSelect class="me-2">
                 <option value="-1">Select a page type</option>
-              <option *ngFor="let item of pageTypeList" [value]="item.id">{{ item.name }}</option>
+              @for (item of pageTypeList; track item.id) {
+              <option [value]="item.id">{{ item.name }}</option>
+              }
             </select>
-            <div *ngIf="pageTypeIdCreateForm?.invalid && (pageTypeIdCreateForm?.dirty || pageTypeIdCreateForm?.touched)" class="text-danger">
-              <div *ngIf="pageTypeIdCreateForm?.hasError('min')">
-                Page type is required.
+            @if (pageTypeIdCreateForm?.invalid && (pageTypeIdCreateForm?.dirty || pageTypeIdCreateForm?.touched)) {
+            <div class="text-danger">
+              @if (pageTypeIdCreateForm?.hasError('min')) {
+              <div>
+                Please select a page type.
               </div>
+              }
             </div>
+            }
         </div>
         <div class="col-12 col-md-4">
           <label cLabel for="titleEN" class="me-2">TitleEn: <span class="text-danger">(*)</span> </label>
           <input cFormControl formControlName="titleEN">
-          <div *ngIf="titleENCreateForm?.invalid && (titleENCreateForm?.dirty || titleENCreateForm?.touched)" class="text-danger">
-            <div *ngIf="titleENCreateForm?.hasError('required')">
+          @if (titleENCreateForm?.invalid && (titleENCreateForm?.dirty || titleENCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (titleENCreateForm?.hasError('required')) {
+            <div>
               TitleEN is required.
             </div>
+            }
           </div>
+          }
         </div>
         <div class="col-12 col-md-4">
           <label cLabel for="titleVN">TitleVN: <span class="text-danger">(*)</span></label>
           <input cFormControl formControlName="titleVN">
-          <div *ngIf="titleVNCreateForm?.invalid && (titleVNCreateForm?.dirty || titleVNCreateForm?.touched)" class="text-danger">
-            <div *ngIf="titleVNCreateForm?.hasError('required')">
+          @if (titleVNCreateForm?.invalid && (titleVNCreateForm?.dirty || titleVNCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (titleVNCreateForm?.hasError('required')) {
+            <div>
               TitleVN is required.
             </div>
+            }
           </div>
+          }
         </div>  
       </div>
       <div class="row">
           <div class="col-6">
             <label cLabel for="contentEN" class="me-2">ContentEN: <span class="text-danger">(*)</span> </label>
-            <div *ngIf="contentENCreateForm?.invalid && (contentENCreateForm?.dirty || contentENCreateForm?.touched)" class="text-danger">
-              <div *ngIf="contentENCreateForm?.hasError('required')">
+            @if (contentENCreateForm?.invalid && (contentENCreateForm?.dirty || contentENCreateForm?.touched)) {
+            <div class="text-danger">
+              @if (contentENCreateForm?.hasError('required')) {
+              <div>
                 ContentEN is required.
               </div>
+              }
             </div>
+            }
             <app-ckeditor (result)="changeContentEN($event,'create')"/>
           </div>
           <div class="col-6">
             <label cLabel for="contentVN" class="me-2">ContentVN: <span class="text-danger">(*)</span> </label>
-            <div *ngIf="contentVNCreateForm?.invalid && (contentVNCreateForm?.dirty || contentVNCreateForm?.touched)" class="text-danger">
-              <div *ngIf="contentVNCreateForm?.hasError('required')">
+            @if (contentVNCreateForm?.invalid && (contentVNCreateForm?.dirty || contentVNCreateForm?.touched)) {
+            <div class="text-danger">
+              @if (contentVNCreateForm?.hasError('required')) {
+              <div>
                 ContentVN is required.
               </div>
+              }
             </div>
+            }
             <app-ckeditor (result)="changeContentVN($event,'create')"/>
           </div>
       </div>
@@ -111,10 +201,11 @@
             <input class="d-none" id="uploadImageCreateForm" type="file" accept="image/*"
                 (change)="onChangeUploadImageFileCreateForm($event,'avatar')" />
             <div class="mt-2 reviewImage">
-                <div *ngIf="reviewUploadImageCreateForm"
-                    class="d-flex align-items-center imageReview">
-                    <img [src]="reviewUploadImageCreateForm" alt="Review Image" />
+                @if (reviewUploadImageCreateForm) {
+                <div class="d-flex align-items-center imageReview">
+                    <img [src]="reviewUploadImageCreateForm" alt="Preview" class="img-thumbnail" style="max-width: 200px;">
                 </div>
+                }
             </div>
         </div>
       </div>
@@ -145,46 +236,64 @@
           <div class="col-12 col-md-4">
               <label cLabel for="pageTypeId" class="me-2">Select page type: <span class="text-danger">(*)</span></label>
               <select cFormControl formControlName="pageTypeId" cSelect class="me-2">
-                <option *ngFor="let item of pageTypeList" [value]="item.id">{{ item.name }}</option>
+                @for (item of pageTypeList; track item.id) {
+                <option [value]="item.id">{{ item.name }}</option>
+                }
               </select>
           </div>
           <div class="col-12 col-md-4">
             <label cLabel for="titleEN" class="me-2">TitleEn: <span class="text-danger">(*)</span> </label>
             <input cFormControl formControlName="titleEN">
-            <div *ngIf="titleENUpdateForm?.invalid && (titleENUpdateForm?.dirty || titleENUpdateForm?.touched)" class="text-danger">
-              <div *ngIf="titleENUpdateForm?.hasError('required')">
+            @if (titleENUpdateForm?.invalid && (titleENUpdateForm?.dirty || titleENUpdateForm?.touched)) {
+            <div class="text-danger">
+              @if (titleENUpdateForm?.hasError('required')) {
+              <div>
                 TitleEN is required.
               </div>
+              }
             </div>
+            }
           </div>
           <div class="col-12 col-md-4">
             <label cLabel for="titleVN">TitleVN: <span class="text-danger">(*)</span></label>
             <input cFormControl formControlName="titleVN">
-            <div *ngIf="titleVNUpdateForm?.invalid && (titleVNUpdateForm?.dirty || titleVNUpdateForm?.touched)" class="text-danger">
-              <div *ngIf="titleVNUpdateForm?.hasError('required')">
+            @if (titleVNUpdateForm?.invalid && (titleVNUpdateForm?.dirty || titleVNUpdateForm?.touched)) {
+            <div class="text-danger">
+              @if (titleVNUpdateForm?.hasError('required')) {
+              <div>
                 TitleVN is required.
               </div>
+              }
             </div>
-          </div>  
+            }
+          </div>
         </div>
         <div class="row">
             <div class="col-6">
               <label cLabel for="contentEN" class="me-2">ContentEN: <span class="text-danger">(*)</span> </label>
-              <div *ngIf="contentENUpdateForm?.invalid && (contentENUpdateForm?.dirty || contentENUpdateForm?.touched)" class="text-danger">
-                <div *ngIf="contentENUpdateForm?.hasError('required')">
+              @if (contentENUpdateForm?.invalid && (contentENUpdateForm?.dirty || contentENUpdateForm?.touched)) {
+              <div class="text-danger">
+                @if (contentENUpdateForm?.hasError('required')) {
+                <div>
                   ContentEN is required.
                 </div>
+                }
               </div>
-              <app-ckeditor [initialData]="updateContentEN" (result)="changeContentEN($event,'update')"/>
+              }
+              <app-ckeditor (result)="changeContentEN($event,'update')"/>
             </div>
             <div class="col-6">
               <label cLabel for="contentVN" class="me-2">ContentVN: <span class="text-danger">(*)</span> </label>
-              <div *ngIf="contentVNUpdateForm?.invalid && (contentVNUpdateForm?.dirty || contentVNUpdateForm?.touched)" class="text-danger">
-                <div *ngIf="contentVNUpdateForm?.hasError('required')">
+              @if (contentVNUpdateForm?.invalid && (contentVNUpdateForm?.dirty || contentVNUpdateForm?.touched)) {
+              <div class="text-danger">
+                @if (contentVNUpdateForm?.hasError('required')) {
+                <div>
                   ContentVN is required.
                 </div>
+                }
               </div>
-              <app-ckeditor [initialData]="updateContentVN" (result)="changeContentVN($event,'update')"/>
+              }
+              <app-ckeditor (result)="changeContentVN($event,'update')"/>
             </div>
         </div>
       <div class="row">

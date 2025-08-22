@@ -81,6 +81,21 @@ export class SizeService {
       })
     );
   }
+  getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<SizeViewModel>>> {
+    const url = EUrl.getAllDeletedUrlSize.concat(`/${pageIndex}/${pageSize}`);
+    return this.http.get<APIResponse<Pagination<SizeViewModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<SizeViewModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
+
   softDelete(id:number):Observable<BaseAPIResponse>{
   return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlSize+`/${id}`,{headers:this.authenticationService.GetHeaders()}).pipe(
     catchError(error=>{
@@ -93,5 +108,20 @@ export class SizeService {
       }
     })
   );
+  }
+
+  restore(id: number): Observable<BaseAPIResponse> {
+    const url = EUrl.restoreUrlSize.concat('/', id.toString());
+    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
   }
 }

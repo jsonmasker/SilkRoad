@@ -55,6 +55,21 @@ export class OrderService {
     );
   }
 
+  getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<OrderModel>>> {
+    const url = EUrl.getAllDeletedUrlOrder.concat(`/${pageIndex}/${pageSize}`);
+    return this.http.get<APIResponse<Pagination<OrderModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<OrderModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
+
   update(model: OrderModel): Observable<BaseAPIResponse> {
     return this.http.put<BaseAPIResponse>(EUrl.updateUrlOrder, model, { headers: this.authenticationService.GetHeaders() }).pipe(
       catchError(error => {
@@ -64,6 +79,35 @@ export class OrderService {
           );
         } else {
           return throwError(error);
+        }
+      })
+    );
+  }
+
+  softDelete(id: number): Observable<BaseAPIResponse> {
+    return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlOrder + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlOrder + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
+
+  restore(id: number): Observable<BaseAPIResponse> {
+    const url = EUrl.restoreUrlOrder.concat('/', id.toString());
+    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
         }
       })
     );

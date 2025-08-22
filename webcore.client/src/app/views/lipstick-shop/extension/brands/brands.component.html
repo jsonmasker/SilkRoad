@@ -1,6 +1,11 @@
 <h1>Brand List</h1>
 <div class="d-flex justify-content-end mb-2">
-  <button (click)="toggleLiveCreateModel()" class="btn btn-success">Create</button>
+  <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
+    <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
+  </button>
+  <button (click)="toggleLiveCreateModel()" class="btn btn-success">
+    <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Create Icon"></svg>
+  </button>
 </div>
 <app-data-table [data]="pageInformation"
 (changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
@@ -15,24 +20,29 @@
   </tr>
 </thead>
 <tbody>
-  <tr *ngFor="let item of data.items; index as i ">
+  @for (item of data.items; track item.id; let i = $index) {
+  <tr>
         <td>{{ i+1 }}</td>
         <td>
-          <ng-container *ngIf="item.avatar">
+          @if (item.avatar) {
             <img [src]="baseUrl+item.avatar" alt="image" class="img-thumbnail">
-          </ng-container>
+          }
         </td>
         <td>{{ item.name }}</td>
         <td>{{ item.priority }}</td>
         <td>{{ item.isActive }}</td>
         <td>
           <div class="d-flex justify-content-end">
-            <button (click)="updateData(item.id)" class="btn btn-primary me-2">Update</button>
-            <button (click)="deleteData(item.id)" class="btn btn-danger" i18n="@@delete">Delete</button>
+            <button (click)="updateData(item.id)" class="btn btn-primary me-2">
+              <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Update Icon"></svg>
+            </button>
+            <button (click)="softDeleteData(item.id)" class="btn btn-danger">
+              <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+            </button>
           </div>
         </td>
-    </tr>
-</tbody>
+</tr>
+}
 </app-data-table>
 <!-- Create Modal -->
 <c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)" id="verticallyCenteredCreateModal" size="lg">

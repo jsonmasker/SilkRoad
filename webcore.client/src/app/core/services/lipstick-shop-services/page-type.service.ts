@@ -94,6 +94,21 @@ export class PageTypeService {
       })
     );
   }
+  getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<PageTypeViewModel>>> {
+    const url = EUrl.getAllDeletedUrlPageType.concat(`/${pageIndex}/${pageSize}`);
+    return this.http.get<APIResponse<Pagination<PageTypeViewModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<PageTypeViewModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
+
   softDelete(id:number):Observable<BaseAPIResponse>{
   return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlPageType+`/${id}`,{headers:this.authenticationService.GetHeaders()}).pipe(
     catchError(error=>{
@@ -106,5 +121,35 @@ export class PageTypeService {
       }
     })
   );
+  }
+
+  restore(id: number): Observable<BaseAPIResponse> {
+    const url = EUrl.restoreUrlPageType.concat('/', id.toString());
+    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
+
+  delete(id: number): Observable<BaseAPIResponse> {
+    const url = EUrl.deleteUrlPageType.concat('/', id.toString());
+    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
   }
 }

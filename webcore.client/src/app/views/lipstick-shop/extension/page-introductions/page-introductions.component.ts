@@ -1,11 +1,11 @@
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { baseUrl, EColors } from '@common/global';
 import { CkeditorComponent } from '@components/ckeditor/ckeditor.component';
 import { DataTableComponent } from '@components/data-table/data-table.component';
 import { ModalBodyComponent, FormControlDirective, FormLabelDirective, ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, FormSelectDirective, ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent } from '@coreui/angular';
-import { cilCloudUpload } from '@coreui/icons';
+import { cilCloudUpload, cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { PageIntroductionViewModel } from '@models/lipstick-shop-models/page-introduction.model';
 import { PageTypeViewModel } from '@models/lipstick-shop-models/page-type.model';
@@ -16,7 +16,7 @@ import { PageTypeService } from '@services/lipstick-shop-services/page-type.serv
 
 @Component({
   selector: 'app-page-introductions',
-  imports: [ModalBodyComponent, NgFor, NgIf, FormControlDirective, FormLabelDirective, IconDirective,
+  imports: [ModalBodyComponent, CommonModule, FormControlDirective, FormLabelDirective, IconDirective,
     ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule, FormSelectDirective,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, CkeditorComponent, DataTableComponent],
   templateUrl: './page-introductions.component.html',
@@ -24,10 +24,14 @@ import { PageTypeService } from '@services/lipstick-shop-services/page-type.serv
 })
 export class PageIntroductionsComponent {
   pageInformation: PageInformation = new PageInformation();
+  trashPageInformation: PageInformation = new PageInformation();
   data: Pagination<PageIntroductionViewModel> = new Pagination<PageIntroductionViewModel>();
+  trashData: Pagination<PageIntroductionViewModel> = new Pagination<PageIntroductionViewModel>();
+  baseUrl: string = baseUrl;
   visibleCreateModal: boolean = false;
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
+  visibleTrashModal: boolean = false;
   pageTypeId: number = -1;
   deleteById: number = 0;
   updateContentVN: string = '';
@@ -35,7 +39,7 @@ export class PageIntroductionsComponent {
   pageTypeList: PageTypeViewModel[] = [];
   reviewUploadImageCreateForm: string = '';
   reviewUploadImageUpdateForm: string = '';
-  icons: any = { cilCloudUpload };
+  icons: any = { cilCloudUpload, cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular };
   createForm: FormGroup = new FormGroup({
     pageTypeId: new FormControl(-1, Validators.min(0)),
     titleEN: new FormControl('', Validators.required),
@@ -223,7 +227,7 @@ export class PageIntroductionsComponent {
   get contentVNUpdateForm() { return this.updateForm.get('contentVN'); }
   //#endregion
   //#region Delete
-  deleteData(id: number) {
+  softDeleteData(id: number) {
     this.deleteById = id;
     this.toggleLiveDelete();
   }
@@ -242,6 +246,46 @@ export class PageIntroductionsComponent {
 
   handleLiveDeleteChange(event: any) {
     this.visibleDelete = event;
+  }
+  //#endregion
+
+  //#region Trash
+  getTrashData() {
+    this.pageIntroService.getAllDeleted(this.trashPageInformation.pageIndex, this.trashPageInformation.pageSize).subscribe((res) => {
+      this.trashData = res.data;
+      this.trashPageInformation.currentPage = this.trashData.currentPage;
+      this.trashPageInformation.totalItems = this.trashData.totalItems;
+      this.trashPageInformation.totalPages = this.trashData.totalPages;
+    });
+  }
+  onTrashPageIndexChange(index: any) {
+    this.trashPageInformation.pageIndex = index;
+    this.getTrashData();
+  }
+  onTrashPageSizeChange(size: any) {
+    this.trashPageInformation.pageSize = size;
+    this.trashPageInformation.pageIndex = 1;
+    this.getTrashData();
+  }
+  toggleLiveTrashModal() {
+    this.getTrashData();
+    this.visibleTrashModal = !this.visibleTrashModal;
+  }
+  handleLiveTrashModalChange(event: any) {
+    this.visibleTrashModal = event;
+  }
+  restoreData(id: number) {
+    this.pageIntroService.restore(id).subscribe((res) => {
+      this.getTrashData();
+      this.getData();
+      this.toastService.showToast(EColors.success, res.message);
+    });
+  }
+  deleteDataTrash(id: number) {
+    this.pageIntroService.delete(id).subscribe((res) => {
+      this.getTrashData();
+      this.toastService.showToast(EColors.success, res.message);
+    });
   }
   //#endregion
 }

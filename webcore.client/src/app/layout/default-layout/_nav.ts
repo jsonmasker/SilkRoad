@@ -11,30 +11,30 @@ export const navItems: INavData[] = [
   //   }
   // },
   //#region Stock Market
-  {
-    title: true,
-    name: 'Stock Market'
-  },
-  {
-    name: 'Industries',
-    url: '/stock/industries',
-    iconComponent: { name: 'cil-chart-pie' }
-  },
-  {
-    name: 'Companies',
-    url: '/stock/companies',
-    iconComponent: { name: 'cil-building' }
-  },
-    {
-    name: 'Chart',
-    url: '/stock/chart',
-    iconComponent: { name: 'cil-bar-chart' }
-  },
-        {
-    name: 'Trade Histories',
-    url: '/stock/chart',
-    iconComponent: { name: 'cil-notes' }
-  },
+  // {
+  //   title: true,
+  //   name: 'Stock Market'
+  // },
+  // {
+  //   name: 'Industries',
+  //   url: '/stock/industries',
+  //   iconComponent: { name: 'cil-chart-pie' }
+  // },
+  // {
+  //   name: 'Companies',
+  //   url: '/stock/companies',
+  //   iconComponent: { name: 'cil-building' }
+  // },
+  //   {
+  //   name: 'Chart',
+  //   url: '/stock/chart',
+  //   iconComponent: { name: 'cil-bar-chart' }
+  // },
+  //       {
+  //   name: 'Trade Histories',
+  //   url: '/stock/chart',
+  //   iconComponent: { name: 'cil-notes' }
+  // },
 
   //#endregion
   //#region Features
@@ -163,47 +163,47 @@ export const navItems: INavData[] = [
   //#endregion
   //#region Surveys
   
-  {
-    title: true,
-    name: 'Surveys'
-  },
-  {
-    name: 'Report',
-    url: '/surveys/report',
-    iconComponent: { name: 'cil-chart-line' }
-  },
-  {
-    name: 'Survey Results',
-    url: '/surveys/survey-results',
-    iconComponent: { name: 'cil-notes' }
-  },
-  {
-    name: 'Extend',
-    url: '/surveys/extend-survey',
-    iconComponent: { name: 'cil-puzzle' },
-    children: [
-      {
-        name: 'Question Groups',
-        url: '/surveys/extend-survey/question-groups',
-        icon: 'nav-icon-bullet'
-      },
-      {
-        name: 'Question Types',
-        url: '/surveys/extend-survey/question-types',
-        icon: 'nav-icon-bullet'
-      },
-      {
-        name: 'Questions',
-        url: '/surveys/extend-survey/questions',
-        icon: 'nav-icon-bullet'
-      },
-      {
-        name: 'Survey Forms',
-        url: '/surveys/extend-survey/survey-forms',
-        icon: 'nav-icon-bullet'
-      }
-    ]
-  },
+  // {
+  //   title: true,
+  //   name: 'Surveys'
+  // },
+  // {
+  //   name: 'Report',
+  //   url: '/surveys/report',
+  //   iconComponent: { name: 'cil-chart-line' }
+  // },
+  // {
+  //   name: 'Survey Results',
+  //   url: '/surveys/survey-results',
+  //   iconComponent: { name: 'cil-notes' }
+  // },
+  // {
+  //   name: 'Extend',
+  //   url: '/surveys/extend-survey',
+  //   iconComponent: { name: 'cil-puzzle' },
+  //   children: [
+  //     {
+  //       name: 'Question Groups',
+  //       url: '/surveys/extend-survey/question-groups',
+  //       icon: 'nav-icon-bullet'
+  //     },
+  //     {
+  //       name: 'Question Types',
+  //       url: '/surveys/extend-survey/question-types',
+  //       icon: 'nav-icon-bullet'
+  //     },
+  //     {
+  //       name: 'Questions',
+  //       url: '/surveys/extend-survey/questions',
+  //       icon: 'nav-icon-bullet'
+  //     },
+  //     {
+  //       name: 'Survey Forms',
+  //       url: '/surveys/extend-survey/survey-forms',
+  //       icon: 'nav-icon-bullet'
+  //     }
+  //   ]
+  // },
   //#endregion
   //#region System Management
   {

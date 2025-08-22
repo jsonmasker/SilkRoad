@@ -21,7 +21,7 @@ export class MemberService {
             switchMap(() => this.http.get<APIResponse<Pagination<MemberModel>>>(EUrl.getAllUrlMember, { headers: this.authenticationService.GetHeaders(), params: query }))
           );
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );

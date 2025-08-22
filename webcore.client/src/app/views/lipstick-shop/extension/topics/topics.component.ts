@@ -1,18 +1,18 @@
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormCheckInputDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective } from '@coreui/angular';
 import { TopicViewModel } from '@models/lipstick-shop-models/topic.model';
 import { TopicService } from '@services/lipstick-shop-services/topic.service';
 import { IconDirective } from '@coreui/icons-angular';
-import { cilCloudUpload } from '@coreui/icons';
+import { cilCloudUpload, cilPlus, cilTrash, cilPen, cilLoopCircular } from '@coreui/icons';
 import { baseUrl, EColors } from '@common/global';
 import { DataTableComponent } from "../../../../core/components/data-table/data-table.component";
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
 @Component({
   selector: 'app-topics',
-  imports: [ModalBodyComponent, NgFor, NgIf, FormControlDirective, FormLabelDirective,
+  imports: [ModalBodyComponent, CommonModule, FormControlDirective, FormLabelDirective,
     ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, IconDirective, DataTableComponent],
   templateUrl: './topics.component.html',
@@ -21,12 +21,15 @@ import { ToastService } from '@services/helper-services/toast.service';
 
 export class TopicsComponent implements OnInit {
   pageInformation: PageInformation = new PageInformation();
+  trashPageInformation: PageInformation = new PageInformation();
   visibleCreateModal: boolean = false;
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
+  visibleTrashModal: boolean = false;
   deleteById: number = 0;
-  icons : any = {cilCloudUpload};
+  icons : any = {cilCloudUpload, cilPlus, cilTrash, cilPen, cilLoopCircular};
   data: Pagination<TopicViewModel> = new Pagination<TopicViewModel>();
+  trashData: Pagination<TopicViewModel> = new Pagination<TopicViewModel>();
   reviewCreateUploadImage: string = '';
   reviewUpdateUploadImage: string = '';
   baseUrl:string = baseUrl;
@@ -191,7 +194,7 @@ get noteUpdateForm() { return this.updateForm.get('note'); }
 
 //#endregion
 //#region Delete
-deleteData(id: number) {
+softDeleteData(id: number) {
   this.deleteById = id;
   this.toggleLiveDelete();
 }
@@ -210,6 +213,52 @@ toggleLiveDelete() {
 
 handleLiveDeleteChange(event: any) {
   this.visibleDelete = event;
+}
+//#endregion
+
+//#region Trash
+getTrashData() {
+  this.topicService.getAllDeleted(this.trashPageInformation.pageIndex, this.trashPageInformation.pageSize).subscribe((res) => {
+    this.trashData = res.data;
+    this.trashPageInformation.currentPage = this.trashData.currentPage;
+    this.trashPageInformation.totalItems = this.trashData.totalItems;
+    this.trashPageInformation.totalPages = this.trashData.totalPages;
+  });
+}
+
+onTrashPageIndexChange(index: any) {
+  this.trashPageInformation.pageIndex = index;
+  this.getTrashData();
+}
+
+onTrashPageSizeChange(size: any) {
+  this.trashPageInformation.pageSize = size;
+  this.trashPageInformation.pageIndex = 1;
+  this.getTrashData();
+}
+
+toggleLiveTrashModal() {
+  this.getTrashData();
+  this.visibleTrashModal = !this.visibleTrashModal;
+}
+
+handleLiveTrashModalChange(event: any) {
+  this.visibleTrashModal = event;
+}
+
+restoreData(id: number) {
+  this.topicService.restore(id).subscribe((res) => {
+    this.getTrashData();
+    this.getData();
+    this.toastService.showToast(EColors.success, res.message);
+  });
+}
+
+deleteDataTrash(id: number) {
+  this.topicService.delete(id).subscribe((res) => {
+    this.getTrashData();
+    this.toastService.showToast(EColors.success, res.message);
+  });
 }
 //#endregion
 }
