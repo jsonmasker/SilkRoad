@@ -33,40 +33,40 @@ export const routes: Routes = [
         loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
       },
       //#region Stock Market
-      {
-        path: 'stock/industries',
-        loadChildren: () => import('./views/stocks/industry/routes').then((m) => m.routes)
-      },
-      {
-        path: 'stock/companies',
-        loadChildren: () => import('./views/stocks/company/routes').then((m) => m.routes)
-      },
-      {
-        path: 'stock/chart',
-        loadChildren: () => import('./views/stocks/chart/routes').then((m) => m.routes)
-      },
+      // {
+      //   path: 'stock/industries',
+      //   loadChildren: () => import('./views/stocks/industry/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'stock/companies',
+      //   loadChildren: () => import('./views/stocks/company/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'stock/chart',
+      //   loadChildren: () => import('./views/stocks/chart/routes').then((m) => m.routes)
+      // },
       //#endregion
       //#region Features
-      {
-        path: 'features/chatgpt',
-       loadChildren: () => import('./views/features/gpt/routes').then((m) => m.routes)
-      },
-      {
-        path: 'features/ollama',
-        loadChildren: () => import('./views/features/ollama/routes').then((m) => m.routes)
-      },
-      {
-        path: 'features/stream-ollama',
-        loadChildren: () => import('./views/features/stream-ollama/routes').then((m) => m.routes)
-      },
+      // {
+      //   path: 'features/chatgpt',
+      //  loadChildren: () => import('./views/features/gpt/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'features/ollama',
+      //   loadChildren: () => import('./views/features/ollama/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'features/stream-ollama',
+      //   loadChildren: () => import('./views/features/stream-ollama/routes').then((m) => m.routes)
+      // },
       {
         path: 'features/qr-code',
         loadChildren: () => import('./views/features/qr-code/routes').then((m) => m.routes)
       },
-      {
-        path: 'features/email-service',
-        loadChildren: () => import('./views/features/email-service/routes').then((m) => m.routes)
-      },
+      // {
+      //   path: 'features/email-service',
+      //   loadChildren: () => import('./views/features/email-service/routes').then((m) => m.routes)
+      // },
       //#endregion
       //#region Lipstick
       // Report

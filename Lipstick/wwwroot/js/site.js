@@ -19,15 +19,15 @@ document.addEventListener("DOMContentLoaded", function () {
     setupSearchInput && setupSearchInput();
 });
 //prevent developer tools from opening
-document.addEventListener("contextmenu", function (e) {
-    e.preventDefault();
-});
-document.addEventListener("keydown", function (e) {
-    // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || (e.ctrlKey && e.key === "U")) {
-        e.preventDefault();
-    }
-});
+//document.addEventListener("contextmenu", function (e) {
+//    e.preventDefault();
+//});
+//document.addEventListener("keydown", function (e) {
+//    // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+//    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || (e.ctrlKey && e.key === "U")) {
+//        e.preventDefault();
+//    }
+//});
 
 
 // Attach functions to window for inline HTML usage
