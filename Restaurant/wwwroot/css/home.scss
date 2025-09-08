@@ -5,25 +5,20 @@
     max-width: $maxWidthContent;
     margin: auto;
 
-    @include respond(map-get($breakPoint,"lg")) {
-        max-width: 100%;
-    }
-
-    .homeBanner {
+    .homeBannerV1 {
         width: 100%;
+        
         overflow: hidden;
 
         .banner {
             width: 100%;
-            max-height: $maxHieghtBanner;
             aspect-ratio: 16/9;
-            max-width: 100%;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
             position: relative;
 
-            .bannerIntro {
+            .intro {
                 height: 100%;
                 width: 100%;
                 position: absolute;
@@ -165,57 +160,5 @@
             max-width: 95%;
             margin: auto;
         }
-    }
-}
-
-.effect-snow {
-    height: 100%;
-    width: 100%;
-    background-image: url('/assets/images/snow1.png'),url('/assets/images/snow2.png');
-    -webkit-animation: snow 20s linear infinite;
-    animation: snow 20s linear infinite;
-    //.btn{
-    //    color: #ffffff;
-    //    min-width: 40px;
-    //    padding: 1rem;
-    //    margin: 0 0.25rem;
-    //    background-color:transparent;
-    //    border: 2px solid #ffffff;
-    //}
-}
-
-@keyframes snow {
-    0% {
-        background-position: 0 0,0 0,0 0;
-    }
-
-    100% {
-        background-position: 500px 1000px,400px 400px,300px 300px;
-    }
-}
-
-.effect-sparkle {
-    height: 100%;
-    width: 100%;
-    background-image: url('/assets/images/sparkle1.png'),url('/assets/images/sparkle2.png');
-    -webkit-animation: sparkle 60s linear infinite;
-    animation: sparkle 60s linear infinite;
-    //.btn {
-    //    color: #000;
-    //    min-width: 40px;
-    //    padding: 1rem;
-    //    margin: 0 0.25rem;
-    //    background-color: #ffffff;
-    //    border: 2px solid #000;
-    //}
-}
-
-@keyframes sparkle {
-    0% {
-        background-position: 0 0,0 0,0 0;
-    }
-
-    100% {
-        background-position: -500px -1000px,-400px -400px,300px 300px;
     }
 }
