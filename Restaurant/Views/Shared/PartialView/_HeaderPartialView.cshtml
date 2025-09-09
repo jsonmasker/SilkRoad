@@ -1,32 +1,42 @@
-﻿
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-	<div class="container-fluid">
-		<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Restaurant</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-				aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-			<ul class="navbar-nav flex-grow-1">
-				<li class="nav-item">
-					<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Menu</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-dark" asp-area="" asp-controller="Reservation" asp-action="Index">Reservation</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-dark" asp-area="" asp-controller="AboutUs" asp-action="Index">About us</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-dark" asp-area="" asp-controller="Contact" asp-action="Index">Contact us</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Index">Blog</a>
-				</li>
-			</ul>
-		</div>
+﻿<nav class="navbarDesktop">
+	<div class="left">
+		<a class="logo" asp-area="" asp-controller="Home" asp-action="Index">
+			<img src="~/assets/images/logo.png" alt="" />			
+		</a>
+	</div>
+	<ul>
+		<li>
+			<a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+		</li>
+		<li>
+			<a asp-area="" asp-controller="Category" asp-action="Index">Menu</a>
+		</li>
+		<li>
+			<a asp-area="" asp-controller="Reservation" asp-action="Index">Reservation</a>
+		</li>
+		<li>
+			<a asp-area="" asp-controller="AboutUs" asp-action="Index">About us</a>
+		</li>
+		<li>
+			<a asp-area="" asp-controller="Contact" asp-action="Index">Contact us</a>
+		</li>
+		<li>
+			<a asp-area="" asp-controller="Blog" asp-action="Index">Blog</a>
+		</li>
+	</ul>
+	<div class="right">
+		<span>VN</span>
 	</div>
 </nav>
+<script>
+	//on scroll down add class fixed to navDesktop, on scroll to top screen remove class fixed
+	window.addEventListener('scroll', function() {
+		const navbar = document.querySelector('.navbarDesktop');
+
+		if (window.scrollY > 0) {
+		navbar.classList.add('fixed');
+		} else {
+		navbar.classList.remove('fixed');
+		}
+	});
+</script>

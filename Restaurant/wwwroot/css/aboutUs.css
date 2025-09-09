@@ -161,6 +161,11 @@
   transition: all 0.3s ease;
 }
 
+.ourServiceCol:hover {
+  background: transparent;
+  border: 2px solid #cdaa7c;
+}
+
 .ourServiceCol h3 {
   font-size: 30px;
   font-family: "Satisfy-Regular";
