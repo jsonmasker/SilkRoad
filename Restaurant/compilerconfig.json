@@ -34,5 +34,9 @@
   {
     "outputFile": "wwwroot/css/reservation.css",
     "inputFile": "wwwroot/css/reservation.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/category.css",
+    "inputFile": "wwwroot/css/category.scss"
   }
 ]
