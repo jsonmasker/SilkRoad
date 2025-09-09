@@ -768,8 +768,8 @@ body {
 .footerContainer {
   width: 100%;
   margin: auto;
-  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.125);
-  background-color: #000000;
+  background-color: #181818;
+  color: #fff;
   /*  .is-diliver {
       height: 3px;
       display: block;
@@ -779,102 +779,10 @@ body {
       max-width: 30px;
   }*/
 }
-@media only screen and (width < 1200px) {
-  .footerContainer {
-    padding: 0 1rem;
-  }
-}
-.footerContainer #chatbox {
-  width: 320px;
-  height: 420px;
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  background-color: #fff;
-  z-index: 1;
-  border: 1px solid #000;
-  border-radius: 5px;
-  box-shadow: 0 0 10px #c1c1c1;
-}
-.footerContainer #chatbox .chatboxHeader {
-  height: 10%;
-  border-bottom: 1px solid #000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 6px;
-  background-color: #000;
-  color: #e72f8b;
-}
-.footerContainer #chatbox .chatboxHeader span {
-  font-weight: 600;
-}
-.footerContainer #chatbox .chatboxContent {
-  height: 80%;
-  padding: 4px 6px;
-  overflow-y: scroll;
-}
-.footerContainer #chatbox .chatboxContent .response {
-  display: flex;
-  flex-direction: row;
-}
-.footerContainer #chatbox .chatboxContent .response .avatar {
-  width: 50px;
-  height: 50px;
-}
-.footerContainer #chatbox .chatboxContent .response .responseContent {
-  display: flex;
-  align-items: center;
-}
-.footerContainer #chatbox .chatboxContent .request {
-  text-align: end;
-}
-.footerContainer #chatbox .chatboxContent::-webkit-scrollbar {
-  width: 5px;
-}
-.footerContainer #chatbox .chatboxContent::-webkit-scrollbar-track {
-  background: #c1c1c1;
-}
-.footerContainer #chatbox .chatboxContent::-webkit-scrollbar-thumb {
-  background: #000;
-}
-.footerContainer #chatbox .chatboxFooter {
-  height: 10%;
-  border-top: 1px solid #000;
-}
-.footerContainer #chatbox .chatboxFooter .form-control {
-  border: unset;
-}
-.footerContainer #chatbox .chatboxFooter .form-control:focus {
-  outline: unset;
-  box-shadow: unset;
-}
-.footerContainer #chatbot {
-  width: 100px;
-  height: 100px;
-  position: fixed;
-  bottom: 110px;
-  right: 0;
-  z-index: 1;
-  cursor: pointer;
-}
-.footerContainer #chatbot img {
-  width: 100%;
-  animation: chatbotAnimation 3s infinite;
-}
-@keyframes chatbotAnimation {
-  0% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(-15deg);
-  }
-  75% {
-    transform: rotate(15deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
+.footerContainer .footerBox {
+  max-width: 1200px;
+  padding: 1.5rem 0;
+  margin: auto;
 }
 .footerContainer #goTop {
   background-color: #fafafa;
@@ -914,28 +822,6 @@ body {
 .footerContainer #goTop:hover span {
   color: #e72f8b;
 }
-.footerContainer .topFooter {
-  width: 100%;
-  margin: auto;
-  max-width: 1080px;
-}
-.footerContainer .bottomFooter {
-  width: 100%;
-  margin: auto;
-  max-width: 1080px;
-}
-.footerContainer ul li {
-  list-style-type: none;
-  padding: 8px 0;
-  border-bottom: 1px solid #1e1e1e;
-}
-.footerContainer ul li:last-child {
-  border-bottom: none;
-}
-.footerContainer ul li a {
-  color: #fff;
-  text-decoration: none;
-}
 
 /*#endregion*/
 html {
@@ -956,10 +842,6 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
-}
-
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
   text-align: end;
@@ -978,11 +860,12 @@ body {
 /*#region responsive*/
 /*#endregion*/
 .homePage {
-  max-width: 1050px;
   margin: auto;
+  width: 100%;
 }
 .homePage .homeBannerV1 {
   width: 100%;
+  max-height: 100vh;
   overflow: hidden;
   /*.categorySuggestion {
       display: flex;
@@ -1005,8 +888,8 @@ body {
   position: relative;
 }
 .homePage .homeBannerV1 .banner .intro {
-  height: 100%;
   width: 100%;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
@@ -1014,16 +897,19 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: #fff;
 }
-.homePage .homeBannerV1 .banner .intro .tag {
-  color: #ffffff;
-  min-width: 90px;
-  padding: 0.25rem 1rem;
-  margin: 0 0.5rem;
-  font-weight: bold;
-  background-color: transparent;
-  border: 2px solid #ffffff;
-  text-align: center;
+.homePage .homeBannerV1 .banner .intro .title {
+  font-weight: 400;
+  font-size: 99px;
+}
+.homePage .homeBannerV1 .banner .intro .subTitle {
+  font-weight: 500;
+  font-size: 22px;
+  color: rgb(204, 204, 204);
+}
+.homePage .homeBannerV1 .banner .intro img {
+  max-width: 320px;
 }
 .homePage .homeBannerV1 .subBanner {
   width: 100%;

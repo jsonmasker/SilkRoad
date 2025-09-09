@@ -536,136 +536,14 @@
 .footerContainer {
     width: 100%;
     margin: auto;
-    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.125);
-    background-color: $color_black_000000;
+    background-color: #181818;
+    color: #fff;
 
-    @include respond(map-get($breakPoint,"lg")) {
-        padding: 0 1rem;
-    }
-
-    #chatbox {
-        width: 320px;
-        height: 420px;
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        background-color: #fff;
-        z-index: 1;
-        border: 1px solid #000;
-        border-radius: 5px;
-        box-shadow: 0 0 10px #c1c1c1;
-
-        .chatboxHeader {
-            height: 10%;
-            border-bottom: 1px solid #000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 6px;
-            background-color: #000;
-            color: $color_pink_e72f8b;
-
-            span {
-                font-weight: 600;
-            }
-        }
-
-        .chatboxContent {
-            height: 80%;
-            padding: 4px 6px;
-            overflow-y: scroll;
-
-            .response {
-                display: flex;
-                flex-direction: row;
-
-                .avatar {
-                    width: 50px;
-                    height: 50px;
-                }
-
-                .responseContent {
-                    display: flex;
-                    align-items: center;
-                }
-            }
-
-            .request{
-                text-align: end;
-            }
-        }
-
-        .chatboxContent::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        .chatboxContent::-webkit-scrollbar-track {
-            background: #c1c1c1;
-        }
-
-        .chatboxContent::-webkit-scrollbar-thumb {
-            background: #000;
-        }
-
-
-        .chatboxFooter {
-            height: 10%;
-            border-top: 1px solid #000;
-
-            .form-control {
-                border: unset;
-            }
-
-            .form-control:focus {
-                outline: unset;
-                box-shadow: unset;
-            }
-        }
-    }
-
-    #chatbot {
-        width: 100px;
-        height: 100px;
-        position: fixed;
-        bottom: 110px;
-        right: 0;
-        z-index: 1;
-        cursor: pointer;
-
-        img {
-            width: 100%;
-            animation: chatbotAnimation 3s infinite;
-        }
-    }
-
-    //#chatbot::before {
-    //    content: "Xin chào!";
-    //    background-color: #fff;
-    //    border-radius: 5px;
-    //    padding: 0 4px;
-    //    border-end-end-radius: unset;
-    //    position: absolute;
-    //    top: -20px;
-    //}
-
-    @keyframes chatbotAnimation {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        25% {
-            transform: rotate(-15deg);
-        }
-
-        75% {
-            transform: rotate(15deg);
-        }
-
-        100% {
-            transform: rotate(0deg);
-        }
-    }
-
+    .footerBox{
+        max-width:1200px;
+        padding: 1.5rem 0;
+        margin: auto;
+    } 
     #goTop {
         background-color: #fafafa;
         display: none;
@@ -705,33 +583,6 @@
             color: $color_pink_e72f8b;
         }
     }
-
-    .topFooter {
-        width: 100%;
-        margin: auto;
-        max-width: $maxWidthFooterContent;
-    }
-
-    .bottomFooter {
-        width: 100%;
-        margin: auto;
-        max-width: $maxWidthFooterContent;
-    }
-
-    ul li {
-        list-style-type: none;
-        padding: 8px 0;
-        border-bottom: 1px solid $color_black_1e1e1e;
-    }
-
-    ul li:last-child {
-        border-bottom: none;
-    }
-
-    ul li a {
-        color: $color_white_fff;
-        text-decoration: none;
-    }
     /*  .is-diliver {
         height: 3px;
         display: block;
@@ -762,9 +613,9 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
-}
+//body {
+//  margin-bottom: 60px;
+//}
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
