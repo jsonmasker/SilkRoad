@@ -137,213 +137,121 @@ fadeInDown animation {
 }
 /*#endregion*/
 /*#region footer*/
-.footerContainer {
-    width: 100%;
-    margin: auto;
-    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.125);
-    background-color: $color_black_000000;
+footer {
+    background: #181818;
+    color: #b2b2b2 !important;
+    position: relative;
+}
+.footerTop {
+    text-align: center;
+}
+.footerBottom {
+    padding: 20px 0 19px;
+    text-align: center;
+}
 
-    @include respond(map-get($breakPoint,"lg")) {
-        padding: 0 1rem;
+.footerTop .footerTopWrapper {
+    padding-top: 80px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid #333;
+}
+.footerTop .footerLogo {
+    margin-bottom: 59px;
+}
+
+.footerTop h6 {
+    color: #fff;
+    text-transform: uppercase;
+    font-family: "Raleway-SemiBold";
+    font-weight: 600;
+    margin-bottom: 28px;
+}
+.footerTop .formInner {
+    padding-top: 7px;
+    margin-bottom: 27px;
+    -webkit-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+    justify-content: center;
+}
+.footerTop .formInner input {
+    width: 261px;
+    border-radius: 21px 0 0 21px;
+    padding-left: 24px;
+    color: #b2b2b2;
+}
+.footerTop .formInner input, .footerTop .formInner button {
+    height: 42px;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.footerTop .formInner button {
+    width: 68px;
+    border-left: none;
+    border-radius: 0 21px 21px 0;
+    cursor: pointer;
+}
+.footerTop .formInner input, .footerTop .formInner button {
+    height: 42px;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.footerTop .formInner button span {
+    font-size: 22px;
+    color: #b2b2b2;
+}
+
+.lnr {
+    font-family: 'Linearicons-Free';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.lnrEnvelope:before {
+    content: "\e818";
+}
+.social a {
+    font-size: 20px;
+    color: #666;
+    margin-right: 16px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+/* Responsive */
+@media (max-width: 992px) {
+    h6 {
+        font-size: 15px;
     }
-
-    #chatbox {
-        width: 320px;
-        height: 420px;
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        background-color: #fff;
-        z-index: 1;
-        border: 1px solid #000;
-        border-radius: 5px;
-        box-shadow: 0 0 10px #c1c1c1;
-
-        .chatboxHeader {
-            height: 10%;
-            border-bottom: 1px solid #000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 6px;
-            background-color: #000;
-            color: $color_pink_e72f8b;
-
-            span {
-                font-weight: 600;
-            }
-        }
-
-        .chatboxContent {
-            height: 80%;
-            padding: 4px 6px;
-            overflow-y: scroll;
-
-            .response {
-                display: flex;
-                flex-direction: row;
-
-                .avatar {
-                    width: 50px;
-                    height: 50px;
-                }
-
-                .responseContent {
-                    display: flex;
-                    align-items: center;
-                }
-            }
-
-            .request{
-                text-align: end;
-            }
-        }
-
-        .chatboxContent::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        .chatboxContent::-webkit-scrollbar-track {
-            background: #c1c1c1;
-        }
-
-        .chatboxContent::-webkit-scrollbar-thumb {
-            background: #000;
-        }
-
-
-        .chatboxFooter {
-            height: 10%;
-            border-top: 1px solid #000;
-
-            .form-control {
-                border: unset;
-            }
-
-            .form-control:focus {
-                outline: unset;
-                box-shadow: unset;
-            }
-        }
+}
+@media (max-width: 768px) {
+    .footerTop .footerTopWrapper, .footerTop .footerTopWrapper.pb-54 {
+        padding-top: 60px;
+        padding-bottom: 40px;
     }
-
-    #chatbot {
-        width: 100px;
-        height: 100px;
-        position: fixed;
-        bottom: 110px;
-        right: 0;
-        z-index: 1;
-        cursor: pointer;
-
-        img {
-            width: 100%;
-            animation: chatbotAnimation 3s infinite;
-        }
+    .footerCol {
+        margin-bottom: 50px;
     }
-
-    //#chatbot::before {
-    //    content: "Xin chào!";
-    //    background-color: #fff;
-    //    border-radius: 5px;
-    //    padding: 0 4px;
-    //    border-end-end-radius: unset;
-    //    position: absolute;
-    //    top: -20px;
-    //}
-
-    @keyframes chatbotAnimation {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        25% {
-            transform: rotate(-15deg);
-        }
-
-        75% {
-            transform: rotate(15deg);
-        }
-
-        100% {
-            transform: rotate(0deg);
-        }
+    .footerCol:last-child {
+        margin-bottom: 0;
     }
-
-    #goTop {
-        background-color: #fafafa;
-        display: none;
-        width: 50px;
-        height: 50px;
-        position: fixed;
-        bottom: 60px;
-        right: 25px;
-        border-radius: 50%;
-        border: 3px solid #000;
-        z-index: 1;
-        justify-content: center;
-        align-items: center;
-        opacity: 0.5;
-
-        @include respond(map-get($breakPoint,"sm")) {
-            width: 40px;
-            height: 40px;
-            bottom: 50px;
-        }
-
-        span {
-            font-size: 20px;
-            font-weight: bold;
-
-            @include respond(map-get($breakPoint,"sm")) {
-                font-size: 16px;
-            }
-        }
+    .footerTop h6 {
+        margin-bottom: 18px;
     }
-
-    #goTop:hover {
-        opacity: 1;
-        border: 3px solid $color_pink_e72f8b;
-
-        span {
-            color: $color_pink_e72f8b;
-        }
+    h6 {
+        font-size: 14px;
     }
-
-    .topFooter {
-        width: 100%;
-        margin: auto;
-        max-width: $maxWidthFooterContent;
+    .footerTop .formInner {
+        margin-bottom: 17px;
     }
-
-    .bottomFooter {
-        width: 100%;
-        margin: auto;
-        max-width: $maxWidthFooterContent;
-    }
-
-    ul li {
-        list-style-type: none;
-        padding: 8px 0;
-        border-bottom: 1px solid $color_black_1e1e1e;
-    }
-
-    ul li:last-child {
-        border-bottom: none;
-    }
-
-    ul li a {
-        color: $color_white_fff;
-        text-decoration: none;
-    }
-    /*  .is-diliver {
-        height: 3px;
-        display: block;
-        background-color: rgba(255,255,255,0.3);
-        margin: 1em 0;
-        width: 100%;
-        max-width: 30px;
-    }*/
 }
 /*#endregion*/
 /*#region item*/

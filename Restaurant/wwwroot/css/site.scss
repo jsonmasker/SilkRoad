@@ -17,10 +17,6 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
-}
-
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
   text-align: end;
@@ -32,4 +28,11 @@ body {
 
 img {
     max-width: 100%;
+}
+p, h1, h2, h3, h4, h5, h6, ul {
+    margin-bottom: 0;
+}
+
+p {
+    line-height: 1.8;
 }
