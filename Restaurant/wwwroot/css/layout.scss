@@ -1,10 +1,6 @@
 ﻿@import "VariableGlobal.scss";
 /*#region header*/
 .navbarDesktop {
-    -webkit-display: flex;
-    -moz-display: flex;
-    -ms-display: flex;
-    -o-display: flex;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -27,10 +23,6 @@
     width: 120px;
 }
 .navbarDesktop .right, .navbarMobile .right {
-    -webkit-display: flex;
-    -moz-display: flex;
-    -ms-display: flex;
-    -o-display: flex;
     display: flex;
     justify-content: flex-end;
 }
@@ -45,10 +37,6 @@
     transition: all 0.3s ease;
 }
 .navbarDesktop > ul {
-    -webkit-display: flex;
-    -moz-display: flex;
-    -ms-display: flex;
-    -o-display: flex;
     display: flex;
 }
 ul {
@@ -89,8 +77,6 @@ fadeInDown animation {
     padding: 20px 80px;
     -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
-    -ms-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
-    -o-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
 }
 /* Responsive */
@@ -169,10 +155,6 @@ footer {
 .footerTop .formInner {
     padding-top: 7px;
     margin-bottom: 27px;
-    -webkit-display: flex;
-    -moz-display: flex;
-    -ms-display: flex;
-    -o-display: flex;
     display: flex;
     justify-content: center;
 }

@@ -3,6 +3,21 @@
   src: url("../assets/fonts/Satisfy/Satisfy-Regular.ttf");
   font-display: swap;
 }
+@font-face {
+  font-family: "Raleway-SemiBold";
+  src: url("../assets/fonts/Raleway/Raleway-SemiBold.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Raleway-Bold";
+  src: url("../assets/fonts/Raleway/Raleway-Bold.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Raleway-Regular";
+  src: url("../assets/fonts/Raleway/Raleway-Regular.ttf");
+  font-display: swap;
+}
 /*#region width*/
 /*#endregion*/
 /*#region color*/
@@ -13,10 +28,6 @@
 /*#endregion*/
 /*#region header*/
 .navbarDesktop {
-  -webkit-display: flex;
-  -moz-display: flex;
-  -ms-display: flex;
-  -o-display: flex;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -41,10 +52,6 @@
 }
 
 .navbarDesktop .right, .navbarMobile .right {
-  -webkit-display: flex;
-  -moz-display: flex;
-  -ms-display: flex;
-  -o-display: flex;
   display: flex;
   justify-content: flex-end;
 }
@@ -62,10 +69,6 @@
 }
 
 .navbarDesktop > ul {
-  -webkit-display: flex;
-  -moz-display: flex;
-  -ms-display: flex;
-  -o-display: flex;
   display: flex;
 }
 
@@ -108,8 +111,6 @@ fadeInDown animation {
   padding: 20px 80px;
   -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
-  -ms-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
-  -o-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
 }
 
@@ -192,10 +193,6 @@ footer {
 .footerTop .formInner {
   padding-top: 7px;
   margin-bottom: 27px;
-  -webkit-display: flex;
-  -moz-display: flex;
-  -ms-display: flex;
-  -o-display: flex;
   display: flex;
   justify-content: center;
 }
