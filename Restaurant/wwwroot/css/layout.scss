@@ -227,323 +227,237 @@
                 }
             }
 
-            & > li::before {
-                content: "";
-                height: 20px;
-                width: 60px;
-                background: none;
-                position: absolute;
-                top: 25px;
-                cursor: pointer;
-                z-index: 2;
-            }
+.navbarDesktop > ul > li {
+    margin-right: 29px;
+}
 
-            & > li:last-child a {
-                border-right: unset;
-            }
+.navbarDesktop > ul > li > a {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: 3px 7px 2px;
+    color: #fff;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+fadeInDown animation {
+    transform: translate3d(0px, 0px, 0px);
+    opacity: 1;
+}
 
-            & > li:hover .menuItem {
-                display: flex;
-            }
-        }
+.navbarDesktop.fixed {
+    -webkit-animation: fadeInDown 0.3s ease-out forwards;
+    -moz-animation: fadeInDown 0.3s ease-out forwards;
+    -o-animation: fadeInDown 0.3s ease-out forwards;
+    animation: fadeInDown 0.3s ease-out forwards;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    background: #000;
+    width: 100%;
+    padding: 20px 80px;
+    -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+}
+/* Responsive */
+@media (max-width: 1500px) {
+    .navbarDesktop:not(.aside) {
+        top: 20px;
     }
-
-    .iconMenuMobile {
-        font-size: 1.5rem;
+    .navbarDesktop:not(.aside) .logo {
+        max-width: 32%;
     }
-
-    #searchBoxMobile {
-        width: 100vw;
-        height: 100vh;
-        position: absolute;
-        border-top: 2px solid #000;
-        top: -100vh;
-
-        .searchContainer {
-            width: 100%;
-            height: 50vh;
-            max-height: 300px;
-            background-color: #fff;
-            padding: 1rem;
-            position: relative;
-            z-index: 1;
-
-            .searchBox {
-                max-width: 75%;
-            }
-        }
-
-        .virtualSearchBoxMobile {
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            position: absolute;
-            top: 0;
-        }
-    }
-
-    .showSearchBoxMobile {
-        animation: showSearchBoxMobile 1s forwards;
-    }
-
-    .hideSearchBoxMobile {
-        animation: hideSearchBoxMobile 1s forwards;
-    }
-
-    @keyframes showSearchBoxMobile {
-        0% {
-            top: -100vh;
-        }
-
-        100% {
-            top: 100%;
-        }
-    }
-
-    @keyframes hideSearchBoxMobile {
-        0% {
-            top: 100%;
-        }
-
-        100% {
-            top: -100vh;
-        }
-    }
-
-    #menuMobile {
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(255, 255, 255, 0.5);
-        position: fixed;
-        z-index: 10;
+    .navbarDesktop:not(.aside).fixed {
+        padding: 10px 80px;
         top: 0;
-        left: -100vw;
-
-        .btnClose {
-            position: absolute;
-            top: 5px;
-            right: 1px;
-
-            span {
-                background-color: #fff;
-                font-size: 1.5rem;
-                font-weight: bold;
-                color: #000;
-                padding: 3px;
-                border: 1px solid #000;
-            }
-        }
-
-        .menuBox {
-            width: 80%;
-            height: 100%;
-            background-color: #fff;
-
-            .logoMobile {
-                border-bottom: 2px solid #000;
-
-                img {
-                    width: 120px;
-                    height: auto;
-                }
-            }
-
-            .menu {
-                overflow-x: hidden;
-                overflow-y: scroll;
-                max-height: 90%;
-                padding: 1rem;
-
-                .menuGroup {
-                    padding-top: 0.5rem;
-                    border-top: 1px solid rgba(0, 0, 0, 0.125);
-                    width: 100%;
-                    display: flex;
-                    flex-direction: row;
-                    margin: 0.5rem 0;
-
-                    button {
-                        background-color: transparent;
-                        border: unset;
-                    }
-                }
-
-                .menuGroupActive {
-                    .col-10 > a {
-                        font-weight: bold;
-                    }
-
-                    .col-2 svg {
-                        transform: rotate(90deg);
-                    }
-                }
-
-                a {
-                    color: #000;
-                    text-decoration: unset;
-                }
-
-                .menuItem {
-                    a {
-                        width: 100%;
-                        margin: 0.25rem 0;
-                    }
-                }
-            }
-
-            .menu::-webkit-scrollbar {
-                width: 5px;
-            }
-
-            .menu::-webkit-scrollbar-track {
-                background: #c1c1c1;
-            }
-
-            .menu::-webkit-scrollbar-thumb {
-                background: #000;
-            }
-        }
-    }
-
-    .showMenuMobile {
-        animation: showMenuMobile 1s forwards;
-    }
-
-    .hideMenuMobile {
-        animation: hideMenuMobile 1s forwards;
-    }
-
-    @keyframes showMenuMobile {
-        0% {
-            left: -100vw;
-        }
-
-        100% {
-            left: 0;
-        }
-    }
-
-    @keyframes hideMenuMobile {
-        0% {
-            left: 0;
-        }
-
-        100% {
-            left: -100vw;
-        }
-    }
-
-    .searchBox {
-        width: 100%;
-        max-width: 260px;
-        height: 35px;
-        position: relative;
-
-        .inputSearch {
-            width: 100%;
-            height: 100%;
-            border-radius: 22px;
-            border-color: rgba(0,0,0,.09);
-            background-color: rgba(0,0,0,.03);
-            padding-left: 8px;
-            padding-right: 35px;
-        }
-
-        .ti-search {
-            width: 30px;
-            height: 100%;
-            font-weight: 900;
-            position: absolute;
-            font-size: larger;
-            top: 0;
-            right: 0;
-            display: flex;
-            align-content: center;
-            flex-wrap: wrap;
-        }
-
-        #searchResult {
-            width: 100%;
-            position: absolute;
-            max-height: 60vh;
-            background-color: #fff7f7;
-            overflow-y: scroll;
-            box-shadow: 0 8px 8px #0000004d;
-
-
-            .suggest {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                color: #000;
-                text-decoration: unset;
-                align-items: center;
-                background-color: #fff;
-                padding: 4px 0;
-
-                img {
-                    display: inline-block;
-                    height: 40px;
-                    width: 40px;
-                    margin-right: 10px;
-                }
-
-                span {
-                    max-width: 75%;
-                    padding-left: 5px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 3;
-                    -line-clamp: 3;
-                    -webkit-box-orient: vertical;
-                }
-            }
-        }
-
-        #searchResult::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        #searchResult::-webkit-scrollbar-track {
-            background: #c1c1c1;
-        }
-
-        #searchResult::-webkit-scrollbar-thumb {
-            background: #000;
-        }
     }
 }
 
-.virtualHeader {
-    width: 100%;
-    height: 180px;
-
-    @include respond(map-get($breakPoint,"md")) {
-        height: 130px;
+@media (max-width: 1200px) {
+    .navbarDesktop, .navbarDesktop.fixed {
+        padding-left: 40px;
+        padding-right: 40px;
     }
-
-    @include respond(map-get($breakPoint,"xs")) {
-        height: 110px;
+    .navbarDesktop > ul > li,
+    .navbarDesktop.fixed > ul > li {
+        margin-right: 19px;
     }
-
-    @media only screen and ( width >= 768px) and ( width < 994px) {
-        height: 205px;
+    .navbarDesktop > ul > li a, .navbarDesktop.fixed > ul > li a {
+        pointer-events: auto;
     }
+    .navbarDesktop > ul > li > a {
+        font-size: 14px;
+    }
+    /*.navbarDesktop > ul > li a, .navbarDesktop.fixed > ul > li a {
+        pointer-events: none;
+    }*/
+    /*.navbarDesktop, .navbarDesktop.fixed {
+        padding-left: 40px;
+        padding-right: 40px;
+    }*/
+}
+@media (max-width: 992px) {
+    .navbarDesktop {
+        display: none;
+    }
+}
+/*#endregion*/
+/*#region footer*/
+footer {
+    background: #181818;
+    color: #b2b2b2 !important;
+    position: relative;
+}
+.footerTop {
+    text-align: center;
+}
+.footerBottom {
+    padding: 20px 0 19px;
+    text-align: center;
+}
+
+.footerTop .footerTopWrapper {
+    padding-top: 80px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid #333;
 }
 /*#endregion*/
 /*#region footer*/
 .footerContainer {
     width: 100%;
     margin: auto;
-    background-color: #181818;
-    color: #fff;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.125);
+    background-color: $color_black_000000;
 
-    .footerBox{
-        max-width:1200px;
-        padding: 1.5rem 0;
-        margin: auto;
-    } 
+    @include respond(map-get($breakPoint,"lg")) {
+        padding: 0 1rem;
+    }
+
+    #chatbox {
+        width: 320px;
+        height: 420px;
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        background-color: #fff;
+        z-index: 1;
+        border: 1px solid #000;
+        border-radius: 5px;
+        box-shadow: 0 0 10px #c1c1c1;
+
+        .chatboxHeader {
+            height: 10%;
+            border-bottom: 1px solid #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 6px;
+            background-color: #000;
+            color: $color_pink_e72f8b;
+
+            span {
+                font-weight: 600;
+            }
+        }
+
+        .chatboxContent {
+            height: 80%;
+            padding: 4px 6px;
+            overflow-y: scroll;
+
+            .response {
+                display: flex;
+                flex-direction: row;
+
+                .avatar {
+                    width: 50px;
+                    height: 50px;
+                }
+
+                .responseContent {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+
+            .request{
+                text-align: end;
+            }
+        }
+
+        .chatboxContent::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .chatboxContent::-webkit-scrollbar-track {
+            background: #c1c1c1;
+        }
+
+        .chatboxContent::-webkit-scrollbar-thumb {
+            background: #000;
+        }
+
+
+        .chatboxFooter {
+            height: 10%;
+            border-top: 1px solid #000;
+
+            .form-control {
+                border: unset;
+            }
+
+            .form-control:focus {
+                outline: unset;
+                box-shadow: unset;
+            }
+        }
+    }
+
+    #chatbot {
+        width: 100px;
+        height: 100px;
+        position: fixed;
+        bottom: 110px;
+        right: 0;
+        z-index: 1;
+        cursor: pointer;
+
+        img {
+            width: 100%;
+            animation: chatbotAnimation 3s infinite;
+        }
+    }
+
+    //#chatbot::before {
+    //    content: "Xin chào!";
+    //    background-color: #fff;
+    //    border-radius: 5px;
+    //    padding: 0 4px;
+    //    border-end-end-radius: unset;
+    //    position: absolute;
+    //    top: -20px;
+    //}
+
+    @keyframes chatbotAnimation {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        25% {
+            transform: rotate(-15deg);
+        }
+
+        75% {
+            transform: rotate(15deg);
+        }
+
+        100% {
+            transform: rotate(0deg);
+        }
+    }
+
     #goTop {
         background-color: #fafafa;
         display: none;
@@ -574,14 +488,38 @@
             }
         }
     }
+}
+@media (max-width: 768px) {
+    .footerTop .footerTopWrapper, .footerTop .footerTopWrapper.pb-54 {
+        padding-top: 60px;
+        padding-bottom: 40px;
+    }
 
-    #goTop:hover {
-        opacity: 1;
-        border: 3px solid $color_pink_e72f8b;
+    .topFooter {
+        width: 100%;
+        margin: auto;
+        max-width: $maxWidthFooterContent;
+    }
 
-        span {
-            color: $color_pink_e72f8b;
-        }
+    .bottomFooter {
+        width: 100%;
+        margin: auto;
+        max-width: $maxWidthFooterContent;
+    }
+
+    ul li {
+        list-style-type: none;
+        padding: 8px 0;
+        border-bottom: 1px solid $color_black_1e1e1e;
+    }
+
+    ul li:last-child {
+        border-bottom: none;
+    }
+
+    ul li a {
+        color: $color_white_fff;
+        text-decoration: none;
     }
     /*  .is-diliver {
         height: 3px;
@@ -622,6 +560,18 @@ html {
   text-align: end;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+    .page-link:hover, .active > .page-link {
+        background-color: black;
+        color: #fff;
+        font-weight: bold;
+    }
 }
+/*#endregion*/
+/*#region Toast*/
+#toastContainer .toast-body .toastImage {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border: 1px solid #a5a1a1;
+}
+/*#endregion*/
