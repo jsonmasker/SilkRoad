@@ -1132,6 +1132,7 @@ html {
 }
 .homePage .ourMenuContainer .ourMenu .menuBox .menuImage {
   width: 70%;
+  aspect-ratio: 1/1;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
