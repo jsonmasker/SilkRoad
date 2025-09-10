@@ -1,21 +1,26 @@
 ﻿@font-face {
-  font-family: "Satisfy-Regular";
+  font-family: "Satisfy Regular";
   src: url("../assets/fonts/Satisfy/Satisfy-Regular.ttf");
   font-display: swap;
 }
 @font-face {
-  font-family: "Raleway-SemiBold";
+  font-family: "Raleway SemiBold";
   src: url("../assets/fonts/Raleway/Raleway-SemiBold.ttf");
   font-display: swap;
 }
 @font-face {
-  font-family: "Raleway-Bold";
+  font-family: "Raleway Bold";
   src: url("../assets/fonts/Raleway/Raleway-Bold.ttf");
   font-display: swap;
 }
 @font-face {
-  font-family: "Raleway-Regular";
+  font-family: "Raleway Regular";
   src: url("../assets/fonts/Raleway/Raleway-Regular.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bitter Regular";
+  src: url("../assets/fonts/Bitter/Bitter-Regular.ttf");
   font-display: swap;
 }
 /*#region width*/
@@ -32,8 +37,8 @@
   position: fixed;
   width: 100%;
   margin: auto;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.125);
-  background-color: #000;
+  border-bottom: 1px solid rgba(205, 170, 124, 0.4);
+  background-color: transparent;
   z-index: 9;
   padding: 20px 80px;
 }
@@ -44,7 +49,7 @@
   color: #fff;
 }
 .headerContainer .headerDesktop .logoImage {
-  max-width: 52px;
+  max-width: 70px;
   height: auto;
 }
 .headerContainer .headerDesktop .navBar {
@@ -64,12 +69,22 @@
   display: flex;
   align-items: center;
   text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid transparent;
+}
+.headerContainer .headerDesktop .navBar .navItem a:hover {
+  color: #CDAA7C;
+  border: 1px solid rgba(205, 170, 124, 0.2);
 }
 .headerContainer .headerDesktop .navBar .navItem svg {
   margin-right: 6px;
 }
 .headerContainer .headerDesktop .navBar .navItem:last-child {
   margin-right: 0;
+}
+.headerContainer .headerDesktop .language {
+  color: #fff;
+  font-weight: 600;
 }
 .headerContainer .headerMain {
   max-width: 1050px;
@@ -456,6 +471,10 @@
 }
 .headerContainer .searchBox #searchResult::-webkit-scrollbar-thumb {
   background: #000;
+}
+
+.headerContainer.scrolled {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.125);
 }
 
 .virtualHeader {
