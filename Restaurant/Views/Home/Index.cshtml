@@ -2,5 +2,72 @@
     ViewData["Title"] = "Home Page";
 }
 <div class="homePage">
-    @await Html.PartialAsync("~/Views/Shared/PartialViews/_HomeBannerV1PartialView.cshtml")
+    <!--Home Banner-->
+    @* @await Html.PartialAsync("~/Views/Shared/PartialViews/_HomeBannerV1PartialView.cshtml") *@
+    <section class="homeBannerV1">
+        <div class="banner">
+            <img src="~/assets/images/home/slideshow-1.jpg" alt="banner" class="w-100" />
+            <div class="intro">
+                <h6 class="subTitle">
+                    Because you deserve to enjoy the best
+                </h6>
+                <h1 class="title">Nice Dinnner</h1>
+                <img src="~/assets/images/home/cuisine-1956.png" alt="Cuisine 1956" />
+            </div>
+        </div>
+    </section>
+    <!--Slide Show-->
+    <section class="slideShowContainer">
+        <div>
+            <img src="~/assets/images/home/flipster-1.jpg" alt="about" class="w-100" />
+        </div>
+        <div>
+            <img src="~/assets/images/home/flipster-2.jpg" alt="about" class="w-100" />
+        </div>
+        <div>
+            <img src="~/assets/images/home/flipster-3.jpg" alt="about" class="w-100" />
+        </div>
+
+    </section>
+    <!--Our Best Service-->
+    <section class="ourServiceContainer">
+        <h1 class="title">Our Best Service</h1>
+        <h5 class="subTitle">~ Experiences on food ~</h5>
+        <div class="ourServices">
+            <div class="service">
+                <h3>Delicious Foods</h3>
+                <img src="~/assets/images/home/service-1.jpg" alt="service" class="w-100" />
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+            <div class="service">
+                <h3>Delicious Foods</h3>
+                <img src="~/assets/images/home/service-1.jpg" alt="service" class="w-100" />
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+            <div class="service">
+                <h3>Delicious Foods</h3>
+                <img src="~/assets/images/home/service-1.jpg" alt="service" class="w-100" />
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+            <div class="service">
+                <h3>Delicious Foods</h3>
+                <img src="~/assets/images/home/service-1.jpg" alt="service" class="w-100" />
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+        </div>
+    </section>
+    <!--Our Menu-->
+    <section class="ourMenuContainer">
+        <h1 class="title">Our Food Menu</h1>
+        <h5 class="subTitle">~ See what we offer ~</h5>
+        <div class="ourMenu">
+            <div class="Category">
+                <img src="~/assets/images/home/menu-1.jpg" alt="menu" class="w-100" />
+               <div class="category">
+                   <h3>Delicious Foods</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+               </div> 
+            </div>
+        </div>
+    </section>
 </div>

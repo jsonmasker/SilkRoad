@@ -27,16 +27,12 @@
 /*#region responsive*/
 /*#endregion*/
 .homePage {
-  max-width: 1050px;
   margin: auto;
-}
-@media only screen and (width < 1200px) {
-  .homePage {
-    max-width: 100%;
-  }
-}
-.homePage .homeBanner {
   width: 100%;
+}
+.homePage .homeBannerV1 {
+  width: 100%;
+  max-height: 100vh;
   overflow: hidden;
   /*.categorySuggestion {
       display: flex;
@@ -50,19 +46,17 @@
       }
   }*/
 }
-.homePage .homeBanner .banner {
+.homePage .homeBannerV1 .banner {
   width: 100%;
-  max-height: 400px;
   aspect-ratio: 16/9;
-  max-width: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
 }
-.homePage .homeBanner .banner .bannerIntro {
-  height: 100%;
+.homePage .homeBannerV1 .banner .intro {
   width: 100%;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
@@ -70,18 +64,21 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: #fff;
 }
-.homePage .homeBanner .banner .bannerIntro .tag {
-  color: #ffffff;
-  min-width: 90px;
-  padding: 0.25rem 1rem;
-  margin: 0 0.5rem;
-  font-weight: bold;
-  background-color: transparent;
-  border: 2px solid #ffffff;
-  text-align: center;
+.homePage .homeBannerV1 .banner .intro .title {
+  font-weight: 400;
+  font-size: 99px;
 }
-.homePage .homeBanner .subBanner {
+.homePage .homeBannerV1 .banner .intro .subTitle {
+  font-weight: 500;
+  font-size: 22px;
+  color: rgb(204, 204, 204);
+}
+.homePage .homeBannerV1 .banner .intro img {
+  max-width: 320px;
+}
+.homePage .homeBannerV1 .subBanner {
   width: 100%;
   min-height: 274px;
   border: 1px solid #e5e7eb;
@@ -91,17 +88,17 @@
   position: relative;
 }
 @media only screen and (width < 768px) {
-  .homePage .homeBanner .subBanner {
+  .homePage .homeBannerV1 .subBanner {
     min-height: 200px;
   }
-  .homePage .homeBanner .subBanner .subBanner1 {
+  .homePage .homeBannerV1 .subBanner .subBanner1 {
     width: 80% !important;
   }
 }
-.homePage .homeBanner .subBanner .subBanner1, .homePage .homeBanner .subBanner .subBanner2, .homePage .homeBanner .subBanner .subBanner3 {
+.homePage .homeBannerV1 .subBanner .subBanner1, .homePage .homeBannerV1 .subBanner .subBanner2, .homePage .homeBannerV1 .subBanner .subBanner3 {
   position: absolute;
 }
-.homePage .homeBanner .subBanner .subBanner1 {
+.homePage .homeBannerV1 .subBanner .subBanner1 {
   width: 60%;
   min-height: 40%;
   background-color: #fff;
@@ -116,10 +113,10 @@
   color: #ff2323;
   box-shadow: 0 1px 3px -2px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
-.homePage .homeBanner .subBanner .subBanner1 a {
+.homePage .homeBannerV1 .subBanner .subBanner1 a {
   color: #ff2323 !important;
 }
-.homePage .homeBanner .subBanner .subBanner2 {
+.homePage .homeBannerV1 .subBanner .subBanner2 {
   top: 0;
   width: 100%;
   height: 100%;
@@ -129,7 +126,7 @@
   justify-content: center;
   align-items: center;
 }
-.homePage .homeBanner .subBanner .subBanner2 div {
+.homePage .homeBannerV1 .subBanner .subBanner2 div {
   font-size: 1.25rem;
   font-weight: bold;
   width: 70%;
@@ -141,7 +138,7 @@
   justify-content: center;
   align-items: center;
 }
-.homePage .homeBanner .subBanner .subBanner2 a {
+.homePage .homeBannerV1 .subBanner .subBanner2 a {
   color: #fff !important;
   text-decoration: none;
   text-align: center;
@@ -150,7 +147,7 @@
   background-color: #ff2323;
   border: 1px solid #fff;
 }
-.homePage .homeBanner .subBanner .subBanner3 {
+.homePage .homeBannerV1 .subBanner .subBanner3 {
   top: 0;
   width: 100%;
   height: 100%;
@@ -160,7 +157,7 @@
   justify-content: center;
   align-items: center;
 }
-.homePage .homeBanner .subBanner .subBanner3 div {
+.homePage .homeBannerV1 .subBanner .subBanner3 div {
   font-size: 1.25rem;
   font-weight: bold;
   width: 70%;
@@ -177,38 +174,5 @@
   .homePage .homeContent {
     max-width: 95%;
     margin: auto;
-  }
-}
-
-.effect-snow {
-  height: 100%;
-  width: 100%;
-  background-image: url("/assets/images/snow1.png"), url("/assets/images/snow2.png");
-  -webkit-animation: snow 20s linear infinite;
-  animation: snow 20s linear infinite;
-}
-
-@keyframes snow {
-  0% {
-    background-position: 0 0, 0 0, 0 0;
-  }
-  100% {
-    background-position: 500px 1000px, 400px 400px, 300px 300px;
-  }
-}
-.effect-sparkle {
-  height: 100%;
-  width: 100%;
-  background-image: url("/assets/images/sparkle1.png"), url("/assets/images/sparkle2.png");
-  -webkit-animation: sparkle 60s linear infinite;
-  animation: sparkle 60s linear infinite;
-}
-
-@keyframes sparkle {
-  0% {
-    background-position: 0 0, 0 0, 0 0;
-  }
-  100% {
-    background-position: -500px -1000px, -400px -400px, 300px 300px;
   }
 }
