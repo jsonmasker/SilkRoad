@@ -200,47 +200,86 @@
     .ourServiceContainer {
         width: 100%;
         min-height: 400px;
-        margin: 2rem auto;
+        padding: 3rem 0;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
         background-image: url('../assets/images/home/our-service-bg.jpg');
 
-        //.heading {
-        //    margin-bottom: 1.25rem;
-        //    .title {
-        //        font-size: $text-level-3;
-        //        font-weight: 600;
-        //    }
-        //}
-        //.serviceList {
-        //    width: 100%;
-        //    display: flex;
-        //    flex-wrap: wrap;
-        //    justify-content: center;
-        //    gap: 1.5rem;
-        //    .serviceItem {
-        //        width: 250px;
-        //        display: flex;
-        //        flex-direction: column;
-        //        align-items: center;
-        //        text-align: center;
-        //        .icon {
-        //            font-size: 3rem;
-        //            color: $color_yellow_CDAA7C;
-        //            margin-bottom: 0.5rem;
-        //        }
-        //        .serviceTitle {
-        //            font-size: $text-level-5;
-        //            font-weight: 500;
-        //            margin-bottom: 0.5rem;
-        //        }
-        //        .serviceDescription {
-        //            font-size: $text-level-6;
-        //            color: $color_gray_b2b2b2;
-        //        }
-        //    }
-        //}
+        .ourServices {
+            display: flex;
+            flex-direction: row;
+
+            .serviceBox {
+                color: $color_white_fff;
+                background-color: $color_yellow_CDAA7C;
+                width: 270px;
+                margin-right: 1rem;
+                padding: 1.5rem 1rem;
+                border: 2px solid $color_yellow_80694D;
+
+                .icon {
+                    width: 66px;
+                    padding: 1rem 0;
+                }
+            }
+
+            .serviceBox:hover {
+                background-color: transparent;
+            }
+
+            .serviceBox:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    .ourMenuContainer {
+        width: 100%;
+        padding: 3rem 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        .ourMenu {
+            max-width: 1170px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+
+            .menuBox {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: end;
+                position: relative;
+
+                .menuImage {
+                    width: 70%;
+                    //aspect-ratio: 1/1;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                }
+
+                .menuInfor {
+                    position: absolute;
+                    top: 50%;
+                    width: 52.13%;
+                    transform: translateY(-50%);
+                    -webkit-transform: translateY(-50%);
+                    -moz-transform: translateY(-50%);
+                    -ms-transform: translateY(-50%);
+                    -o-transform: translateY(-50%);
+                    background: #fff;
+                    margin-bottom: 0;
+                    padding: 64px 54px;
+
+                }
+            }
+        }
     }
 }
