@@ -105,54 +105,105 @@
         <h1 class="text-40 fw-bold font-weight-700">Our Food Menu</h1>
         <h5 class="font-satisfy-regular text-30 text-color-yellow mb-4">~ See what we offer ~</h5>
         <div class="ourMenu">
+            <div class="menuBox mb-4">
+                <div class="menuInfor">
+                    <div class="heading">
+                        <h3 class="font-satisfy-regular text-start text-34">Main Course</h3>
+                        <img src="~/assets/images/home/main-course.png" alt="border" class="menuIcon" />
+                    </div>
+                    @for (int i = 0; i < 3; i++)
+                    {
+                        <div class="menuItem">
+                            <h5 class="d-flex">
+                                <span>Ice cream tarte apple @i</span>
+                                <span class="dots"></span>
+                                <span class="price">$25</span>
+                            </h5>
+                            <ul class="d-flex flex-wrap list-unstyled">
+                                <li>
+                                    <span>Chicken</span>
+                                </li>
+                                <li>
+                                    <span>Italian</span>
+                                </li>
+                                <li>
+                                    <span>Sausage</span>
+                                </li>
+                                <li>
+                                    <span>Spinach</span>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                    <a href="#" class="text-color-black text-uppercase">View More</a>
+                </div>
+                <img src="~/assets/images/home/main-course-menu.jpg" alt="menu" class="menuImage" />
+            </div>
+            <div class="menuBox mb-4">
+                <div class="menuInfor">
+                    <div class="heading">
+                        <h3 class="font-satisfy-regular text-start text-34">Main Course</h3>
+                        <img src="~/assets/images/home/main-course.png" alt="border" class="menuIcon" />
+                    </div>
+                    @for (int i = 0; i < 3; i++)
+                    {
+                        <div class="menuItem">
+                            <h5 class="d-flex">
+                                <span>Ice cream tarte apple @i</span>
+                                <span class="dots"></span>
+                                <span class="price">$25</span>
+                            </h5>
+                            <ul class="d-flex flex-wrap list-unstyled">
+                                <li>
+                                    <span>Chicken</span>
+                                </li>
+                                <li>
+                                    <span>Italian</span>
+                                </li>
+                                <li>
+                                    <span>Sausage</span>
+                                </li>
+                                <li>
+                                    <span>Spinach</span>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                    <a href="#" class="text-color-black text-uppercase">View More</a>
+                </div>
+                <img src="~/assets/images/home/main-course-menu.jpg" alt="menu" class="menuImage" />
+            </div>
             <div class="menuBox">
                 <div class="menuInfor">
                     <div class="heading">
-                        <h3 class="font-satisfy-regular">Main Course</h3>
+                        <h3 class="font-satisfy-regular text-start text-34">Main Course</h3>
                         <img src="~/assets/images/home/main-course.png" alt="border" class="menuIcon" />
                     </div>
-                    <div class="menuItem">
-                        <h3>
-                            <span>Ice cream tarte apple</span>
-                            <span class="dots"></span>
-                            <span class="price">$25</span>
-                        </h3>
-                        <ul>
-                            <li>
-                                <a href="#">Chicken</a>
-                            </li>
-                            <li>
-                                <a href="#">Italian</a>
-                            </li>
-                            <li>
-                                <a href="#">Sausage</a>
-                            </li>
-                            <li>
-                                <a href="#">Spinach</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="menuItem">
-                        <h3>
-                            <span>Ice cream tarte apple</span>
-                            <span class="dots"></span>
-                            <span class="price">$25</span>
-                        </h3>
-                        <ul>
-                            <li>
-                                <a href="#">Chicken</a>
-                            </li>
-                            <li>
-                                <a href="#">Italian</a>
-                            </li>
-                            <li>
-                                <a href="#">Sausage</a>
-                            </li>
-                            <li>
-                                <a href="#">Spinach</a>
-                            </li>
-                        </ul>
-                    </div>
+                    @for (int i = 0; i < 3; i++)
+                    {
+                        <div class="menuItem">
+                            <h5 class="d-flex">
+                                <span>Ice cream tarte apple @i</span>
+                                <span class="dots"></span>
+                                <span class="price">$25</span>
+                            </h5>
+                            <ul class="d-flex flex-wrap list-unstyled">
+                                <li>
+                                    <span>Chicken</span>
+                                </li>
+                                <li>
+                                    <span>Italian</span>
+                                </li>
+                                <li>
+                                    <span>Sausage</span>
+                                </li>
+                                <li>
+                                    <span>Spinach</span>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                    <a href="#" class="text-color-black text-uppercase">View More</a>
                 </div>
                 <img src="~/assets/images/home/main-course-menu.jpg" alt="menu" class="menuImage" />
             </div>

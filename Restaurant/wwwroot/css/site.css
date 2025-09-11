@@ -145,6 +145,10 @@ body {
   font-size: 40px;
 }
 
+.text-34 {
+  font-size: 34px;
+}
+
 .text-30 {
   font-size: 30px;
 }
@@ -1114,10 +1118,10 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
 }
 .homePage .ourMenuContainer .ourMenu {
   max-width: 1170px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1127,26 +1131,50 @@ html {
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: end;
   position: relative;
 }
 .homePage .ourMenuContainer .ourMenu .menuBox .menuImage {
   width: 70%;
-  aspect-ratio: 1/1;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 .homePage .ourMenuContainer .ourMenu .menuBox .menuInfor {
+  max-width: 600px;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+.homePage .ourMenuContainer .ourMenu .menuBox .menuInfor .heading {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+.homePage .ourMenuContainer .ourMenu .menuBox .menuInfor .heading .menuIcon {
   position: absolute;
-  top: 50%;
-  width: 52.13%;
-  transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
-  background: #fff;
-  margin-bottom: 0;
-  padding: 64px 54px;
+  right: 0;
+  top: 0;
+}
+.homePage .ourMenuContainer .ourMenu .menuBox .menuInfor .menuItem {
+  margin-bottom: 2rem;
+}
+.homePage .ourMenuContainer .ourMenu .menuBox .menuInfor .menuItem .dots {
+  flex-grow: 1;
+  border-bottom: 1px dotted;
+  transform: translateY(-6px);
+}
+.homePage .ourMenuContainer .ourMenu .menuBox .menuInfor .menuItem ul li {
+  margin-right: 5px;
+}
+.homePage .ourMenuContainer .ourMenu .menuBox .menuInfor .menuItem ul li span {
+  color: #000000;
+  font-weight: 500;
+  opacity: 0.6;
+}
+.homePage .ourMenuContainer .ourMenu .menuBox .menuInfor .menuItem ul li span::after {
+  content: "/";
+  margin-left: 4px;
+}
+.homePage .ourMenuContainer .ourMenu .menuBox .menuInfor .menuItem ul li:last-child span::after {
+  content: "";
 }
