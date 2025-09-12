@@ -12,7 +12,7 @@ import { LoadingService } from '@services/helper-services/loading.service';
   encapsulation: ViewEncapsulation.None
 })
 export class LoadingComponent implements OnInit {
-  progress : number = 0;
+  // progress : number = 0;
   @Input() visible : boolean = false;
   
   constructor(private loadingService: LoadingService) {
@@ -20,27 +20,27 @@ export class LoadingComponent implements OnInit {
   ngOnInit(): void {
     this.loadingService.visible$.subscribe(({ show }) => {
       this.visible = show;
-      if(show){
-        this.updateProgress();
-      }
+      // if(show){
+      //   this.updateProgress();
+      // }
     });
   }
 
-  handleLiveDemoChange(event: any) {
-    this.progress = 0;
-    if(event){
-      this.updateProgress();
-    }
-  }
+  // handleLiveDemoChange(event: any) {
+  //   this.progress = 0;
+  //   if(event){
+  //     this.updateProgress();
+  //   }
+  // }
 
-  updateProgress(): void {
-     if (this.progress < 100 && this.visible) {
-        setTimeout(() => {
-          if(this.progress < 100) {
-            this.progress += 5;
-            this.updateProgress();
-          }
-        }, 200);
-     }
-  }
+  // updateProgress(): void {
+  //    if (this.progress < 100 && this.visible) {
+  //       setTimeout(() => {
+  //         if(this.progress < 100) {
+  //           this.progress += 5;
+  //           this.updateProgress();
+  //         }
+  //       }, 200);
+  //    }
+  // }
 }

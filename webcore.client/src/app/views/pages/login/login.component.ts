@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { IconDirective } from '@coreui/icons-angular';
 import { InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective, FormCheckComponent } from '@coreui/angular';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -9,6 +9,8 @@ import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.componen
 import { MyAccountService } from '@services/system-services/my-account.service';
 import { LoadingService } from '@services/helper-services/loading.service';
 import { ParticleCanvasComponent } from '@components/generals/particle-canvas/particle-canvas.component';
+import { APIResponse } from '@models/api-response.model';
+import { JwtModel } from '@models/system-management-models/jwt.model';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,7 @@ import { ParticleCanvasComponent } from '@components/generals/particle-canvas/pa
     ReactiveFormsModule, RouterLink, EyeIconComponent, EyeCloseIconComponent
   ]
 })
-export class LoginComponent {
+export class LoginComponent{
   //#region Variables
   showPassword: boolean = false;
   errorMessage: string = '';
@@ -37,29 +39,27 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    debugger;
     if (this.loginForm.invalid)
       return;
 
     this.loadingService.showLoadingComponent(true);
-
-    // this.myAccount.login(this.loginForm.value).subscribe({
-    //   next: (response: APIResponse<JwtModel>) => {
-    //     if (response.success) {
-    //       localStorage.setItem('token', response.data.token);
-    //       localStorage.setItem('refreshToken', response.data.refreshToken);
-    //     }
-    //     this.loadingService.showLoadingComponent(false);
-    //     this.router.navigate(['/introduction']);
-    //   },
-    //   error: (exception: any) => {
-    //     this.loadingService.showLoadingComponent(false);
-    //     if (exception.status == 423) {
-    //       this.router.navigate(['/423']);
-    //     }
-    //     this.errorMessage = exception.error.message;
-    //   }
-    // });
+    this.myAccount.login(this.loginForm.value).subscribe({
+      next: (response: APIResponse<JwtModel>) => {
+        if (response.success) {
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('refreshToken', response.data.refreshToken);
+        }
+        this.loadingService.showLoadingComponent(false);
+        this.router.navigate(['/introduction']);
+      },
+      error: (exception: any) => {
+        this.loadingService.showLoadingComponent(false);
+        if (exception.status == 423) {
+          this.router.navigate(['/423']);
+        }
+        this.errorMessage = exception.error.message;
+      }
+    });
   }
   //#endregion
 
