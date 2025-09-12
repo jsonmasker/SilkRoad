@@ -11,11 +11,11 @@
 (changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
 <thead class="text-nowrap text-truncate">
   <tr>
-    <th scope="col" i18n="@@thSTT">STT</th>
+    <th scope="col">STT</th>
     <th scope="col">NameEn</th>
     <th scope="col">NameVN</th>
     <th scope="col">Priority</th>
-    <th scope="col" i18n="@@thActive">Active</th>
+    <th scope="col">Active</th>
     <th></th>
   </tr>
 </thead>
@@ -32,7 +32,7 @@
           <button (click)="updateData(item.id)" class="btn btn-primary me-2">
             <svg cIcon [cIcon]="icons.cilPen" class="me-1"></svg>
           </button>
-          <button (click)="deleteData(item.id)" class="btn btn-danger" i18n="@@delete">
+          <button (click)="deleteData(item.id)" class="btn btn-danger">
             <svg cIcon [cIcon]="icons.cilTrash" class="me-1"></svg>
           </button>
         </div>
@@ -53,7 +53,7 @@
       <div class="mb-2 d-flex flex-row">
         <c-form-check class="me-2 d-flex align-items-center">
           <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-          <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+          <label cFormCheckLabel for="isActive" class="me-2">Active </label>
         </c-form-check>
         <div>
           <label for="priority" class="me-2">Priority: </label>
@@ -93,7 +93,7 @@
       </div>
     </c-modal-body>
     <c-modal-footer>
-      <button (click)="toggleLiveCreateModel()" cButton color="secondary" i18n="@@close">
+      <button (click)="toggleLiveCreateModel()" cButton color="secondary">
         Close
       </button>
       <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Save</button>
@@ -111,7 +111,7 @@
       <div class="mb-2 d-flex flex-row">
         <c-form-check class="me-2 d-flex align-items-center">
           <input cFormCheckInput formControlName="isActive" id="isActiveUpdate" class="me-2" type="checkbox" />
-          <label cFormCheckLabel for="isActiveUpdate" class="me-2" i18n="@@active">Active </label>
+          <label cFormCheckLabel for="isActiveUpdate" class="me-2">Active </label>
         </c-form-check>
         <div>
           <label for="priorityUpdate" class="me-2">Priority: </label>
@@ -151,7 +151,7 @@
       </div>
     </c-modal-body>
     <c-modal-footer>
-      <button (click)="toggleLiveUpdateModel()" cButton color="secondary" i18n="@@close">
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
         Close
       </button>
       <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">Save</button>
@@ -186,11 +186,11 @@
     (changePageIndex)="onDeletedPageIndexChange($event)" (changePageSize)="onDeletedPageSizeChange($event)">
       <thead class="text-nowrap text-truncate">
         <tr>
-          <th scope="col" i18n="@@thSTT">STT</th>
+          <th scope="col">STT</th>
           <th scope="col">NameEn</th>
           <th scope="col">NameVN</th>
           <th scope="col">Priority</th>
-          <th scope="col" i18n="@@thActive">Active</th>
+          <th scope="col">Active</th>
           <th></th>
         </tr>
       </thead>

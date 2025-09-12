@@ -5,11 +5,11 @@ import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent
 import { IconDirective } from '@coreui/icons-angular';
 import { CategoryViewModel } from '@models/lipstick-shop-models/category.model';
 import { CategoryService } from '@services/lipstick-shop-services/category.service';
-import { DataTableComponent } from "@components/data-table/data-table.component";
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
 import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular } from '@coreui/icons';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 @Component({
   selector: 'app-categories',

@@ -38,12 +38,12 @@
                  <div class="col-4">
                     <label cLabel for="paymentMethodId">Select province: <span class="text-danger">(*)</span></label>
                     <!-- <app-select-search [options]="provinceList" (onChangeValue)="onProvinceChange($event)"></app-select-search> -->
-                    <app-select-search-v1 [options]="provinceList" (onChangeValue)="onProvinceChange($event)"></app-select-search-v1>
+                    <!-- <app-select-search-v1 [options]="provinceList" (onChangeValue)="onProvinceChange($event)"></app-select-search-v1> -->
                 </div>
                 <div class="col-4">
                     <label cLabel for="statusId">Select district: <span class="text-danger">(*)</span></label>
                     <!-- <app-select-search [options]="districtList" (onChangeValue)="onDistrictChange($event)"></app-select-search> -->
-                    <app-select-search-v1 [options]="districtList" (onChangeValue)="onDistrictChange($event)"></app-select-search-v1>
+                    <!-- <app-select-search-v1 [options]="districtList" (onChangeValue)="onDistrictChange($event)"></app-select-search-v1> -->
 
                 </div>     
                 <div class="col-4">
@@ -108,9 +108,9 @@
             </c-accordion>
             <div class="d-flex justify-content-end">
                 <button cButton type="submit" type="submit" [disabled]="!orderForm.valid"
-                    i18n="@@submit">Submit</button>
+                   >Submit</button>
                 <button cButton type="button" routerLink="/lipstick-shop/orders" class="ms-2 btn-info"
-                    i18n="@@backToList">Back to list</button>
+                   >Back to list</button>
             </div>
         </form>
     </c-card-body>
@@ -168,7 +168,7 @@
             </div>
         </c-modal-body>
         <c-modal-footer>
-            <button (click)="toggleLiveCreateModel()" cButton color="secondary" i18n="@@close">
+            <button (click)="toggleLiveCreateModel()" cButton color="secondary">
                 Close
             </button>
             <button cButton type="submit" [disabled]="!addProductForm.valid" color="primary">Add</button>
@@ -211,7 +211,7 @@
             </div>
         </c-modal-body>
         <c-modal-footer>
-            <button (click)="toggleLiveUpdateModel()" cButton color="secondary" i18n="@@close">
+            <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
                 Close
             </button>
             <button cButton type="submit" [disabled]="!updateProductForm.valid" color="primary">Save</button>

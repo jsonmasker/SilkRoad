@@ -1,0 +1,21 @@
+
+<c-modal id="loadingModel" [visible]="visible" backdrop="static" [fullscreen]="true" alignment="center">
+    <c-modal-body>
+        <div class="component-loading">
+            <div class="loading-container">
+                <img src="assets/images/loading2.gif" alt="Logo" class="w-100" />
+                <div class="loading-text">LOADING
+                    <div class="loading-dots">
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                    </div>
+                </div>
+                <!-- <div class="progress-bar">
+                    <div class="progress-fill" [style.width.%]="progress"></div>
+                    <div class="progress-percent">{{ progress }}%</div>
+                </div> -->
+            </div>
+        </div>
+    </c-modal-body>
+  </c-modal>

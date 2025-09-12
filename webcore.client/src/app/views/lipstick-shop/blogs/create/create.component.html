@@ -5,7 +5,7 @@
             <div class="mb-2">
                 <c-form-check>
                     <input cFormCheckInput formControlName="isActive" id="isActive" type="checkbox" class="me-2" />
-                    <label cFormCheckLabel for="isActive" i18n="@@active">Active</label>
+                    <label cFormCheckLabel for="isActive">Active</label>
                 </c-form-check>
             </div>
             <div class="mb-2 row">
@@ -102,9 +102,9 @@
             </div>
             <div class="d-flex justify-content-end">
                 <button cButton type="submit" type="submit" [disabled]="!createForm.valid"
-                    i18n="@@submit">Submit</button>
+                   >Submit</button>
                 <button cButton type="button" routerLink="/lipstick-shop/blogs" class="ms-2 btn-info"
-                    i18n="@@backToList">Back
+                   >Back
                     to list</button>
             </div>
         </form>

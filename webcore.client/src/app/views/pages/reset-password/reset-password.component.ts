@@ -4,7 +4,6 @@ import { InputGroupComponent, InputGroupTextDirective, FormControlDirective, But
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators  } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ParticleCanvasComponent } from '@components/particle-canvas/particle-canvas.component';
 import { MyAccountService } from '@services/system-services/my-account.service';
 import { NgIf } from '@angular/common';
 import { ToastService } from '@services/helper-services/toast.service';
@@ -12,6 +11,7 @@ import { EyeIconComponent } from '@components/icons/eye-icon.component';
 import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.component';
 import { EColors } from '@common/global';
 import { timer } from 'rxjs';
+import { ParticleCanvasComponent } from '@components/generals/particle-canvas/particle-canvas.component';
 
 @Component({
   selector: 'app-reset-password',

@@ -1,7 +1,7 @@
 <h1>Home Banner List</h1>
 <div class="d-flex justify-content-between my-2">
     <div class="d-flex align-items-center">
-        <span class="me-2" i18n="@@filter">Filter: </span>
+        <span class="me-2">Filter: </span>
         <select class="form-control" id="slideTheme" cSelect (change)="filter($event)">
             <option value="-1">All</option>
             @for (item of bannerTypeList; track $index; let i = $index) {
@@ -129,7 +129,7 @@
                 <div class="col-6 d-flex flex-row">
                     <c-form-check class="me-2 d-flex align-items-center">
                         <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-                        <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+                        <label cFormCheckLabel for="isActive" class="me-2">Active </label>
                     </c-form-check>
                     <div class="d-flex align-items-center">
                         <label for="priority" class="me-2">Priority: </label>
@@ -253,7 +253,7 @@
             </div>
         </c-modal-body>
         <c-modal-footer>
-            <button (click)="toggleLiveCreateModel()" cButton color="secondary" i18n="@@close">
+            <button (click)="toggleLiveCreateModel()" cButton color="secondary">
                 Close
             </button>
             <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Save</button>
@@ -273,7 +273,7 @@
                 <div class="col-6 d-flex flex-row">
                     <c-form-check class="me-2 d-flex align-items-center">
                         <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-                        <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+                        <label cFormCheckLabel for="isActive" class="me-2">Active </label>
                     </c-form-check>
                     <div class="d-flex align-items-center">
                         <label for="priority" class="me-2">Priority: </label>
@@ -381,7 +381,7 @@
             </div>
         </c-modal-body>
         <c-modal-footer>
-            <button (click)="toggleLiveUpdateModel()" cButton color="secondary" i18n="@@close">
+            <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
                 Close
             </button>
             <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">Save</button>

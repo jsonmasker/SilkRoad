@@ -6,48 +6,62 @@
       <h1 class="text-center title">
         Sign In
       </h1>
-      <div *ngIf="errorMessage" class="text-danger mb-2">
-        {{ errorMessage }}
-      </div>
-      <span class="mb-1" i18n="@@userName">Username:</span>
+      @if (errorMessage) {
+        <div class="text-danger mb-2">
+          {{ errorMessage }}
+        </div>
+      }
+      <span class="mb-1">Username:</span>
 
       <c-input-group>
         <span cInputGroupText>
           <svg cIcon name="cilUser"></svg>
         </span>
-        <input formControlName="username" cFormControl placeholder="Enter username..." i18n-placeholder="@@inputUserNamePlaceholder" />
+        <input formControlName="username" cFormControl placeholder="Enter username..." />
       </c-input-group>
-      <div *ngIf="username?.invalid && (username?.dirty || username?.touched)" class="text-danger">
-        <div *ngIf="username?.hasError('required')" i18n="@@userNameRequiredWarning">
-          Enter UserName, please!
+      @if (username?.invalid && (username?.dirty || username?.touched)) {
+        <div class="text-danger">
+          @if (username?.hasError('required')) {
+            <div>
+              Enter UserName, please!
+            </div>
+          }
         </div>
-      </div>
+      }
 
-      <span class="mb-1 mt-2" i18n="@@password">Password:</span>
+      <span class="mb-1 mt-2">Password:</span>
 
       <c-input-group class="position-relative">
         <span cInputGroupText>
           <svg cIcon name="cilLockLocked"></svg>
         </span>
         <div style="z-index: 10;" (click)="ShowPassword()">
-           <app-eye-icon *ngIf="showPassword" class="eyeIcon"></app-eye-icon>
-           <app-eye-close-icon *ngIf="!showPassword" class="eyeIcon"></app-eye-close-icon>
+           @if (showPassword) {
+             <app-eye-icon class="eyeIcon"></app-eye-icon>
+           }
+           @if (!showPassword) {
+             <app-eye-close-icon class="eyeIcon"></app-eye-close-icon>
+           }
         </div>
-        <input formControlName="password" cFormControl id="password" placeholder="Enter password..." type="password" i18n-placeholder="@@inputPasswordPlaceholder" />
+        <input formControlName="password" cFormControl id="password" placeholder="Enter password..." type="password"/>
       </c-input-group>
-      <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="text-danger mb-2">
-        <div *ngIf="password?.hasError('required')" i18n="@@passwordRequiredWarning">
-          Enter Password, please!
+      @if (password?.invalid && (password?.dirty || password?.touched)) {
+        <div class="text-danger mb-2">
+          @if (password?.hasError('required')) {
+            <div>
+              Enter Password, please!
+            </div>
+          }
         </div>
-      </div>
+      }
 
       <c-form-check class="mb-4 mt-2">
         <input formControlName="rememberMe" cFormCheckInput id="remember" type="checkbox" class="me-2" />
-        <label cFormCheckLabel for="remember" i18n="@@rememberMyAccount">Remember my account</label>
+        <label cFormCheckLabel for="remember">Remember my account</label>
       </c-form-check>
-      <button cButton type="submit" class="px-4 w-100 text-uppercase btn btn-submit" [disabled]="!loginForm.valid" i18n="@@login">Login</button>
+      <button cButton type="submit" class="px-4 w-100 text-uppercase btn btn-submit" [disabled]="!loginForm.valid">Login</button>
       <div class="d-flex justify-content-end w-100">
-        <button cButton class="px-0" color="link" routerLink="/recover-password" i18n="@@forgotPassword">Forgot password?</button>
+        <button cButton class="px-0" color="link" routerLink="/recover-password" >Forgot password?</button>
       </div>
     </form>
   </div>

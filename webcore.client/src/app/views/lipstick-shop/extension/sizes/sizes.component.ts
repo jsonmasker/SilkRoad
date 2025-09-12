@@ -6,9 +6,9 @@ import { SizeViewModel } from '@models/lipstick-shop-models/size.model';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { SizeService } from '@services/lipstick-shop-services/size.service';
-import { DataTableComponent } from "@components/data-table/data-table.component";
 import { EColors } from '@common/global';
 import { cilPlus, cilTrash, cilPen, cilLoopCircular, cilSave, cilExitToApp } from '@coreui/icons';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 @Component({
   selector: 'app-sizes',

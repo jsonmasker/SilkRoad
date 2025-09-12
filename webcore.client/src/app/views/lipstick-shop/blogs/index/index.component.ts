@@ -9,9 +9,9 @@ import { TopicViewModel } from '@models/lipstick-shop-models/topic.model';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { BlogService } from '@services/lipstick-shop-services/blog.service';
 import { TopicService } from '@services/lipstick-shop-services/topic.service';
-import { DataTableComponent } from "@components/data-table/data-table.component";
 import { cilPlus, cilTrash, cilPen } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 @Component({
   selector: 'app-index',

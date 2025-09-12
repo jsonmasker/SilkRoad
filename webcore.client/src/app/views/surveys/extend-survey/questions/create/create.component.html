@@ -112,9 +112,9 @@
             </c-accordion>
             <div class="d-flex justify-content-end">
                 <button cButton type="submit" type="submit" [disabled]="!createForm.valid"
-                    i18n="@@submit">Submit</button>
+                   >Submit</button>
                 <button cButton type="button" routerLink="/surveys/extend-survey/questions" class="ms-2 btn-info"
-                    i18n="@@backToList">Back to list</button>
+                   >Back to list</button>
             </div>
         </form>
     </c-card-body>
@@ -170,7 +170,7 @@
             </div>
         </c-modal-body>
         <c-modal-footer>
-            <button (click)="toggleLiveCreateModel()" cButton color="secondary" i18n="@@close">
+            <button (click)="toggleLiveCreateModel()" cButton color="secondary">
                 Close
             </button>
             <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Save</button>
@@ -228,7 +228,7 @@
             </div>
         </c-modal-body>
         <c-modal-footer>
-            <button (click)="toggleLiveUpdateModel()" cButton color="secondary" i18n="@@close">
+            <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
                 Close
             </button>
             <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">Save</button>

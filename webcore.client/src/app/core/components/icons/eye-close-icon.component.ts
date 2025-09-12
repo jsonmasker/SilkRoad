@@ -12,9 +12,7 @@ import {Component} from '@angular/core';
         <path d="M6.38 17.62L3 21" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M19.5695 8.42999C20.4801 9.55186 21.2931 10.7496 21.9995 12.01C17.9995 19.01 13.2695 21.4 8.76953 19.23" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-    `,
-    styles: [``],
-    standalone: true
+    `
 })
 export class EyeCloseIconComponent {
 }
