@@ -1,7 +1,7 @@
 ﻿@import "VariableGlobal.scss";
 /*#region header*/
 .headerContainer {
-    top: 0;
+    top: 10px;
     position: fixed;
     width: 100%;
     margin: auto;
@@ -9,6 +9,10 @@
     background-color: transparent;
     z-index: 9;
     padding: 20px 80px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 
     .headerDesktop {
         display: flex;
@@ -542,6 +546,37 @@
         height: 205px;
     }
 }
+fadeInDown animation {
+    transform: translate3d(0px, 0px, 0px);
+    opacity: 1;
+}
+
+.headerContainer.fixed {
+    -webkit-animation: fadeInDown 0.3s ease-out forwards;
+    -moz-animation: fadeInDown 0.3s ease-out forwards;
+    -o-animation: fadeInDown 0.3s ease-out forwards;
+    animation: fadeInDown 0.3s ease-out forwards;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    background: #000;
+    width: 100%;
+    padding: 20px 80px;
+    -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: 1500px) {
+        padding: 10px 80px;
+        top: 0;
+    }
+
+    @include respond(map-get($breakPoint,"lg")) {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
 /*#endregion*/
 /*#region footer*/
 .footerContainer {
@@ -641,10 +676,6 @@ html {
     min-height: 100%;
 }
 
-//body {
-//  margin-bottom: 60px;
-//}
-
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
     color: var(--bs-secondary-color);
     text-align: end;
@@ -653,3 +684,124 @@ html {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+/*#region Banner*/
+.banner-background {
+    background-attachment: fixed;
+    background-position: top;
+    height: 550px;
+    position: relative;
+    text-align: center;
+    background-repeat: no-repeat;
+
+    @include respond(map-get($breakPoint,"lg")) {
+        height: 450px;
+    }
+
+    @include respond(map-get($breakPoint,"md")) {
+        height: 350px;
+    }
+}
+
+.banner-background .section-header {
+    position: absolute;
+    padding: 0 15px;
+    position: absolute;
+    left: 50%;
+    margin-bottom: 0;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    bottom: 35%;
+    width: 100%;
+
+    @include respond(map-get($breakPoint,"md")) {
+        bottom: 50%;
+        transform: translate(-50%, 50%);
+    }
+
+    @include respond(map-get($breakPoint,"sm")) {
+        width: 100%;
+    }
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 70px;
+
+    @include respond(map-get($breakPoint,"md")) {
+        margin-bottom: 50px;
+    }
+}
+.section-header h1, .section-header h2 {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-family: $fontRalewayBold;
+}
+
+.section-header span {
+    display: block;
+    color: #cdaa7c;
+    font-family: $fontSatisfyRegular;
+    font-size: 30px;
+}
+
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+/*#endregion */
+
+/*#region general*/
+.section-primary {
+    padding-top: 139px;
+    padding-bottom: 116px;
+
+    @include respond(map-get($breakPoint,"lg")) {
+        padding-top: 110px;
+        padding-bottom: 90px;
+    }
+
+    @include respond(map-get($breakPoint,"md")) {
+        padding-top: 90px;
+        padding-bottom: 80px;
+    }
+
+    @include respond(map-get($breakPoint,"sm")) {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+}
+/*#endregion*/
+
+/*#region button*/
+.au-btn.medium {
+    width: 174px;
+}
+.au-btn {
+    display: inline-flex;
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    width: 152px;
+    height: 42px;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    color: $color_white_fff;
+    border: none;
+    overflow: hidden;
+    cursor: pointer;
+    background: none;
+    background: $color_dark_grey_333333;
+    border-radius: 21px;
+}
+/*#endregion*/

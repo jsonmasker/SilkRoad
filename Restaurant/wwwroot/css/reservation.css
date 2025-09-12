@@ -1,0 +1,164 @@
+﻿@font-face {
+  font-family: "Satisfy Regular";
+  src: url("../assets/fonts/Satisfy/Satisfy-Regular.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Raleway SemiBold";
+  src: url("../assets/fonts/Raleway/Raleway-SemiBold.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Raleway Bold";
+  src: url("../assets/fonts/Raleway/Raleway-Bold.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Raleway Regular";
+  src: url("../assets/fonts/Raleway/Raleway-Regular.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bitter Regular";
+  src: url("../assets/fonts/Bitter/Bitter-Regular.ttf");
+  font-display: swap;
+}
+/*#region width*/
+/*#endregion*/
+/*#region color*/
+/*#endregion*/
+/*#region font-size*/
+/*#endregion*/
+/*#region font family*/
+/*#endregion*/
+/*#region responsive*/
+/*#endregion*/
+/*#region banner*/
+.reservationBanner {
+  background-image: url("../assets/images/reservation/banner.jpg");
+}
+
+/*#endregion*/
+/*#region section form*/
+.sectionForm .formInner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.sectionForm .formCol {
+  width: 30.4%;
+  margin-bottom: 43px;
+}
+.sectionForm .formCol .formHolder {
+  position: relative;
+}
+.sectionForm .formCol .formHolder span.primary-color {
+  color: #666666;
+}
+.sectionForm .formCol .formHolder span {
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+  font-size: 12px;
+  color: #CCCCCC;
+}
+.sectionForm .formCol .form-control.style {
+  border-bottom: 1px solid #333333;
+  color: #666666;
+}
+.sectionForm .formCol .form-control {
+  display: block;
+  width: 100%;
+  height: 31px;
+  border-bottom: 1px solid #CCCCCC;
+  font-size: 18px;
+  color: #CCCCCC;
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  line-height: 1.5;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.sectionForm .formCol .form-control:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/*#endregion*/
+/*#region reservation*/
+.reservation {
+  padding-bottom: 116px;
+}
+.reservation img {
+  width: 100%;
+}
+.reservation .info {
+  margin-top: 45px;
+}
+.reservation .info h5 {
+  text-transform: uppercase;
+  margin-bottom: 9px;
+}
+.reservation .info p {
+  white-space: nowrap;
+}
+.reservation .info .openingCol p {
+  display: inline-block;
+  margin-right: 35px;
+  white-space: nowrap;
+}
+.reservation .info .openingCol p span {
+  display: block;
+  color: #333333;
+  font-family: "Raleway SemiBold";
+  font-weight: 600;
+}
+.reservation .info .support {
+  padding-left: 80px;
+}
+.reservation .info .support .address, .reservation .info .support .phone {
+  margin-right: -10px;
+}
+.reservation .info .support a, .reservation .info .support p {
+  color: #666666;
+}
+.reservation .info .support .address span {
+  margin-right: 8px;
+}
+.reservation .info .support a span, .reservation .info .support p span {
+  font-family: "Raleway Bold";
+  font-weight: 700;
+  margin-right: 5px;
+}
+.reservation .info .support .phone span {
+  margin-right: 12px;
+}
+.reservation .info .support .email, .reservation .info .support .website {
+  padding-left: 14px;
+}
+.reservation .info .support .email span {
+  margin-right: 8px;
+}
+.reservation .info .support .website span {
+  margin-right: 3px;
+}
+.reservation .info .social {
+  padding-top: 27px;
+}
+.reservation .info .social a {
+  color: #999999;
+  text-decoration: none;
+  font-size: 20px;
+  margin-right: 16px;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.reservation a {
+  text-decoration: none;
+  color: #666666;
+}
+
+/*#endregion*/

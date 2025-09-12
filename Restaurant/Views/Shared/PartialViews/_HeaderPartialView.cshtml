@@ -11,14 +11,14 @@
                 <a  asp-controller="Category" asp-action="Index">Menu</a>
             </li>
             <li class="navItem">
-                <a asp-controller="Promotion" asp-action="Index">Promotion</a>
-            </li>
-            <li class="navItem">
                 <a asp-controller="Reservation" asp-action="Index">Reservation</a>
             </li>
             <li class="navItem">
                 <a asp-controller="Blog" asp-action="Index">Blog</a>
-            </li>
+			</li>
+			<li class="navItem">
+				<a asp-controller="Contact" asp-action="Index">Contact</a>
+			</li>
             <li class="navItem">
                 <a asp-controller="AboutUs" asp-action="Index">About Us</a>
             </li>
@@ -28,3 +28,15 @@
         </a>
     </section>
 </header>
+<script>
+    //on scroll down add class fixed to navDesktop, on scroll to top screen remove class fixed
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.headerContainer');
+
+        if (window.scrollY > 0) {
+        navbar.classList.add('fixed');
+        } else {
+        navbar.classList.remove('fixed');
+        }
+    });
+</script>
