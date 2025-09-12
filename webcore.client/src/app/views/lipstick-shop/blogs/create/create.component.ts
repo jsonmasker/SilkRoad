@@ -5,12 +5,12 @@ import { Router, RouterLink } from '@angular/router';
 import { ButtonDirective, CardBodyComponent, CardComponent, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective } from '@coreui/angular';
 import { cilCloudUpload } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
-import { CkeditorComponent } from '@components/ckeditor/ckeditor.component';
 import { TopicViewModel } from '@models/lipstick-shop-models/topic.model';
 import { BlogService } from '@services/lipstick-shop-services/blog.service';
 import { TopicService } from '@services/lipstick-shop-services/topic.service';
 import { EColors } from '@common/global';
 import { ToastService } from '@services/helper-services/toast.service';
+import { CkeditorComponent } from '@components/ckeditor/ckeditor.component';
 
 @Component({
   selector: 'app-create',

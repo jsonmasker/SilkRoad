@@ -5,9 +5,9 @@ import { Params } from '@angular/router';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TableDirective, TemplateIdDirective } from '@coreui/angular';
 import { ActionLoggingModel } from '@models/system-management-models/action-logging.model';
 import { ActionLoggingService } from '@services/system-services/action-logging.service';
-import { DataTableComponent } from "../../../core/components/data-table/data-table.component";
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { EActions, EController, stringEnumToArray } from '@common/global';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 @Component({
   selector: 'app-logging',

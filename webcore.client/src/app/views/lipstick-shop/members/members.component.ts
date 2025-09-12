@@ -2,7 +2,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Params } from '@angular/router';
-import { DataTableComponent } from '@components/data-table/data-table.component';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 import { MemberModel } from '@models/lipstick-shop-models/member.model';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { MemberService } from '@services/lipstick-shop-services/member.service';

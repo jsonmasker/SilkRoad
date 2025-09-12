@@ -1,65 +1,69 @@
-import { Component } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule, NgIf } from '@angular/common';
 import { IconDirective } from '@coreui/icons-angular';
 import { InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective, FormCheckComponent } from '@coreui/angular';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators  } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { ParticleCanvasComponent } from '@components/particle-canvas/particle-canvas.component';
-import {EyeIconComponent} from '@components/icons/eye-icon.component';
-import {EyeCloseIconComponent} from '@components/icons/eye-close-icon.component';
-import { JwtModel } from '@models/system-management-models/jwt.model';
+import { EyeIconComponent } from '@components/icons/eye-icon.component';
+import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.component';
 import { MyAccountService } from '@services/system-services/my-account.service';
-import { APIResponse } from '@models/api-response.model';
 import { LoadingService } from '@services/helper-services/loading.service';
+import { ParticleCanvasComponent } from '@components/generals/particle-canvas/particle-canvas.component';
+
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    standalone: true,
-    imports: [
-    NgIf,
-    InputGroupComponent,
-    InputGroupTextDirective, IconDirective,
-    FormCheckComponent,
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  standalone: true,
+  imports: [
+    InputGroupComponent, CommonModule,
+    InputGroupTextDirective, IconDirective, FormCheckComponent,
     FormControlDirective, ButtonDirective, ParticleCanvasComponent,
-    ReactiveFormsModule, RouterLink, EyeIconComponent, EyeCloseIconComponent  
-]
+    ReactiveFormsModule, RouterLink, EyeIconComponent, EyeCloseIconComponent
+  ]
 })
-export class LoginComponent{ 
-  showPassword:boolean = false;
-  errorMessage:string = '';
+export class LoginComponent {
+  //#region Variables
+  showPassword: boolean = false;
+  errorMessage: string = '';
   loginForm: FormGroup = new FormGroup({
-    username: new FormControl('',Validators.required),
-    password: new FormControl('',Validators.required),
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
     rememberMe: new FormControl(false)
   });
-
-  constructor(private myAccount : MyAccountService ,private router: Router, private loadingService: LoadingService) {
-    this.loadingService.showLoadingComponent(false);
-
+  //#endregion
+  //#region Lifecycle Hooks
+  constructor(private myAccount: MyAccountService, private router: Router, private loadingService: LoadingService) {
   }
+
   onSubmit() {
-    if(this.loginForm.invalid){
+    debugger;
+    if (this.loginForm.invalid)
       return;
-    }
-    this.loadingService.showLoadingComponent(true);
-    this.myAccount.login(this.loginForm.value).subscribe((response: APIResponse<JwtModel>) => {
-      if(response.success){
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('refreshToken', response.data.refreshToken);
-      }
-      this.loadingService.showLoadingComponent(false);
-      this.router.navigate(['/introduction']);
-    }, exception => {
-      this.loadingService.showLoadingComponent(false);
-      if(exception.status == 423){
-        this.router.navigate(['/423']);
-      }
-      this.errorMessage = exception.error.message;
 
-    }
-  );
+    this.loadingService.showLoadingComponent(true);
+
+    // this.myAccount.login(this.loginForm.value).subscribe({
+    //   next: (response: APIResponse<JwtModel>) => {
+    //     if (response.success) {
+    //       localStorage.setItem('token', response.data.token);
+    //       localStorage.setItem('refreshToken', response.data.refreshToken);
+    //     }
+    //     this.loadingService.showLoadingComponent(false);
+    //     this.router.navigate(['/introduction']);
+    //   },
+    //   error: (exception: any) => {
+    //     this.loadingService.showLoadingComponent(false);
+    //     if (exception.status == 423) {
+    //       this.router.navigate(['/423']);
+    //     }
+    //     this.errorMessage = exception.error.message;
+    //   }
+    // });
   }
+  //#endregion
+
+  //#region Methods
   ShowPassword() {
     const passwordInput = document.getElementById('password');
     if (passwordInput) {
@@ -71,7 +75,8 @@ export class LoginComponent{
   get username() {
     return this.loginForm.get('username');
   }
-  get password(){
+  get password() {
     return this.loginForm.get('password');
   }
+  //#endregion
 }

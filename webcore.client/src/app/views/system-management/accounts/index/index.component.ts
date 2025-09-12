@@ -5,7 +5,8 @@ import { CardBodyComponent, CardComponent, CardHeaderComponent, TableDirective }
 import { AccountService } from '@services/system-services/account.service';
 import { AccountModel } from '@models/system-management-models/account.model';
 import { PageInformation, Pagination } from '@models/pagination.model';
-import { DataTableComponent } from "@components/data-table/data-table.component";
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
+
 
 @Component({
   selector: 'app-index',

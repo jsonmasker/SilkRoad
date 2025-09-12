@@ -15,7 +15,6 @@ import { ToastService } from '@services/helper-services/toast.service';
 import { OrderService } from '@services/lipstick-shop-services/order.service';
 import { ProductService } from '@services/lipstick-shop-services/product.service';
 import { ProvinceService } from '@services/system-services/province.service';
-import { SelectSearchV1Component } from "@components/select-search-v1/select-search-v1.component";
 
 @Component({
   selector: 'app-create',
@@ -25,8 +24,7 @@ import { SelectSearchV1Component } from "@components/select-search-v1/select-sea
     ReactiveFormsModule, ModalBodyComponent, ModalComponent, ModalFooterComponent,
     ButtonCloseDirective, ModalHeaderComponent, AccordionButtonDirective, AccordionComponent,
     AccordionItemComponent, TemplateIdDirective,
-    TableDirective, NgIf,
-    SelectSearchV1Component, DecimalPipe
+    TableDirective, NgIf, DecimalPipe
   ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'

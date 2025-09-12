@@ -6,9 +6,9 @@ import { QuestionModel } from '@models/survey-models/question.model';
 import { QuestionGroupService } from '@services/survey-services/question-group.service';
 import { QuestionService } from '@services/survey-services/question.service';
 import { NgFor } from '@angular/common';
-import { DataTableComponent } from '@components/data-table/data-table.component';
 import { RouterLink } from '@angular/router';
 import { FormSelectDirective } from '@coreui/angular';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 @Component({
   selector: 'app-index',

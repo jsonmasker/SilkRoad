@@ -2,8 +2,9 @@ import { NgFor } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, TableDirective } from '@coreui/angular';
-import { DataTableComponent } from '@components/data-table/data-table.component';
+
 import { APIResponse } from '@models/api-response.model';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { RoleModel } from '@models/system-management-models/role.model';

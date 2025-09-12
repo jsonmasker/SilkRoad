@@ -9,8 +9,8 @@ import { PageInformation, Pagination } from '@models/pagination.model';
 import { ActionModel } from '@models/system-management-models/module.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { ActionService } from '@services/system-services/action.service';
-import { DataTableComponent } from "@components/data-table/data-table.component";
 import { ActivatedRoute } from '@angular/router';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 @Component({
   selector: 'app-actions',
