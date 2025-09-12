@@ -3,7 +3,7 @@
   <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
     <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
   </button>
-  <button (click)="toggleLiveCreateModel()" class="btn btn-success" i18n="@@create">
+  <button (click)="toggleLiveCreateModel()" class="btn btn-success">
     <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
   </button>
 </div>
@@ -11,11 +11,11 @@
 (changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
 <thead class="text-nowrap text-truncate">
   <tr>
-    <th scope="col" i18n="@@thSTT">STT</th>
+    <th scope="col">STT</th>
     <th scope="col">Image</th>
     <th scope="col">NameEn</th>
     <th scope="col">NameVN</th>
-    <th scope="col" i18n="@@thActive">Active</th>
+    <th scope="col">Active</th>
     <th scope="col">Priority</th>
     <th scope="col">Show In Home Page</th>
     <th></th>
@@ -40,7 +40,7 @@
             <button (click)="updateData(item.id)" class="btn btn-primary me-2">
               <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
             </button>
-            <button (click)="softDeleteData(item.id)" class="btn btn-danger" i18n="@@delete">
+            <button (click)="softDeleteData(item.id)" class="btn btn-danger">
               <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
             </button>
           </div>
@@ -61,11 +61,11 @@
       <div class="mb-2 d-flex flex-row">
         <c-form-check class="me-2 d-flex align-items-center">
           <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-          <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+          <label cFormCheckLabel for="isActive" class="me-2">Active </label>
         </c-form-check>
         <c-form-check class="me-2 d-flex align-items-center">
           <input cFormCheckInput formControlName="inHomePage" id="inHomePage"  class="me-2" type="checkbox" />
-          <label cFormCheckLabel for="inHomePage" class="me-2" i18n="@@active">Show In Home Page </label>
+          <label cFormCheckLabel for="inHomePage" class="me-2">Show In Home Page </label>
         </c-form-check>
         <div>
           <label for="priority" class="me-2">Priority: </label>
@@ -136,7 +136,7 @@
       </div>
     </c-modal-body>
     <c-modal-footer>
-      <button (click)="toggleLiveCreateModel()" cButton color="secondary" i18n="@@close">
+      <button (click)="toggleLiveCreateModel()" cButton color="secondary">
         Close
       </button>
       <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Save</button>
@@ -154,7 +154,7 @@
       <div class="mb-2 d-flex flex-row">
         <c-form-check class="me-2 d-flex align-items-center">
           <input cFormCheckInput formControlName="isActive" id="isActive1" class="me-2" type="checkbox" />
-          <label cFormCheckLabel for="isActive1" class="me-2" i18n="@@active">Active </label>
+          <label cFormCheckLabel for="isActive1" class="me-2">Active </label>
         </c-form-check>
         <c-form-check class="me-2 d-flex align-items-center">
           <input cFormCheckInput formControlName="inHomePage" id="inHomePage1" class="me-2" type="checkbox" />
@@ -229,7 +229,7 @@
       </div>
     </c-modal-body>
     <c-modal-footer>
-      <button (click)="toggleLiveUpdateModel()" cButton color="secondary" i18n="@@close">
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
         Close
       </button>
       <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">Save</button>
@@ -264,11 +264,11 @@
     (changePageIndex)="onTrashPageIndexChange($event)" (changePageSize)="onTrashPageSizeChange($event)">
     <thead class="text-nowrap text-truncate">
       <tr>
-        <th scope="col" i18n="@@thSTT">STT</th>
+        <th scope="col">STT</th>
         <th scope="col">Image</th>
         <th scope="col">NameEn</th>
         <th scope="col">NameVN</th>
-        <th scope="col" i18n="@@thActive">Active</th>
+        <th scope="col">Active</th>
         <th scope="col">Priority</th>
         <th scope="col">Show In Home Page</th>
         <th></th>
@@ -312,7 +312,7 @@
     </div>
   </c-modal-body>
   <c-modal-footer>
-    <button (click)="toggleLiveTrashModal()" cButton color="secondary" i18n="@@close">
+    <button (click)="toggleLiveTrashModal()" cButton color="secondary">
       Close
     </button>
   </c-modal-footer>

@@ -1,9 +1,9 @@
 <h1>Information Page List</h1>
 <div class="d-flex justify-content-between my-2">
     <div class="d-flex align-items-center">
-        <span class="me-2" i18n="@@filter">Filter: </span>
+        <span class="me-2">Filter: </span>
         <select class="form-control" id="slideTheme" cSelect (change)="filter($event)">
-          <option value="-1" i18n="@@all">All</option>
+          <option value="-1">All</option>
           @for (item of pageTypeList; track item.id) {
             <option [value]="item.id">{{ item.name }}</option>
           }
@@ -18,10 +18,10 @@
 (changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
   <thead class="text-nowrap text-truncate">
     <tr>
-      <th scope="col" i18n="@@thSTT">STT</th>
+      <th scope="col">STT</th>
       <th scope="col">TitleEn</th>
       <th scope="col">TitleVN</th>
-      <th scope="col" i18n="@@thActive">Active</th>
+      <th scope="col">Active</th>
       <th></th>
     </tr>
   </thead>
@@ -54,7 +54,7 @@
       <div class="mb-2 d-flex flex-row">
         <c-form-check class="me-2 d-flex align-items-center">
           <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-          <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+          <label cFormCheckLabel for="isActive" class="me-2">Active </label>
         </c-form-check>
         <div>
           <label for="priority" class="me-2">Priority: </label>
@@ -147,7 +147,7 @@
     </form>
     </c-modal-body>
       <c-modal-footer>
-        <button (click)="toggleLiveCreateModel()" cButton color="secondary" i18n="@@close">
+        <button (click)="toggleLiveCreateModel()" cButton color="secondary">
           Close
         </button>
         <button cButton (click)="onSubmitCreateForm()" [disabled]="!createForm.valid" color="primary">Save</button>
@@ -164,7 +164,7 @@
         <div class="mb-2 d-flex flex-row">
           <c-form-check class="me-2 d-flex align-items-center">
             <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-            <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+            <label cFormCheckLabel for="isActive" class="me-2">Active </label>
           </c-form-check>
           <div>
             <label for="priority" class="me-2">Priority: </label>
@@ -247,7 +247,7 @@
     </form>
     </c-modal-body>
     <c-modal-footer>
-      <button (click)="toggleLiveUpdateModel()" cButton color="secondary" i18n="@@close">
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
         Close
       </button>
       <button cButton (click)="onSubmitUpdateForm()" [disabled]="!updateForm.valid" color="primary">Save</button>
@@ -281,10 +281,10 @@
     (changePageIndex)="onTrashPageIndexChange($event)" (changePageSize)="onTrashPageSizeChange($event)">
     <thead class="text-nowrap text-truncate">
       <tr>
-        <th scope="col" i18n="@@thSTT">STT</th>
+        <th scope="col">STT</th>
         <th scope="col">TitleEn</th>
         <th scope="col">TitleVN</th>
-        <th scope="col" i18n="@@thActive">Active</th>
+        <th scope="col">Active</th>
         <th></th>
       </tr>
     </thead>
@@ -314,7 +314,7 @@
     </app-data-table>
   </c-modal-body>
   <c-modal-footer>
-    <button (click)="toggleLiveTrashModal()" cButton color="secondary" i18n="@@close">
+    <button (click)="toggleLiveTrashModal()" cButton color="secondary">
       Close
     </button>
   </c-modal-footer>

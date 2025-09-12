@@ -1,9 +1,9 @@
 <h1>Blog List</h1>
 <div class="d-flex justify-content-between my-2">
     <div class="d-flex align-items-center">
-        <span class="me-2" i18n="@@filter">Filter: </span>
+        <span class="me-2">Filter: </span>
         <select class="form-control" id="slideTheme" cSelect (change)="filter($event)">
-          <option value="-1" i18n="@@all">All</option>
+          <option value="-1">All</option>
           <option *ngFor="let item of topicList" [value]="item.id">{{ item.nameEN }}</option>
         </select>
       </div>

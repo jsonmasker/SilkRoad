@@ -1,15 +1,15 @@
-<h1 i18n="@@accountList">Account List</h1>
+<h1>Account List</h1>
 <div class="d-flex justify-content-end mb-2">
-    <button routerLink="./create" class="btn btn-success" i18n="@@create">Create</button>
+    <button routerLink="./create" class="btn btn-success">Create</button>
 </div>
 <app-data-table [data]="pageInformation"
 (changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
 <thead class="text-nowrap text-truncate">
   <tr>
-    <th scope="col" i18n="@@thSTT">STT</th>
-    <th scope="col" i18n="@@thUserName">UserName</th>
-    <th scope="col" i18n="@@thEmail">Email</th>
-    <th scope="col" i18n="@@thIsActive">IsActive</th>
+    <th scope="col">STT</th>
+    <th scope="col">UserName</th>
+    <th scope="col">Email</th>
+    <th scope="col">IsActive</th>
     <th scope="col"></th>
   </tr>
 </thead>

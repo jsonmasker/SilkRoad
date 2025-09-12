@@ -1,6 +1,6 @@
-<h1 i18n="@@roleList">Role list</h1>
+<h1>Role list</h1>
 <div class="d-flex justify-content-end mb-2">
-    <button routerLink="./create" class="btn btn-success" i18n="@@create">Create</button>
+    <button routerLink="./create" class="btn btn-success">Create</button>
 </div>
 <app-data-table [data]="pageInformation"
 (changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">

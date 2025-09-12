@@ -65,7 +65,7 @@
           </div>
           <div class="col-2 ">
             <div class="justify-content-end d-flex">
-              <button routerLink="./create" class="btn btn-success" i18n="@@create">
+              <button routerLink="./create" class="btn btn-success">
                 <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
               </button>
             </div>
@@ -99,7 +99,7 @@
           <button routerLink="./update/{{item.id}}" class="btn btn-primary me-2">
             <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
           </button>
-          <button (click)="deleteData(item.id)" class="btn btn-danger" i18n="@@delete">
+          <button (click)="deleteData(item.id)" class="btn btn-danger">
             <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
           </button>
         </div>

@@ -2,7 +2,7 @@
 @if (enumList.length > 0) {
   <div class="d-flex justify-content-end my-2">
     <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2"><svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg></button>
-    <button (click)="toggleLiveCreateModel()" class="btn btn-success" i18n="@@create"><svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg></button>
+    <button (click)="toggleLiveCreateModel()" class="btn btn-success"><svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg></button>
   </div>
 }
 <app-data-table [data]="pageInformation"
@@ -10,7 +10,7 @@
 
   <thead class="text-nowrap text-truncate">
     <tr>
-      <th scope="col" i18n="@@thSTT">STT</th>
+      <th scope="col">STT</th>
       <th scope="col">Label</th>
       <th scope="col">Name</th>
       <th></th>
@@ -77,7 +77,7 @@
     </form>
     </c-modal-body>
       <c-modal-footer>
-        <button (click)="toggleLiveCreateModel()" cButton color="secondary" i18n="@@close">
+        <button (click)="toggleLiveCreateModel()" cButton color="secondary">
           Close
         </button>
         <button cButton (click)="onSubmitCreateForm()" [disabled]="!createForm.valid" color="primary">Save</button>
@@ -114,7 +114,7 @@
     </form>
     </c-modal-body>
     <c-modal-footer>
-      <button (click)="toggleLiveUpdateModel()" cButton color="secondary" i18n="@@close">
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
         Close
       </button>
       <button cButton (click)="onSubmitUpdateForm()" [disabled]="!updateForm.valid" color="primary">Save</button>
@@ -149,7 +149,7 @@
     (changePageIndex)="onTrashPageIndexChange($event)" (changePageSize)="onTrashPageSizeChange($event)">
     <thead class="text-nowrap text-truncate">
       <tr>
-        <th scope="col" i18n="@@thSTT">STT</th>
+        <th scope="col">STT</th>
         <th scope="col">Label</th>
         <th scope="col">Name</th>
         <th></th>
@@ -180,7 +180,7 @@
     </app-data-table>
   </c-modal-body>
   <c-modal-footer>
-    <button (click)="toggleLiveTrashModal()" cButton color="secondary" i18n="@@close">
+    <button (click)="toggleLiveTrashModal()" cButton color="secondary">
       Close
     </button>
   </c-modal-footer>

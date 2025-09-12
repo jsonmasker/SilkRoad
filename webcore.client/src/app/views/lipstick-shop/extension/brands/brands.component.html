@@ -55,7 +55,7 @@
       <div class="mb-2 d-flex flex-row">
         <c-form-check class="me-2 d-flex align-items-center">
           <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-          <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+          <label cFormCheckLabel for="isActive" class="me-2">Active </label>
         </c-form-check>
         <div>
           <label for="priority" class="me-2">Priority: </label>
@@ -107,7 +107,7 @@
       </div>
     </c-modal-body>
     <c-modal-footer>
-      <button (click)="toggleLiveCreateModel()" cButton color="secondary" i18n="@@close">
+      <button (click)="toggleLiveCreateModel()" cButton color="secondary">
         Close
       </button>
       <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Save</button>
@@ -125,7 +125,7 @@
       <div class="mb-2 d-flex flex-row">
         <c-form-check class="me-2 d-flex align-items-center">
           <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-          <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+          <label cFormCheckLabel for="isActive" class="me-2">Active </label>
         </c-form-check>
         <div>
           <label for="priority" class="me-2">Priority: </label>
@@ -177,7 +177,7 @@
       </div>
     </c-modal-body>
     <c-modal-footer>
-      <button (click)="toggleLiveUpdateModel()" cButton color="secondary" i18n="@@close">
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
         Close
       </button>
       <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">Save</button>

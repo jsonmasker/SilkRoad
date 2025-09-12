@@ -1,6 +1,6 @@
 <h1>Action List</h1>
 <div class="d-flex justify-content-end mb-2" *ngIf="eActionList.length > 0">
-  <button (click)="toggleLiveCreateModel()" class="btn btn-success" i18n="@@create">Create</button>
+  <button (click)="toggleLiveCreateModel()" class="btn btn-success">Create</button>
 </div>
 <app-data-table [data]="pageInformation"
 (changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
@@ -71,7 +71,7 @@
       </div>
     </c-modal-body>
     <c-modal-footer>
-      <button (click)="toggleLiveCreateModel()" cButton color="secondary" i18n="@@close">
+      <button (click)="toggleLiveCreateModel()" cButton color="secondary">
         Close
       </button>
       <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Save</button>
@@ -110,7 +110,7 @@
       </div>
     </c-modal-body>
     <c-modal-footer>
-      <button (click)="toggleLiveUpdateModel()" cButton color="secondary" i18n="@@close">
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
         Close
       </button>
       <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">Save</button>

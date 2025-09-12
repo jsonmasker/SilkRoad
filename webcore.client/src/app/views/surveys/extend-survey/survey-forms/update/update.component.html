@@ -5,7 +5,7 @@
             <div class="mb-2 d-flex">
                 <c-form-check class="me-2 d-flex align-items-center">
                   <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-                  <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Active </label>
+                  <label cFormCheckLabel for="isActive" class="me-2">Active </label>
                 </c-form-check>
                 <c-form-check class="me-2 d-flex align-items-center">
                   <input cFormCheckInput formControlName="isPeriodic" id="isPeriodic" class="me-2" type="checkbox" />
@@ -107,9 +107,9 @@
             </c-accordion>
             <div class="d-flex justify-content-end">
                 <button cButton type="submit" type="submit" [disabled]="!updateForm.valid"
-                    i18n="@@submit">Submit</button>
+                   >Submit</button>
                 <button cButton type="button" routerLink="/surveys/extend-survey/survey-forms" class="ms-2 btn-info"
-                    i18n="@@backToList">Back to list</button>
+                   >Back to list</button>
             </div>
         </form>
     </c-card-body>

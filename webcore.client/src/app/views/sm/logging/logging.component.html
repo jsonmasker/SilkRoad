@@ -15,13 +15,13 @@
               <div class="row me-2">
                 <div cFormFloating class="col-3">
                   <select class="form-control" id="action" cSelect formControlName="action">
-                    <option value="-1" i18n="@@allAction">All Action</option>
+                    <option value="-1">All Action</option>
                     <option *ngFor="let item of actions" [value]="item.value">{{item.key}}</option>
                   </select>
                 </div>
                 <div cFormFloating class="col-3">
                   <select class="form-control" id="controller" cSelect formControlName="controller">
-                    <option value="-1" i18n="@@allController">All Controller</option>
+                    <option value="-1">All Controller</option>
                     <option *ngFor="let item of controllers" [value]="item.value">{{item.key}}</option>
                   </select>
                 </div>
@@ -32,7 +32,7 @@
                   <input type="date" class="form-control" placeholder="To" cInput formControlName="endDate">
                 </div>
               </div>
-              <button class="btn btn-primary" type="submit" type="submit" i18n="@@find">Find</button>
+              <button class="btn btn-primary" type="submit" type="submit">Find</button>
             </form>
           </div>
         </div>
@@ -45,12 +45,12 @@
   (changePageSize)="onPageSizeChange($event)">
   <thead class="text-nowrap text-truncate">
     <tr>
-      <th scope="col" i18n="@@thSTT">STT</th>
-      <th scope="col" i18n="@@thUserName">UserName</th>
-      <th scope="col" i18n="@@thControllerName">ControllerName</th>
-      <th scope="col" i18n="@@thActionName">ActionName</th>
-      <th scope="col" i18n="@@thStatus">Status</th>
-      <th scope="col" i18n="@@thCreatedOn">CreatedOn</th>
+      <th scope="col">STT</th>
+      <th scope="col">UserName</th>
+      <th scope="col">ControllerName</th>
+      <th scope="col">ActionName</th>
+      <th scope="col">Status</th>
+      <th scope="col">CreatedOn</th>
       <th></th>
     </tr>
   </thead>
@@ -64,7 +64,7 @@
       <td>{{ item.createdDate | date: "dd/MM/yyy hh:mm:ss" }}</td>
       <td>
         <div class="d-flex justify-content-end">
-          <button (click)="updateData(item.id)" class="btn btn-primary me-2" i18n="@@detail">Detail</button>
+          <button (click)="updateData(item.id)" class="btn btn-primary me-2">Detail</button>
         </div>
       </td>
     </tr>
@@ -74,40 +74,40 @@
 <c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)"
   id="verticallyCenteredUpdateModal" size="lg">
   <c-modal-header>
-    <h5 cModalTitle i18n="@@information">Information</h5>
+    <h5 cModalTitle>Information</h5>
     <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
   </c-modal-header>
   <form cForm [formGroup]="updateForm">
     <c-modal-body>
       <div class="row mb-2">
         <div class="col-6">
-          <label cLabel="" for="userName" class="me-2" i18n="@@userName">User Name: </label>
+          <label cLabel="" for="userName" class="me-2">User Name: </label>
           <input cFormControl formControlName="userName" class="me-2" readonly [disabled]="true">
         </div>
         <div class="col-6">
-          <label cLabel for="createdDate" class="me-2" i18n="@@createdOn">CreatedOn: </label>
+          <label cLabel for="createdDate" class="me-2">CreatedOn: </label>
           <input cFormControl formControlName="createdDate" class="me-2" readonly [disabled]="true">
         </div>
       </div>
       <div class="mb-2 row">
         <div class="col-6">
-          <label cLabel for="actionName" i18n="@@actionName">Action Name:</label>
+          <label cLabel for="actionName">Action Name:</label>
           <input cFormControl formControlName="actionName" type="text" class="me-2" readonly [disabled]="true">
         </div>
         <div class="col-6">
-          <label cLabel for="controllerName" i18n="@@controllerName">Controller Name: </label>
+          <label cLabel for="controllerName">Controller Name: </label>
           <input cFormControl formControlName="controllerName" type="text" class="me-2" readonly [disabled]="true">
         </div>
       </div>
       <div class="mb-2 row">
         <div class="col-12">
-          <label cLabel for="details" i18n="@@detail">Detail: </label>
+          <label cLabel for="details">Detail: </label>
           <textarea cFormControl formControlName="details" rows="10"></textarea>
         </div>
       </div>
     </c-modal-body>
     <c-modal-footer>
-      <button (click)="toggleLiveUpdateModel()" cButton color="secondary" i18n="@@close">
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
         Close
       </button>
     </c-modal-footer>

@@ -1,4 +1,4 @@
-<h1 i18n="@@updateAccount">Update Account</h1>
+<h1>Update Account</h1>
 <c-card>
     <c-card-body>
         <form cForm [formGroup]="formData" (ngSubmit)="onSubmit()">
@@ -7,18 +7,18 @@
             <div class="mb-2">
                 <c-form-check>
                     <input cFormCheckInput formControlName="isActive" id="isActive" type="checkbox" class="me-2" />
-                    <label cFormCheckLabel for="isActive" i18n="@@active">Active</label>
+                    <label cFormCheckLabel for="isActive">Active</label>
                 </c-form-check>
             </div>
             <div class="mb-3 row">
                 <div class="col-12 col-sm-4">
-                    <label cLabel for="roleId" i18n="@@selectRoleHaveSpanChild">Select Role: <span class="text-danger">(*)</span></label>
+                    <label cLabel for="roleId">Select Role: <span class="text-danger">(*)</span></label>
                     <select cFormControl formControlName="roleId" cSelect>
-                        <option value="-1" i18n="@@selectRole">Select Role</option>
+                        <option value="-1">Select Role</option>
                         <option *ngFor="let item of roles" [value]="item.id">{{ item.name }}</option>
                     </select>
                     <div *ngIf="roleId?.invalid && (roleId?.dirty || roleId?.touched)" class="text-danger">
-                        <div *ngIf="roleId?.hasError('min')" i18n="@@roleRequiredWarning">
+                        <div *ngIf="roleId?.hasError('min')">
                             Select a role, please!
                         </div>
                     </div>
@@ -27,17 +27,17 @@
                     </div>
                 </div>
                 <div class="col-12 col-sm-4">
-                    <label cLabel for="mallId" i18n="@@selectMallLabel">Select mall:</label>
+                    <label cLabel for="mallId">Select mall:</label>
                     <select cFormControl formControlName="mallId" cSelect>
-                        <option value="-1" i18n="@@selectMall">Select Mall</option>
+                        <option value="-1">Select Mall</option>
                         <!-- <option *ngFor="let slideTheme of slideThemes" [value]="slideTheme.id">{{ slideTheme.title }}
                 </option> -->
                     </select>
                 </div>
                 <div class="col-12 col-sm-4">
-                    <label cLabel for="officeId" i18n="@@selectOfficeLabel">Select office:</label>
+                    <label cLabel for="officeId">Select office:</label>
                     <select cFormControl formControlName="officeId" cSelect>
-                        <option value="-1" i18n="@@selectOffice">Select office</option>
+                        <option value="-1">Select office</option>
                         <!-- <option *ngFor="let slideTheme of slideThemes" [value]="slideTheme.id">{{ slideTheme.title }}
                 </option> -->
                     </select>
@@ -45,13 +45,13 @@
             </div>
             <div class="row mb-3">
                 <div class="col-12 col-sm-6">
-                    <label cLabel for="email" i18n="@@emailHaveSpanChild">Email:<span class="text-danger">(*)</span></label>
+                    <label cLabel for="email">Email:<span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="email" type="text" readonly class="disabled" />
                     <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger">
-                        <div *ngIf="email?.hasError('required')" i18n="@@emailRequiredWarning">
+                        <div *ngIf="email?.hasError('required')">
                             Enter your email, please!
                         </div>
-                        <div *ngIf="email?.hasError('email')" i18n="@@emailInvalidWarning">
+                        <div *ngIf="email?.hasError('email')">
                             Email is invalid!
                         </div>
                     </div>
@@ -60,10 +60,10 @@
                       </div>
                 </div>
                 <div class="col-12 col-sm-6">
-                    <label cLabel for="phoneNumber" i18n="@@phoneNumberLabel">PhoneNumber:</label>
+                    <label cLabel for="phoneNumber">PhoneNumber:</label>
                     <input cFormControl formControlName="phoneNumber" type="text" maxlength="10" />
                     <div *ngIf="phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)" class="text-danger">
-                        <div *ngIf="phoneNumber?.hasError('phoneNumber')" class="text-danger" i18n="@@phoneNumberInvalidWarning">
+                        <div *ngIf="phoneNumber?.hasError('phoneNumber')" class="text-danger">
                             Phone number must be vietnamese phone number!
                         </div>
                     </div>
@@ -75,7 +75,7 @@
             </div>
             <div class="row mb-3">
                 <div class="col-12 col-sm-6">
-                    <label cLabel for="userName" i18n="@@userNameHaveSpanChild">UserName:<span class="text-danger">(*)</span></label>
+                    <label cLabel for="userName">UserName:<span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="userName" type="text" readonly  class="disabled"/>
                     <input cFormControl formControlName="password" type="hidden" readonly/>
                     <!-- <div *ngIf="userName?.invalid && (userName?.dirty || userName?.touched)" class="text-danger">
@@ -93,8 +93,8 @@
             </div>
 
             <div class="d-flex justify-content-end">
-                <button cButton type="submit" type="submit" [disabled]="!formData.valid" i18n="@@submit">Submit</button>
-                <button cButton type="button" routerLink="/accounts" class="ms-2 btn-info" i18n="@@backToList">Back to list</button>
+                <button cButton type="submit" type="submit" [disabled]="!formData.valid">Submit</button>
+                <button cButton type="button" routerLink="/accounts" class="ms-2 btn-info">Back to list</button>
             </div>
         </form>
     </c-card-body>
