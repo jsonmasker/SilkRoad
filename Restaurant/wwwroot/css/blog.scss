@@ -1,0 +1,28 @@
+﻿@import "VariableGlobal.scss";
+/*#region banner*/
+.blogBanner {
+    background-image: url('../assets/images/blog/banner.jpg');
+}
+/*#endregion*/
+
+/*#region blog standard*/
+.blogStandard {
+    padding-top: 150px;
+    padding-bottom: 113px;
+
+    @include respond(map-get($breakPoint,"lg")) {
+        padding-top: 110px;
+        padding-bottom: 90px;
+    }
+
+    @include respond(map-get($breakPoint,"md")) {
+        padding-top: 90px;
+        padding-bottom: 80px;
+    }
+
+    @include respond(map-get($breakPoint,"sm")) {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+}
+/*#endregion*/

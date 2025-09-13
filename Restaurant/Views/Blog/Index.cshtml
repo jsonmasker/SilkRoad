@@ -1,4 +1,53 @@
 ﻿@{
 	ViewData["Title"] = "Blog";
 }
-blog
+<section class="banner-background blogBanner">
+	<div class="section-header">
+		<h1 class="text-white">Blog Standrd</h1>
+		<span>~ The things you want to find ~</span>
+	</div>
+</section>
+
+<section class="blogStandard">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9">
+				<div class="blogPost">
+					@for (int i = 0; i < 6; i++)
+					{
+						<div class="post">
+							<div class="postThumb">
+								<a href=""><img src="~/assets/images/blog/blog-standard-1.jpg" alt="" /></a>
+								<div class="postDate">
+									<div class="inner">
+										<span class="date">15</span>
+										<span class="month">Aug</span>
+									</div>
+								</div>
+							</div>
+							<div class="postBody">
+								<h4>
+									<a href="#">
+										Various versions have
+									</a>
+								</h4>
+								<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+								<div class="end">
+									<div class="postMeta">
+										<div class="postAuthor">
+											<a href="#" class="thumb"><img src="~/assets/images/blog/author-avatar-1.png" /></a>
+											&nbsp;By&nbsp;
+											<a href="#" class="name">Andrea Silva</a>
+										</div>
+									</div>
+									<a href="#" class="readMore">Read More</a>
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
+			<div class="col-md-3"></div>
+		</div>
+	</div>
+</section>
