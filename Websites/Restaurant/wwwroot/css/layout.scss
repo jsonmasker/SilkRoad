@@ -657,7 +657,7 @@ fadeInDown animation {
 }
 /*#endregion*/
 
-html {
+/*html {
     font-size: 14px;
 }
 
@@ -665,7 +665,7 @@ html {
     html {
         font-size: 16px;
     }
-}
+}*/
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
@@ -684,124 +684,3 @@ html {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
-
-/*#region Banner*/
-.banner-background {
-    background-attachment: fixed;
-    background-position: top;
-    height: 550px;
-    position: relative;
-    text-align: center;
-    background-repeat: no-repeat;
-
-    @include respond(map-get($breakPoint,"lg")) {
-        height: 450px;
-    }
-
-    @include respond(map-get($breakPoint,"md")) {
-        height: 350px;
-    }
-}
-
-.banner-background .section-header {
-    position: absolute;
-    padding: 0 15px;
-    position: absolute;
-    left: 50%;
-    margin-bottom: 0;
-    transform: translateX(-50%);
-    -webkit-transform: translateX(-50%);
-    -moz-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
-    bottom: 35%;
-    width: 100%;
-
-    @include respond(map-get($breakPoint,"md")) {
-        bottom: 50%;
-        transform: translate(-50%, 50%);
-    }
-
-    @include respond(map-get($breakPoint,"sm")) {
-        width: 100%;
-    }
-}
-
-.section-header {
-    text-align: center;
-    margin-bottom: 70px;
-
-    @include respond(map-get($breakPoint,"md")) {
-        margin-bottom: 50px;
-    }
-}
-.section-header h1, .section-header h2 {
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    font-family: $fontRalewayBold;
-}
-
-.section-header span {
-    display: block;
-    color: #cdaa7c;
-    font-family: $fontSatisfyRegular;
-    font-size: 30px;
-}
-
-@media (min-width: 1400px) {
-    .container {
-        max-width: 1200px;
-    }
-}
-
-@media (min-width: 1200px) {
-    .container {
-        max-width: 1140px;
-    }
-}
-/*#endregion */
-
-/*#region general*/
-.section-primary {
-    padding-top: 139px;
-    padding-bottom: 116px;
-
-    @include respond(map-get($breakPoint,"lg")) {
-        padding-top: 110px;
-        padding-bottom: 90px;
-    }
-
-    @include respond(map-get($breakPoint,"md")) {
-        padding-top: 90px;
-        padding-bottom: 80px;
-    }
-
-    @include respond(map-get($breakPoint,"sm")) {
-        padding-top: 50px;
-        padding-bottom: 50px;
-    }
-}
-/*#endregion*/
-
-/*#region button*/
-.au-btn.medium {
-    width: 174px;
-}
-.au-btn {
-    display: inline-flex;
-    display: -webkit-inline-box;
-    display: -webkit-inline-flex;
-    width: 152px;
-    height: 42px;
-    justify-content: center;
-    align-items: center;
-    text-transform: uppercase;
-    color: $color_white_fff;
-    border: none;
-    overflow: hidden;
-    cursor: pointer;
-    background: none;
-    background: $color_dark_grey_333333;
-    border-radius: 21px;
-}
-/*#endregion*/

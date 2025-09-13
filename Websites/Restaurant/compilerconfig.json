@@ -38,5 +38,9 @@
   {
     "outputFile": "wwwroot/css/VariableGlobal.css",
     "inputFile": "wwwroot/css/VariableGlobal.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/blog.css",
+    "inputFile": "wwwroot/css/blog.scss"
   }
 ]
