@@ -1058,6 +1058,39 @@ html {
   text-align: start;
 }
 
+/*#region click to top*/
+#clickToTop {
+  position: fixed;
+  text-align: center;
+  right: 80px;
+  bottom: 62px;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 99;
+  height: 37px;
+  width: 39px;
+  line-height: 37px;
+  background: #CDAA7C;
+  border: 1px solid rgba(205, 170, 124, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
+  z-index: 9999;
+}
+@media (max-width: 1500px) {
+  #clickToTop {
+    right: 5%;
+    bottom: 5%;
+  }
+}
+
+#clickToTop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/*#endregion*/
 @font-face {
   font-family: "Satisfy Regular";
   src: url("../assets/fonts/Satisfy/Satisfy-Regular.ttf");
@@ -1120,6 +1153,49 @@ html {
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+}
+.homePage .homeBannerV1 .banner #bannerEffect {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+@keyframes reveal {
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+.homePage .homeBannerV1 .banner .bannerTile {
+  position: absolute;
+  animation: reveal 1.2s ease forwards;
+  clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+  background-repeat: no-repeat;
+  background-size: 600% 600%;
+  transform: scale(1.01);
+  backface-visibility: hidden;
+  will-change: transform, clip-path;
+}
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .homePage .homeBannerV1 .banner .intro {
   width: 100%;
@@ -1133,6 +1209,9 @@ html {
   align-items: center;
   color: #fff;
 }
+.homePage .homeBannerV1 .banner .intro .subTitle, .homePage .homeBannerV1 .banner .intro .title, .homePage .homeBannerV1 .banner .intro img {
+  opacity: 0;
+}
 .homePage .homeBannerV1 .banner .intro .title {
   font-weight: 400;
   font-size: 99px;
@@ -1144,6 +1223,18 @@ html {
 }
 .homePage .homeBannerV1 .banner .intro img {
   max-width: 320px;
+}
+.homePage .homeBannerV1 .banner .intro.animate .subTitle {
+  animation: fadeSlideDown 0.8s ease-out forwards;
+  animation-delay: 0.2s;
+}
+.homePage .homeBannerV1 .banner .intro.animate .title {
+  animation: fadeSlideDown 0.8s ease-out forwards;
+  animation-delay: 0.6s;
+}
+.homePage .homeBannerV1 .banner .intro.animate img {
+  animation: fadeSlideUp 0.8s ease-out forwards;
+  animation-delay: 1s;
 }
 .homePage .homeBannerV1 .subBanner {
   width: 100%;

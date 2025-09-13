@@ -6,7 +6,8 @@
     @* @await Html.PartialAsync("~/Views/Shared/PartialViews/_HomeBannerV1PartialView.cshtml") *@
     <section class="homeBannerV1">
         <div class="banner">
-            <img src="~/assets/images/home/slideshow-1.jpg" alt="banner" class="w-100" />
+            <div id="bannerEffect"></div>
+            @* <img src="~/assets/images/home/slideshow-1.jpg" alt="banner" class="w-100" /> *@
             <div class="intro text-uppercase">
                 <h6 class="subTitle text-uppercase">
                     Because you deserve to enjoy the best
@@ -210,3 +211,49 @@
         </div>
     </section>
 </div>
+
+<script>
+    const rows = 6;
+    const cols = 6;
+    const container = document.getElementById('bannerEffect');
+    const imageUrl = '@Url.Content("~/assets/images/home/slideshow-1.jpg")';
+    const intro = document.querySelector('.intro');
+
+    const tileWidth = 100 / cols;
+    const tileHeight = 100 / rows;
+    const totalTiles = rows * cols;
+    let tilesLoaded = 0;
+
+    function checkAllTilesLoaded() {
+        tilesLoaded++;
+        if (tilesLoaded === totalTiles) {
+            intro.classList.add('animate');
+        }
+    }
+
+    for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+            const tile = document.createElement('div');
+            tile.classList.add('bannerTile');
+
+            tile.style.width = `${tileWidth}%`;
+            tile.style.height = `${tileHeight}%`;
+            tile.style.left = `${col * tileWidth}%`;
+            tile.style.top = `${row * tileHeight}%`;
+
+            tile.style.backgroundImage = `url('${imageUrl}')`;
+            tile.style.backgroundSize = `${cols * 100}% ${rows * 100}%`;
+            tile.style.backgroundPosition = `${(col / (cols - 1)) * 100}% ${(row / (rows - 1)) * 100}%`;
+
+            const delay = (row + col) * 100;
+
+            setTimeout(() => {
+                tile.classList.add('show');
+                checkAllTilesLoaded();
+            }, delay);
+
+            container.appendChild(tile);
+        }
+    }
+</script>
+
