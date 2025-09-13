@@ -1,12 +1,12 @@
 <h1>Survey Form List</h1>
 <div class="d-flex justify-content-end mb-4">
-    <button routerLink="./create" class="btn btn-success" i18n="@@create">Create</button>
+    <button routerLink="./create" class="btn btn-success">Create</button>
 </div>
 <app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
     (changePageSize)="onPageSizeChange($event)">
     <thead class="text-nowrap text-truncate">
         <tr>
-            <th scope="col" i18n="@@thSTT">STT</th>
+            <th scope="col">STT</th>
             <th scope="col">NameEN</th>
             <th scope="col">NameVN</th>
             <th scope="col">Active</th>

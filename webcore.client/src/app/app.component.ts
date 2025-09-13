@@ -3,15 +3,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { delay, filter, map, tap } from 'rxjs/operators';
-
 import { ColorModeService } from '@coreui/angular';
 import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from './icons/icon-subset';
 import { freeSet } from '@coreui/icons';
+import { ToastNotificationComponent } from '@components/generals/toast-notification/toast-notification.component';
+import { LoadingComponent } from '@components/generals/loading/loading.component';
+
 @Component({
     selector: 'app-root',
-    template: '<router-outlet />',
-    imports: [RouterOutlet]
+    template: '<router-outlet /> <app-toast-notification/> <app-loading/>',
+    imports: [RouterOutlet, ToastNotificationComponent, LoadingComponent]
 })
 export class AppComponent implements OnInit {
   title = 'Admin Template';

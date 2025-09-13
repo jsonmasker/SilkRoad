@@ -9,9 +9,7 @@ import { Component } from '@angular/core';
     <path d="M2 11.98C8.09 1.31996 15.91 1.32996 22 11.98" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M22 12.01C15.91 22.67 8.09 22.66 2 12.01" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-  `,
-  styles: [``],
-  standalone: true
+  `
 })
 export class EyeIconComponent {
 }

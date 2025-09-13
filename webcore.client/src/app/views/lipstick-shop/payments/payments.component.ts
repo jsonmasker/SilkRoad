@@ -9,10 +9,10 @@ import { IconDirective } from '@coreui/icons-angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { baseUrl, EColors, EPaymentStatus, EPaymentTypes } from '@common/global';
-import { DataTableComponent } from "@components/data-table/data-table.component";
 import { PaymentService } from '@services/lipstick-shop-services/payment.service';
 import { Params } from '@angular/router';
 import { PaymentViewModel } from '@models/lipstick-shop-models/payment.model';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 @Component({
   selector: 'app-payments',
   imports: [ModalBodyComponent, NgFor, FormControlDirective, FormLabelDirective,

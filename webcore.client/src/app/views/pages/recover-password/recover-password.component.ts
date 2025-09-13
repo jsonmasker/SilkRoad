@@ -2,14 +2,13 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { IconDirective } from '@coreui/icons-angular';
 import { InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective } from '@coreui/angular';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators  } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
-import { ParticleCanvasComponent } from '@components/particle-canvas/particle-canvas.component';
 import { NgIf } from '@angular/common';
 import { MyAccountService } from '@services/system-services/my-account.service';
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
 import { timer } from 'rxjs';
+import { ParticleCanvasComponent } from '@components/generals/particle-canvas/particle-canvas.component';
 
 @Component({
   selector: 'app-recover-password',

@@ -6,9 +6,9 @@ import { Params } from '@angular/router';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { QuestionGroupModel } from '@models/survey-models/question-group.model';
 import { QuestionGroupService } from '@services/survey-services/question-group.service';
-import { DataTableComponent } from "@components/data-table/data-table.component";
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 @Component({
   selector: 'app-question-groups',

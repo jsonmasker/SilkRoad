@@ -7,10 +7,10 @@ import { IconDirective } from '@coreui/icons-angular';
 import { HomeBannerViewModel } from '@models/lipstick-shop-models/home-banner.model';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { HomeBannerService } from '@services/lipstick-shop-services/home-banner.service';
-import { DataTableComponent } from "@components/data-table/data-table.component";
 import { ToastService } from '@services/helper-services/toast.service';
 import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload } from '@coreui/icons';
 import { CommonModule } from '@angular/common';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 
 @Component({

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Params, RouterLink } from '@angular/router';
 import { EOrderStatus, EPaymentStatus, EPaymentTypes } from '@common/global';
-import { DataTableComponent } from '@components/data-table/data-table.component';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 import { OrderModel } from '@models/lipstick-shop-models/order.model';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { OrderService } from '@services/lipstick-shop-services/order.service';

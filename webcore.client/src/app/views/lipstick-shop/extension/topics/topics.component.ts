@@ -7,9 +7,9 @@ import { TopicService } from '@services/lipstick-shop-services/topic.service';
 import { IconDirective } from '@coreui/icons-angular';
 import { cilCloudUpload, cilPlus, cilTrash, cilPen, cilLoopCircular } from '@coreui/icons';
 import { baseUrl, EColors } from '@common/global';
-import { DataTableComponent } from "../../../../core/components/data-table/data-table.component";
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 @Component({
   selector: 'app-topics',
   imports: [ModalBodyComponent, CommonModule, FormControlDirective, FormLabelDirective,

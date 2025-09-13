@@ -2,7 +2,6 @@ import { CommonModule, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Params, RouterLink } from '@angular/router';
-import { DataTableComponent } from '@components/data-table/data-table.component';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormSelectDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective, TemplateIdDirective } from '@coreui/angular';
 import { BrandViewModel } from '@models/lipstick-shop-models/brand.model';
 import { CategoryViewModel } from '@models/lipstick-shop-models/category.model';
@@ -19,6 +18,7 @@ import { SizeService } from '@services/lipstick-shop-services/size.service';
 import { SubCategoryService } from '@services/lipstick-shop-services/sub-category.service';
 import { cilPlus, cilTrash, cilPen } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 @Component({
   selector: 'app-index',
@@ -28,7 +28,7 @@ import { IconDirective } from '@coreui/icons-angular';
     AccordionItemComponent,
     TemplateIdDirective,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent,
-    FormSelectDirective,DataTableComponent],
+    FormSelectDirective, DataTableComponent],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })

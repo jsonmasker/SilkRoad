@@ -8,7 +8,7 @@ import { IconDirective } from '@coreui/icons-angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { baseUrl, EColors } from '@common/global';
-import { DataTableComponent } from "@components/data-table/data-table.component";
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 @Component({
   selector: 'app-brands',

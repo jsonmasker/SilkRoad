@@ -2,7 +2,7 @@ import { DatePipe, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Params, RouterLink } from '@angular/router';
-import { DataTableComponent } from '@components/data-table/data-table.component';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 import { FormSelectDirective } from '@coreui/angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ParticipantModel } from '@models/survey-models/participant.model';

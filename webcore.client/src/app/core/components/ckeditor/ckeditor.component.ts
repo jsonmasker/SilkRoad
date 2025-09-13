@@ -18,22 +18,22 @@ const cloudConfig = {
 
 @Component({
 	selector: 'app-ckeditor',
-	  standalone: true,
-	  imports: [CommonModule, CKEditorModule, NgIf],
-		templateUrl: './ckeditor.component.html',
-		styleUrl: './ckeditor.component.scss',
-	  encapsulation: ViewEncapsulation.None
-  })
+	standalone: true,
+	imports: [CommonModule, CKEditorModule, NgIf],
+	templateUrl: './ckeditor.component.html',
+	styleUrl: './ckeditor.component.scss',
+	encapsulation: ViewEncapsulation.None
+})
 export class CkeditorComponent implements OnInit {
 	public Editor: typeof ClassicEditor | null = null;
 	public config: EditorConfig | null = null;
 	@Input() initialData: string = '';
 	@Output() result: EventEmitter<string> = new EventEmitter<string>();
 
-	public onChange( { editor }: ChangeEvent ) {
-        const data = editor.getData();
-        this.result.emit(data);
-    }
+	public onChange({ editor }: ChangeEvent) {
+		const data = editor.getData();
+		this.result.emit(data);
+	}
 	public ngOnInit(): void {
 		loadCKEditorCloud(cloudConfig).then(this._setupEditor.bind(this));
 	}
@@ -202,7 +202,7 @@ export class CkeditorComponent implements OnInit {
 					'resizeImage'
 				]
 			},
-			initialData:'',
+			initialData: '',
 			licenseKey: LICENSE_KEY,
 			link: {
 				addTargetToExternalLinks: true,

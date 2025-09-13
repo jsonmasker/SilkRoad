@@ -13,7 +13,7 @@ import { OrderDetailModel } from '@models/lipstick-shop-models/order.model';
 import { DistrictModel, ProvinceModel } from '@models/province.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { OrderService } from '@services/lipstick-shop-services/order.service';
-import { SelectSearchV1Component } from "@components/select-search-v1/select-search-v1.component";
+
 import { ProvinceService } from '@services/system-services/province.service';
 
 @Component({
@@ -23,8 +23,7 @@ import { ProvinceService } from '@services/system-services/province.service';
     FormControlDirective, ButtonDirective, RouterLink, CardComponent, CardBodyComponent, NgFor,
     ReactiveFormsModule, AccordionButtonDirective, AccordionComponent,
     AccordionItemComponent, TemplateIdDirective,
-    TableDirective, NgIf,
-    SelectSearchV1Component, DecimalPipe
+    TableDirective, NgIf, DecimalPipe
   ],
   templateUrl: './update.component.html',
   styleUrl: './update.component.scss'

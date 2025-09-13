@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { baseUrl, EColors } from '@common/global';
 import { CkeditorComponent } from '@components/ckeditor/ckeditor.component';
-import { DataTableComponent } from '@components/data-table/data-table.component';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 import { ModalBodyComponent, FormControlDirective, FormLabelDirective, ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, FormSelectDirective, ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent } from '@coreui/angular';
 import { cilCloudUpload, cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';

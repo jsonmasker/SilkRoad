@@ -10,8 +10,8 @@ import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { CategoryService } from '@services/lipstick-shop-services/category.service';
 import { SubCategoryService } from '@services/lipstick-shop-services/sub-category.service';
-import { DataTableComponent } from "@components/data-table/data-table.component";
 import { cilPlus, cilTrash, cilPen, cilLoopCircular } from '@coreui/icons';
+import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 @Component({
   selector: 'app-sub-categories',
