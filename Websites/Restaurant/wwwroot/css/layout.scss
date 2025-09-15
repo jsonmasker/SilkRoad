@@ -14,11 +14,20 @@
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
 
+    @include respond(map-get($breakPoint,"md")) {
+        position: unset;
+        padding: unset;
+    }
+
     .headerDesktop {
         display: flex;
         justify-content: space-between;
         align-items: center;
         color: #fff;
+
+        @include respond(map-get($breakPoint,"md")) {
+            display: none;
+        }
 
         .logoImage {
             max-width: 70px;
@@ -69,6 +78,47 @@
         }
     }
 
+    .headerMobile {
+        display: none;
+        background: $color_dark_grey_333333;
+        padding: 15px 0;
+
+        @include respond(map-get($breakPoint,"md")) {
+            display: block;
+        }
+
+        .heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .toggleHeader {
+                display: inline-block;
+
+                span {
+                    display: block;
+                    width: 30px;
+                    height: 4px;
+                    background-color: $color_yellow_CDAA7C;
+                    margin: 5px 0px;
+                }
+            }
+
+            .logoImage {
+                max-width: 8%;
+
+                @include respond(map-get($breakPoint,"sm")) {
+                    max-width: 15%;
+                }
+            }
+
+            .language {
+                color: $color_white_fff;
+                font-weight: 600;
+                text-decoration: none;
+            }
+        }
+    }
 
     .headerMain {
         max-width: $maxWidthContent;

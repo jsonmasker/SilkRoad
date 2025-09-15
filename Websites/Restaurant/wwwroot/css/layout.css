@@ -48,11 +48,22 @@
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
+@media only screen and (width < 992px) {
+  .headerContainer {
+    position: unset;
+    padding: unset;
+  }
+}
 .headerContainer .headerDesktop {
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: #fff;
+}
+@media only screen and (width < 992px) {
+  .headerContainer .headerDesktop {
+    display: none;
+  }
 }
 .headerContainer .headerDesktop .logoImage {
   max-width: 70px;
@@ -91,6 +102,44 @@
 .headerContainer .headerDesktop .language {
   color: #fff;
   font-weight: 600;
+}
+.headerContainer .headerMobile {
+  display: none;
+  background: #333333;
+  padding: 15px 0;
+}
+@media only screen and (width < 992px) {
+  .headerContainer .headerMobile {
+    display: block;
+  }
+}
+.headerContainer .headerMobile .heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.headerContainer .headerMobile .heading .toggleHeader {
+  display: inline-block;
+}
+.headerContainer .headerMobile .heading .toggleHeader span {
+  display: block;
+  width: 30px;
+  height: 4px;
+  background-color: #CDAA7C;
+  margin: 5px 0px;
+}
+.headerContainer .headerMobile .heading .logoImage {
+  max-width: 8%;
+}
+@media only screen and (width < 768px) {
+  .headerContainer .headerMobile .heading .logoImage {
+    max-width: 15%;
+  }
+}
+.headerContainer .headerMobile .heading .language {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
 }
 .headerContainer .headerMain {
   max-width: 1050px;
