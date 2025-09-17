@@ -152,7 +152,7 @@
             height: 100%;
             z-index: 9999;
             overscroll-behavior: none;
-            display: none;
+            display: block;
 
             .navContainer {
                 position: fixed;
@@ -161,7 +161,8 @@
                 width: 240px;
                 max-width: 100%;
                 height: 100%;
-                transition: transform .4s ease;
+                transform: translate3d(-100%, 0, 0);
+                transition: transform 0.4s ease;
 
                 @include respond(map-get($breakPoint,"md")) {
                     min-width: 310px;

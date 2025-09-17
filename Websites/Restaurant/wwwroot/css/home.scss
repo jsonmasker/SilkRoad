@@ -100,16 +100,52 @@
                 .title {
                     font-weight: 400;
                     font-size: 99px;
+
+                    @include respond(map-get($breakPoint,"md")) {
+                        font-size: 80px;
+                    }
+
+                    @include respond(map-get($breakPoint,"sm")) {
+                        font-size: 60px;
+                    }
+
+                    @include respond(map-get($breakPoint,"xs")) {
+                        font-size: 40px;
+                    }
                 }
 
                 .subTitle {
                     font-weight: 500;
                     font-size: 22px;
                     color: rgb(204, 204, 204);
+
+                    @include respond(map-get($breakPoint,"md")) {
+                        font-size: 18px;
+                    }
+
+                    @include respond(map-get($breakPoint,"sm")) {
+                        font-size: 15px;
+                    }
+
+                    @include respond(map-get($breakPoint,"xs")) {
+                        font-size: 10px;
+                    }
                 }
 
                 img {
                     max-width: 320px;
+
+                    @include respond(map-get($breakPoint,"md")) {
+                        max-width: 280px;
+                    }
+
+                    @include respond(map-get($breakPoint,"sm")) {
+                        max-width: 220px;
+                    }
+
+                    @include respond(map-get($breakPoint,"xs")) {
+                        max-width: 160px;
+                    }
                 }
             }
 
