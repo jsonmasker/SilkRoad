@@ -147,15 +147,15 @@
             }
 
             h4 {
-                font-weight: 600;
+                /*font-weight: 600;*/
                 text-transform: uppercase;
                 margin-bottom: 16px;
                 line-height: 1.3;
-                color: $color_dark_grey_333333;
-                font-size: 25px;
+                /*color: $color_dark_grey_333333;*/
+                /*font-size: 25px;*/
 
                 a {
-                    color: $color_dark_grey_333333;
+                    /*color: $color_dark_grey_333333;*/
                 }
             }
 
@@ -180,8 +180,8 @@
                     }
 
                     .postAuthor {
-                        font-size: $text-level-12;
-                        color: $color_dark_grey_333333;
+                        /*font-size: 14px;*/
+                        /*color: $color_dark_grey_333333;*/
                         display: inline-block;
                         margin-right: 22px;
 
@@ -190,7 +190,7 @@
                         }
 
                         .thumb {
-                            color: $color_dark_grey_333333;
+                            /*color: $color_dark_grey_333333;*/
                             margin-right: 5px;
 
                             img {
@@ -200,7 +200,7 @@
                     }
 
                     .tagCloud {
-                        font-size: $text-level-12;
+                        /*font-size: 14px;*/
                         display: inline-block;
 
                         span {
@@ -221,7 +221,7 @@
 
                 .readMore {
                     text-transform: uppercase;
-                    color: $color_dark_grey_333333;
+                    /*color: $color_dark_grey_333333;*/
                     text-decoration: underline;
                     display: inline-block;
 
@@ -246,13 +246,13 @@
         }
 
         .pageNumber {
-            font-size: $text-level-8;
+            font-size: 20px;
             padding: 0 13px;
             cursor: pointer;
         }
 
         .pageNumber.prevPage, .pageNumber.nextPage {
-            font-size: $text-level-11;
+            font-size: 15px;
             display: inline-block;
             margin-top: 6px;
         }
@@ -273,7 +273,7 @@
 
         .widgetTitle {
             text-transform: uppercase;
-            margin-bottom: $text-level-9;
+            margin-bottom: 19px;
 
             h5 {
                 font-weight: 700;

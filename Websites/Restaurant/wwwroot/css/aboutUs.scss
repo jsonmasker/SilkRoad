@@ -52,7 +52,6 @@
         background: #181818;
         width: 53.84%;
         margin: auto;
-        color: $color_white_fff;
         text-align: center;
         position: relative;
         z-index: 9;
@@ -71,9 +70,7 @@
             margin-bottom: 35px;
 
             h2 {
-                color: $color_white_fff;
                 font-size: 55px;
-                /*font-family: "Satisfy-Regular";*/
                 font-weight: 400;
             }
         }
@@ -86,7 +83,6 @@
                 font-weight: 600;
                 font-size: 17px;
                 margin-bottom: 3px;
-                color: $color_white_fff;
             }
         }
 
@@ -158,7 +154,7 @@
     background-size: cover;
 
     .ourServiceCol {
-        color: #fff;
+        /*color: #fff;*/
         text-align: center;
         border: 2px solid #80694d;
         height: 100%;
@@ -175,9 +171,9 @@
         }
 
         h3 {
-            font-size: 30px;
+            /*font-size: 30px;*/
             font-weight: 400;
-            color: #fff;
+            /*color: #fff;*/
             margin-bottom: 24px;
         }
 
@@ -232,7 +228,7 @@
 
         .btnReadMore {
             text-transform: uppercase;
-            color: #333;
+            /*color: #333;*/
             text-decoration: underline;
             display: inline-block;
         }

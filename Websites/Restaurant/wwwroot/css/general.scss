@@ -16,7 +16,12 @@
 .text-color-yellow {
     color: $color_yellow_CDAA7C;
 }
-
+.text-color-dark-grey {
+    color: $color_dark_grey_333333;
+}
+.text-color-grey {
+    color: $color_grey_999999;
+}
 /*#endregion*/
 
 /*#region text-style*/
@@ -88,18 +93,29 @@
 .text-40 {
     font-size: 40px;
 }
-.text-34{
-        font-size: 34px;
+.text-35 {
+    font-size: 35px;
 }
 .text-30{
     font-size: 30px;
 }
+.text-25 {
+    font-size: 25px;
+}
+.text-20 {
+    font-size: 20px;
+}
 .text-18 {
     font-size: 18px;
 }
-
 .text-16 {
     font-size: 16px;
+}
+.text-15 {
+    font-size: 15px;
+}
+.text-14 {
+    font-size: 14px;
 }
 
 

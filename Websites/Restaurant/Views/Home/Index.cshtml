@@ -7,7 +7,7 @@
     <section class="homeBannerV1">
         <div class="banner">
             <div id="bannerEffect"></div>
-            @* <img src="~/assets/images/home/slideshow-1.jpg" alt="banner" class="w-100" /> *@
+            @* <img src="~/assets/images/home/slideshow-1.jpg" alt="banner" class="w-100 d-none" id="bannerImage" /> *@
             <div class="intro text-uppercase">
                 <h6 class="subTitle text-uppercase">
                     Because you deserve to enjoy the best
@@ -219,41 +219,69 @@
     const imageUrl = '@Url.Content("~/assets/images/home/slideshow-1.jpg")';
     const intro = document.querySelector('.intro');
 
-    const tileWidth = 100 / cols;
-    const tileHeight = 100 / rows;
-    const totalTiles = rows * cols;
-    let tilesLoaded = 0;
+    function createBannerTiles() {
+        container.innerHTML = ''; // Clear old tiles
 
-    function checkAllTilesLoaded() {
-        tilesLoaded++;
-        if (tilesLoaded === totalTiles) {
-            intro.classList.add('animate');
+        const containerWidth = container.offsetWidth;
+        const containerHeight = container.offsetHeight;
+
+        const baseTileWidth = Math.floor(containerWidth / cols);
+        const baseTileHeight = Math.floor(containerHeight / rows);
+
+        let tilesLoaded = 0;
+        const totalTiles = rows * cols;
+
+        function checkAllTilesLoaded() {
+            tilesLoaded++;
+            if (tilesLoaded === totalTiles) {
+                intro.classList.add('animate');
+            }
+        }
+
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+                const tile = document.createElement('div');
+                tile.classList.add('bannerTile');
+
+                // Tính vị trí và kích thước
+                const left = baseTileWidth * col;
+                const top = baseTileHeight * row;
+
+                // Nếu là tile cuối hàng → gánh phần dư còn lại
+                const width = (col === cols - 1)
+                    ? containerWidth - baseTileWidth * (cols - 1)
+                    : baseTileWidth;
+
+                const height = (row === rows - 1)
+                    ? containerHeight - baseTileHeight * (rows - 1)
+                    : baseTileHeight;
+
+                tile.style.width = `${width + 0.5}px`;
+                tile.style.height = `${height + 0.5}px`;
+                tile.style.left = `${left}px`;
+                tile.style.top = `${top}px`;
+
+                tile.style.backgroundImage = `url('${imageUrl}')`;
+                tile.style.backgroundSize = `${containerWidth}px ${containerHeight}px`;
+                tile.style.backgroundPosition = `-${left}px -${top}px`;
+
+                const delay = (row + col) * 100;
+
+                setTimeout(() => {
+                    tile.classList.add('show');
+                    checkAllTilesLoaded();
+                }, delay);
+
+                container.appendChild(tile);
+            }
         }
     }
 
-    for (let row = 0; row < rows; row++) {
-        for (let col = 0; col < cols; col++) {
-            const tile = document.createElement('div');
-            tile.classList.add('bannerTile');
-
-            tile.style.width = `${tileWidth}%`;
-            tile.style.height = `${tileHeight}%`;
-            tile.style.left = `${col * tileWidth}%`;
-            tile.style.top = `${row * tileHeight}%`;
-
-            tile.style.backgroundImage = `url('${imageUrl}')`;
-            tile.style.backgroundSize = `${cols * 100}% ${rows * 100}%`;
-            tile.style.backgroundPosition = `${(col / (cols - 1)) * 100}% ${(row / (rows - 1)) * 100}%`;
-
-            const delay = (row + col) * 100;
-
-            setTimeout(() => {
-                tile.classList.add('show');
-                checkAllTilesLoaded();
-            }, delay);
-
-            container.appendChild(tile);
-        }
-    }
+    window.addEventListener('load', createBannerTiles);
+    window.addEventListener('resize', () => {
+        createBannerTiles();
+    });
 </script>
+
+
 

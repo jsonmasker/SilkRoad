@@ -1,4 +1,5 @@
-﻿@font-face {
+﻿@charset "UTF-8";
+@font-face {
   font-family: "Bitter Regular";
   font-style: normal;
   src: url("/assets/fonts/Bitter/Bitter-Regular.ttf");
@@ -95,6 +96,14 @@ body {
   color: #CDAA7C;
 }
 
+.text-color-dark-grey {
+  color: #333333;
+}
+
+.text-color-grey {
+  color: #999999;
+}
+
 /*#endregion*/
 /*#region text-style*/
 .text-uppercase {
@@ -159,12 +168,20 @@ body {
   font-size: 40px;
 }
 
-.text-34 {
-  font-size: 34px;
+.text-35 {
+  font-size: 35px;
 }
 
 .text-30 {
   font-size: 30px;
+}
+
+.text-25 {
+  font-size: 25px;
+}
+
+.text-20 {
+  font-size: 20px;
 }
 
 .text-18 {
@@ -173,6 +190,14 @@ body {
 
 .text-16 {
   font-size: 16px;
+}
+
+.text-15 {
+  font-size: 15px;
+}
+
+.text-14 {
+  font-size: 14px;
 }
 
 /*#endregion*/
@@ -466,11 +491,6 @@ body {
   border-bottom: 1px solid rgba(205, 170, 124, 0.4);
   background-color: transparent;
   z-index: 9;
-  padding: 20px 80px;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  transition: all 0.3s ease;
 }
 @media only screen and (width < 992px) {
   .headerContainer {
@@ -483,6 +503,11 @@ body {
   justify-content: space-between;
   align-items: center;
   color: #fff;
+  padding: 20px 80px;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 @media only screen and (width < 992px) {
   .headerContainer .headerDesktop {
@@ -527,6 +552,34 @@ body {
   color: #fff;
   font-weight: 600;
 }
+.headerContainer .headerDesktop.fixed {
+  -webkit-animation: fadeInDown 0.3s ease-out forwards;
+  -moz-animation: fadeInDown 0.3s ease-out forwards;
+  -o-animation: fadeInDown 0.3s ease-out forwards;
+  animation: fadeInDown 0.3s ease-out forwards;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  background: #000;
+  width: 100%;
+  padding: 20px 80px;
+  -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 1500px) {
+  .headerContainer .headerDesktop.fixed {
+    padding: 10px 80px;
+    top: 0;
+  }
+}
+@media only screen and (width < 1200px) {
+  .headerContainer .headerDesktop.fixed {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
 .headerContainer .headerMobile {
   display: none;
   background: #333333;
@@ -544,6 +597,7 @@ body {
 }
 .headerContainer .headerMobile .heading .toggleHeader {
   display: inline-block;
+  cursor: pointer;
 }
 .headerContainer .headerMobile .heading .toggleHeader span {
   display: block;
@@ -565,7 +619,147 @@ body {
   font-weight: 600;
   text-decoration: none;
 }
-.headerContainer .headerMain {
+.headerContainer .headerMobile .mobileNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 9999;
+  overscroll-behavior: none;
+  display: none;
+}
+.headerContainer .headerMobile .mobileNav .navContainer {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  width: 240px;
+  max-width: 100%;
+  height: 100%;
+  transition: transform 0.4s ease;
+}
+@media only screen and (width < 992px) {
+  .headerContainer .headerMobile .mobileNav .navContainer {
+    min-width: 310px;
+  }
+}
+@media only screen and (width < 768px) {
+  .headerContainer .headerMobile .mobileNav .navContainer {
+    min-width: 250px;
+  }
+}
+.headerContainer .headerMobile .mobileNav .navContainer .navWrapper {
+  position: static;
+  height: 100%;
+  overflow: scroll;
+  overflow-x: visible;
+  overflow-y: auto;
+  background: #181818;
+  width: 100%;
+}
+.headerContainer .headerMobile .mobileNav .navContainer .navWrapper h2 {
+  font-size: 19px;
+  font-weight: normal;
+  text-align: left;
+  padding: 20px 17px;
+  color: #fff;
+}
+.headerContainer .headerMobile .mobileNav .navContainer .navWrapper ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.headerContainer .headerMobile .mobileNav .navContainer .navWrapper li {
+  position: relative;
+  display: block;
+  text-align: left;
+}
+.headerContainer .headerMobile .mobileNav .navContainer .navWrapper a {
+  padding: 14px 17px;
+  font-size: 16px;
+  color: #fff;
+  z-index: 1;
+  background: #000;
+  text-decoration: none;
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.headerContainer .headerMobile .mobileNav .navContainer .navWrapper a:hover {
+  color: #CDAA7C;
+  border: 1px solid rgba(205, 170, 124, 0.2);
+}
+.headerContainer .headerMobile .mobileNav .navContainer .navWrapper li.navClose span {
+  width: 45px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.headerContainer .headerMobile .mobileNav .navContainer .navWrapper li.navClose span:before {
+  margin-left: -9px;
+  transform: rotate(135deg);
+}
+.headerContainer .headerMobile .mobileNav .navContainer .navWrapper li.navClose span:after {
+  transform: rotate(-45deg);
+}
+.headerContainer .headerMobile .mobileNav .navContainer .navWrapper li.navClose span:before, .headerContainer .headerMobile .mobileNav .navContainer .navWrapper li.navClose span:after {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  box-sizing: content-box;
+}
+.headerContainer .headerMobile .mobileNav.navOpen {
+  display: block;
+}
+.headerContainer .headerMobile .mobileNav.navOpen .navContainer {
+  transform: translate3d(0, 0, 0);
+}
+.headerContainer .headerMobile .mobileNav.navOpen .navContainer .navWrapper {
+  box-shadow: 1px 0 2px rgba(0, 0, 0, 0.2);
+}
+.headerContainer .headerMobile .mobileNav.navOpen .navContainer .navWrapper:after {
+  content: "";
+  position: fixed;
+  z-index: 9990;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overscroll-behavior: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s ease 0.4s, opacity 0.4s ease;
+}
+.headerContainer .headerMobile .overlayBackground {
+  opacity: 1;
+  transition-delay: 0.05s;
+  position: fixed;
+  z-index: 9990;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overscroll-behavior: none;
+  transition: visibility 0s ease 0.4s, opacity 0.4s ease;
+  background: rgba(0, 0, 0, 0.3);
+  display: none;
+}
+.headerContainer .headerMobile .headerMain {
   max-width: 1050px;
   height: 110px;
   margin: auto;
@@ -574,38 +768,38 @@ body {
   background-color: #fff;
 }
 @media only screen and (width < 1200px) {
-  .headerContainer .headerMain {
+  .headerContainer .headerMobile .headerMain {
     padding: 0 0.75rem;
   }
 }
 @media only screen and (width < 768px) {
-  .headerContainer .headerMain {
+  .headerContainer .headerMobile .headerMain {
     height: auto;
     padding: 0.5rem 0.75rem;
   }
 }
-.headerContainer .headerMain .boxCard {
+.headerContainer .headerMobile .headerMain .boxCard {
   width: 100%;
   display: flex;
   justify-content: end;
   flex-direction: row;
   align-items: center;
 }
-.headerContainer .headerMain .boxCard .ti-close, .headerContainer .headerMain .boxCard .ti-search {
+.headerContainer .headerMobile .headerMain .boxCard .ti-close, .headerContainer .headerMobile .headerMain .boxCard .ti-search {
   font-size: 1.5rem;
   font-weight: bold;
   margin-left: 1rem;
 }
-.headerContainer .headerMain .logo {
+.headerContainer .headerMobile .headerMain .logo {
   max-width: 210px;
   height: auto;
 }
 @media only screen and (width < 576px) {
-  .headerContainer .headerMain .logo {
+  .headerContainer .headerMobile .headerMain .logo {
     max-width: 160px;
   }
 }
-.headerContainer .headerMain .call {
+.headerContainer .headerMobile .headerMain .call {
   display: flex;
   flex-direction: row;
   height: 35px;
@@ -619,24 +813,24 @@ body {
   color: #000;
   opacity: 0.5;
 }
-.headerContainer .headerMain .call svg {
+.headerContainer .headerMobile .headerMain .call svg {
   margin-right: 6px;
 }
-.headerContainer .headerMain .call:hover {
+.headerContainer .headerMobile .headerMain .call:hover {
   background-color: #000000;
   color: #fff;
   opacity: 1;
 }
-.headerContainer .headerMain .call:hover svg path {
+.headerContainer .headerMobile .headerMain .call:hover svg path {
   fill: #fff !important;
 }
-.headerContainer .headerMain .cart {
+.headerContainer .headerMobile .headerMain .cart {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.headerContainer .headerMain .cart .numberProductInCard {
+.headerContainer .headerMobile .headerMain .cart .numberProductInCard {
   position: absolute;
   top: -5px;
   right: -10px;
@@ -649,31 +843,31 @@ body {
   border-radius: 50%;
   background-color: #E32E2D;
 }
-.headerContainer .headerMain .cart .numberProductInCard span {
+.headerContainer .headerMobile .headerMain .cart .numberProductInCard span {
   color: #fff;
   font-weight: 500;
   font-size: 12px;
 }
-.headerContainer .headerMain .cart .cartImage {
+.headerContainer .headerMobile .headerMain .cart .cartImage {
   height: auto;
   width: 1.75rem;
 }
-.headerContainer .headerBottom {
+.headerContainer .headerMobile .headerBottom {
   max-width: 1050px;
   margin: auto;
   padding: 0.25rem 0;
 }
 @media only screen and (width < 1200px) {
-  .headerContainer .headerBottom {
+  .headerContainer .headerMobile .headerBottom {
     border-top: 1px solid rgba(0, 0, 0, 0.125);
   }
 }
 @media only screen and (width < 768px) {
-  .headerContainer .headerBottom {
+  .headerContainer .headerMobile .headerBottom {
     display: none;
   }
 }
-.headerContainer .headerBottom .menuGroup {
+.headerContainer .headerMobile .headerBottom .menuGroup {
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -684,20 +878,20 @@ body {
   padding: 0.25rem 0;
   flex-wrap: wrap;
 }
-.headerContainer .headerBottom .menuGroup > li {
+.headerContainer .headerMobile .headerBottom .menuGroup > li {
   display: inline;
   position: relative;
   /*a:first-child {
       border-left: unset;
   }*/
 }
-.headerContainer .headerBottom .menuGroup > li a {
+.headerContainer .headerMobile .headerBottom .menuGroup > li a {
   padding: 0 14px;
   color: #000000;
   text-decoration: unset;
   border-right: 1px solid #ccc;
 }
-.headerContainer .headerBottom .menuGroup > li .menuItem {
+.headerContainer .headerMobile .headerBottom .menuGroup > li .menuItem {
   display: none;
   list-style-type: none;
   padding: 0;
@@ -711,13 +905,13 @@ body {
   flex-wrap: wrap;
   flex-direction: column;
 }
-.headerContainer .headerBottom .menuGroup > li .menuItem a {
+.headerContainer .headerMobile .headerBottom .menuGroup > li .menuItem a {
   border: unset;
   padding: 0;
   margin: 0 0.75rem;
   text-transform: capitalize;
 }
-.headerContainer .headerBottom .menuGroup > li::before {
+.headerContainer .headerMobile .headerBottom .menuGroup > li::before {
   content: "";
   height: 20px;
   width: 60px;
@@ -727,23 +921,23 @@ body {
   cursor: pointer;
   z-index: 2;
 }
-.headerContainer .headerBottom .menuGroup > li:last-child a {
+.headerContainer .headerMobile .headerBottom .menuGroup > li:last-child a {
   border-right: unset;
 }
-.headerContainer .headerBottom .menuGroup > li:hover .menuItem {
+.headerContainer .headerMobile .headerBottom .menuGroup > li:hover .menuItem {
   display: flex;
 }
-.headerContainer .iconMenuMobile {
+.headerContainer .headerMobile .iconMenuMobile {
   font-size: 1.5rem;
 }
-.headerContainer #searchBoxMobile {
+.headerContainer .headerMobile #searchBoxMobile {
   width: 100vw;
   height: 100vh;
   position: absolute;
   border-top: 2px solid #000;
   top: -100vh;
 }
-.headerContainer #searchBoxMobile .searchContainer {
+.headerContainer .headerMobile #searchBoxMobile .searchContainer {
   width: 100%;
   height: 50vh;
   max-height: 300px;
@@ -752,20 +946,20 @@ body {
   position: relative;
   z-index: 1;
 }
-.headerContainer #searchBoxMobile .searchContainer .searchBox {
+.headerContainer .headerMobile #searchBoxMobile .searchContainer .searchBox {
   max-width: 75%;
 }
-.headerContainer #searchBoxMobile .virtualSearchBoxMobile {
+.headerContainer .headerMobile #searchBoxMobile .virtualSearchBoxMobile {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
   position: absolute;
   top: 0;
 }
-.headerContainer .showSearchBoxMobile {
+.headerContainer .headerMobile .showSearchBoxMobile {
   animation: showSearchBoxMobile 1s forwards;
 }
-.headerContainer .hideSearchBoxMobile {
+.headerContainer .headerMobile .hideSearchBoxMobile {
   animation: hideSearchBoxMobile 1s forwards;
 }
 @keyframes showSearchBoxMobile {
@@ -784,7 +978,7 @@ body {
     top: -100vh;
   }
 }
-.headerContainer #menuMobile {
+.headerContainer .headerMobile #menuMobile {
   width: 100vw;
   height: 100vh;
   background-color: rgba(255, 255, 255, 0.5);
@@ -793,12 +987,12 @@ body {
   top: 0;
   left: -100vw;
 }
-.headerContainer #menuMobile .btnClose {
+.headerContainer .headerMobile #menuMobile .btnClose {
   position: absolute;
   top: 5px;
   right: 1px;
 }
-.headerContainer #menuMobile .btnClose span {
+.headerContainer .headerMobile #menuMobile .btnClose span {
   background-color: #fff;
   font-size: 1.5rem;
   font-weight: bold;
@@ -806,25 +1000,25 @@ body {
   padding: 3px;
   border: 1px solid #000;
 }
-.headerContainer #menuMobile .menuBox {
+.headerContainer .headerMobile #menuMobile .menuBox {
   width: 80%;
   height: 100%;
   background-color: #fff;
 }
-.headerContainer #menuMobile .menuBox .logoMobile {
+.headerContainer .headerMobile #menuMobile .menuBox .logoMobile {
   border-bottom: 2px solid #000;
 }
-.headerContainer #menuMobile .menuBox .logoMobile img {
+.headerContainer .headerMobile #menuMobile .menuBox .logoMobile img {
   width: 120px;
   height: auto;
 }
-.headerContainer #menuMobile .menuBox .menu {
+.headerContainer .headerMobile #menuMobile .menuBox .menu {
   overflow-x: hidden;
   overflow-y: scroll;
   max-height: 90%;
   padding: 1rem;
 }
-.headerContainer #menuMobile .menuBox .menu .menuGroup {
+.headerContainer .headerMobile #menuMobile .menuBox .menu .menuGroup {
   padding-top: 0.5rem;
   border-top: 1px solid rgba(0, 0, 0, 0.125);
   width: 100%;
@@ -832,37 +1026,37 @@ body {
   flex-direction: row;
   margin: 0.5rem 0;
 }
-.headerContainer #menuMobile .menuBox .menu .menuGroup button {
+.headerContainer .headerMobile #menuMobile .menuBox .menu .menuGroup button {
   background-color: transparent;
   border: unset;
 }
-.headerContainer #menuMobile .menuBox .menu .menuGroupActive .col-10 > a {
+.headerContainer .headerMobile #menuMobile .menuBox .menu .menuGroupActive .col-10 > a {
   font-weight: bold;
 }
-.headerContainer #menuMobile .menuBox .menu .menuGroupActive .col-2 svg {
+.headerContainer .headerMobile #menuMobile .menuBox .menu .menuGroupActive .col-2 svg {
   transform: rotate(90deg);
 }
-.headerContainer #menuMobile .menuBox .menu a {
+.headerContainer .headerMobile #menuMobile .menuBox .menu a {
   color: #000;
   text-decoration: unset;
 }
-.headerContainer #menuMobile .menuBox .menu .menuItem a {
+.headerContainer .headerMobile #menuMobile .menuBox .menu .menuItem a {
   width: 100%;
   margin: 0.25rem 0;
 }
-.headerContainer #menuMobile .menuBox .menu::-webkit-scrollbar {
+.headerContainer .headerMobile #menuMobile .menuBox .menu::-webkit-scrollbar {
   width: 5px;
 }
-.headerContainer #menuMobile .menuBox .menu::-webkit-scrollbar-track {
+.headerContainer .headerMobile #menuMobile .menuBox .menu::-webkit-scrollbar-track {
   background: #c1c1c1;
 }
-.headerContainer #menuMobile .menuBox .menu::-webkit-scrollbar-thumb {
+.headerContainer .headerMobile #menuMobile .menuBox .menu::-webkit-scrollbar-thumb {
   background: #000;
 }
-.headerContainer .showMenuMobile {
+.headerContainer .headerMobile .showMenuMobile {
   animation: showMenuMobile 1s forwards;
 }
-.headerContainer .hideMenuMobile {
+.headerContainer .headerMobile .hideMenuMobile {
   animation: hideMenuMobile 1s forwards;
 }
 @keyframes showMenuMobile {
@@ -881,13 +1075,13 @@ body {
     left: -100vw;
   }
 }
-.headerContainer .searchBox {
+.headerContainer .headerMobile .searchBox {
   width: 100%;
   max-width: 260px;
   height: 35px;
   position: relative;
 }
-.headerContainer .searchBox .inputSearch {
+.headerContainer .headerMobile .searchBox .inputSearch {
   width: 100%;
   height: 100%;
   border-radius: 22px;
@@ -896,7 +1090,7 @@ body {
   padding-left: 8px;
   padding-right: 35px;
 }
-.headerContainer .searchBox .ti-search {
+.headerContainer .headerMobile .searchBox .ti-search {
   width: 30px;
   height: 100%;
   font-weight: 900;
@@ -908,7 +1102,7 @@ body {
   align-content: center;
   flex-wrap: wrap;
 }
-.headerContainer .searchBox #searchResult {
+.headerContainer .headerMobile .searchBox #searchResult {
   width: 100%;
   position: absolute;
   max-height: 60vh;
@@ -916,7 +1110,7 @@ body {
   overflow-y: scroll;
   box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3019607843);
 }
-.headerContainer .searchBox #searchResult .suggest {
+.headerContainer .headerMobile .searchBox #searchResult .suggest {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -926,13 +1120,13 @@ body {
   background-color: #fff;
   padding: 4px 0;
 }
-.headerContainer .searchBox #searchResult .suggest img {
+.headerContainer .headerMobile .searchBox #searchResult .suggest img {
   display: inline-block;
   height: 40px;
   width: 40px;
   margin-right: 10px;
 }
-.headerContainer .searchBox #searchResult .suggest span {
+.headerContainer .headerMobile .searchBox #searchResult .suggest span {
   max-width: 75%;
   padding-left: 5px;
   overflow: hidden;
@@ -942,13 +1136,13 @@ body {
   -line-clamp: 3;
   -webkit-box-orient: vertical;
 }
-.headerContainer .searchBox #searchResult::-webkit-scrollbar {
+.headerContainer .headerMobile .searchBox #searchResult::-webkit-scrollbar {
   width: 5px;
 }
-.headerContainer .searchBox #searchResult::-webkit-scrollbar-track {
+.headerContainer .headerMobile .searchBox #searchResult::-webkit-scrollbar-track {
   background: #c1c1c1;
 }
-.headerContainer .searchBox #searchResult::-webkit-scrollbar-thumb {
+.headerContainer .headerMobile .searchBox #searchResult::-webkit-scrollbar-thumb {
   background: #000;
 }
 
@@ -979,35 +1173,6 @@ body {
 fadeInDown animation {
   transform: translate3d(0px, 0px, 0px);
   opacity: 1;
-}
-
-.headerContainer.fixed {
-  -webkit-animation: fadeInDown 0.3s ease-out forwards;
-  -moz-animation: fadeInDown 0.3s ease-out forwards;
-  -o-animation: fadeInDown 0.3s ease-out forwards;
-  animation: fadeInDown 0.3s ease-out forwards;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 99;
-  background: #000;
-  width: 100%;
-  padding: 20px 80px;
-  -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
-}
-@media (max-width: 1500px) {
-  .headerContainer.fixed {
-    padding: 10px 80px;
-    top: 0;
-  }
-}
-@media only screen and (width < 1200px) {
-  .headerContainer.fixed {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
 }
 
 /*#endregion*/
@@ -1081,13 +1246,13 @@ fadeInDown animation {
 
 /*#endregion*/
 /*html {
-    font-size: 14px;
+font-size: 14px;
 }
 
 @media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
+html {
+    font-size: 16px;
+}
 }*/
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
@@ -1210,6 +1375,15 @@ html {
   width: 100%;
   height: 100%;
   position: relative;
+  overflow: hidden;
+}
+.homePage .homeBannerV1 .banner #bannerEffect::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.02); /* hoặc 0.01 */
+  pointer-events: none;
+  z-index: 2;
 }
 @keyframes reveal {
   to {
@@ -1222,9 +1396,11 @@ html {
   clip-path: polygon(0 0, 0 0, 0 0, 0 0);
   background-repeat: no-repeat;
   background-size: 600% 600%;
-  transform: scale(1.01);
   backface-visibility: hidden;
   will-change: transform, clip-path;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0;
 }
 @keyframes fadeSlideDown {
   from {
@@ -1596,7 +1772,6 @@ html {
   background: #181818;
   width: 53.84%;
   margin: auto;
-  color: #fff;
   text-align: center;
   position: relative;
   z-index: 9;
@@ -1613,9 +1788,7 @@ html {
   margin-bottom: 35px;
 }
 .ourStoryWrapper .ourStoryContent .heading h2 {
-  color: #fff;
   font-size: 55px;
-  /*font-family: "Satisfy-Regular";*/
   font-weight: 400;
 }
 .ourStoryWrapper .ourStoryContent .name {
@@ -1626,7 +1799,6 @@ html {
   font-weight: 600;
   font-size: 17px;
   margin-bottom: 3px;
-  color: #fff;
 }
 .ourStoryWrapper .ourStoryContent .borderPlace {
   transform: translate(-8px, -11px);
@@ -1687,7 +1859,7 @@ html {
   background-size: cover;
 }
 .ourService .ourServiceCol {
-  color: #fff;
+  /*color: #fff;*/
   text-align: center;
   border: 2px solid #80694d;
   height: 100%;
@@ -1705,9 +1877,9 @@ html {
   }
 }
 .ourService .ourServiceCol h3 {
-  font-size: 30px;
+  /*font-size: 30px;*/
   font-weight: 400;
-  color: #fff;
+  /*color: #fff;*/
   margin-bottom: 24px;
 }
 .ourService .ourServiceCol p {
@@ -1755,7 +1927,7 @@ html {
 }
 .aboutUs .aboutUsCol .btnReadMore {
   text-transform: uppercase;
-  color: #333;
+  /*color: #333;*/
   text-decoration: underline;
   display: inline-block;
 }
@@ -2378,15 +2550,15 @@ html {
   }
 }
 .blogStandard .blogPost .post .postBody h4 {
-  font-weight: 600;
+  /*font-weight: 600;*/
   text-transform: uppercase;
   margin-bottom: 16px;
   line-height: 1.3;
-  color: #333333;
-  font-size: 25px;
+  /*color: $color_dark_grey_333333;*/
+  /*font-size: 25px;*/
 }
 .blogStandard .blogPost .post .postBody h4 a {
-  color: #333333;
+  /*color: $color_dark_grey_333333;*/
 }
 .blogStandard .blogPost .post .postBody p {
   line-height: 1.8;
@@ -2409,8 +2581,8 @@ html {
   }
 }
 .blogStandard .blogPost .post .postBody .end .postMeta .postAuthor {
-  font-size: 14px;
-  color: #333333;
+  /*font-size: 14px;*/
+  /*color: $color_dark_grey_333333;*/
   display: inline-block;
   margin-right: 22px;
 }
@@ -2420,14 +2592,14 @@ html {
   }
 }
 .blogStandard .blogPost .post .postBody .end .postMeta .postAuthor .thumb {
-  color: #333333;
+  /*color: $color_dark_grey_333333;*/
   margin-right: 5px;
 }
 .blogStandard .blogPost .post .postBody .end .postMeta .postAuthor .thumb img {
   width: 32px;
 }
 .blogStandard .blogPost .post .postBody .end .postMeta .tagCloud {
-  font-size: 14px;
+  /*font-size: 14px;*/
   display: inline-block;
 }
 .blogStandard .blogPost .post .postBody .end .postMeta .tagCloud span {
@@ -2443,7 +2615,7 @@ html {
 }
 .blogStandard .blogPost .post .postBody .end .readMore {
   text-transform: uppercase;
-  color: #333333;
+  /*color: $color_dark_grey_333333;*/
   text-decoration: underline;
   display: inline-block;
 }
