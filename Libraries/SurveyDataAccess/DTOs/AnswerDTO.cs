@@ -3,7 +3,7 @@
     public class AnswerDTO
     {
         public int Id { get; set; }
-        public int ParticipantId { get; set; }
+        public Guid ParticipantId { get; set; }
         public Guid? QuestionGroupId { get; set; }
         public Guid QuestionId { get; set; }
         public Guid QuestionTypeId { get; set; }

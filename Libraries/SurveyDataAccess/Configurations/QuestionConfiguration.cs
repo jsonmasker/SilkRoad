@@ -18,7 +18,11 @@ namespace SurveyDataAccess.Configurations
             builder.Property(s => s.NameEN).HasColumnType("nvarchar(255)");
             builder.Property(s => s.NameVN).HasColumnType("nvarchar(255)");
             builder.HasOne<QuestionGroupDTO>(s => s.QuestionGroup).WithMany(g => g.Questions).HasForeignKey(s => s.QuestionGroupId);
-            builder.HasOne<SurveyFormDTO>(s => s.SurveyForm).WithMany(g => g.Questions).HasForeignKey(s => s.QuestionTypeId);
+            builder.HasOne<QuestionTypeDTO>(s => s.QuestionType)
+                .WithMany()
+                .HasForeignKey(s => s.QuestionTypeId)
+                .OnDelete(DeleteBehavior.NoAction);
+            // If you have a SurveyForm relationship, add it here with the correct FK
         }
     }
 }

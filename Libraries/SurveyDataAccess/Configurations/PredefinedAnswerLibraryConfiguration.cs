@@ -13,7 +13,7 @@ namespace SurveyDataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<PredefinedAnswerLibraryDTO> builder)
         {
-            builder.ToTable("Table_PredefinedAnswers");
+            builder.ToTable("Table_PredefinedAnswerLibraries");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id)
                 .HasDefaultValueSql("NEWID()")
