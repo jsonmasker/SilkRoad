@@ -8,4 +8,5 @@ export interface QuestionGroupLibraryModel extends BaseModel {
     note: string;
     priority: number;
     questionLibraries?: QuestionLibraryModel[];
+    expanded?: boolean;
 }

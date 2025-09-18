@@ -6,9 +6,6 @@
     <button (click)="toggleLiveCreateModel()" class="btn btn-success me-2">
         <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
     </button>
-    <button class="btn btn-info">
-        <svg [cIcon]="icons.cilCloudDownload" width="25" class="text-white" title="Plus Icon"></svg>
-    </button>
 </div>
 <app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
     (changePageSize)="onPageSizeChange($event)">
@@ -17,6 +14,7 @@
             <th scope="col">NO</th>
             <th scope="col">NameEN</th>
             <th scope="col">NameVN</th>
+            <th scope="col">Priority</th>
             <th scope="col">Is Active</th>
             <th scope="col">Created By</th>
             <th scope="col">Modified By</th>
@@ -29,11 +27,17 @@
             <td>{{ $index+1 }}</td>
             <td>{{ item.nameEN }}</td>
             <td>{{ item.nameVN }}</td>
+            <td>{{ item.priority }}</td>
             <td>{{ item.isActive }}</td>
             <td>{{ item.createdBy }}</td>
             <td>{{ item.modifiedBy }}</td>
             <td>
                 <div class="d-flex justify-content-end">
+                    <!-- @if((item?.questionLibraries?.length ?? 0) > 0) {
+                        <button (click)="toggleNode(item)" class="btn btn-info me-2">
+                            <app-book-icon [open]="item.expanded"></app-book-icon>
+                        </button>
+                    } -->
                     <button (click)="updateData(item.id)" class="btn btn-primary me-2">
                         <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
                     </button>
@@ -43,9 +47,46 @@
                 </div>
             </td>
         </tr>
+        <!-- <ng-container [ngTemplateOutlet]="nodeTemplate"
+            [ngTemplateOutletContext]="{ node: item, level: 1 }"></ng-container> -->
         }
     </tbody>
 </app-data-table>
+
+<!-- <ng-template #nodeTemplate let-node="node" let-level="level">
+    <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
+        <td>
+            <span [ngStyle]="{'margin-left.px': level * 30}">
+                {{ index + 1 }}
+            </span>
+        </td>
+        <td>
+            <ng-container *ngIf="node.imagePath">
+                <img [src]="baseUrl + node.imagePath" alt="Logo" class="img-thumbnail">
+            </ng-container>
+        </td>
+        <td>{{ node.code }}</td>
+        <td>{{ node.name }}</td>
+        <td>{{ node.isActive }}</td>
+        <td>{{ node.createdBy }}</td>
+        <td>{{ node.modifiedBy }}</td>
+        <td>
+            <div class="d-flex justify-content-end">
+                <button (click)="updateData(node.id)"
+                    class="btn btn-primary {{ (node?.children?.length ?? 0) <= 0 ? 'me-2' : '' }}">
+                    <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+                </button>
+                <button (click)="softDeleteData(node.id)" class="btn btn-danger"
+                    *ngIf="(node?.children?.length ?? 0) <= 0">
+                    <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+                </button>
+            </div>
+        </td>
+    </tr>
+</ng-template> -->
+
+
+
 <!-- Trash Modal -->
 <c-modal backdrop="static" [visible]="visibleTrashModal" (visibleChange)="handleLiveTrashModalChange($event)"
     id="verticallyCenteredTrashModal" size="lg">
@@ -176,7 +217,7 @@
                     <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
                     <label cFormCheckLabel for="isActive" class="me-2">Is Active</label>
                 </c-form-check>
-                 <div>
+                <div>
                     <label for="priority" class="me-2">Priority: </label>
                     <input formControlName="priority" type="number" class="me-2 number-control">
                     @if (priorityUpdateForm?.invalid && (priorityUpdateForm?.dirty || priorityUpdateForm?.touched)) {
@@ -190,7 +231,7 @@
                     }
                 </div>
             </div>
-                        <div class="mb-2 row">
+            <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="nameEN">Name EN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameEN">

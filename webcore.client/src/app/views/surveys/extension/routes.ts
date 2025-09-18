@@ -12,13 +12,6 @@ export const routes: Routes = [
         redirectTo: 'question-types',
         pathMatch: 'full'
       },
-      // {
-      //   path: 'question-groups',
-      //   loadComponent: () => import('./question-groups/question-groups.component').then(m => m.QuestionGroupsComponent),
-      //   data: {
-      //     title: 'Question Groups'
-      //   }
-      // },
       {
         path: 'question-types',
         loadComponent: () => import('./question-types/question-types.component').then(m => m.QuestionTypesComponent),
