@@ -15,10 +15,10 @@ namespace WebCore.Server.Controllers.FeatureControllers
     public class QRCodeController : BaseApiController
     {
         private readonly IQRCodeHelper _qrCodeHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
         public QRCodeController(IQRCodeHelper qrCodeHelper,
-            IActionloggingService actionLog,
+            IActionLoggingService actionLog,
             IStringLocalizer<SharedResource> localizer)
         {
             _qrCodeHelper = qrCodeHelper;

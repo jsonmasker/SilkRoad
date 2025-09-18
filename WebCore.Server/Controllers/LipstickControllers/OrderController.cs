@@ -14,9 +14,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class OrderController : BaseApiController
     {
         private readonly IOrderHelper _orderHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public OrderController(IOrderHelper orderHelper, IStringLocalizer<SharedResource> localizer, IActionloggingService actionLog)
+        public OrderController(IOrderHelper orderHelper, IStringLocalizer<SharedResource> localizer, IActionLoggingService actionLog)
         {
             _orderHelper = orderHelper;
             _localizer = localizer;

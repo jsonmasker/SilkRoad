@@ -32,24 +32,24 @@ export class QuestionGroupLibrariesComponent implements OnInit {
   trashData: Pagination<QuestionGroupLibraryModel> = new Pagination<QuestionGroupLibraryModel>();
   icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload };
   createForm: FormGroup = new FormGroup({
-    code: new FormControl('', Validators.required),
-    name: new FormControl('', Validators.required),
+    nameEN: new FormControl('', Validators.required),
+    nameVN: new FormControl('', Validators.required),
     note: new FormControl('', Validators.maxLength(500)),
     isActive: new FormControl(true, Validators.required),
-    imageFile: new FormControl(null)
+    priority: new FormControl(1, [Validators.required, Validators.min(0), Validators.max(255)])
   });
   updateForm: FormGroup = new FormGroup({
     id: new FormControl(0, Validators.required),
-    code: new FormControl('', Validators.required),
-    name: new FormControl('', Validators.required),
+    nameEN: new FormControl('', Validators.required),
+    nameVN: new FormControl('', Validators.required),
     note: new FormControl('', Validators.maxLength(500)),
     isActive: new FormControl(true, Validators.required),
-    imageFile: new FormControl(null)
+    priority: new FormControl(0, [Validators.required, Validators.min(0)])
   });
   //#endregion
 
   constructor(private questionGroupLibraryService: QuestionGroupLibraryService,
-    private toastService: ToastService) {}
+    private toastService: ToastService) { }
   ngOnInit(): void {
     this.getData();
     this.trashPageInformation.pageSize = 5;
@@ -119,14 +119,17 @@ export class QuestionGroupLibrariesComponent implements OnInit {
   //#region Create Form
   onSubmitCreateForm() {
     if (this.createForm.valid) {
-      this.questionGroupLibraryService.create(this.createForm.value).subscribe((res) => {
-        this.toggleLiveCreateModel();
-        this.getData();
-        this.toastService.showToast(EColors.success, res.message);
-        this.createForm.reset();
-        this.createForm.patchValue({ isActive: true });
-      }, (failure) => {
-        this.toastService.showToast(EColors.danger, failure.error.message);
+      this.questionGroupLibraryService.create(this.createForm.value).subscribe({
+        next: (res) => {
+          this.toggleLiveCreateModel();
+          this.getData();
+          this.toastService.showToast(EColors.success, res.message);
+          this.createForm.reset();
+          this.createForm.patchValue({ isActive: true, priority: 1 });
+        },
+        error: (failure) => {
+          this.toastService.showToast(EColors.danger, failure.error.message);
+        }
       });
     }
   }
@@ -139,9 +142,10 @@ export class QuestionGroupLibrariesComponent implements OnInit {
     this.visibleCreateModal = event;
   }
 
-  get nameCreateForm() { return this.createForm.get('name'); }
-  get codeCreateForm() { return this.createForm.get('code'); }
+  get nameENCreateForm() { return this.createForm.get('nameEN'); }
+  get nameVNCreateForm() { return this.createForm.get('nameVN'); }
   get noteCreateForm() { return this.createForm.get('note'); }
+  get priorityCreateForm() { return this.createForm.get('priority'); }
   //#endregion
 
   //#region Update Form

@@ -16,9 +16,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class BrandController : BaseApiController
     {
         private readonly IBrandHelper _brandHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public BrandController(IBrandHelper brandHelper, IStringLocalizer<SharedResource> localizer, IActionloggingService actionLog)
+        public BrandController(IBrandHelper brandHelper, IStringLocalizer<SharedResource> localizer, IActionLoggingService actionLog)
         {
             _brandHelper = brandHelper;
             _localizer = localizer;

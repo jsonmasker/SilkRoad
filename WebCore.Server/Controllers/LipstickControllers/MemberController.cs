@@ -16,9 +16,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class MemberController : BaseApiController
     {
         private readonly IMemberHelper _memberHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public MemberController(IMemberHelper memberHelper, IActionloggingService actionLog, IStringLocalizer<SharedResource> localizer)
+        public MemberController(IMemberHelper memberHelper, IActionLoggingService actionLog, IStringLocalizer<SharedResource> localizer)
         {
             _memberHelper = memberHelper;
             _actionLog = actionLog;

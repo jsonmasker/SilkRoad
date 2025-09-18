@@ -16,9 +16,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class ColorController : BaseApiController
     {
         private readonly IColorHelper _colorHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public ColorController(IColorHelper colorHelper, IStringLocalizer<SharedResource> localizer, IActionloggingService actionLog)
+        public ColorController(IColorHelper colorHelper, IStringLocalizer<SharedResource> localizer, IActionLoggingService actionLog)
         {
             _colorHelper = colorHelper;
             _localizer = localizer;

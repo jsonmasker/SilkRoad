@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace Common.Services.ActionLoggingServices
 {
-    public class ActionLoggingService : IActionloggingService
+    public class ActionLoggingService : IActionLoggingService
     {
         private readonly IMongoCollection<UserActionModel> _userActionsCollection;
         private readonly IJwtService _jwtService;

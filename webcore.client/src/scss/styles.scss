@@ -24,7 +24,7 @@
 @use "login";
 
 
-.priorityInput {
+.number-control {
     max-width: 80px;
     text-align: center;
     font-size: 1rem;
@@ -39,7 +39,7 @@
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.priorityInput:focus {
+.number-control:focus {
     color: var(--cui-body-color);
     background-color: var(--cui-body-bg);
     border-color: rgb(171.5, 170.5, 234.5);

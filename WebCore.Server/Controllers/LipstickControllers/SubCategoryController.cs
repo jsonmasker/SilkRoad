@@ -16,9 +16,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class SubCategoryController : BaseApiController
     {
         private readonly ISubCategoryHelper _subCategoryHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public SubCategoryController(ISubCategoryHelper subCategoryHelper, IStringLocalizer<SharedResource> localizer, IActionloggingService actionLog)
+        public SubCategoryController(ISubCategoryHelper subCategoryHelper, IStringLocalizer<SharedResource> localizer, IActionLoggingService actionLog)
         {
             _subCategoryHelper = subCategoryHelper;
             _localizer = localizer;

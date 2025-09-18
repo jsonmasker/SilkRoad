@@ -1,4 +1,4 @@
-<h3>Question Group Libaries</h3>
+<h3>Question Group Libraries</h3>
 <div class="d-flex justify-content-end mb-2">
     <button (click)="toggleLiveTrashModal()" class="btn btn-warning me-2">
         <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
@@ -96,7 +96,7 @@
 <c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
     id="verticallyCenteredCreateModal" size="lg">
     <c-modal-header>
-        <h5 cModalTitle>Thêm</h5>
+        <h5 cModalTitle>Add Question Group Library</h5>
         <button (click)="toggleLiveCreateModel()" cButtonClose></button>
     </c-modal-header>
     <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
@@ -104,61 +104,61 @@
             <div class="mb-2 d-flex flex-row">
                 <c-form-check class="me-2 d-flex align-items-center">
                     <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-                    <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Hoạt Động </label>
+                    <label cFormCheckLabel for="isActive" class="me-2">Is Active </label>
                 </c-form-check>
+                <div>
+                    <label for="priority" class="me-2">Priority: </label>
+                    <input formControlName="priority" type="number" class="me-2 number-control">
+                    @if (priorityCreateForm?.invalid && (priorityCreateForm?.dirty || priorityCreateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (priorityCreateForm?.hasError('min') || priorityCreateForm?.hasError('max')) {
+                        <div>
+                            Priority must be between 1 and 255.
+                        </div>
+                        }
+                    </div>
+                    }
+                </div>
             </div>
             <div class="mb-2 row">
                 <div class="col-6">
-                    <label cLabel for="code">Mã: <span class="text-danger">(*)</span></label>
-                    <input cFormControl formControlName="code">
-                    @if (codeCreateForm?.invalid && (codeCreateForm?.dirty || codeCreateForm?.touched)) {
-                        <div class="text-danger">
-                            @if (codeCreateForm?.hasError('required')) {
-                                Code is required.
-                            }
-                        </div>
+                    <label cLabel for="nameEN">Name EN: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="nameEN">
+                    @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameENCreateForm?.hasError('required')) {
+                        Name EN is required.
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="col-6">
+                    <label cLabel for="nameVN">Name VN: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="nameVN">
+                    @if (nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameVNCreateForm?.hasError('required')) {
+                        Name VN is required.
+                        }
+                    </div>
                     }
                 </div>
             </div>
-            <div class="mb-2 row">
-                <div class="col-12">
-                    <label cLabel for="name">Tên: <span class="text-danger">(*)</span></label>
-                    <input cFormControl formControlName="name">
-                    @if (nameCreateForm?.invalid && (nameCreateForm?.dirty || nameCreateForm?.touched)) {
-                        <div class="text-danger">
-                            @if (nameCreateForm?.hasError('required')) {
-                                Name is required.
-                            }
-                        </div>
+
+            <div class="mb-2">
+                <label cLabel for="note">Note: </label>
+                <textarea cFormControl formControlName="note" rows="3"></textarea>
+                @if (noteCreateForm?.invalid && (noteCreateForm?.dirty || noteCreateForm?.touched)) {
+                <div class="text-danger">
+                    @if (noteCreateForm?.hasError('maxlength')) {
+                    Maximum 500 characters.
                     }
                 </div>
-                <div class="mb-2">
-                    <label cLabel for="note">Ghi Chú: </label>
-                    <textarea cFormControl formControlName="note" rows="3"></textarea>
-                    @if (noteCreateForm?.invalid && (noteCreateForm?.dirty || noteCreateForm?.touched)) {
-                        <div class="text-danger">
-                            @if (noteCreateForm?.hasError('maxlength')) {
-                                Maximum 500 characters.
-                            }
-                        </div>
-                    }
-                </div>
-                <!-- <div class="mb-2">
-                    <label cLabel for="note">Hình Ảnh:</label>
-                    <input class="d-none" id="createUploadImage" type="file" accept="image/*"
-                        (change)="onChangeUploadImage($event,'create')" />
-                    <div class="mt-2 reviewImage" (click)="openFileInput('create')">
-                        <ng-container *ngIf="!reviewCreateUploadImage">
-                            <svg [cIcon]="icons.cilCloudUpload" width="140" title="Shield Icon"></svg>
-                        </ng-container>
-                        <div *ngIf="reviewCreateUploadImage" [innerHTML]="reviewCreateUploadImage"
-                            class="w-100 h-100 d-flex justify-content-center align-items-center"></div>
-                    </div>
-                </div> -->
+                }
             </div>
         </c-modal-body>
         <c-modal-footer>
-            <button (click)="toggleLiveCreateModel()" cButton color="secondary" i18n="@@close">
+            <button (click)="toggleLiveCreateModel()" cButton color="secondary">
                 Đóng
             </button>
             <button cButton type="submit" [disabled]="!createForm.valid" color="primary">Lưu</button>
@@ -177,7 +177,7 @@
             <div class="mb-2 d-flex flex-row">
                 <c-form-check class="me-2 d-flex align-items-center">
                     <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
-                    <label cFormCheckLabel for="isActive" class="me-2" i18n="@@active">Hoạt Động </label>
+                    <label cFormCheckLabel for="isActive" class="me-2">Hoạt Động </label>
                 </c-form-check>
             </div>
             <div class="mb-2 row">
@@ -185,11 +185,11 @@
                     <label cLabel for="code">Mã: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="code">
                     @if (codeUpdateForm?.invalid && (codeUpdateForm?.dirty || codeUpdateForm?.touched)) {
-                        <div class="text-danger">
-                            @if (codeUpdateForm?.hasError('required')) {
-                                Code is required.
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (codeUpdateForm?.hasError('required')) {
+                        Code is required.
+                        }
+                    </div>
                     }
                 </div>
             </div>
@@ -198,22 +198,22 @@
                     <label cLabel for="name">Tên: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="name">
                     @if (nameUpdateForm?.invalid && (nameUpdateForm?.dirty || nameUpdateForm?.touched)) {
-                        <div class="text-danger">
-                            @if (nameUpdateForm?.hasError('required')) {
-                                Name is required.
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (nameUpdateForm?.hasError('required')) {
+                        Name is required.
+                        }
+                    </div>
                     }
                 </div>
                 <div class="mb-2">
                     <label cLabel for="note">Ghi Chú: </label>
                     <textarea cFormControl formControlName="note" rows="3"></textarea>
                     @if (noteUpdateForm?.invalid && (noteUpdateForm?.dirty || noteUpdateForm?.touched)) {
-                        <div class="text-danger">
-                            @if (noteUpdateForm?.hasError('maxlength')) {
-                                Maximum 500 characters.
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (noteUpdateForm?.hasError('maxlength')) {
+                        Maximum 500 characters.
+                        }
+                    </div>
                     }
                 </div>
                 <!-- <div class="mb-2">

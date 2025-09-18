@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SurveyControllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class QuestionLibraryController : BaseApiController
     {
         //private readonly IQuestionLibraryHelper _questionHelper;

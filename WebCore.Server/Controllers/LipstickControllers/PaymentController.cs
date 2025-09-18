@@ -14,9 +14,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class PaymentController : BaseApiController
     {
         private readonly IPaymentHelper _paymentHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public PaymentController(IPaymentHelper paymentHelper, IStringLocalizer<SharedResource> localizer, IActionloggingService actionLog)
+        public PaymentController(IPaymentHelper paymentHelper, IStringLocalizer<SharedResource> localizer, IActionLoggingService actionLog)
         {
             _paymentHelper = paymentHelper;
             _localizer = localizer;

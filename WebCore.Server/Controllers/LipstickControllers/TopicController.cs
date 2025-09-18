@@ -16,9 +16,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class TopicController : BaseApiController
     {
         private readonly ITopicHelper _topicHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public TopicController(ITopicHelper topicHelper, IStringLocalizer<SharedResource> localizer, IActionloggingService actionLog)
+        public TopicController(ITopicHelper topicHelper, IStringLocalizer<SharedResource> localizer, IActionLoggingService actionLog)
         {
             _topicHelper = topicHelper;
             _localizer = localizer;

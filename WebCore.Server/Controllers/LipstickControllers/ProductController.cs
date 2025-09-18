@@ -16,9 +16,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class ProductController : BaseApiController
     {
         private readonly IProductHelper _productHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public ProductController(IProductHelper productHelper, IStringLocalizer<SharedResource> localizer, IActionloggingService actionLog)
+        public ProductController(IProductHelper productHelper, IStringLocalizer<SharedResource> localizer, IActionLoggingService actionLog)
         {
             _productHelper = productHelper;
             _localizer = localizer;

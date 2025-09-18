@@ -104,7 +104,7 @@ namespace WebCore.Server
             services.AddScoped<IQRCodeService, QRCodeService>();
             services.AddScoped<IFileStorageService, FileStorageService>();
             services.AddScoped<IConvertWordToPdfService, ConvertWordToPdfService>();
-            services.AddScoped<IActionloggingService, ActionLoggingService>();
+            services.AddScoped<IActionLoggingService, ActionLoggingService>();
             services.AddTransient<IApiKeyValidation, ApiKeyValidation>();
             services.AddScoped<ApiKeyAuthFilter>();
             services.AddAutoMapper(typeof(Program));

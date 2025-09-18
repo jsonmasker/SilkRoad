@@ -74,11 +74,12 @@ export class QuestionGroupLibraryService {
   }
 
   create(model: FormData): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlQuestionGroupLibrary, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+    const url = EUrl.createUrlQuestionGroupLibrary;
+    return this.http.post<BaseAPIResponse>(url, model, { headers: this.authenticationService.GetHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
           return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlQuestionGroupLibrary, model, { headers: this.authenticationService.GetHeaders() }))
+            switchMap(() => this.http.post<BaseAPIResponse>(url, model, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
           return throwError(() =>error);

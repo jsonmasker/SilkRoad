@@ -1,4 +1,5 @@
 ﻿using Common.Services.ActionLoggingServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using SurveyBusinessLogic.IHelpers;
@@ -8,12 +9,13 @@ namespace WebCore.Server.Controllers.SurveyControllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class QuestionTypeController : BaseApiController
     {
         private readonly IQuestionTypeHelper _questionTypeHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public QuestionTypeController(IQuestionTypeHelper questionTypeHelper, IActionloggingService actionLog, IStringLocalizer<SharedResource> localizer)
+        public QuestionTypeController(IQuestionTypeHelper questionTypeHelper, IActionLoggingService actionLog, IStringLocalizer<SharedResource> localizer)
         {
             _questionTypeHelper = questionTypeHelper;
             _actionLog = actionLog;

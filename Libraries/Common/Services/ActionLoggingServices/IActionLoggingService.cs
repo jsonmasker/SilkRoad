@@ -2,7 +2,7 @@
 
 namespace Common.Services.ActionLoggingServices
 {
-    public interface IActionloggingService
+    public interface IActionLoggingService
     {
         public Task<Pagination<UserActionModel>> GetAllAsync(string? controllerName, string? actionName, DateTime? startDate, DateTime? endDate, int pageIndex, int pageSize);
         public Task<UserActionModel> GetAsync(string id);

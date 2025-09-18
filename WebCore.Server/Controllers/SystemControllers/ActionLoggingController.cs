@@ -12,9 +12,9 @@ namespace WebCore.Server.Controllers.SystemControllers
     [Authorize]
     public class ActionLoggingController : BaseApiController
     {
-        private readonly IActionloggingService _actionloggingService;
+        private readonly IActionLoggingService _actionloggingService;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public ActionLoggingController(IActionloggingService actionloggingService,
+        public ActionLoggingController(IActionLoggingService actionloggingService,
             IStringLocalizer<SharedResource> localizer)
         {
             _actionloggingService = actionloggingService;

@@ -1,6 +1,7 @@
 ﻿using Common;
 using Common.Models;
 using Common.Services.ActionLoggingServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using SurveyBusinessLogic.IHelpers;
@@ -11,17 +12,20 @@ namespace WebCore.Server.Controllers.SurveyControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class QuestionGroupLibrabryController : BaseApiController
+    [Authorize]
+    public class QuestionGroupLibraryController : BaseApiController
     {
         private readonly IQuestionGroupLibraryHelper _helper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public QuestionGroupLibrabryController(IQuestionGroupLibraryHelper questionGroupHelper, IActionloggingService actionLog, IStringLocalizer<SharedResource> localizer)
+        public QuestionGroupLibraryController(IQuestionGroupLibraryHelper questionGroupHelper,
+        IActionLoggingService actionLog, IStringLocalizer<SharedResource> localizer)
         {
             _helper = questionGroupHelper;
             _actionLog = actionLog;
             _localizer = localizer;
         }
+
         [HttpGet("getAll/{pageIndex}/{pageSize}")]
         public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
         {
@@ -30,7 +34,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             }
             Pagination<QuestionGroupLibraryDTO> data = await _helper.GetAllAsync(pageIndex, pageSize);
-            return Succeeded<Pagination<QuestionGroupLibraryDTO>>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
         // [HttpGet("getAllActive/{pageIndex}/{pageSize}")]
@@ -57,13 +61,14 @@ namespace WebCore.Server.Controllers.SurveyControllers
             var data = await _helper.GetAllDeletedAsync(pageIndex, pageSize);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
+
         [HttpGet("getById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var data = await _helper.GetByIdAsync(id);
             if (data == null)
                 return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
-            return Succeeded<QuestionGroupLibraryDTO>(data, _localizer["dataFetchedSuccessfully"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
         //[HttpGet("getEargerById/{id}")]
         //public async Task<IActionResult> GetEargerById(int id)
@@ -75,7 +80,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
         //}
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromForm] QuestionGroupLibraryDTO model)
+        public async Task<IActionResult> Create([FromBody] QuestionGroupLibraryDTO model)
         {
             if (model == null || !ModelState.IsValid)
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
@@ -87,7 +92,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update([FromForm] QuestionGroupLibraryDTO model)
+        public async Task<IActionResult> Update([FromBody] QuestionGroupLibraryDTO model)
         {
             if (model == null || !ModelState.IsValid)
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);

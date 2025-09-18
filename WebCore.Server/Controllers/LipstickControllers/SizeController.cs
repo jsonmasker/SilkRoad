@@ -16,9 +16,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class SizeController : BaseApiController
     {
         private readonly ISizeHelper _sizeHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public SizeController(ISizeHelper sizeHelper, IStringLocalizer<SharedResource> localizer, IActionloggingService actionLog)
+        public SizeController(ISizeHelper sizeHelper, IStringLocalizer<SharedResource> localizer, IActionLoggingService actionLog)
         {
             _sizeHelper = sizeHelper;
             _localizer = localizer;

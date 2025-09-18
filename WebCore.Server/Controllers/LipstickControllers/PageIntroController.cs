@@ -16,9 +16,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class PageIntroController : BaseApiController
     {
         private readonly IPageIntroHelper _pageIntroHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         public readonly IStringLocalizer<SharedResource> _localizer;
-        public PageIntroController(IPageIntroHelper pageIntroHelper, IStringLocalizer<SharedResource> localizer, IActionloggingService actionLog)
+        public PageIntroController(IPageIntroHelper pageIntroHelper, IStringLocalizer<SharedResource> localizer, IActionLoggingService actionLog)
         {
             _pageIntroHelper = pageIntroHelper;
             _localizer = localizer;
