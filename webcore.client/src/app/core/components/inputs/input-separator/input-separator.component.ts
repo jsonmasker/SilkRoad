@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ThousandSeparatorDirective } from '@common/directives/thousand-separator.directive';
-import { FormControlDirective } from '@coreui/angular';
 
 @Component({
   selector: 'app-input-separator',
