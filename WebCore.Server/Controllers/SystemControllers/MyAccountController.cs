@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using WebCore.Server;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SystemControllers
@@ -19,13 +18,13 @@ namespace WebCore.Server.Controllers.SystemControllers
     {
         private readonly SignInManager<UserDTO> _signInManager;
         private readonly IMyAccountHelper _myAccountHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         public readonly IStringLocalizer<MyAccountController> _localizer;
         public readonly IStringLocalizer<SharedResource> _sharedLocalizer;
         public MyAccountController(SignInManager<UserDTO> signInManager,
             IStringLocalizer<MyAccountController> localizer,
             IStringLocalizer<SharedResource> sharedLocalizer,
-            IActionloggingService actionLog,
+            IActionLoggingService actionLog,
             IMyAccountHelper myAccountHelper)
         {
             _signInManager = signInManager;

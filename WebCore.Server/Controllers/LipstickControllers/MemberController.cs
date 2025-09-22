@@ -6,7 +6,6 @@ using LipstickBusinessLogic.ILipstickHelpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using WebCore.Server;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.LipstickControllers
@@ -17,9 +16,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class MemberController : BaseApiController
     {
         private readonly IMemberHelper _memberHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public MemberController(IMemberHelper memberHelper, IActionloggingService actionLog, IStringLocalizer<SharedResource> localizer)
+        public MemberController(IMemberHelper memberHelper, IActionLoggingService actionLog, IStringLocalizer<SharedResource> localizer)
         {
             _memberHelper = memberHelper;
             _actionLog = actionLog;

@@ -1,9 +1,11 @@
-﻿using Common.ViewModels.SurveyViewModels;
+﻿using Common.Models;
+using SurveyDataAccess.DTOs;
 
 namespace SurveyBusinessLogic.IHelpers
 {
     public interface IQuestionTypeHelper
     {
-        public Task<IEnumerable<QuestionTypeViewModel>> GetAllAsync();
+        public Task<IEnumerable<QuestionTypeDTO>> GetAllAsync();
+        public Task<IEnumerable<OptionModel>> GetOptionListAsync();
     }
 }

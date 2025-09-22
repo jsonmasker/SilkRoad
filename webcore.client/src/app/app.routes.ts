@@ -24,10 +24,10 @@ export const routes: Routes = [
         path: 'introduction',
         loadChildren: () => import('./views/introduction/routes').then((m) => m.routes)
       },
-      // {
-      //   path: 'test-component',
-      //   loadChildren: () => import('./views/test/routes').then((m) => m.routes)
-      // },
+      {
+        path: 'test-component',
+        loadChildren: () => import('./views/test/routes').then((m) => m.routes)
+      },
       {
         path: 'dashboard',
         loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
@@ -142,8 +142,16 @@ export const routes: Routes = [
         loadChildren: () => import('./views/surveys/survey-results/details/routes').then((m) => m.routes)
       },
       {
-        path: 'surveys/extend-survey',
-        loadChildren: () => import('./views/surveys/extend-survey/routes').then((m) => m.routes)
+        path: 'surveys/survey-forms',
+        loadChildren: () => import('./views/surveys/survey-forms/index/routes').then((m) => m.routes)
+      },
+      {
+        path: 'surveys/survey-forms/create',
+        loadChildren: () => import('./views/surveys/survey-forms/create/routes').then((m) => m.routes)
+      },
+      {
+        path: 'surveys/extension',
+        loadChildren: () => import('./views/surveys/extension/routes').then((m) => m.routes)
       },
       //#endregion
       //#region System Management

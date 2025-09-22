@@ -6,7 +6,6 @@ using LipstickBusinessLogic.ILipstickHelpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using WebCore.Server;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.LipstickControllers
@@ -17,9 +16,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class ColorController : BaseApiController
     {
         private readonly IColorHelper _colorHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public ColorController(IColorHelper colorHelper, IStringLocalizer<SharedResource> localizer, IActionloggingService actionLog)
+        public ColorController(IColorHelper colorHelper, IStringLocalizer<SharedResource> localizer, IActionLoggingService actionLog)
         {
             _colorHelper = colorHelper;
             _localizer = localizer;

@@ -3,7 +3,6 @@ using Common.Services.ActionLoggingServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using WebCore.Server;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SystemControllers
@@ -13,9 +12,9 @@ namespace WebCore.Server.Controllers.SystemControllers
     [Authorize]
     public class ActionLoggingController : BaseApiController
     {
-        private readonly IActionloggingService _actionloggingService;
+        private readonly IActionLoggingService _actionloggingService;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public ActionLoggingController(IActionloggingService actionloggingService,
+        public ActionLoggingController(IActionLoggingService actionloggingService,
             IStringLocalizer<SharedResource> localizer)
         {
             _actionloggingService = actionloggingService;

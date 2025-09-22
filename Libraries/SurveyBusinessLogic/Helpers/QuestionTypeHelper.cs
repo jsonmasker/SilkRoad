@@ -1,23 +1,29 @@
-﻿using AutoMapper;
-using Common.ViewModels.SurveyViewModels;
+﻿using Common.Models;
 using SurveyBusinessLogic.IHelpers;
 using SurveyDataAccess;
+using SurveyDataAccess.DTOs;
 
 namespace SurveyBusinessLogic.Helpers
 {
     public class QuestionTypeHelper : IQuestionTypeHelper
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-        public QuestionTypeHelper(IUnitOfWork unitOfWork, IMapper mapper)
+        public QuestionTypeHelper(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
-        public async Task<IEnumerable<QuestionTypeViewModel>> GetAllAsync()
+        public async Task<IEnumerable<QuestionTypeDTO>> GetAllAsync()
         {
-            var data = await _unitOfWork.QuestionTypeRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<QuestionTypeViewModel>>(data);
+            return await _unitOfWork.QuestionTypeRepository.GetAllAsync();
+        }
+
+        public async Task<IEnumerable<OptionModel>> GetOptionListAsync()
+        {
+            return (await _unitOfWork.QuestionTypeRepository.GetAllAsync(x => x.IsActive)).Select(x => new OptionModel
+            {
+                Id = x.Id,
+                Name = x.Name
+            });
         }
     }
 }

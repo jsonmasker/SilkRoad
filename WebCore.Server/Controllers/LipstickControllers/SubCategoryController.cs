@@ -6,7 +6,6 @@ using LipstickBusinessLogic.ILipstickHelpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using WebCore.Server;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.LipstickControllers
@@ -17,9 +16,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class SubCategoryController : BaseApiController
     {
         private readonly ISubCategoryHelper _subCategoryHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public SubCategoryController(ISubCategoryHelper subCategoryHelper, IStringLocalizer<SharedResource> localizer, IActionloggingService actionLog)
+        public SubCategoryController(ISubCategoryHelper subCategoryHelper, IStringLocalizer<SharedResource> localizer, IActionLoggingService actionLog)
         {
             _subCategoryHelper = subCategoryHelper;
             _localizer = localizer;

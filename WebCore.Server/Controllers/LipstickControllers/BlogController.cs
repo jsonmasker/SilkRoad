@@ -6,7 +6,6 @@ using LipstickBusinessLogic.ILipstickHelpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using WebCore.Server;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.LipstickControllers
@@ -17,9 +16,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class BlogController : BaseApiController
     {
         private readonly IBlogHelper _blogHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public BlogController(IBlogHelper blogHelper, IStringLocalizer<SharedResource> localizer, IActionloggingService actionLog)
+        public BlogController(IBlogHelper blogHelper, IStringLocalizer<SharedResource> localizer, IActionLoggingService actionLog)
         {
             _blogHelper = blogHelper;
             _localizer = localizer;

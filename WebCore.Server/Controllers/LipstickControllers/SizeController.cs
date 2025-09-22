@@ -6,7 +6,6 @@ using LipstickBusinessLogic.ILipstickHelpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using WebCore.Server;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.LipstickControllers
@@ -17,9 +16,9 @@ namespace WebCore.Server.Controllers.LipstickControllers
     public class SizeController : BaseApiController
     {
         private readonly ISizeHelper _sizeHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public SizeController(ISizeHelper sizeHelper, IStringLocalizer<SharedResource> localizer, IActionloggingService actionLog)
+        public SizeController(ISizeHelper sizeHelper, IStringLocalizer<SharedResource> localizer, IActionLoggingService actionLog)
         {
             _sizeHelper = sizeHelper;
             _localizer = localizer;

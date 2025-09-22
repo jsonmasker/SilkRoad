@@ -13,8 +13,6 @@ using LipstickBusinessLogic.ILipstickClientHelpers;
 using LipstickBusinessLogic.ILipstickHelpers;
 using LipstickBusinessLogic.LipstickClientHelpers;
 using LipstickBusinessLogic.LipstickHelpers;
-using RestaurantBusinessLogic.Helpers;
-using RestaurantBusinessLogic.IHelpers;
 using StockBusinessLogic.Helpers;
 using StockBusinessLogic.IHelpers;
 using SurveyBusinessLogic.Helpers;
@@ -66,8 +64,8 @@ namespace WebCore.Server
             #region Survey
             services.AddScoped<SurveyDataAccess.IUnitOfWork, SurveyDataAccess.UnitOfWork>();
             services.AddScoped<IParticipantHelper, ParticipantHelper>();
-            services.AddScoped<IQuestionGroupHelper, QuestionGroupHelper>();
-            services.AddScoped<IQuestionHelper, QuestionHelper>();
+            services.AddScoped<IQuestionGroupLibraryHelper, QuestionGroupLibraryHelper>();
+            services.AddScoped<IQuestionLibraryHelper, QuestionLibraryHelper>();
             services.AddScoped<ISurveyFormHelper, SurveyFormHelper>();
             services.AddScoped<ISurveyReportHelper, SurveyReportHelper>();
             services.AddScoped<IQuestionTypeHelper, QuestionTypeHelper>();
@@ -106,7 +104,7 @@ namespace WebCore.Server
             services.AddScoped<IQRCodeService, QRCodeService>();
             services.AddScoped<IFileStorageService, FileStorageService>();
             services.AddScoped<IConvertWordToPdfService, ConvertWordToPdfService>();
-            services.AddScoped<IActionloggingService, ActionLoggingService>();
+            services.AddScoped<IActionLoggingService, ActionLoggingService>();
             services.AddTransient<IApiKeyValidation, ApiKeyValidation>();
             services.AddScoped<ApiKeyAuthFilter>();
             services.AddAutoMapper(typeof(Program));

@@ -5,7 +5,6 @@ using Common.ViewModels.QRViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using WebCore.Server;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.FeatureControllers
@@ -16,10 +15,10 @@ namespace WebCore.Server.Controllers.FeatureControllers
     public class QRCodeController : BaseApiController
     {
         private readonly IQRCodeHelper _qrCodeHelper;
-        private readonly IActionloggingService _actionLog;
+        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
         public QRCodeController(IQRCodeHelper qrCodeHelper,
-            IActionloggingService actionLog,
+            IActionLoggingService actionLog,
             IStringLocalizer<SharedResource> localizer)
         {
             _qrCodeHelper = qrCodeHelper;
@@ -38,10 +37,10 @@ namespace WebCore.Server.Controllers.FeatureControllers
                 string controllerName = ControllerContext.ActionDescriptor.ControllerName;
                 if (!ModelState.IsValid)
                 {
-                    _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
+                    // _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
                     return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
                 }
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Successful, model);
+                // _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Successful, model);
                 // Generate the QR code as a base64 string
                 byte[] fileBytes = await _qrCodeHelper.GenerateQRCodeAsync(model);
                 // Return the byte array as a PNG image
@@ -64,10 +63,10 @@ namespace WebCore.Server.Controllers.FeatureControllers
                 string controllerName = ControllerContext.ActionDescriptor.ControllerName;
                 if (!ModelState.IsValid)
                 {
-                    _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
+                    // _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Failed, model);
                     return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
                 }
-                _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Successful, model);
+                // _actionLog.CreateAsync(token, controllerName, EUserAction.Create, EUserActionStatus.Successful, model);
                 string filePath = await _qrCodeHelper.GenerateListQRCodeAsync(model);
                 var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
                 var fileName = Path.GetFileName(filePath);
