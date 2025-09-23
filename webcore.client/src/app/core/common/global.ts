@@ -7,7 +7,7 @@ export const ollamaUrl = baseUrl + "api/Ollama/GetResponse";
 export const streamOllamaUrl = baseUrl + "api/Ollama/GetStreamingResponse";
 export const chatGPTUrl = baseUrl + "api/ChatGPT/GetResponse";
 
-export enum EPageType
+export enum EPageTypes
 {
     AboutUs,
     Contact,
@@ -16,7 +16,7 @@ export enum EPageType
     PrivacyPolicy,
 }
 
-export enum EBannerType
+export enum EBannerTypes
 {
     MainBanner,
     SubBanner
@@ -38,7 +38,7 @@ export enum EActions{
     ViewDetails = 'ViewDetails',
     Create = 'Create',
     Update = 'Update',
-    SoftDalete = 'SoftDelete',
+    SoftDelete = 'SoftDelete',
     Restore = 'Restore',
     Delete = 'Delete',
     Export = 'Export',
@@ -47,12 +47,12 @@ export enum EActions{
     LogOut = 'LogOut',
 }
 
-export enum EController{
+export enum EControllers{
     Blog = 'Blog',
     Brand = 'Brand',
     Category = 'Category',
     Color = 'Color',
-    Homebanner = 'HomeBanner',
+    HomeBanner = 'HomeBanner',
     PageContent = 'PageContent',
     PageType = 'PageType',
     product = 'Product',
@@ -62,12 +62,6 @@ export enum EController{
     MyAccount = 'MyAccount',
 }
 
-export enum EQuestionType {
-    Option = 1,
-    Open = 2,
-    OptionOpen = 3,
-    Rating = 4,
-}
 export enum EPaymentTypes
 {
     CashOnDelivery = 1,
@@ -95,6 +89,15 @@ export enum EPaymentStatus
     Failed = 3,
     Cancelled = 4,
     Refunded = 5
+}
+
+export enum EQuestionTypes
+{
+    ClosedEndedQuestion,
+    OpenEndedQuestion,
+    HybridQuestion,
+    MultipleChoiceQuestion,
+    RatingQuestion
 }
 
 export function numberEnumToArray(enumObj: any): { key: string, value: number }[] {

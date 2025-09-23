@@ -2,7 +2,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { EQuestionType } from '@common/global';
+import { EQuestionTypes } from '@common/global';
 import { RatingComponent } from '@components/generals/rating/rating.component';
 import { FormLabelDirective, ButtonDirective, FormDirective, CardComponent, CardBodyComponent, FormControlDirective } from '@coreui/angular';
 import { QuestionGroupUIModel, SurveyUIModel } from '@models/survey-models/survey-ui.model';
@@ -18,7 +18,7 @@ import { ParticipantService } from '@services/survey-services/participant.servic
 })
 export class DetailsComponent {
   questionGroupUIs: QuestionGroupUIModel[] = [];
-  EQuestionType = EQuestionType;
+  EQuestionType = EQuestionTypes;
   formGroup: FormGroup = new FormGroup({
     fullName: new FormControl(''),
     phoneNumber: new FormControl(''),

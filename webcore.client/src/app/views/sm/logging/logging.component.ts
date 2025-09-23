@@ -6,7 +6,7 @@ import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, B
 import { ActionLoggingModel } from '@models/system-management-models/action-logging.model';
 import { ActionLoggingService } from '@services/system-services/action-logging.service';
 import { PageInformation, Pagination } from '@models/pagination.model';
-import { EActions, EController, stringEnumToArray } from '@common/global';
+import { EActions, EControllers, stringEnumToArray } from '@common/global';
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
 @Component({
@@ -42,7 +42,7 @@ export class LoggingComponent {
   constructor(private actionLoggingService: ActionLoggingService) { }
   ngOnInit(): void {
     var today = new Date();
-    this.controllers = stringEnumToArray(EController);
+    this.controllers = stringEnumToArray(EControllers);
     this.actions = stringEnumToArray(EActions);
     this.queryParamForm.patchValue({
       startDate: new Date(today.setDate(today.getDate() - 3)).toISOString().split('T')[0],

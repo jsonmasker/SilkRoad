@@ -22,7 +22,7 @@
                 @for (question of questiongroup.questionUIs; track $index; let j = $index) {
                 <div class="mb-2">
                     <span>Question {{j+1}}. {{question.questionName}}</span>
-                    @if (question.questionTypeID == EQuestionType.Option) {
+                    @if (question.questionTypeID == EQuestionType.OpenEndedQuestion) {
                         @for (answer of question.answers; track $index; let k = $index) {
                         <ng-container>
                             <input class="me-1" type="radio" [checked]="answer.checked" disabled readonly />
@@ -30,10 +30,10 @@
                         </ng-container>
                         }
                     }
-                    @if (question.questionTypeID == EQuestionType.Open) {
+                    @if (question.questionTypeID == EQuestionType.OpenEndedQuestion) {
                         <textarea cFormControl [value]="question.answerOfCustomer" rows="3"></textarea>
                     }
-                    @if (question.questionTypeID == EQuestionType.OptionOpen) {
+                    @if (question.questionTypeID == EQuestionType.OpenEndedQuestion) {
                         @for (answer of question.answers; track $index; let k = $index) {
                         <ng-container>
                             <input class="me-1" type="radio" [checked]="answer.checked" disabled readonly />
@@ -42,7 +42,7 @@
                         }
                         <textarea cFormControl [value]="question.answerOfCustomer" rows="3"></textarea>
                     }
-                    @if (question.questionTypeID == EQuestionType.Rating) {
+                    @if (question.questionTypeID == EQuestionType.RatingQuestion) {
                         <app-rating [rating]="question.rating" [maxStars]="5" [readOnly]="true"></app-rating>
                     }
                 </div>

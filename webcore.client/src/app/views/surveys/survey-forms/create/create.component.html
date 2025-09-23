@@ -1,6 +1,10 @@
 <h3>Create Survey form</h3>
 <c-card>
     <c-card-body>
+        <div class="d-flex justify-content-end mb-4">
+            <button cButton type="button" class="btn-info me-2">Add Question Group</button>
+            <button cButton type="button" class="btn-info">Add Single Question</button>
+        </div>
         <form cForm [formGroup]="createForm" (ngSubmit)="onSubmit()">
             <div class="mb-2 row">
                 <div class="col-6">
@@ -15,7 +19,8 @@
                     }
                 </div>
                 <div class="col-6">
-                <app-range-datetime-picker></app-range-datetime-picker>
+                    <label cLabel>Start - End Date: <span class="text-danger">(*)</span></label>
+                    <app-range-datetime-picker></app-range-datetime-picker>
                 </div>
             </div>
             <div class="mb-2 row">

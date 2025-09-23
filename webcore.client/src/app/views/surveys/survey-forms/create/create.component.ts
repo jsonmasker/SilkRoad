@@ -1,8 +1,8 @@
-import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, CardBodyComponent, CardComponent, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, TemplateIdDirective } from '@coreui/angular';
+import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, CardBodyComponent, CardComponent,
+   FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, TemplateIdDirective } from '@coreui/angular';
 import { QuestionGroupModel } from '@models/survey-models/question-group.model';
 import { SelectedQuestionModel } from '@models/survey-models/survey-form.model';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
@@ -10,10 +10,9 @@ import { RangeDatetimePickerComponent } from "@components/generals/range-datetim
 
 @Component({
   selector: 'app-create',
-  imports: [FormControlDirective, FormLabelDirective, CardComponent,
-    FormCheckComponent, CardBodyComponent, ReactiveFormsModule, FormDirective,
-    ButtonDirective, AccordionButtonDirective,
-    AccordionComponent, AccordionItemComponent, TemplateIdDirective, RouterLink, RangeDatetimePickerComponent],
+  imports: [FormControlDirective, FormLabelDirective, CardComponent, FormCheckComponent, CardBodyComponent, ReactiveFormsModule, 
+    FormDirective, ButtonDirective, AccordionButtonDirective, AccordionComponent, AccordionItemComponent, TemplateIdDirective, 
+    RouterLink, RangeDatetimePickerComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
@@ -22,7 +21,6 @@ export class CreateComponent {
   questionGroupList: QuestionGroupModel[] = [];
   selectedQuestions: SelectedQuestionModel[] = [];
   createForm: FormGroup = new FormGroup({
-    isPeriodic: new FormControl(false),
     name: new FormControl('', Validators.required),
     titleEN: new FormControl('', Validators.required),
     titleVN: new FormControl('', Validators.required),
@@ -33,6 +31,7 @@ export class CreateComponent {
     isActive: new FormControl(true)
   });
   //#endregion
+
   //#region Constructor and Hooks
   constructor(
     // private questionGroupService: QuestionGroupService,
@@ -54,6 +53,7 @@ export class CreateComponent {
     this.questionGroupList = questionGroupList;
   }
   //#endregion
+  
   //#region Methods
   getSelectedQuestionData() {
     this.selectedQuestions = [];
