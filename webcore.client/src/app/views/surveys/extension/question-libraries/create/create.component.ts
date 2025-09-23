@@ -48,15 +48,11 @@ export class CreateComponent {
   createForm: FormGroup = new FormGroup({
     nameEN: new FormControl(''),
     nameVN: new FormControl(''),
-    point: new FormControl(1, Validators.min(1)),
-    description: new FormControl(''),
   });
 
   updateForm: FormGroup = new FormGroup({
     nameEN: new FormControl(''),
     nameVN: new FormControl(''),
-    point: new FormControl(1, Validators.min(1)),
-    description: new FormControl(''),
   });
   //#endregion
 
@@ -116,8 +112,6 @@ export class CreateComponent {
 
   get nameENCreateForm() { return this.createForm.get('nameEN'); }
   get nameVNCreateForm() { return this.createForm.get('nameVN'); }
-  get pointCreateForm() { return this.createForm.get('point'); }
-  get descriptionCreateForm() { return this.createForm.get('description'); }
 
   //#endregion
   
@@ -145,8 +139,6 @@ export class CreateComponent {
 
   get nameENUpdateForm() { return this.updateForm.get('nameEN'); }
   get nameVNUpdateForm() { return this.updateForm.get('nameVN'); }
-  get pointUpdateForm() { return this.updateForm.get('point'); }
-  get descriptionUpdateForm() { return this.updateForm.get('description'); }
 
   //#endregion
   

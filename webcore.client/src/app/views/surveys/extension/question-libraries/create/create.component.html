@@ -103,7 +103,7 @@
     </c-modal-header>
     <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
         <c-modal-body>
-            <div class="mb-2 row">
+            <!-- <div class="mb-2 row">
                 <div class="col-6">
                     <label for="point" class="me-2">Point: <span class="text-danger">(*)</span> </label>
                     <input formControlName="point" type="number" class="me-2 priorityInput">
@@ -115,9 +115,9 @@
                     </div>
                     }
                 </div>
-            </div>
-            <div class="mb-2 row">
-                <div class="col-6">
+            </div> -->
+          
+                <div class="mb-2">
                     <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
                     <input cFormControl formControlName="nameEN">
                     @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
@@ -128,7 +128,7 @@
                     </div>
                     }
                 </div>
-                <div class="col-6">
+                <div class="mb-2">
                     <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameVN">
                     @if (nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)) {
@@ -139,13 +139,13 @@
                     </div>
                     }
                 </div>
-            </div>
-            <div class="mb-2 row">
+          
+            <!-- <div class="mb-2 row">
                 <div class="col-12">
-                    <label cLabel for="description" class="me-2">Description: </label>
-                    <textarea cFormControl formControlName="description" rows="3"></textarea>
+                    <label cLabel for="note" class="me-2">Note: </label>
+                    <textarea cFormControl formControlName="note" rows="3"></textarea>
                 </div>
-            </div>
+            </div> -->
         </c-modal-body>
         <c-modal-footer>
             <button (click)="toggleLiveCreateModel()" cButton color="secondary">
@@ -164,7 +164,7 @@
     </c-modal-header>
     <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
         <c-modal-body>
-            <div class="mb-2 d-flex flex-row">
+            <!-- <div class="mb-2 d-flex flex-row">
                 <div>
                     <label for="point" class="me-2">Point: <span class="text-danger">(*)</span> </label>
                     <input formControlName="point" type="number" class="me-2 priorityInput">
@@ -176,9 +176,9 @@
                     </div>
                     }
                 </div>
-            </div>
-            <div class="mb-2 row">
-                <div class="col-6">
+            </div> -->
+         
+                <div class="mb-2">
                     <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
                     <input cFormControl formControlName="nameEN">
                     @if (nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)) {
@@ -189,7 +189,7 @@
                     </div>
                     }
                 </div>
-                <div class="col-6">
+                <div class="mb-2">
                     <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameVN">
                     @if (nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)) {
@@ -200,13 +200,13 @@
                     </div>
                     }
                 </div>
-            </div>
-            <div class="mb-2 row">
+        
+            <!-- <div class="mb-2 row">
                 <div class="col-12">
-                    <label cLabel for="description" class="me-2">Description: </label>
-                    <textarea cFormControl formControlName="description" rows="3"></textarea>
+                    <label cLabel for="note" class="me-2">Note: </label>
+                    <textarea cFormControl formControlName="note" rows="3"></textarea>
                 </div>
-            </div>
+            </div> -->
         </c-modal-body>
         <c-modal-footer>
             <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
