@@ -93,11 +93,11 @@ export enum EPaymentStatus
 
 export enum EQuestionTypes
 {
-    ClosedEndedQuestion,
-    OpenEndedQuestion,
-    HybridQuestion,
-    MultipleChoiceQuestion,
-    RatingQuestion
+    ClosedEndedQuestion = 1,
+    OpenEndedQuestion = 2,
+    HybridQuestion = 3,
+    MultipleChoiceQuestion = 4,
+    RatingQuestion = 5
 }
 
 export function numberEnumToArray(enumObj: any): { key: string, value: number }[] {

@@ -1,4 +1,4 @@
-<h1>Create Question Library</h1>
+<h3>Create Question Library</h3>
 <c-card>
     <c-card-body>
         <form cForm [formGroup]="questionForm" (ngSubmit)="onSubmit()">
@@ -6,35 +6,11 @@
                 <div class="col-6">
                     <label cLabel for="questionTypeId">Select Question type: <span
                             class="text-danger">(*)</span></label>
-                    <select cFormControl formControlName="questionTypeId" cSelect>
-                        <option [value]="-1">Select a question type</option>
-                        @for (item of questionTypeList; track item?.id) {
-                            <option [value]="item.id">{{ item.name }}</option>
-                        }
-                    </select>
-                    @if (questionTypeId?.invalid && (questionTypeId?.dirty || questionTypeId?.touched)) {
-                        <div class="text-danger">
-                            @if (questionTypeId?.hasError('min')) {
-                                <div>Select question type, please!</div>
-                            }
-                        </div>
-                    }
+                    <app-select-search [options]="questionTypeList" (onChangeValue)="onchangeQuestionType($event)"></app-select-search>
                 </div>
                 <div class="col-6">
                     <label cLabel for="QuestionGroupLibraryId">Select Question group: </label>
-                    <select cFormControl formControlName="QuestionGroupLibraryId" cSelect>
-                        <option [value]="-1">Select question group</option>
-                        @for (item of questionGroupList; track item?.id) {
-                            <option [value]="item.id">{{ item.name }}</option>
-                        }
-                    </select>
-                    @if (QuestionGroupLibraryId?.invalid && (QuestionGroupLibraryId?.dirty || QuestionGroupLibraryId?.touched)) {
-                        <div class="text-danger">
-                            @if (QuestionGroupLibraryId?.hasError('min')) {
-                                <div>Select question group, please!</div>
-                            }
-                        </div>
-                    }
+                    <app-select-search [options]="questionGroupList" (onChangeValue)="questionForm.patchValue({QuestionGroupLibraryId: $event})"></app-select-search>
                 </div>
             </div>
             <div class="mb-2 row">
@@ -42,22 +18,22 @@
                     <label cLabel for="nameEN">NameEN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameEN" type="text" />
                     @if (nameEN?.invalid && (nameEN?.dirty || nameEN?.touched)) {
-                        <div class="text-danger">
-                            @if (nameEN?.hasError('required')) {
-                                <div>Enter NameEN, please!</div>
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (nameEN?.hasError('required')) {
+                        <div>Enter NameEN, please!</div>
+                        }
+                    </div>
                     }
                 </div>
                 <div class="col-6">
                     <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameVN" type="text" />
                     @if (nameVN?.invalid && (nameVN?.dirty || nameVN?.touched)) {
-                        <div class="text-danger">
-                            @if (nameVN?.hasError('required')) {
-                                <div>Enter NameVN, please!</div>
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (nameVN?.hasError('required')) {
+                        <div>Enter NameVN, please!</div>
+                        }
+                    </div>
                     }
                 </div>
             </div>
@@ -67,30 +43,30 @@
                     <textarea cFormControl formControlName="note" rows="3"></textarea>
                 </div>
             </div>
-            <div class="d-flex justify-content-end mb-2">
-                <button (click)="toggleLiveCreateModel()" cButton type="button" class="ms-2 btn-info">Add
-                    Answer</button>
-            </div>
-            <c-accordion class="mb-4">
-                <c-accordion-item #item0="cAccordionItem" [visible]="true">
-                    <ng-template cTemplateId="accordionHeaderTemplate">
-                        <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
-                            Answer List
-                        </button>
-                    </ng-template>
-                    <ng-template cTemplateId="accordionBodyTemplate">
-                        <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0">
-                            <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>NameEN</th>
-                                    <th>NameVN</th>
-                                    <th>Point</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for (item of predefinedAnswerList; track $index; let i = $index) {
+            @if(showPredefinedAnswerTable()) {
+                <div class="d-flex justify-content-end mb-2">
+                    <button (click)="toggleLiveCreateModel()" cButton type="button" class="ms-2 btn-info">Add Answer</button>
+                </div>
+                <c-accordion>
+                    <c-accordion-item #item0="cAccordionItem" [visible]="true">
+                        <ng-template cTemplateId="accordionHeaderTemplate">
+                            <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+                                Answer List
+                            </button>
+                        </ng-template>
+                        <ng-template cTemplateId="accordionBodyTemplate">
+                            <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>NameEN</th>
+                                        <th>NameVN</th>
+                                        <th>Point</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (item of predefinedAnswerList; track $index; let i = $index) {
                                     <tr>
                                         <td>{{ i + 1 }}</td>
                                         <td>{{ item.nameEN }}</td>
@@ -103,17 +79,17 @@
                                                 class="btn btn-danger">Delete</button>
                                         </td>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </ng-template>
-                </c-accordion-item>
-            </c-accordion>
-            <div class="d-flex justify-content-end">
-                <button cButton type="submit" type="submit" [disabled]="!createForm.valid"
-                   >Submit</button>
-                <button cButton type="button" routerLink="/surveys/extend-survey/questions" class="ms-2 btn-info"
-                   >Back to list</button>
+                                    }
+                                </tbody>
+                            </table>
+                        </ng-template>
+                    </c-accordion-item>
+                </c-accordion>
+            }
+            <div class="d-flex justify-content-end mt-4">
+                <button cButton type="submit" type="submit" [disabled]="!createForm.valid">Submit</button>
+                <button cButton type="button" routerLink="/surveys/extend-survey/questions" class="ms-2 btn-info">Back
+                    to list</button>
             </div>
         </form>
     </c-card-body>
@@ -132,11 +108,11 @@
                     <label for="point" class="me-2">Point: <span class="text-danger">(*)</span> </label>
                     <input formControlName="point" type="number" class="me-2 priorityInput">
                     @if (pointCreateForm?.invalid && (pointCreateForm?.dirty || pointCreateForm?.touched)) {
-                        <div class="text-danger">
-                            @if (pointCreateForm?.hasError('min') || pointCreateForm?.hasError('max')) {
-                                <div>Point must be between 1 and 9999.</div>
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (pointCreateForm?.hasError('min') || pointCreateForm?.hasError('max')) {
+                        <div>Point must be between 1 and 9999.</div>
+                        }
+                    </div>
                     }
                 </div>
             </div>
@@ -145,22 +121,22 @@
                     <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
                     <input cFormControl formControlName="nameEN">
                     @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
-                        <div class="text-danger">
-                            @if (nameENCreateForm?.hasError('required')) {
-                                <div>NameEN is required.</div>
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (nameENCreateForm?.hasError('required')) {
+                        <div>NameEN is required.</div>
+                        }
+                    </div>
                     }
                 </div>
                 <div class="col-6">
                     <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameVN">
                     @if (nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)) {
-                        <div class="text-danger">
-                            @if (nameVNCreateForm?.hasError('required')) {
-                                <div>NameVN is required.</div>
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (nameVNCreateForm?.hasError('required')) {
+                        <div>NameVN is required.</div>
+                        }
+                    </div>
                     }
                 </div>
             </div>
@@ -193,11 +169,11 @@
                     <label for="point" class="me-2">Point: <span class="text-danger">(*)</span> </label>
                     <input formControlName="point" type="number" class="me-2 priorityInput">
                     @if (pointUpdateForm?.invalid && (pointUpdateForm?.dirty || pointUpdateForm?.touched)) {
-                        <div class="text-danger">
-                            @if (pointUpdateForm?.hasError('min') || pointUpdateForm?.hasError('max')) {
-                                <div>point must be between 1 and 9999.</div>
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (pointUpdateForm?.hasError('min') || pointUpdateForm?.hasError('max')) {
+                        <div>point must be between 1 and 9999.</div>
+                        }
+                    </div>
                     }
                 </div>
             </div>
@@ -206,22 +182,22 @@
                     <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
                     <input cFormControl formControlName="nameEN">
                     @if (nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)) {
-                        <div class="text-danger">
-                            @if (nameENUpdateForm?.hasError('required')) {
-                                <div>NameEN is required.</div>
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (nameENUpdateForm?.hasError('required')) {
+                        <div>NameEN is required.</div>
+                        }
+                    </div>
                     }
                 </div>
                 <div class="col-6">
                     <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="nameVN">
                     @if (nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)) {
-                        <div class="text-danger">
-                            @if (nameVNUpdateForm?.hasError('required')) {
-                                <div>NameVN is required.</div>
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (nameVNUpdateForm?.hasError('required')) {
+                        <div>NameVN is required.</div>
+                        }
+                    </div>
                     }
                 </div>
             </div>

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { EColors } from '@common/global';
+import { EColors, EQuestionTypes } from '@common/global';
 import { PredefinedAnswerModel } from '@models/survey-models/predefined-answer.model';
 import { QuestionGroupModel } from '@models/survey-models/question-group.model';
 import { QuestionTypeModel } from '@models/survey-models/question-type.model';
@@ -11,15 +11,13 @@ import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, B
 import { QuestionGroupLibraryService } from '@services/survey-services/question-group-library.service';
 import { QuestionLibraryService } from '@services/survey-services/question-library.service';
 import { OptionModel } from '@models/option.model';
+import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
 
 @Component({
   selector: 'app-create',
-  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective,
-    ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, CardComponent, 
-    FormSelectDirective, CardBodyComponent, AccordionButtonDirective,
-      AccordionComponent, AccordionItemComponent, TemplateIdDirective,
-      TableDirective, RouterLink],
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule,
+     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, CardComponent, CardBodyComponent, AccordionButtonDirective, AccordionComponent,
+      AccordionItemComponent, TemplateIdDirective, TableDirective, RouterLink, SelectSearchComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
@@ -28,11 +26,16 @@ export class CreateComponent {
   questionGroupList: OptionModel[] = [];
   questionTypeList: OptionModel[] = [];
   predefinedAnswerList: PredefinedAnswerModel[] = [];
+  eQuestionTypes = EQuestionTypes;
+
   visibleCreateModal: boolean = false;
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
+
   updateByIndex: number = 0;
   deleteByIndex: number = 0;
+
+  showPredefinedAnswerTable = signal<boolean>(false);
 
   questionForm: FormGroup = new FormGroup({
     questionTypeId: new FormControl(-1, Validators.min(1)),
@@ -75,6 +78,7 @@ export class CreateComponent {
   //#endregion
   
   //#region Form Submit
+
   onSubmit() {
     const question = this.questionForm.value;
     question.predefinedAnswers = this.predefinedAnswerList;
@@ -86,9 +90,8 @@ export class CreateComponent {
     });
   }
 
-  get questionTypeId() { return this.questionForm.get('questionTypeId'); }
-  get QuestionGroupLibraryId() { return this.questionForm.get('QuestionGroupLibraryId'); }
-  get chartLabel() { return this.questionForm.get('chartLabel'); }
+  // get questionTypeId() { return this.questionForm.get('questionTypeId'); }
+  // get QuestionGroupLibraryId() { return this.questionForm.get('QuestionGroupLibraryId'); }
   get nameEN() { return this.questionForm.get('nameEN'); }
   get nameVN() { return this.questionForm.get('nameVN'); }
   get note() { return this.questionForm.get('note'); }
@@ -165,4 +168,15 @@ export class CreateComponent {
     this.visibleDelete = event;
   }
   //#endregion
+
+  onchangeQuestionType(event: any) {
+    this.questionForm.patchValue({questionTypeId: event});
+    if (event == EQuestionTypes.ClosedEndedQuestion ||
+       event == EQuestionTypes.HybridQuestion ||
+       event == EQuestionTypes.MultipleChoiceQuestion) {
+        this.showPredefinedAnswerTable.set(true);
+    }else{
+      this.showPredefinedAnswerTable.set(false);
+    }
+  }
 }
