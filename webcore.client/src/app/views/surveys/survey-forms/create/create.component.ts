@@ -12,8 +12,9 @@ import { cilPlus } from '@coreui/icons';
 
 @Component({
   selector: 'app-create',
-  imports: [FormControlDirective, FormLabelDirective, CardComponent, FormCheckComponent, CardBodyComponent, ReactiveFormsModule, 
-    FormDirective, ButtonDirective, AccordionButtonDirective, AccordionComponent, AccordionItemComponent, TemplateIdDirective, 
+  imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, 
+    FormDirective, ButtonDirective,
+    // AccordionButtonDirective, AccordionComponent, AccordionItemComponent, TemplateIdDirective,FormCheckComponent, 
     RouterLink, RangeDatetimePickerComponent, TableDirective, IconDirective],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
