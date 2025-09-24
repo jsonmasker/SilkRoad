@@ -48,8 +48,7 @@
     </c-accordion-item>
 </c-accordion>
 
-<app-data-table [data]="data" (changePageIndex)="onPageIndexChange($event)"
-    (changePageSize)="onPageSizeChange($event)">
+<app-data-table [striped]="false" [data]="data" (changePageIndex)="onPageIndexChange($event)" (changePageSize)="onPageSizeChange($event)">
     <thead class="text-nowrap text-truncate">
         <tr>
             <th scope="col">STT</th>
@@ -76,6 +75,11 @@
             <td>{{ item.modifiedBy }}</td>
             <td>
                 <div class="d-flex justify-content-end">
+                    @if((item.predefinedAnswerLibraries?.length ?? 0) > 0) {
+                        <button (click)="toggleNode(item)" class="btn btn-info me-2">
+                            <app-book-icon [open]="item.expanded ?? false"></app-book-icon>
+                        </button>
+                    }
                     <a routerLink="./update/{{item.id}}" class="btn btn-primary me-2">
                         <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
                     </a>
@@ -85,6 +89,30 @@
                 </div>
             </td>
         </tr>
-        }
+         @if(item.expanded && (item?.predefinedAnswerLibraries?.length ?? 0) > 0) {
+            <ng-container *ngFor="let node of item.predefinedAnswerLibraries; index as i">
+                <ng-container [ngTemplateOutlet]="nodeTemplate"
+                [ngTemplateOutletContext]="{ node: node, index: i, level: 1 }"></ng-container>
+            </ng-container>
+            }
+         }
     </tbody>
 </app-data-table>
+
+
+<ng-template #nodeTemplate let-node="node" let-level="level" let-index="index">
+  <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
+    <td>
+      <span [ngStyle]="{'margin-left.px': level * 15}">
+        {{ index + 1 }}
+      </span>
+    </td>
+    <td>{{ node.nameVN }}</td>
+    <td>{{ node.nameEN }}</td>
+    <td>{{ node.priority }}</td>
+    <td>###</td>
+    <td>###</td>
+    <td>###</td>
+    <td>###</td>
+  </tr>
+</ng-template>

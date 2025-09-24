@@ -10,7 +10,7 @@ namespace SurveyDataAccess.Repositories
         {
         }
 
-        public async Task<bool> DeleteByQuestionLibraryId(int questionLibraryId)
+        public async Task<bool> DeleteByQuestionLibraryIdAsync(int questionLibraryId)
         {
             try
             {
@@ -23,6 +23,11 @@ namespace SurveyDataAccess.Repositories
             {
                 return false;
             }
+        }
+
+        public async Task<ICollection<PredefinedAnswerLibraryDTO>> GetAllByQuestionLibraryIdAsync(int questionLibraryId)
+        {
+            return await _dbSet.Where(s => s.QuestionLibraryId == questionLibraryId).ToListAsync();
         }
     }
 }

@@ -21,6 +21,10 @@ namespace SurveyBusinessLogic.Helpers
             if (pageIndex > totalPages)
                 pageIndex = totalPages > 0 ? totalPages : 1;
             var items = allItems.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            foreach (var item in items)
+            {
+                item.PredefinedAnswerLibraries = await _unitOfWork.PredefinedAnswerLibraryRepository.GetAllByQuestionLibraryIdAsync(item.Id);
+            }
             return new Pagination<QuestionLibraryDTO>
             {
                 PageIndex = pageIndex,
@@ -86,7 +90,7 @@ namespace SurveyBusinessLogic.Helpers
             {
                 try
                 {
-                bool deletePredefinedAnswerResult = await _unitOfWork.PredefinedAnswerLibraryRepository.DeleteByQuestionLibraryId(model.Id);
+                bool deletePredefinedAnswerResult = await _unitOfWork.PredefinedAnswerLibraryRepository.DeleteByQuestionLibraryIdAsync(model.Id);
                 if (!deletePredefinedAnswerResult)
                 {
                     _unitOfWork.Rollback();

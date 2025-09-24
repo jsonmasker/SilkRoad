@@ -10,4 +10,5 @@ export interface QuestionLibraryModel extends BaseModel {
     priority: number;
     note: string;
     predefinedAnswerLibraries?: PredefinedAnswerLibraryModel[];
+    expanded?: boolean;
 }
