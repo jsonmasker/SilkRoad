@@ -72,6 +72,22 @@ export class QuestionLibraryService {
     );
   }
 
+    getEagerLoadingById(id: any): Observable<APIResponse<QuestionLibraryModel>> {
+    const url = EUrl.getEagerLoadingByIdUrlQuestionLibrary.concat('/',id.toString());
+    return this.http.get<APIResponse<QuestionLibraryModel>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.ReNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<QuestionLibraryModel>>(url, { headers: this.authenticationService.GetHeaders() }))
+          );
+        } else {
+          return throwError(() =>error);
+        }
+      })
+    );
+  }
+
+
   create(model: FormData): Observable<BaseAPIResponse> {
     const url = EUrl.createUrlQuestionLibrary;
     return this.http.post<BaseAPIResponse>(url, model, { headers: this.authenticationService.GetHeaders() }).pipe(

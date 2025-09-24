@@ -20,6 +20,7 @@ namespace SurveyDataAccess.Configurations
                 .ValueGeneratedOnAdd();
             builder.Property(s => s.NameEN).HasColumnType("nvarchar(255)");
             builder.Property(s => s.NameVN).HasColumnType("nvarchar(255)");
+            builder.Property(s => s.Priority).HasColumnType("tinyint");
             builder.HasOne<QuestionLibraryDTO>(s => s.Question).WithMany(g => g.PredefinedAnswerLibraries).HasForeignKey(s => s.QuestionLibraryId);
         }
     }

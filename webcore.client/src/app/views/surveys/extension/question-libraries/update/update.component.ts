@@ -2,7 +2,6 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EColors, EQuestionTypes } from '@common/global';
-import { PredefinedAnswerModel } from '@models/survey-models/predefined-answer.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { QuestionTypeService } from '@services/survey-services/question-type.service';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormCheckInputDirective, FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective, TemplateIdDirective } from '@coreui/angular';
@@ -11,11 +10,13 @@ import { QuestionLibraryService } from '@services/survey-services/question-libra
 import { OptionModel } from '@models/option.model';
 import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
 import { PredefinedAnswerLibraryModel } from '@models/survey-models/predefined-answer-library.model';
+import { IconDirective } from '@coreui/icons-angular';
+import { cilPlus } from '@coreui/icons';
 @Component({
   selector: 'app-update',
   imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule,
      ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, CardComponent, CardBodyComponent, AccordionButtonDirective, AccordionComponent,
-      AccordionItemComponent, TemplateIdDirective, TableDirective, RouterLink, SelectSearchComponent],
+      AccordionItemComponent, TemplateIdDirective, TableDirective, RouterLink, SelectSearchComponent, IconDirective, FormCheckComponent],
   templateUrl: './update.component.html',
   styleUrl: './update.component.scss'
 })
@@ -25,6 +26,7 @@ export class UpdateComponent implements OnInit {
   questionTypeList: OptionModel[] = [];
   predefinedAnswerList: PredefinedAnswerLibraryModel[] = [];
   eQuestionTypes = EQuestionTypes;
+  icons: any = { cilPlus };
 
   visibleCreateModal: boolean = false;
   visibleUpdateModal: boolean = false;
@@ -32,16 +34,21 @@ export class UpdateComponent implements OnInit {
 
   updateByIndex = signal<number>(0);
   deleteByIndex = signal<number>(0);
+  selectedQuestionType = signal<number>(-1);
+  selectedQuestionGroup = signal<number>(-1);
 
   showPredefinedAnswerTable = signal<boolean>(false);
 
   questionForm: FormGroup = new FormGroup({
+    id: new FormControl(0),
     questionTypeId: new FormControl(-1, Validators.min(1)),
-    QuestionGroupLibraryId: new FormControl(-1, Validators.min(1)),
+    questionGroupLibraryId: new FormControl(-1, Validators.min(1)),
     nameEN: new FormControl(null, Validators.required),
     nameVN: new FormControl(null, Validators.required),
     note: new FormControl(null, Validators.maxLength(500)),
     predefinedAnswerLibraries: new FormControl([]),
+    isActive: new FormControl(true, Validators.required),
+    priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(999)])
   });
 
   createPredefinedAnswerForm: FormGroup = new FormGroup({
@@ -49,6 +56,8 @@ export class UpdateComponent implements OnInit {
     // questionLibraryId: new FormControl(0),
     nameEN: new FormControl(''),
     nameVN: new FormControl(''),
+    priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)])
+
   });
 
   updatePredefinedAnswerForm: FormGroup = new FormGroup({
@@ -56,6 +65,8 @@ export class UpdateComponent implements OnInit {
     // questionLibraryId: new FormControl(0),
     nameEN: new FormControl(''),
     nameVN: new FormControl(''),
+    priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)])
+
   });
   //#endregion
 
@@ -65,7 +76,7 @@ export class UpdateComponent implements OnInit {
     private questionTypeService: QuestionTypeService,
     private questionLibraryService: QuestionLibraryService,
     private toastService: ToastService,
-     private route: ActivatedRoute,
+    private route: ActivatedRoute,
     private router: Router) { }
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -75,8 +86,12 @@ export class UpdateComponent implements OnInit {
     this.questionTypeService.getAll().subscribe((res) => {
       this.questionTypeList = res.data;
     });
-    this.questionLibraryService.getById(id).subscribe(res => {
+    this.questionLibraryService.getEagerLoadingById(id).subscribe(res => {
       this.questionForm.patchValue(res.data);
+      console.log(this.questionForm.value);
+      this.selectedQuestionType.set(res.data.questionTypeId);
+      this.selectedQuestionGroup.set(res.data.questionGroupLibraryId);
+      this.onchangeQuestionType(res.data.questionTypeId);
       if (res.data.predefinedAnswerLibraries) {
         this.predefinedAnswerList = res.data.predefinedAnswerLibraries;
       }
@@ -94,7 +109,7 @@ export class UpdateComponent implements OnInit {
     }  
     this.questionForm.patchValue({predefinedAnswerLibraries: this.predefinedAnswerList});
     console.log(this.questionForm.value);
-    this.questionLibraryService.create(this.questionForm.value).subscribe({
+    this.questionLibraryService.update(this.questionForm.value).subscribe({
       next: (res) => {
         this.toastService.showToast(EColors.success, res.message);
         this.router.navigate(['/surveys/extension/question-libraries']);
@@ -108,6 +123,7 @@ export class UpdateComponent implements OnInit {
   get nameEN() { return this.questionForm.get('nameEN'); }
   get nameVN() { return this.questionForm.get('nameVN'); }
   get note() { return this.questionForm.get('note'); }
+  get priority() { return this.questionForm.get('priority'); }
   //#endregion
 
   //#region  Create Predefined Answer Form
@@ -116,6 +132,8 @@ export class UpdateComponent implements OnInit {
     this.toastService.showToast(EColors.success, "Create Predefined Answer Success!");
     this.toggleLiveCreateModel();
     this.createPredefinedAnswerForm.reset();
+    this.createPredefinedAnswerForm.patchValue({priority: 1});
+
   }
 
   toggleLiveCreateModel() {
@@ -128,7 +146,7 @@ export class UpdateComponent implements OnInit {
 
   get nameENCreateForm() { return this.createPredefinedAnswerForm.get('nameEN'); }
   get nameVNCreateForm() { return this.createPredefinedAnswerForm.get('nameVN'); }
-
+  get priorityCreateForm() { return this.createPredefinedAnswerForm.get('priority'); }
   //#endregion
 
   //#region  Update Predefined Answer Form
@@ -154,7 +172,7 @@ export class UpdateComponent implements OnInit {
 
   get nameENUpdateForm() { return this.updatePredefinedAnswerForm.get('nameEN'); }
   get nameVNUpdateForm() { return this.updatePredefinedAnswerForm.get('nameVN'); }
-
+  get priorityUpdateForm() { return this.updatePredefinedAnswerForm.get('priority'); }
   //#endregion
   
   //#region Delete

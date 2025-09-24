@@ -56,10 +56,13 @@ namespace SurveyBusinessLogic.Helpers
             return await _unitOfWork.QuestionLibraryRepository.GetByIdAsync(id);
         }
 
+        public async Task<QuestionLibraryDTO?> GetEagerLoadingByIdAsync(int id)
+        {
+            return await _unitOfWork.QuestionLibraryRepository.GetEagerLoadingByIdAsync(id);
+        }
+
         public async Task<bool> CreateAsync(QuestionLibraryDTO model, string? userName = null)
         {
-            using (var transaction = _unitOfWork.BeginTransaction())
-            {
                 try
                 {
                     model.CreatedBy = userName;
@@ -69,50 +72,60 @@ namespace SurveyBusinessLogic.Helpers
                     model.Note = model.Note?.Trim();
                     await _unitOfWork.QuestionLibraryRepository.CreateAsync(model);
                     await _unitOfWork.SaveChangesAsync();
-
-                    if (model.PredefinedAnswerLibraries != null)
-                    {
-                        foreach (var item in model.PredefinedAnswerLibraries)
-                        {
-                            item.Id = Guid.NewGuid();
-                            item.QuestionLibraryId = model.Id;
-                            item.NameEN = item.NameEN.Trim();
-                            item.NameVN = item.NameVN.Trim();
-                            _unitOfWork.PredefinedAnswerLibraryRepository.Create(item);
-                        }
-                    }
-                    await _unitOfWork.SaveChangesAsync();
-                    _unitOfWork.Commit();
                     return true;
                 }
                 catch
                 {
-                    _unitOfWork.Rollback();
                     return false;
                 }
-            }
         }
 
         public async Task<bool> UpdateAsync(QuestionLibraryDTO model, string? userName = null)
         {
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
+                try
+                {
+                bool deletePredefinedAnswerResult = await _unitOfWork.PredefinedAnswerLibraryRepository.DeleteByQuestionLibraryId(model.Id);
+                if (!deletePredefinedAnswerResult)
+                {
+                    _unitOfWork.Rollback();
+                    return false;
+                }
                 var data = await _unitOfWork.QuestionLibraryRepository.GetByIdAsync(model.Id);
-                if (data == null) return false;
-                data.ModifiedBy = userName;
-                data.IsActive = model.IsActive;
-                data.NameEN = model.NameEN.Trim();
-                data.NameVN = model.NameVN.Trim();
-                data.Note = model.Note?.Trim();
-                data.QuestionGroupLibraryId = model.QuestionGroupLibraryId;
-                data.QuestionTypeId = model.QuestionTypeId;
+                    if (data == null) return false;
+                    data.IsActive = model.IsActive;
+                    data.NameEN = model.NameEN.Trim();
+                    data.NameVN = model.NameVN.Trim();
+                    data.Note = model.Note?.Trim();
+                    data.Priority = model.Priority;
+                    data.QuestionGroupLibraryId = model.QuestionGroupLibraryId;
+                    data.QuestionTypeId = model.QuestionTypeId;
+                    data.Update(userName);
+                    await _unitOfWork.SaveChangesAsync();
+
+                if (model.PredefinedAnswerLibraries != null)
+                {
+                    foreach (var item in model.PredefinedAnswerLibraries)
+                    {
+                        item.Id = Guid.NewGuid();
+                        item.QuestionLibraryId = model.Id;
+                        item.NameEN = item.NameEN.Trim();
+                        item.NameVN = item.NameVN.Trim();
+                        _unitOfWork.PredefinedAnswerLibraryRepository.Create(item);
+                    }
+                }
                 await _unitOfWork.SaveChangesAsync();
+                _unitOfWork.Commit();
+
                 return true;
-            }
-            catch
-            {
+                }
+                catch
+                {
+                    _unitOfWork.Rollback();
                 return false;
-            }
+                }
+        }
         }
 
         public async Task<bool> SoftDeleteAsync(int id, string? userName = null)

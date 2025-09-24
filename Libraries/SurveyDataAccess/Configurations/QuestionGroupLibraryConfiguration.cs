@@ -14,7 +14,6 @@ namespace SurveyDataAccess.Configurations
             builder.Property(s => s.NameEN).HasColumnType("nvarchar(255)");
             builder.Property(s => s.NameVN).HasColumnType("nvarchar(255)");
             builder.Property(s => s.Note).HasColumnType("nvarchar(500)");
-            builder.Property(s => s.Priority).HasColumnType("tinyint");
             builder.Property(s => s.CreatedBy).HasColumnType("varchar(100)");
             builder.Property(s => s.ModifiedBy).HasColumnType("varchar(100)");
         }

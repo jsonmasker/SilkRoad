@@ -3,4 +3,5 @@ export interface PredefinedAnswerModel {
     questionId: string;
     nameEN: string;
     nameVN: string;
+    priority: number;
 }

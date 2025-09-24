@@ -1,17 +1,38 @@
-<h3>Create Question Library</h3>
+<h3>Update Question Library</h3>
 <c-card>
     <c-card-body>
         <form cForm [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+            <div class="mb-2 d-flex flex-row">
+                <c-form-check class="me-2 d-flex align-items-center">
+                    <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+                    <label cFormCheckLabel for="isActive" class="me-2">Is Active </label>
+                </c-form-check>
+                <div>
+                    <label for="priority" class="me-2">Priority: </label>
+                    <input formControlName="priority" type="number" class="me-2 number-control">
+                    @if (priority?.invalid && (priority?.dirty || priority?.touched)) {
+                    <div class="text-danger">
+                        @if (priority?.hasError('min') || priority?.hasError('max')) {
+                        <div>
+                            Priority must be between 1 and 999.
+                        </div>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="questionTypeId">Select Question type: <span
                             class="text-danger">(*)</span></label>
-                    <app-select-search [options]="questionTypeList" (onChangeValue)="onchangeQuestionType($event)"></app-select-search>
+                    <app-select-search [options]="questionTypeList" [selectedValue]="selectedQuestionType()"
+                        (onChangeValue)="onchangeQuestionType($event)"></app-select-search>
                 </div>
                 <div class="col-6">
                     <label cLabel for="QuestionGroupLibraryId">Select Question group: <span
                             class="text-danger">(*)</span></label>
-                    <app-select-search [options]="questionGroupList" (onChangeValue)="questionForm.patchValue({QuestionGroupLibraryId: $event})"></app-select-search>
+                    <app-select-search [options]="questionGroupList" [selectedValue]="selectedQuestionGroup()"
+                        (onChangeValue)="questionForm.patchValue({QuestionGroupLibraryId: $event})"></app-select-search>
                 </div>
             </div>
             <div class="mb-2 row">
@@ -45,45 +66,51 @@
                 </div>
             </div>
             @if(showPredefinedAnswerTable()) {
-                <div class="d-flex justify-content-end mb-2">
-                    <button (click)="toggleLiveCreateModel()" cButton type="button" class="ms-2 btn-info">Add Answer</button>
-                </div>
-                <c-accordion>
-                    <c-accordion-item #item0="cAccordionItem" [visible]="true">
-                        <ng-template cTemplateId="accordionHeaderTemplate">
-                            <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
-                                Answer List
-                            </button>
-                        </ng-template>
-                        <ng-template cTemplateId="accordionBodyTemplate">
-                            <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>NameEN</th>
-                                        <th>NameVN</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @for (item of predefinedAnswerList; track $index; let i = $index) {
-                                    <tr>
-                                        <td>{{ i + 1 }}</td>
-                                        <td>{{ item.nameEN }}</td>
-                                        <td>{{ item.nameVN }}</td>
-                                        <td class="d-flex justify-content-center">
-                                            <button cButton type="button" (click)="updateData(i)"
-                                                class="btn btn-warning me-2">Update</button>
-                                            <button cButton type="button" (click)="deleteData(i)"
-                                                class="btn btn-danger">Delete</button>
-                                        </td>
-                                    </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </ng-template>
-                    </c-accordion-item>
-                </c-accordion>
+            <div class="d-flex justify-content-end mb-2">
+                <button (click)="toggleLiveCreateModel()" cButton type="button"
+                    class="ms-2 btn-success text-white d-flex align-items-center justify-content-center">
+                    <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+                    <span>Predefined Answer</span>
+                </button>
+            </div>
+            <c-accordion>
+                <c-accordion-item #item0="cAccordionItem" [visible]="true">
+                    <ng-template cTemplateId="accordionHeaderTemplate">
+                        <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+                            Answer List
+                        </button>
+                    </ng-template>
+                    <ng-template cTemplateId="accordionBodyTemplate">
+                        <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>NameEN</th>
+                                    <th>NameVN</th>
+                                    <th>Priority</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (item of predefinedAnswerList; track $index; let i = $index) {
+                                <tr>
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ item.nameEN }}</td>
+                                    <td>{{ item.nameVN }}</td>
+                                    <td>{{ item.priority }}</td>
+                                    <td class="d-flex justify-content-center">
+                                        <button cButton type="button" (click)="updateData(i)"
+                                            class="btn btn-warning me-2">Update</button>
+                                        <button cButton type="button" (click)="deleteData(i)"
+                                            class="btn btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </ng-template>
+                </c-accordion-item>
+            </c-accordion>
             }
             <div class="d-flex justify-content-end mt-4">
                 <button cButton type="submit" type="submit" [disabled]="!questionForm.valid">Submit</button>
@@ -115,31 +142,46 @@
                     }
                 </div>
             </div> -->
-          <div class="mb-2 row">
-              <div class="col-12 col-md-6">
-                  <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
-                  <input cFormControl formControlName="nameEN">
-                  @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
-                  <div class="text-danger">
-                      @if (nameENCreateForm?.hasError('required')) {
-                      <div>NameEN is required.</div>
-                      }
-                  </div>
-                  }
-              </div>
-              <div class="col-12 col-md-6">
-                  <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
-                  <input cFormControl formControlName="nameVN">
-                  @if (nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)) {
-                  <div class="text-danger">
-                      @if (nameVNCreateForm?.hasError('required')) {
-                      <div>NameVN is required.</div>
-                      }
-                  </div>
-                  }
-              </div>
-          </div>
-          
+            <div class="mb-2 d-flex flex-row">
+                <div>
+                    <label for="priority" class="me-2">Priority: </label>
+                    <input formControlName="priority" type="number" class="me-2 number-control" min="1" max="255">
+                    @if (priorityCreateForm?.invalid && (priorityCreateForm?.dirty || priorityCreateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (priorityCreateForm?.hasError('min') || priorityCreateForm?.hasError('max')) {
+                        <div>
+                            Priority must be between 1 and 255.
+                        </div>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-12 col-md-6">
+                    <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
+                    <input cFormControl formControlName="nameEN">
+                    @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameENCreateForm?.hasError('required')) {
+                        <div>NameEN is required.</div>
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="col-12 col-md-6">
+                    <label cLabel for="nameVN">NameVN: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="nameVN">
+                    @if (nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (nameVNCreateForm?.hasError('required')) {
+                        <div>NameVN is required.</div>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+
             <!-- <div class="mb-2 row">
                 <div class="col-12">
                     <label cLabel for="note" class="me-2">Note: </label>
@@ -177,8 +219,22 @@
                     }
                 </div>
             </div> -->
+            <div class="mb-2 d-flex flex-row">
+                <div>
+                    <label for="priority" class="me-2">Priority: </label>
+                    <input formControlName="priority" type="number" class="me-2 number-control" min="1" max="255">
+                    @if (priorityUpdateForm?.invalid && (priorityUpdateForm?.dirty || priorityUpdateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (priorityUpdateForm?.hasError('min') || priorityUpdateForm?.hasError('max')) {
+                        <div>
+                            Priority must be between 1 and 255.
+                        </div>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
             <div class="row mb-2">
-
                 <div class="col-12 col-md-6">
                     <label cLabel for="nameEN" class="me-2">NameEN: <span class="text-danger">(*)</span> </label>
                     <input cFormControl formControlName="nameEN">

@@ -9,5 +9,6 @@ namespace SurveyDataAccess.IRepositories
 {
     public interface IPredefinedAnswerLibraryRepository : IGenericRepository<PredefinedAnswerLibraryDTO>
     {
+        public Task<bool> DeleteByQuestionLibraryId(int questionLibraryId);
     }
 }

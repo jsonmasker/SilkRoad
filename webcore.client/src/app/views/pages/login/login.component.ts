@@ -11,6 +11,7 @@ import { LoadingService } from '@services/helper-services/loading.service';
 import { ParticleCanvasComponent } from '@components/generals/particle-canvas/particle-canvas.component';
 import { APIResponse } from '@models/api-response.model';
 import { JwtModel } from '@models/system-management-models/jwt.model';
+import { AuthenticationService } from '@services/system-services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ import { JwtModel } from '@models/system-management-models/jwt.model';
     ReactiveFormsModule, RouterLink, EyeIconComponent, EyeCloseIconComponent
   ]
 })
-export class LoginComponent{
+export class LoginComponent implements OnInit {
   //#region Variables
   showPassword: boolean = false;
   errorMessage: string = '';
@@ -35,7 +36,15 @@ export class LoginComponent{
   });
   //#endregion
   //#region Lifecycle Hooks
-  constructor(private myAccount: MyAccountService, private router: Router, private loadingService: LoadingService) {
+  constructor(private myAccount: MyAccountService, private authenticationService: AuthenticationService,
+     private router: Router, private loadingService: LoadingService) {
+  }
+  ngOnInit(): void {
+        const isAuthenticated = this.authenticationService.CheckLogin();
+    
+        if (isAuthenticated) {
+          this.router.navigate(['/introduction']);
+        }
   }
 
   onSubmit() {

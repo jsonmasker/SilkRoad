@@ -14,11 +14,11 @@
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <app-select-search [options]="questionGroupLibraries"
-                                        placeholder="Select question group"></app-select-search>
+                                        placeholder="All question group"></app-select-search>
                                 </div>
                                 <div class="col-4">
                                     <app-select-search [options]="questionTypes"
-                                        placeholder="Select question type"></app-select-search>
+                                        placeholder="All question type"></app-select-search>
                                 </div>
                             </div>
                             <div class="row">
@@ -55,6 +55,10 @@
             <th scope="col">STT</th>
             <th scope="col">NameEn</th>
             <th scope="col">NameVN</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Is Active</th>
+            <th scope="col">Created By</th>
+            <th scope="col">Modified By</th>
             <th></th>
         </tr>
     </thead>
@@ -64,6 +68,12 @@
             <td>{{ i+1 }}</td>
             <td>{{ item.nameEN }}</td>
             <td>{{ item.nameVN }}</td>
+            <td>{{ item.priority }}</td>
+            <td>
+                <input type="checkbox" [checked]="item.isActive" disabled>
+            </td>
+            <td>{{ item.createdBy }}</td>
+            <td>{{ item.modifiedBy }}</td>
             <td>
                 <div class="d-flex justify-content-end">
                     <a routerLink="./update/{{item.id}}" class="btn btn-primary me-2">

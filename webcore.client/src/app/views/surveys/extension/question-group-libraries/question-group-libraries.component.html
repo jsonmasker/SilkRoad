@@ -28,7 +28,9 @@
             <td>{{ item.nameEN }}</td>
             <td>{{ item.nameVN }}</td>
             <td>{{ item.priority }}</td>
-            <td>{{ item.isActive }}</td>
+            <td>
+                <input type="checkbox" [checked]="item.isActive" disabled>
+            </td>
             <td>{{ item.createdBy }}</td>
             <td>{{ item.modifiedBy }}</td>
             <td>

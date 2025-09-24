@@ -1,21 +1,19 @@
 <h3>Create Survey form</h3>
 <c-card>
     <c-card-body>
-        <div class="d-flex justify-content-end mb-4">
-            <button cButton type="button" class="btn-info me-2">Add Question Group</button>
-            <button cButton type="button" class="btn-info">Add Single Question</button>
-        </div>
+        <!-- Survey Form Creation Form -->
+        <h4>Survey Information</h4>
         <form cForm [formGroup]="createForm" (ngSubmit)="onSubmit()">
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="name">Name: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="name" type="text" />
                     @if (name?.invalid && (name?.dirty || name?.touched)) {
-                        <div class="text-danger">
-                            @if (name?.hasError('required')) {
-                                <div>Enter Name, please!</div>
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (name?.hasError('required')) {
+                        <div>Enter Name, please!</div>
+                        }
+                    </div>
                     }
                 </div>
                 <div class="col-6">
@@ -28,22 +26,22 @@
                     <label cLabel for="titleEN">TitleEN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="titleEN" type="text" />
                     @if (titleEN?.invalid && (titleEN?.dirty || titleEN?.touched)) {
-                        <div class="text-danger">
-                            @if (titleEN?.hasError('required')) {
-                                <div>Enter TitleEN, please!</div>
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (titleEN?.hasError('required')) {
+                        <div>Enter TitleEN, please!</div>
+                        }
+                    </div>
                     }
                 </div>
                 <div class="col-6">
                     <label cLabel for="titleVN">TitleVN: <span class="text-danger">(*)</span></label>
                     <input cFormControl formControlName="titleVN" type="text" />
                     @if (titleVN?.invalid && (titleVN?.dirty || titleVN?.touched)) {
-                        <div class="text-danger">
-                            @if (titleVN?.hasError('required')) {
-                                <div>Enter TitleVN, please!</div>
-                            }
-                        </div>
+                    <div class="text-danger">
+                        @if (titleVN?.hasError('required')) {
+                        <div>Enter TitleVN, please!</div>
+                        }
+                    </div>
                     }
                 </div>
             </div>
@@ -57,39 +55,87 @@
                     <textarea cFormControl formControlName="descriptionVN" rows="3"></textarea>
                 </div>
             </div>
-            @for (questiongroup of questionGroupList; track $index; let i = $index) {
-            <c-accordion class="mb-2">
-                <c-accordion-item #item0="cAccordionItem" [visible]="false">
-                    <ng-template cTemplateId="accordionHeaderTemplate">
-                        <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
-                            {{questiongroup.nameVN}}
-                        </button>
-                    </ng-template>
-                    <ng-template cTemplateId="accordionBodyTemplate">
-                        @for (question of questiongroup.questions; track $index; let j = $index) {
-                        <div class="row px-2 py-1">
-                            <div class="col-2">
-                                <input cFormControl type="number" [value]="question.priority" (change)="onChangePriority($event, i, j)"/>
-                            </div>
-                            <div class="col-10">
-                                <c-form-check cFormCheckInput class="me-2 d-flex align-items-center">
-                                    <input class="me-2" type="checkbox" [checked]="question.checked" (change)="onCheckQuestion(i, j)" />
-                                    <label cFormCheckLabel for="isActive" class="me-2">{{question.nameVN}}</label>
-                                </c-form-check>
-                            </div>
-                        </div>
-                        }
-                        <!-- Add more fields as needed -->
-                    </ng-template>
-                </c-accordion-item>
-            </c-accordion>
-            }
-            <div class="d-flex justify-content-end">
-                <button cButton type="submit" type="submit" [disabled]="!createForm.valid"
-                   >Submit</button>
-                <button cButton type="button" routerLink="/surveys/extend-survey/survey-forms" class="ms-2 btn-info"
-                   >Back to list</button>
-            </div>
         </form>
+        <!-- Add Question Group and Single Question buttons -->
+        <div class="d-flex justify-content-end my-4">
+            <button cButton type="button" class="btn-success me-2 text-white d-flex justify-content-center align-items-center">
+                <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+                <span>Question Group</span>
+            </button>
+            <button cButton type="button" class="btn-success text-white d-flex  justify-content-center  align-items-center">
+                <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+                <span>Question</span>
+            </button>
+        </div>
+        <!-- Table of Question Groups -->
+        <h4>Question Groups</h4>
+        <table cTable>
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>&#64;mdo</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>&#64;fat</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td colSpan="2">Larry the Bird</td>
+                    <td>&#64;twitter</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Table of Questions -->
+        <h4 class="mt-4">Questions</h4>
+        <table cTable>
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>&#64;mdo</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>&#64;fat</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td colSpan="2">Larry the Bird</td>
+                    <td>&#64;twitter</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Button Submit Creation Form -->
+        <div class="d-flex justify-content-end mt-4">
+            <button cButton type="submit" (click)="onSubmit()" [disabled]="!createForm.valid">Submit</button>
+            <button cButton type="button" routerLink="/surveys/extend-survey/survey-forms" class="ms-2 btn-info">Back to
+                list</button>
+        </div>
     </c-card-body>
 </c-card>

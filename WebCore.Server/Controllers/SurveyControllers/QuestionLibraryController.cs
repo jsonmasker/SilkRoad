@@ -65,6 +65,15 @@ namespace WebCore.Server.Controllers.SurveyControllers
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
+        [HttpGet("getEagerLoadingById/{id}")]
+        public async Task<IActionResult> GetEagerLoadingById(int id)
+        {
+            var data = await _helper.GetEagerLoadingByIdAsync(id);
+            if (data == null)
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
+
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] QuestionLibraryDTO model)
         {

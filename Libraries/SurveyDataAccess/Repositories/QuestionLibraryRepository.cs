@@ -1,4 +1,5 @@
-﻿using SurveyDataAccess.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using SurveyDataAccess.DTOs;
 using SurveyDataAccess.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,12 @@ namespace SurveyDataAccess.Repositories
     {
         public QuestionLibraryRepository(ApplicationContext context) : base(context)
         {
+        }
+        public async Task<QuestionLibraryDTO?> GetEagerLoadingByIdAsync(int id)
+        {
+            return await _dbSet.Where(s => s.Id == id)
+                .Include(q => q.PredefinedAnswerLibraries)
+                .FirstOrDefaultAsync();
         }
     }
 }
