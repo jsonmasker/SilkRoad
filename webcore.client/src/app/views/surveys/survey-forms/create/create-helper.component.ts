@@ -36,20 +36,18 @@ const questionGroupList: QuestionGroupModel[] = [
 ];
 
 @Component({
-  selector: 'app-create',
-  imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, CommonModule,
-    RouterLink, RangeDatetimePickerComponent, TableDirective, IconDirective, BookIconComponent,
+  selector: 'app-create-helper',
+  imports: [ReactiveFormsModule, ButtonDirective, CommonModule, TableDirective, IconDirective, BookIconComponent,
     ModalComponent,
     ModalHeaderComponent,
     ModalTitleDirective,
     ButtonCloseDirective,
     ModalBodyComponent,
     ModalFooterComponent],
-  templateUrl: './create.component.html',
-  styleUrl: './create.component.scss'
+  templateUrl: './create-helper.component.html',
 })
 
-export class CreateComponent {
+export class CreateHelperComponent {
   //#region Variables
   icons: any = { cilPlus, cilTrash, cilPen };
 
@@ -63,42 +61,6 @@ export class CreateComponent {
   visibleDeleteQuestionModal = signal(false);
   visibleCreateQuestionGroupModal = signal(false);
   visibleDeleteQuestionGroupModal = signal(false);
-
-  createForm: FormGroup = new FormGroup({
-    name: new FormControl('', Validators.required),
-    titleEN: new FormControl('', Validators.required),
-    titleVN: new FormControl('', Validators.required),
-    descriptionEN: new FormControl(''),
-    descriptionVN: new FormControl(''),
-    startDate: new FormControl(''),
-    endDate: new FormControl(''),
-    isActive: new FormControl(true)
-  });
-  //#endregion
-
-  //#region Constructor and Hooks
-  constructor(
-    // private questionGroupService: QuestionGroupService,
-    private surveyFormService: SurveyFormService,
-    private router: Router
-  ) { }
-  ngOnInit() {
-    // this.questionGroupService.getEagerAllElements().subscribe((response) => {
-    //   this.intitQuestionGroupData(response.data);
-    // });
-  }
-  //#endregion
-
-  //#endregion submit
-  onSubmit() {
-  }
-
-  get name() { return this.createForm.get('name'); }
-  get titleEN() { return this.createForm.get('titleEN'); }
-  get titleVN() { return this.createForm.get('titleVN'); }
-  get startDate() { return this.createForm.get('startDate'); }
-  get endDate() { return this.createForm.get('endDate'); }
-
   //#endregion
   //#region table tree
   toggleQuestionNode(node: QuestionGroupModel): void {

@@ -65,12 +65,6 @@
                 <button cButton type="button"
                     class="btn-success me-2 text-white d-flex justify-content-center align-items-center">
                     <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Plus Icon"></svg>
-                    <span>Question Group</span>
-                </button>
-                <button cButton type="button"
-                    class="btn-success text-white d-flex  justify-content-center  align-items-center">
-                    <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Plus Icon"></svg>
-                    <span>Question Group Library</span>
                 </button>
             </div>
         </div>
@@ -92,17 +86,33 @@
                     <td>{{ item.nameVN }}</td>
                     <td>{{ item.priority }}</td>
                     <td class="text-end">
-                        <button class="btn btn-info me-2">
+                        <!-- <button class="btn btn-info me-2">
                             <app-book-icon [open]="item.expanded ?? false" [size]="20"></app-book-icon>
+                        </button> -->
+                        @if((item?.questions?.length ?? 0) > 0) {
+                            <button (click)="toggleQuestionNode(item)" class="btn btn-info me-2">
+                                <app-book-icon [open]="item.expanded ?? false" [size]="20"></app-book-icon>
+                            </button>
+                        }
+                        <button cButton (click)="toggleCreateQuestionGroupModal()" type="button" class="btn-success text-white me-2">
+                            <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Edit Icon"></svg>
                         </button>
-                        <button cButton type="button" class="btn-success text-white me-2">
+                        <button cButton type="button" class="btn-primary text-white me-2">
                             <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
                         </button>
-                        <button cButton type="button" class="btn-danger text-white">
+                        <button cButton type="button" (click)="toggleDeleteQuestionGroupModal()" class="btn-danger text-white">
                             <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Trash Icon"></svg>
                         </button>
                     </td>
                 </tr>
+                @if(item.expanded && (item?.questions?.length ?? 0) > 0) {
+                    @for(item1 of item.questions; track $index; let j = $index) {
+                    <ng-container>
+                        <ng-container [ngTemplateOutlet]="questionTemplate"
+                            [ngTemplateOutletContext]="{ node: item1, index: j, level: 1 }"></ng-container>
+                    </ng-container>
+                    }
+                }
                 }
             </tbody>
         </table>
@@ -115,12 +125,6 @@
                 <button cButton type="button"
                     class="btn-success me-2 text-white d-flex justify-content-center align-items-center">
                     <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Plus Icon"></svg>
-                    <span>Question</span>
-                </button>
-                <button cButton type="button"
-                    class="btn-success text-white d-flex  justify-content-center  align-items-center">
-                    <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Plus Icon"></svg>
-                    <span>Question Library</span>
                 </button>
             </div>
         </div>
@@ -140,33 +144,6 @@
                         <ng-container [ngTemplateOutlet]="questionTemplate"
                             [ngTemplateOutletContext]="{ node: item, index: i, level: 0 }"></ng-container>
                     </ng-container>
-                <!-- <tr>
-                    <th>{{ i + 1 }}</th>
-                    <td>{{ item.nameEN }}</td>
-                    <td>{{ item.nameVN }}</td>
-                    <td>{{ item.priority }}</td>
-                    <td class="text-end">
-                        @if((item.predefinedAnswers?.length ?? 0) > 0) {
-                        <button (click)="toggleQuestionNode(item)" class="btn btn-info me-2">
-                            <app-book-icon [open]="item.expanded ?? false" [size]="20"></app-book-icon>
-                        </button>
-                        }
-                        <button cButton type="button" class="btn-success text-white me-2">
-                            <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
-                        </button>
-                        <button cButton type="button" class="btn-danger text-white">
-                            <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Trash Icon"></svg>
-                        </button>
-                    </td>
-                </tr>
-                @if(item.expanded && (item?.predefinedAnswers?.length ?? 0) > 0) {
-                @for(item1 of item.predefinedAnswers; track $index; let j = $index) {
-                <ng-container>
-                    <ng-container [ngTemplateOutlet]="predefinedAnswerTemplate"
-                        [ngTemplateOutletContext]="{ node: item1, index: j, level: 1 }"></ng-container>
-                </ng-container>
-                }
-                } -->
                 }
             </tbody>
         </table>
@@ -192,14 +169,17 @@
         <td>{{ node.priority }}</td>
         <td class="text-end">
             @if((node.predefinedAnswers?.length ?? 0) > 0) {
-                <button (click)="toggleQuestionNode(node)" class="btn btn-info me-2">
+                <button (click)="togglePredefinedAnswerNode(node)" class="btn btn-info me-2">
                     <app-book-icon [open]="node.expanded ?? false" [size]="20"></app-book-icon>
                 </button>
             }
-            <button cButton type="button" class="btn-success text-white me-2">
+            <button cButton type="button" (click)="toggleCreateQuestionModal()" class="btn-success text-white me-2">
+                <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Plus Icon"></svg>
+            </button>
+            <button cButton type="button" class="btn-primary text-white me-2">
                 <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
             </button>
-            <button cButton type="button" class="btn-danger text-white">
+            <button cButton type="button" (click)="toggleDeleteQuestionModal()" class="btn-danger text-white">
                 <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Trash Icon"></svg>
             </button>
         </td>
@@ -208,7 +188,7 @@
         @for(item1 of node.predefinedAnswers; track $index; let j = $index) {
         <ng-container>
             <ng-container [ngTemplateOutlet]="predefinedAnswerTemplate"
-                [ngTemplateOutletContext]="{ node: item1, index: j, level: 1 }"></ng-container>
+                [ngTemplateOutletContext]="{ node: item1, index: j, level: level + 1 }"></ng-container>
         </ng-container>
         }
     }
@@ -228,3 +208,59 @@
         <td>###</td>
     </tr>
 </ng-template>
+
+<c-modal id="visibleCreateQuestionGroupModal" [visible]="visibleCreateQuestionGroupModal()" (visibleChange)="handleCreateQuestionGroupModalChange($event)">
+  <c-modal-header>
+    <h5 cModalTitle>Modal title visibleCreateQuestionGroupModal</h5>
+    <button (click)="toggleCreateQuestionGroupModal()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>Woohoo, you are reading this text in a modal!</c-modal-body>
+  <c-modal-footer>
+    <button (click)="toggleCreateQuestionGroupModal()" cButton color="secondary">
+      Close
+    </button>
+    <button cButton color="primary">Save changes</button>
+  </c-modal-footer>
+</c-modal>
+
+<c-modal id="visibleDeleteQuestionGroupModal" [visible]="visibleDeleteQuestionGroupModal()" (visibleChange)="handleDeleteQuestionGroupModalChange($event)">
+  <c-modal-header>
+    <h5 cModalTitle>Modal title visibleDeleteQuestionGroupModal</h5>
+    <button (click)="toggleDeleteQuestionGroupModal()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>Woohoo, you are reading this text in a modal!</c-modal-body>
+  <c-modal-footer>
+    <button (click)="toggleDeleteQuestionGroupModal()" cButton color="secondary">
+      Close
+    </button>
+    <button cButton color="primary">Save changes</button>
+  </c-modal-footer>
+</c-modal>
+
+<c-modal id="visibleCreateQuestionModal" [visible]="visibleCreateQuestionModal()" (visibleChange)="handleCreateQuestionModalChange($event)">
+  <c-modal-header>
+    <h5 cModalTitle>Modal title visibleCreateQuestionModal</h5>
+    <button (click)="toggleCreateQuestionModal()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>Woohoo, you are reading this text in a modal!</c-modal-body>
+  <c-modal-footer>
+    <button (click)="toggleCreateQuestionModal()" cButton color="secondary">
+      Close
+    </button>
+    <button cButton color="primary">Save changes</button>
+  </c-modal-footer>
+</c-modal>
+
+<c-modal id="visibleDeleteQuestionModal" [visible]="visibleDeleteQuestionModal()" (visibleChange)="handleDeleteQuestionModalChange($event)">
+  <c-modal-header>
+    <h5 cModalTitle>Modal title visibleDeleteQuestionModal</h5>
+    <button (click)="toggleDeleteQuestionModal()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>Woohoo, you are reading this text in a modal!</c-modal-body>
+  <c-modal-footer>
+    <button (click)="toggleDeleteQuestionModal()" cButton color="secondary">
+      Close
+    </button>
+    <button cButton color="primary">Save changes</button>
+  </c-modal-footer>
+</c-modal>
