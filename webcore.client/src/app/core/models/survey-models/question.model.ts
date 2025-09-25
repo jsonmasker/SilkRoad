@@ -9,4 +9,5 @@ export interface QuestionModel {
     nameEN: string;
     nameVN: string;
     predefinedAnswers?: PredefinedAnswerModel[];
+    expanded?: boolean; // For UI purpose
 }

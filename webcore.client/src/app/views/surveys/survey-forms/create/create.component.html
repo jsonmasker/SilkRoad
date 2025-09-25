@@ -64,13 +64,13 @@
             <div class="d-flex justify-content-end">
                 <button cButton type="button"
                     class="btn-success me-2 text-white d-flex justify-content-center align-items-center">
-                    <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+                    <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Plus Icon"></svg>
                     <span>Question Group</span>
                 </button>
                 <button cButton type="button"
                     class="btn-success text-white d-flex  justify-content-center  align-items-center">
-                    <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
-                    <span>Question</span>
+                    <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Plus Icon"></svg>
+                    <span>Question Group Library</span>
                 </button>
             </div>
         </div>
@@ -81,26 +81,29 @@
                     <th scope="col">NameEN</th>
                     <th scope="col">NameVN</th>
                     <th scope="col">Priority</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
+                @for(item of questionGroups; track $index; let i = $index) {
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>&#64;mdo</td>
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ item.nameEN }}</td>
+                    <td>{{ item.nameVN }}</td>
+                    <td>{{ item.priority }}</td>
+                    <td class="text-end">
+                        <button class="btn btn-info me-2">
+                            <app-book-icon [open]="item.expanded ?? false" [size]="20"></app-book-icon>
+                        </button>
+                        <button cButton type="button" class="btn-success text-white me-2">
+                            <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
+                        </button>
+                        <button cButton type="button" class="btn-danger text-white">
+                            <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Trash Icon"></svg>
+                        </button>
+                    </td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>&#64;fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colSpan="2">Larry the Bird</td>
-                    <td>&#64;twitter</td>
-                </tr>
+                }
             </tbody>
         </table>
 
@@ -111,13 +114,13 @@
             <div class="d-flex justify-content-end">
                 <button cButton type="button"
                     class="btn-success me-2 text-white d-flex justify-content-center align-items-center">
-                    <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
-                    <span>Question Group</span>
+                    <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Plus Icon"></svg>
+                    <span>Question</span>
                 </button>
                 <button cButton type="button"
                     class="btn-success text-white d-flex  justify-content-center  align-items-center">
-                    <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
-                    <span>Question</span>
+                    <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Plus Icon"></svg>
+                    <span>Question Library</span>
                 </button>
             </div>
         </div>
@@ -128,26 +131,43 @@
                     <th scope="col">NameEN</th>
                     <th scope="col">NameVN</th>
                     <th scope="col">Priority</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>&#64;mdo</td>
+                @for(item of questions; track $index; let i = $index) {
+                    <ng-container>
+                        <ng-container [ngTemplateOutlet]="questionTemplate"
+                            [ngTemplateOutletContext]="{ node: item, index: i, level: 0 }"></ng-container>
+                    </ng-container>
+                <!-- <tr>
+                    <th>{{ i + 1 }}</th>
+                    <td>{{ item.nameEN }}</td>
+                    <td>{{ item.nameVN }}</td>
+                    <td>{{ item.priority }}</td>
+                    <td class="text-end">
+                        @if((item.predefinedAnswers?.length ?? 0) > 0) {
+                        <button (click)="toggleQuestionNode(item)" class="btn btn-info me-2">
+                            <app-book-icon [open]="item.expanded ?? false" [size]="20"></app-book-icon>
+                        </button>
+                        }
+                        <button cButton type="button" class="btn-success text-white me-2">
+                            <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
+                        </button>
+                        <button cButton type="button" class="btn-danger text-white">
+                            <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Trash Icon"></svg>
+                        </button>
+                    </td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>&#64;fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colSpan="2">Larry the Bird</td>
-                    <td>&#64;twitter</td>
-                </tr>
+                @if(item.expanded && (item?.predefinedAnswers?.length ?? 0) > 0) {
+                @for(item1 of item.predefinedAnswers; track $index; let j = $index) {
+                <ng-container>
+                    <ng-container [ngTemplateOutlet]="predefinedAnswerTemplate"
+                        [ngTemplateOutletContext]="{ node: item1, index: j, level: 1 }"></ng-container>
+                </ng-container>
+                }
+                } -->
+                }
             </tbody>
         </table>
 
@@ -159,3 +179,52 @@
         </div>
     </c-card-body>
 </c-card>
+
+<ng-template #questionTemplate let-node="node" let-level="level" let-index="index">
+    <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
+        <th>
+            <span [ngStyle]="{'margin-left.px': level * 15}">
+                {{ index + 1 }}
+            </span>
+        </th>
+        <td>{{ node.nameEN }}</td>
+        <td>{{ node.nameVN }}</td>
+        <td>{{ node.priority }}</td>
+        <td class="text-end">
+            @if((node.predefinedAnswers?.length ?? 0) > 0) {
+                <button (click)="toggleQuestionNode(node)" class="btn btn-info me-2">
+                    <app-book-icon [open]="node.expanded ?? false" [size]="20"></app-book-icon>
+                </button>
+            }
+            <button cButton type="button" class="btn-success text-white me-2">
+                <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
+            </button>
+            <button cButton type="button" class="btn-danger text-white">
+                <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Trash Icon"></svg>
+            </button>
+        </td>
+    </tr>
+    @if(node.expanded && (node?.predefinedAnswers?.length ?? 0) > 0) {
+        @for(item1 of node.predefinedAnswers; track $index; let j = $index) {
+        <ng-container>
+            <ng-container [ngTemplateOutlet]="predefinedAnswerTemplate"
+                [ngTemplateOutletContext]="{ node: item1, index: j, level: 1 }"></ng-container>
+        </ng-container>
+        }
+    }
+</ng-template>
+
+
+<ng-template #predefinedAnswerTemplate let-node="node" let-level="level" let-index="index">
+    <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
+        <th>
+            <span [ngStyle]="{'margin-left.px': level * 15}">
+                {{ index + 1 }}
+            </span>
+        </th>
+        <td>{{ node.nameVN }}</td>
+        <td>{{ node.nameEN }}</td>
+        <td>{{ node.priority }}</td>
+        <td>###</td>
+    </tr>
+</ng-template>

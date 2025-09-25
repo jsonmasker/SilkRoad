@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, CardBodyComponent, CardComponent,
@@ -8,9 +8,11 @@ import { SelectedQuestionModel } from '@models/survey-models/survey-form.model';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
 import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 import { IconDirective } from '@coreui/icons-angular';
-import { cilPlus } from '@coreui/icons';
+import { cilPen, cilPlus, cilTrash } from '@coreui/icons';
 import { QuestionModel } from '@models/survey-models/question.model';
 import { PredefinedAnswerModel } from '@models/survey-models/predefined-answer.model';
+import { BookIconComponent } from "@components/icons/book-icon.component";
+import { CommonModule } from '@angular/common';
 
 
 const predefinedAnswerList: PredefinedAnswerModel[] = [
@@ -34,18 +36,19 @@ const questionGroupList: QuestionGroupModel[] = [
 @Component({
   selector: 'app-create',
   imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule,
-    FormDirective, ButtonDirective,
+    FormDirective, ButtonDirective, CommonModule,
     // AccordionButtonDirective, AccordionComponent, AccordionItemComponent, TemplateIdDirective,FormCheckComponent, 
-    RouterLink, RangeDatetimePickerComponent, TableDirective, IconDirective],
+    RouterLink, RangeDatetimePickerComponent, TableDirective, IconDirective, BookIconComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
 
 export class CreateComponent {
   //#region Variables
-  icons: any = { cilPlus };
+  icons: any = { cilPlus, cilTrash, cilPen };
   questionGroups: QuestionGroupModel[] = [...questionGroupList];
   questions: QuestionModel[] = [...questionList];
+  showQuestionChildrenByParentId = signal<string | null>(null);
   createForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
     titleEN: new FormControl('', Validators.required),
@@ -78,4 +81,14 @@ export class CreateComponent {
   get titleVN() { return this.createForm.get('titleVN'); }
   get startDate() { return this.createForm.get('startDate'); }
   get endDate() { return this.createForm.get('endDate'); }
+
+      //table tree
+      toggleQuestionNode(node: QuestionModel): void {
+      node.expanded = !node.expanded;
+      if (node.expanded) {
+        this.showQuestionChildrenByParentId.set(node.id);
+      } else {
+        this.showQuestionChildrenByParentId.set(null);
+      }
+    }
 }

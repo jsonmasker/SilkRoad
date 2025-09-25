@@ -7,4 +7,5 @@ export interface QuestionGroupModel {
     nameVN: string;
     priority: number;
     questions: QuestionModel[];
+    expanded?: boolean; // For UI purpose
 }
