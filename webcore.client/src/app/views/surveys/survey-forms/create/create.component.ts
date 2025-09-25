@@ -15,36 +15,11 @@ import { QuestionModel } from '@models/survey-models/question.model';
 import { PredefinedAnswerModel } from '@models/survey-models/predefined-answer.model';
 import { BookIconComponent } from "@components/icons/book-icon.component";
 import { CommonModule } from '@angular/common';
-
-
-const predefinedAnswerList: PredefinedAnswerModel[] = [
-  { id: "1", questionId: "1", nameEN: 'Answer 1', nameVN: 'Câu trả lời 1', priority: 1 },
-  { id: "2", questionId: "1", nameEN: 'Answer 2', nameVN: 'Câu trả lời 2', priority: 2 },
-  { id: "3", questionId: "2", nameEN: 'Answer 3', nameVN: 'Câu trả lời 3', priority: 3 },
-  { id: "4", questionId: "2", nameEN: 'Answer 4', nameVN: 'Câu trả lời 4', priority: 4 },
-];
-
-const questionList: QuestionModel[] = [
-  { id: "1", questionTypeId: 1, priority: 1, nameEN: 'Question 1', nameVN: 'Câu hỏi 1', predefinedAnswers: [...predefinedAnswerList] },
-  { id: "2", questionTypeId: 1, priority: 2, nameEN: 'Question 2', nameVN: 'Câu hỏi 2', predefinedAnswers: [...predefinedAnswerList] },
-  { id: "3", questionTypeId: 1, priority: 3, nameEN: 'Question 3', nameVN: 'Câu hỏi 3', predefinedAnswers: [...predefinedAnswerList] },
-];
-
-const questionGroupList: QuestionGroupModel[] = [
-  { id: "1", nameEN: 'Group 1', nameVN: 'Nhóm 1', priority: 1, questions: [questionList[0], questionList[1]] },
-  { id: "2", nameEN: 'Group 2', nameVN: 'Nhóm 2', priority: 2, questions: [questionList[2]] },
-];
-
+import { CreateHelperComponent } from "./create-helper.component";
 @Component({
   selector: 'app-create',
   imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, CommonModule,
-    RouterLink, RangeDatetimePickerComponent, TableDirective, IconDirective, BookIconComponent,
-    ModalComponent,
-    ModalHeaderComponent,
-    ModalTitleDirective,
-    ButtonCloseDirective,
-    ModalBodyComponent,
-    ModalFooterComponent],
+    RouterLink, RangeDatetimePickerComponent, CreateHelperComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
@@ -53,16 +28,8 @@ export class CreateComponent {
   //#region Variables
   icons: any = { cilPlus, cilTrash, cilPen };
 
-  questionGroups: QuestionGroupModel[] = [...questionGroupList];
-  questions: QuestionModel[] = [...questionList];
-
-  showQuestionChildrenByParentId = signal<string | null>(null);
-  showPredefinedAnswerChildrenByParentId = signal<string | null>(null);
-
-  visibleCreateQuestionModal = signal(false);
-  visibleDeleteQuestionModal = signal(false);
-  visibleCreateQuestionGroupModal = signal(false);
-  visibleDeleteQuestionGroupModal = signal(false);
+  // questionGroups: QuestionGroupModel[] = [...questionGroupList];
+  // questions: QuestionModel[] = [...questionList];
 
   createForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -99,52 +66,5 @@ export class CreateComponent {
   get startDate() { return this.createForm.get('startDate'); }
   get endDate() { return this.createForm.get('endDate'); }
 
-  //#endregion
-  //#region table tree
-  toggleQuestionNode(node: QuestionGroupModel): void {
-    node.expanded = !node.expanded;
-    if (node.expanded) {
-      this.showQuestionChildrenByParentId.set(node.id);
-    } else {
-      this.showQuestionChildrenByParentId.set(null);
-    }
-  }
-  togglePredefinedAnswerNode(node: QuestionModel): void {
-    node.expanded = !node.expanded;
-    if (node.expanded) {
-      this.showPredefinedAnswerChildrenByParentId.set(node.id);
-    } else {
-      this.showPredefinedAnswerChildrenByParentId.set(null);
-    }
-  }
-  //#endregion
-  //#region modal
-  toggleCreateQuestionModal(): void {
-    this.visibleCreateQuestionModal.set(!this.visibleCreateQuestionModal());
-  }
-  handleCreateQuestionModalChange(event: any) {
-    this.visibleCreateQuestionModal.set(event);
-  }
-
-  toggleDeleteQuestionModal(): void {
-    this.visibleDeleteQuestionModal.set(!this.visibleDeleteQuestionModal());
-  }
-  handleDeleteQuestionModalChange(event: any) {
-    this.visibleDeleteQuestionModal.set(event);
-  }
-
-  toggleCreateQuestionGroupModal(): void {
-    this.visibleCreateQuestionGroupModal.set(!this.visibleCreateQuestionGroupModal());
-  }
-  handleCreateQuestionGroupModalChange(event: any) {
-    this.visibleCreateQuestionGroupModal.set(event);
-  }
-
-  toggleDeleteQuestionGroupModal(): void {
-    this.visibleDeleteQuestionGroupModal.set(!this.visibleDeleteQuestionGroupModal());
-  }
-  handleDeleteQuestionGroupModalChange(event: any) {
-    this.visibleDeleteQuestionGroupModal.set(event);
-  }
   //#endregion
 }

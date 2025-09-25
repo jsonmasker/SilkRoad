@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import {
@@ -45,6 +45,7 @@ const questionGroupList: QuestionGroupModel[] = [
     ModalBodyComponent,
     ModalFooterComponent],
   templateUrl: './create-helper.component.html',
+  styleUrl: './create.component.scss'
 })
 
 export class CreateHelperComponent {
@@ -61,7 +62,21 @@ export class CreateHelperComponent {
   visibleDeleteQuestionModal = signal(false);
   visibleCreateQuestionGroupModal = signal(false);
   visibleDeleteQuestionGroupModal = signal(false);
+
+  createQuestionGroupForm = new FormGroup({
+    nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    priority: new FormControl(1, [Validators.required, Validators.min(1)])
+  });
+
+  createQuestionForm = new FormGroup({
+    questionTypeId: new FormControl(1, [Validators.required]),
+    nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    priority: new FormControl(1, [Validators.required, Validators.min(1)])
+  });
   //#endregion
+  
   //#region table tree
   toggleQuestionNode(node: QuestionGroupModel): void {
     node.expanded = !node.expanded;
@@ -80,6 +95,45 @@ export class CreateHelperComponent {
     }
   }
   //#endregion
+  
+  //#endregion form submit
+  onSubmitCreateQuestionGroup(): void {
+    if (this.createQuestionGroupForm.valid) {
+      const newQuestionGroup: QuestionGroupModel = {
+        id: (this.questionGroups.length + 1).toString(),
+        nameEN: this.createQuestionGroupForm.value.nameEN ?? '',
+        nameVN: this.createQuestionGroupForm.value.nameVN ?? '',
+        priority: this.createQuestionGroupForm.value.priority ?? 1,
+        questions: []
+      };
+      this.questionGroups.push(newQuestionGroup);
+      this.createQuestionGroupForm.reset({ nameEN: '', nameVN: '', priority: 1 });
+      this.toggleCreateQuestionGroupModal();
+    } else {
+      this.createQuestionGroupForm.markAllAsTouched();
+    }
+  }
+
+  onSubmitCreateQuestion(): void {
+    if (this.createQuestionForm.valid) {
+      const newQuestion: QuestionModel = {
+        id: (this.questions.length + 1).toString(),
+        questionTypeId: this.createQuestionForm.value.questionTypeId ?? 1,
+        nameEN: this.createQuestionForm.value.nameEN ?? '',
+        nameVN: this.createQuestionForm.value.nameVN ?? '',
+        priority: this.createQuestionForm.value.priority ?? 1,
+        predefinedAnswers: []
+      };
+      this.questions.push(newQuestion);
+      this.createQuestionForm.reset({ questionTypeId: 1, nameEN: '', nameVN: '', priority: 1 });
+      this.toggleCreateQuestionModal();
+    } else {
+      this.createQuestionForm.markAllAsTouched();
+    }
+  }
+  //#endregion
+
+
   //#region modal
   toggleCreateQuestionModal(): void {
     this.visibleCreateQuestionModal.set(!this.visibleCreateQuestionModal());
