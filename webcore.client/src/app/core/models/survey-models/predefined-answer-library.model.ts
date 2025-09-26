@@ -3,4 +3,5 @@ export interface PredefinedAnswerLibraryModel {
     questionLibraryId: number;
     nameVN: string;
     nameEN: string;
+    priority: number;
 }

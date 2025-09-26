@@ -552,6 +552,452 @@ sql.connect(config).then(pool => {
 
 🎉 **You're now ready to work with SQL Server in Docker!**
 
+## 12. LipstickSurveyDatabase Tutorial
+
+### Overview
+The LipstickSurveyDatabase is a comprehensive survey management system with the following key tables:
+
+#### Database Tables Structure
+- `Table_SurveyForms` - Main survey forms and metadata
+- `Table_Questions` - Individual survey questions
+- `Table_QuestionGroups` - Logical grouping of questions
+- `Table_QuestionTypes` - Question type definitions (multiple choice, text, etc.)
+- `Table_Answers` - Survey responses from participants
+- `Table_Participants` - Survey participant information
+- `Table_PredefinedAnswers` - Predefined answer options
+- `Table_PredefinedAnswerLibraries` - Answer option libraries
+- `Table_QuestionLibraries` - Reusable question libraries
+- `Table_QuestionGroupLibraries` - Reusable question group libraries
+
+### Basic Query Operations
+
+#### 1. Connect to LipstickSurveyDatabase
+```bash
+# Method 1: Single command execution
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "USE LipstickSurveyDatabase; [YOUR_SQL_QUERY]"
+
+# Method 2: Interactive session
+docker exec -it sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C
+# Then in the session:
+USE LipstickSurveyDatabase;
+GO
+```
+
+#### 2. Explore Database Structure
+```bash
+# List all tables
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase; 
+SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' ORDER BY TABLE_NAME;
+"
+
+# Get table column information
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE 
+FROM INFORMATION_SCHEMA.COLUMNS 
+WHERE TABLE_NAME = 'Table_SurveyForms' 
+ORDER BY ORDINAL_POSITION;
+"
+```
+
+#### 3. Quick Data Overview
+```bash
+# Get record counts for all main tables
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT 'SurveyForms' as TableName, COUNT(*) as RecordCount FROM Table_SurveyForms
+UNION SELECT 'Questions', COUNT(*) FROM Table_Questions
+UNION SELECT 'Participants', COUNT(*) FROM Table_Participants  
+UNION SELECT 'Answers', COUNT(*) FROM Table_Answers
+UNION SELECT 'QuestionTypes', COUNT(*) FROM Table_QuestionTypes
+ORDER BY TableName;
+"
+```
+
+### Survey Management Queries
+
+#### 4. Survey Forms Analysis
+```bash
+# List all active survey forms
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT 
+    Id,
+    Name,
+    TitleEN,
+    TitleVN,
+    StartDate,
+    EndDate,
+    IsActive,
+    CreatedAt
+FROM Table_SurveyForms 
+WHERE IsDeleted = 0
+ORDER BY CreatedAt DESC;
+"
+
+# Survey forms with question counts
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT 
+    sf.Id,
+    sf.Name,
+    sf.TitleEN,
+    COUNT(q.Id) as QuestionCount,
+    sf.StartDate,
+    sf.EndDate,
+    sf.IsActive
+FROM Table_SurveyForms sf
+LEFT JOIN Table_Questions q ON sf.Id = q.SurveyFormId
+WHERE sf.IsDeleted = 0
+GROUP BY sf.Id, sf.Name, sf.TitleEN, sf.StartDate, sf.EndDate, sf.IsActive
+ORDER BY sf.CreatedAt DESC;
+"
+```
+
+#### 5. Question Analysis
+```bash
+# Questions by survey with question types
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT 
+    sf.Name as SurveyName,
+    q.NameEN as QuestionEN,
+    q.NameVN as QuestionVN,
+    qt.TypeName as QuestionType,
+    q.CreatedAt
+FROM Table_SurveyForms sf
+JOIN Table_Questions q ON sf.Id = q.SurveyFormId
+LEFT JOIN Table_QuestionTypes qt ON q.QuestionTypeId = qt.Id
+WHERE sf.IsDeleted = 0
+ORDER BY sf.Name, q.Id;
+"
+
+# Question type distribution
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT 
+    qt.TypeName,
+    COUNT(q.Id) as QuestionCount,
+    CAST(COUNT(q.Id) * 100.0 / SUM(COUNT(q.Id)) OVER() AS DECIMAL(5,2)) as Percentage
+FROM Table_QuestionTypes qt
+LEFT JOIN Table_Questions q ON qt.Id = q.QuestionTypeId
+GROUP BY qt.Id, qt.TypeName
+ORDER BY QuestionCount DESC;
+"
+```
+
+#### 6. Participant Management
+```bash
+# Active participants summary
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT 
+    Id,
+    Email,
+    FirstName,
+    LastName,
+    CreatedAt,
+    ModifiedAt
+FROM Table_Participants 
+WHERE IsDeleted = 0
+ORDER BY CreatedAt DESC;
+"
+
+# Participant registration timeline
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT 
+    CAST(CreatedAt AS DATE) as RegistrationDate,
+    COUNT(*) as NewParticipants
+FROM Table_Participants
+WHERE IsDeleted = 0
+GROUP BY CAST(CreatedAt AS DATE)
+ORDER BY RegistrationDate DESC;
+"
+```
+
+### Response Analysis Queries
+
+#### 7. Survey Response Statistics
+```bash
+# Overall response statistics by survey
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT 
+    sf.Name as SurveyName,
+    COUNT(DISTINCT p.Id) as UniqueParticipants,
+    COUNT(DISTINCT q.Id) as TotalQuestions,
+    COUNT(a.Id) as TotalAnswers,
+    CASE 
+        WHEN COUNT(DISTINCT q.Id) > 0 
+        THEN CAST(COUNT(a.Id) * 100.0 / (COUNT(DISTINCT p.Id) * COUNT(DISTINCT q.Id)) AS DECIMAL(5,2))
+        ELSE 0 
+    END as CompletionPercentage
+FROM Table_SurveyForms sf
+LEFT JOIN Table_Questions q ON sf.Id = q.SurveyFormId
+LEFT JOIN Table_Answers a ON q.Id = a.QuestionId
+LEFT JOIN Table_Participants p ON a.ParticipantId = p.Id AND p.IsDeleted = 0
+WHERE sf.IsDeleted = 0
+GROUP BY sf.Id, sf.Name
+ORDER BY TotalAnswers DESC;
+"
+
+# Individual participant completion status
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT 
+    p.Email,
+    p.FirstName,
+    p.LastName,
+    sf.Name as SurveyName,
+    COUNT(q.Id) as TotalQuestions,
+    COUNT(a.Id) as AnsweredQuestions,
+    CASE 
+        WHEN COUNT(q.Id) > 0 
+        THEN CAST(COUNT(a.Id) * 100.0 / COUNT(q.Id) AS DECIMAL(5,2))
+        ELSE 0 
+    END as CompletionPercentage
+FROM Table_Participants p
+CROSS JOIN Table_SurveyForms sf
+LEFT JOIN Table_Questions q ON sf.Id = q.SurveyFormId
+LEFT JOIN Table_Answers a ON q.Id = a.QuestionId AND a.ParticipantId = p.Id
+WHERE p.IsDeleted = 0 AND sf.IsDeleted = 0
+GROUP BY p.Id, p.Email, p.FirstName, p.LastName, sf.Id, sf.Name
+HAVING COUNT(q.Id) > 0
+ORDER BY p.Email, sf.Name;
+"
+```
+
+#### 8. Answer Analysis
+```bash
+# Recent survey responses
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT TOP 20
+    p.Email,
+    sf.Name as SurveyName,
+    q.NameEN as QuestionEN,
+    a.AnswerText,
+    a.CreatedAt
+FROM Table_Answers a
+JOIN Table_Questions q ON a.QuestionId = q.Id
+JOIN Table_SurveyForms sf ON q.SurveyFormId = sf.Id
+JOIN Table_Participants p ON a.ParticipantId = p.Id
+WHERE p.IsDeleted = 0 AND sf.IsDeleted = 0
+ORDER BY a.CreatedAt DESC;
+"
+
+# Answer distribution for specific questions
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT 
+    q.NameEN as Question,
+    a.AnswerText,
+    COUNT(*) as ResponseCount,
+    CAST(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(PARTITION BY q.Id) AS DECIMAL(5,2)) as Percentage
+FROM Table_Answers a
+JOIN Table_Questions q ON a.QuestionId = q.Id
+WHERE a.AnswerText IS NOT NULL AND a.AnswerText != ''
+GROUP BY q.Id, q.NameEN, a.AnswerText
+ORDER BY q.NameEN, ResponseCount DESC;
+"
+```
+
+### Advanced Reporting Queries
+
+#### 9. Survey Performance Dashboard
+```bash
+# Comprehensive survey dashboard
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT 
+    'Total Surveys' as Metric,
+    CAST(COUNT(*) AS VARCHAR(50)) as Value
+FROM Table_SurveyForms WHERE IsDeleted = 0
+UNION
+SELECT 
+    'Active Surveys',
+    CAST(COUNT(*) AS VARCHAR(50))
+FROM Table_SurveyForms WHERE IsDeleted = 0 AND IsActive = 1
+UNION
+SELECT 
+    'Total Questions',
+    CAST(COUNT(*) AS VARCHAR(50))
+FROM Table_Questions
+UNION
+SELECT 
+    'Total Participants',
+    CAST(COUNT(*) AS VARCHAR(50))
+FROM Table_Participants WHERE IsDeleted = 0
+UNION
+SELECT 
+    'Total Responses',
+    CAST(COUNT(*) AS VARCHAR(50))
+FROM Table_Answers
+UNION
+SELECT 
+    'Avg Questions per Survey',
+    CAST(AVG(CAST(QuestionCount AS FLOAT)) AS VARCHAR(50))
+FROM (
+    SELECT COUNT(q.Id) as QuestionCount
+    FROM Table_SurveyForms sf
+    LEFT JOIN Table_Questions q ON sf.Id = q.SurveyFormId
+    WHERE sf.IsDeleted = 0
+    GROUP BY sf.Id
+) as SurveyStats;
+"
+```
+
+#### 10. Data Export Queries
+```bash
+# Export survey responses in CSV format
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -s"," -Q "
+USE LipstickSurveyDatabase;
+SELECT 
+    'ParticipantEmail' as ParticipantEmail,
+    'SurveyName' as SurveyName,
+    'QuestionEN' as QuestionEN,
+    'QuestionVN' as QuestionVN,
+    'AnswerText' as AnswerText,
+    'ResponseDate' as ResponseDate
+UNION ALL
+SELECT 
+    p.Email,
+    sf.Name,
+    q.NameEN,
+    q.NameVN,
+    a.AnswerText,
+    CONVERT(VARCHAR(19), a.CreatedAt, 120)
+FROM Table_Answers a
+JOIN Table_Questions q ON a.QuestionId = q.Id
+JOIN Table_SurveyForms sf ON q.SurveyFormId = sf.Id
+JOIN Table_Participants p ON a.ParticipantId = p.Id
+WHERE p.IsDeleted = 0 AND sf.IsDeleted = 0
+ORDER BY sf.Name, p.Email, q.Id;
+"
+```
+
+### Maintenance and Monitoring
+
+#### 11. Database Health Check
+```bash
+# Survey database health metrics
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT 
+    'Orphaned Questions' as Issue,
+    COUNT(*) as Count
+FROM Table_Questions q
+LEFT JOIN Table_SurveyForms sf ON q.SurveyFormId = sf.Id
+WHERE sf.Id IS NULL
+UNION
+SELECT 
+    'Orphaned Answers',
+    COUNT(*)
+FROM Table_Answers a
+LEFT JOIN Table_Questions q ON a.QuestionId = q.Id
+WHERE q.Id IS NULL
+UNION
+SELECT 
+    'Orphaned Participant Answers',
+    COUNT(*)
+FROM Table_Answers a
+LEFT JOIN Table_Participants p ON a.ParticipantId = p.Id
+WHERE p.Id IS NULL OR p.IsDeleted = 1;
+"
+
+# Recent activity summary
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "
+USE LipstickSurveyDatabase;
+SELECT 
+    'New Surveys (Last 30 days)' as Activity,
+    COUNT(*) as Count
+FROM Table_SurveyForms 
+WHERE CreatedAt >= DATEADD(DAY, -30, GETDATE()) AND IsDeleted = 0
+UNION
+SELECT 
+    'New Participants (Last 30 days)',
+    COUNT(*)
+FROM Table_Participants 
+WHERE CreatedAt >= DATEADD(DAY, -30, GETDATE()) AND IsDeleted = 0
+UNION
+SELECT 
+    'New Responses (Last 30 days)',
+    COUNT(*)
+FROM Table_Answers 
+WHERE CreatedAt >= DATEADD(DAY, -30, GETDATE());
+"
+```
+
+### Creating Query Scripts
+
+#### 12. Survey Analysis Script Template
+```bash
+# Create a reusable survey analysis script
+cat > survey_analysis.sql << 'EOF'
+USE LipstickSurveyDatabase;
+
+-- Survey Overview
+SELECT 'SURVEY OVERVIEW' as Section;
+SELECT 
+    Id,
+    Name,
+    TitleEN,
+    COUNT(q.Id) as Questions,
+    IsActive,
+    StartDate,
+    EndDate
+FROM Table_SurveyForms sf
+LEFT JOIN Table_Questions q ON sf.Id = q.SurveyFormId
+WHERE sf.IsDeleted = 0
+GROUP BY sf.Id, sf.Name, sf.TitleEN, sf.IsActive, sf.StartDate, sf.EndDate
+ORDER BY sf.CreatedAt DESC;
+
+-- Response Statistics
+SELECT 'RESPONSE STATISTICS' as Section;
+SELECT 
+    sf.Name as Survey,
+    COUNT(DISTINCT p.Id) as Participants,
+    COUNT(a.Id) as Responses,
+    AVG(CAST(COUNT(a.Id) AS FLOAT)) as AvgResponsesPerParticipant
+FROM Table_SurveyForms sf
+LEFT JOIN Table_Questions q ON sf.Id = q.SurveyFormId
+LEFT JOIN Table_Answers a ON q.Id = a.QuestionId
+LEFT JOIN Table_Participants p ON a.ParticipantId = p.Id AND p.IsDeleted = 0
+WHERE sf.IsDeleted = 0
+GROUP BY sf.Id, sf.Name
+ORDER BY Responses DESC;
+EOF
+
+# Execute the analysis script
+docker cp survey_analysis.sql sqlserver2022:/tmp/survey_analysis.sql
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -i /tmp/survey_analysis.sql
+docker exec -u root sqlserver2022 rm /tmp/survey_analysis.sql
+```
+
+### Quick Reference Commands
+
+#### Essential LipstickSurveyDatabase Commands
+```bash
+# 1. Database connection test
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "USE LipstickSurveyDatabase; SELECT @@VERSION;"
+
+# 2. Quick table list
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "USE LipstickSurveyDatabase; SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE';"
+
+# 3. Record counts
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "USE LipstickSurveyDatabase; SELECT 'Surveys', COUNT(*) FROM Table_SurveyForms UNION SELECT 'Questions', COUNT(*) FROM Table_Questions UNION SELECT 'Participants', COUNT(*) FROM Table_Participants UNION SELECT 'Answers', COUNT(*) FROM Table_Answers;"
+
+# 4. Recent activity
+docker exec sqlserver2022 /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "MyPass@123" -C -Q "USE LipstickSurveyDatabase; SELECT TOP 5 'Survey: ' + Name, CreatedAt FROM Table_SurveyForms WHERE IsDeleted = 0 ORDER BY CreatedAt DESC;"
+```
+
+---
+
+🎯 **LipstickSurveyDatabase Tutorial Complete!**
+
+You now have comprehensive tools and queries to effectively manage and analyze your survey data. Use these examples as templates and modify them according to your specific requirements.
 
  **Show List of Databases - Quick Commands
 Method 1: Simple Database List**

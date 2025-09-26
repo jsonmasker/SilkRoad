@@ -1,8 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-import { getISOWeek } from 'date-fns';
-
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @Component({
@@ -12,7 +9,10 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
   imports: [FormsModule, NzDatePickerModule]
 })
 export class RangeDatetimePickerComponent {
-  date = null;
+  showTime = input<boolean>(true);
+  isDisabled = input<boolean>(false);
+  initialData = input<Date[] | null>(null);
+  placeHolder = input<string[]>(['Start Date', 'End Date']);
 
   onChange(result: Date[]): void {
     console.log('onChange: ', result);

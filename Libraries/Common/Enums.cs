@@ -22,7 +22,6 @@ namespace Common
         Cancelled = 4,
         Refunded = 5
     }
-
     public enum EWebContentKey
     {
         HostName,
@@ -74,12 +73,13 @@ namespace Common
         Mall,
         Office
     }
-    public enum EQuestionType
+    public enum EQuestionTypes
     {
-        Option = 1,
-        Open = 2,
-        OptionOpen = 3,
-        Rating = 4
+        ClosedEndedQuestion,
+        OpenEndedQuestion,
+        HybridQuestion,
+        MultipleChoiceQuestion,
+        RatingQuestion
     }
     public enum EControllers
     {

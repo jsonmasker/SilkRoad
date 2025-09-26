@@ -1,10 +1,6 @@
-﻿using SurveyDataAccess.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using SurveyDataAccess.DTOs;
 using SurveyDataAccess.IRepositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SurveyDataAccess.Repositories
 {
@@ -12,6 +8,26 @@ namespace SurveyDataAccess.Repositories
     {
         public PredefinedAnswerLibraryRepository(ApplicationContext context) : base(context)
         {
+        }
+
+        public async Task<bool> DeleteByQuestionLibraryIdAsync(int questionLibraryId)
+        {
+            try
+            {
+                var data = await _dbSet.Where(s => s.QuestionLibraryId == questionLibraryId).ToListAsync();
+                if (data != null && data.Count() > 0)
+                    _dbSet.RemoveRange(data);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<ICollection<PredefinedAnswerLibraryDTO>> GetAllByQuestionLibraryIdAsync(int questionLibraryId)
+        {
+            return await _dbSet.Where(s => s.QuestionLibraryId == questionLibraryId).ToListAsync();
         }
     }
 }

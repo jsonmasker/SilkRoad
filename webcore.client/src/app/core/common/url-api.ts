@@ -255,6 +255,7 @@ export enum EUrl {
     //questionLibrary
     getAllUrlQuestionLibrary = "/api/questionLibrary/getAll",
     getAllDeletedUrlQuestionLibrary = "/api/questionLibrary/getAllDeleted",
+    getEagerLoadingByIdUrlQuestionLibrary = "/api/questionLibrary/getEagerLoadingById",
     getByIdUrlQuestionLibrary = "/api/questionLibrary/getById",
     createUrlQuestionLibrary = "/api/questionLibrary/create",
     updateUrlQuestionLibrary = "/api/questionLibrary/update",

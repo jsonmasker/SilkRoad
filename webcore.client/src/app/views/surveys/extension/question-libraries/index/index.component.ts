@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PageInformation, Pagination } from '@models/pagination.model';
-import { QuestionGroupModel } from '@models/survey-models/question-group.model';
-import { QuestionModel } from '@models/survey-models/question.model';
 import { cilPlus, cilTrash, cilPen, cilSave } from '@coreui/icons';
 import { RouterLink } from '@angular/router';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, TemplateIdDirective } from '@coreui/angular';
@@ -13,24 +11,28 @@ import { QuestionLibraryService } from '@services/survey-services/question-libra
 import { QuestionTypeService } from '@services/survey-services/question-type.service';
 import { OptionModel } from '@models/option.model';
 import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
+import { QuestionLibraryModel } from '@models/survey-models/question-library.model';
+import { CommonModule } from '@angular/common';
+import { BookIconComponent } from "@components/icons/book-icon.component";
 
 @Component({
   selector: 'app-index',
-  imports: [ReactiveFormsModule, DataTableComponent, RouterLink, 
+  imports: [ReactiveFormsModule, DataTableComponent, RouterLink, CommonModule,
     AccordionButtonDirective,
     AccordionComponent,
     AccordionItemComponent,
-    TemplateIdDirective, IconDirective, SelectSearchComponent],
+    TemplateIdDirective, IconDirective, SelectSearchComponent, BookIconComponent],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })
 export class IndexComponent {
   //#region Variables
-  data: Pagination<QuestionModel> = new Pagination<QuestionModel>();
+  data: Pagination<QuestionLibraryModel> = new Pagination<QuestionLibraryModel>();
   questionGroupLibraries: OptionModel[] = [];
   questionTypes: OptionModel[] = [];
   pageInformation: PageInformation = new PageInformation();
   icons: any = { cilPlus, cilTrash, cilPen, cilSave };
+  showChildrenByParentId  = signal<number | null>(null);
   filterForm: FormGroup = new FormGroup({
     questionGroupId: new FormControl(-1),
     questionTypeId: new FormControl(-1),
@@ -44,7 +46,6 @@ export class IndexComponent {
   ngOnInit() {
     this.questionGroupLibraryService.getOptionList().subscribe((res) => {
       this.questionGroupLibraries = res.data;
-      console.log('questionGroups', res.data);
     });
     this.questionTypeService.getOptionList().subscribe((res) => {
       this.questionTypes = res.data;
@@ -52,7 +53,10 @@ export class IndexComponent {
     this.getData();
   }
   getData() {
-
+    this.questionLibraryService.getAll(1,10).subscribe((res) => {
+      this.data = res.data;
+      console.log(this.data);
+    });
   }
   onPageIndexChange(index: any) {
     this.pageInformation.pageIndex = index;
@@ -74,5 +78,14 @@ export class IndexComponent {
   filter() {
     this.pageInformation.pageIndex = 1;
     this.getData();
+  }
+    //table tree
+    toggleNode(node: QuestionLibraryModel): void {
+    node.expanded = !node.expanded;
+    if (node.expanded) {
+      this.showChildrenByParentId.set(node.id);
+    } else {
+      this.showChildrenByParentId.set(null);
+    }
   }
 }

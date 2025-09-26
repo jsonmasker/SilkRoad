@@ -7,6 +7,8 @@ export interface QuestionLibraryModel extends BaseModel {
     questionTypeId: number;
     nameVN: string;
     nameEN: string;
+    priority: number;
     note: string;
     predefinedAnswerLibraries?: PredefinedAnswerLibraryModel[];
+    expanded?: boolean;
 }

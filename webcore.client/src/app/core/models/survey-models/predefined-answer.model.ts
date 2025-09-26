@@ -1,7 +1,7 @@
 export interface PredefinedAnswerModel {
     id: string;
-    point: number;
+    questionId: string;
     nameEN: string;
     nameVN: string;
-    description: string;
+    priority: number;
 }
