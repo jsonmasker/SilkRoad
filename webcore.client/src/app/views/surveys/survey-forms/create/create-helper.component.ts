@@ -65,6 +65,10 @@ export class CreateHelperComponent implements OnInit {
   visibleUpdatePredefinedAnswerModal = signal(false);
 
   initQuestionTypeId = signal<number>(-1);
+  updateQuestionGroupIndex = signal<number>(-1);
+  deleteQuestionGroupIndex = signal<number>(-1);
+  updateQuestionIndex = signal<number>(-1);
+  deleteQuestionIndex = signal<number>(-1);
 
   // Create Question Group Form
   createQuestionGroupForm = new FormGroup({
@@ -274,6 +278,7 @@ export class CreateHelperComponent implements OnInit {
   }
   updateQuestionGroup(index: number): void {
     const selectedQuestionGroup = this.questionGroups[index];
+    this.updateQuestionGroupIndex.set(index);
     this.updateQuestionGroupForm.patchValue({
       nameEN: selectedQuestionGroup.nameEN,
       nameVN: selectedQuestionGroup.nameVN,
@@ -283,18 +288,20 @@ export class CreateHelperComponent implements OnInit {
   }
 
   onSubmitUpdateQuestionGroup(): void {
-    if (this.updateQuestionGroupForm.valid) {
-      // const updatedQuestionGroup: QuestionGroupModel = {
-      //   ...this.selectedQuestionGroup,
-      //   nameEN: this.updateQuestionGroupForm.value.nameEN ?? '',
-      //   nameVN: this.updateQuestionGroupForm.value.nameVN ?? '',
-      //   priority: this.updateQuestionGroupForm.value.priority ?? 1
-      // };
-      // const index = this.questionGroups.findIndex(qg => qg.id === this.selectedQuestionGroup.id);
-      // if (index !== -1) {
-      //   this.questionGroups[index] = updatedQuestionGroup;
-      // }
+    if (this.updateQuestionGroupForm.valid && this.updateQuestionGroupIndex() !== -1) {
+      const index = this.updateQuestionGroupIndex();
+      const selectedQuestionGroup = this.questionGroups[index];
+      
+      const updatedQuestionGroup: QuestionGroupModel = {
+        ...selectedQuestionGroup,
+        nameEN: this.updateQuestionGroupForm.value.nameEN ?? '',
+        nameVN: this.updateQuestionGroupForm.value.nameVN ?? '',
+        priority: this.updateQuestionGroupForm.value.priority ?? 1
+      };
+      
+      this.questionGroups[index] = updatedQuestionGroup;
       this.updateQuestionGroupForm.reset({ nameEN: '', nameVN: '', priority: 1 });
+      this.updateQuestionGroupIndex.set(-1);
       this.toggleUpdateQuestionGroupModal();
     } else {
       this.updateQuestionGroupForm.markAllAsTouched();
@@ -308,6 +315,18 @@ export class CreateHelperComponent implements OnInit {
   }
   get priorityUpdateQuestionGroupForm() {
     return this.updateQuestionGroupForm.get('priority');
+  }
+  deleteQuestionGroup(index: number): void {
+    this.deleteQuestionGroupIndex.set(index);
+    this.toggleDeleteQuestionGroupModal();
+  }
+  confirmDeleteQuestionGroup(): void {
+    const index = this.deleteQuestionGroupIndex();
+    if (index !== -1) {
+      this.questionGroups.splice(index, 1);
+      this.deleteQuestionGroupIndex.set(-1);
+    }
+    this.toggleDeleteQuestionGroupModal();
   }
   //#endregion
 
@@ -382,6 +401,94 @@ export class CreateHelperComponent implements OnInit {
   }
   get priorityCreateQuestionForm() {
     return this.createQuestionForm.get('priority');
+  }
+
+  updateQuestion(index: number): void {
+    const selectedQuestion = this.questions[index];
+    this.updateQuestionIndex.set(index);
+    this.initQuestionTypeId.set(selectedQuestion.questionTypeId);
+    this.updateQuestionForm.patchValue({
+      questionTypeId: selectedQuestion.questionTypeId,
+      nameEN: selectedQuestion.nameEN,
+      nameVN: selectedQuestion.nameVN,
+      priority: selectedQuestion.priority
+    });
+    
+    // Set predefined answers if they exist
+    if (selectedQuestion.predefinedAnswers && selectedQuestion.predefinedAnswers.length > 0) {
+      this.predefinedAnswerList = [...selectedQuestion.predefinedAnswers.map((pa, idx) => ({
+        id: (idx + 1).toString(), // Temporary ID for display
+        questionLibraryId: 0, // Temporary ID
+        nameEN: pa.nameEN,
+        nameVN: pa.nameVN,
+        priority: pa.priority,
+        isActive: true,
+        isDeleted: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }))];
+    } else {
+      this.predefinedAnswerList = [];
+    }
+    
+    this.onchangeQuestionType(selectedQuestion.questionTypeId);
+    this.toggleUpdateQuestionModal();
+  }
+
+  onSubmitUpdateQuestion(): void {
+    if (this.updateQuestionForm.valid && this.updateQuestionIndex() !== -1) {
+      const index = this.updateQuestionIndex();
+      const selectedQuestion = this.questions[index];
+      
+      const predefinedAnswers = this.predefinedAnswerList.map((pa) => ({
+        nameEN: pa.nameEN,
+        nameVN: pa.nameVN,
+        priority: pa.priority
+      }));
+      
+      const updatedQuestion: QuestionModel = {
+        ...selectedQuestion,
+        questionTypeId: this.updateQuestionForm.value.questionTypeId ?? 1,
+        nameEN: this.updateQuestionForm.value.nameEN ?? '',
+        nameVN: this.updateQuestionForm.value.nameVN ?? '',
+        priority: this.updateQuestionForm.value.priority ?? 1,
+        predefinedAnswers: predefinedAnswers
+      };
+      
+      this.questions[index] = updatedQuestion;
+      this.updateQuestionForm.reset({ questionTypeId: 1, nameEN: '', nameVN: '', priority: 1 });
+      this.predefinedAnswerList = [];
+      this.updateQuestionIndex.set(-1);
+      this.initQuestionTypeId.set(-1);
+      this.onchangeQuestionType(this.initQuestionTypeId());
+      this.toggleUpdateQuestionModal();
+    } else {
+      this.updateQuestionForm.markAllAsTouched();
+    }
+  }
+
+  get nameENUpdateQuestionForm() {
+    return this.updateQuestionForm.get('nameEN');
+  }
+  get nameVNUpdateQuestionForm() {
+    return this.updateQuestionForm.get('nameVN');
+  }
+  get priorityUpdateQuestionForm() {
+    return this.updateQuestionForm.get('priority');
+  }
+
+  deleteQuestion(index: number): void {
+    this.deleteQuestionIndex.set(index);
+    this.toggleDeleteQuestionModal();
+  }
+
+  confirmDeleteQuestion(): void {
+    const index = this.deleteQuestionIndex();
+    if (index !== -1) {
+      this.questions.splice(index, 1);
+      this.deleteQuestionIndex.set(-1);
+    }
+    this.toggleDeleteQuestionModal();
   }
   //#endregion
 
