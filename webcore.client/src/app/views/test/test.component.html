@@ -6,51 +6,7 @@
     </button>
   </div>
 
-  <!-- Add User Form -->
-  <div class="add-form" *ngIf="showAddForm">
-    <h3>Add New User</h3>
-    <form [formGroup]="addUserForm" (ngSubmit)="addUser()">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="addName">Name:</label>
-          <input type="text" id="addName" formControlName="name" placeholder="Enter name" 
-                 class="form-control" [class.error]="hasError(addUserForm, 'name', 'required') || hasError(addUserForm, 'name', 'minlength') || hasError(addUserForm, 'name', 'maxlength')">
-          <div class="error-message" *ngIf="getErrorMessage(addUserForm, 'name')">
-            {{ getErrorMessage(addUserForm, 'name') }}
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="addEmail">Email:</label>
-          <input type="email" id="addEmail" formControlName="email" placeholder="Enter email" 
-                 class="form-control" [class.error]="hasError(addUserForm, 'email', 'required') || hasError(addUserForm, 'email', 'email')">
-          <div class="error-message" *ngIf="getErrorMessage(addUserForm, 'email')">
-            {{ getErrorMessage(addUserForm, 'email') }}
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="addRole">Role:</label>
-          <select id="addRole" formControlName="role" class="form-control" 
-                  [class.error]="hasError(addUserForm, 'role', 'required')">
-            <option value="">Select role</option>
-            <option value="Admin">Admin</option>
-            <option value="Manager">Manager</option>
-            <option value="User">User</option>
-          </select>
-          <div class="error-message" *ngIf="getErrorMessage(addUserForm, 'role')">
-            {{ getErrorMessage(addUserForm, 'role') }}
-          </div>
-        </div>
-        <div class="form-actions">
-          <button type="submit" class="btn btn-success" [disabled]="addUserForm.invalid">
-            Save
-          </button>
-          <button type="button" class="btn btn-secondary" (click)="cancelAdd()">
-            Cancel
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
+
 
   <!-- Users Table -->
   <div class="table-container">
@@ -65,10 +21,50 @@
         </tr>
       </thead>
       <tbody>
+        
+        <!-- Add User Form Row -->
+        <tr *ngIf="showAddForm" class="add-form-row" [formGroup]="addUserForm">
+          <td class="new-id">New</td>
+          <td>
+            <input type="text" formControlName="name" placeholder="Enter name" 
+                   class="form-control-sm" [class.error]="hasError(addUserForm, 'name', 'required') || hasError(addUserForm, 'name', 'minlength') || hasError(addUserForm, 'name', 'maxlength')">
+            <div class="error-message-inline" *ngIf="getErrorMessage(addUserForm, 'name')">
+              {{ getErrorMessage(addUserForm, 'name') }}
+            </div>
+          </td>
+          <td>
+            <input type="email" formControlName="email" placeholder="Enter email" 
+                   class="form-control-sm" [class.error]="hasError(addUserForm, 'email', 'required') || hasError(addUserForm, 'email', 'email')">
+            <div class="error-message-inline" *ngIf="getErrorMessage(addUserForm, 'email')">
+              {{ getErrorMessage(addUserForm, 'email') }}
+            </div>
+          </td>
+          <td>
+            <select formControlName="role" class="form-control-sm" 
+                    [class.error]="hasError(addUserForm, 'role', 'required')">
+              <option value="">Select role</option>
+              <option value="Admin">Admin</option>
+              <option value="Manager">Manager</option>
+              <option value="User">User</option>
+            </select>
+            <div class="error-message-inline" *ngIf="getErrorMessage(addUserForm, 'role')">
+              {{ getErrorMessage(addUserForm, 'role') }}
+            </div>
+          </td>
+          <td class="actions">
+            <button class="btn btn-sm btn-success" (click)="addUser()" 
+                    [disabled]="addUserForm.invalid"
+                    title="Save">
+              <i class="icon-save"></i>
+            </button>
+            <button class="btn btn-sm btn-secondary" (click)="cancelAdd()" title="Cancel">
+              <i class="icon-cancel"></i>
+            </button>
+          </td>
+        </tr>
+        
         <tr *ngFor="let user of users; trackBy: trackByUserId" 
-            [class.editing]="editingUserId === user.id">
-          
-          <!-- Regular row view -->
+            [class.editing]="editingUserId === user.id">          <!-- Regular row view -->
           <ng-container *ngIf="editingUserId !== user.id">
             <td>{{ user.id }}</td>
             <td>{{ user.name }}</td>
