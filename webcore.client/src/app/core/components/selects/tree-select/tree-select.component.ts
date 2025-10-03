@@ -34,16 +34,10 @@ export class TreeSelectComponent {
 
 
   ngOnChanges(): void {
-    console.log('ngOnChanges', this.expandKeys());
+    // console.log('ngOnChanges', this.expandKeys());
    this.nodes = this.handleData(this.options());
-   console.log('nodes', this.nodes);
+  //  console.log('nodes', this.nodes);
   }
-  // ngOnInit(): void {
-  //   this.nodes = this.handleData(this.options);
-  //   // if (this.selectedValue) {
-  //   //   this.expandKeys = [String(this.selectedValue)];
-  //   // }
-  // }
 
   handleData(options: OptionModel[]): NzTreeNodeOptions[] {
     return options.map(option => ({

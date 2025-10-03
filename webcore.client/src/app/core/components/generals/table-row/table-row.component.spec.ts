@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DocsLinkComponent } from './docs-link.component';
+import { TableRowComponent } from './table-row.component';
 
-describe('DocsLinkComponent', () => {
-  let component: DocsLinkComponent;
-  let fixture: ComponentFixture<DocsLinkComponent>;
+describe('TableRowComponent', () => {
+  let component: TableRowComponent;
+  let fixture: ComponentFixture<TableRowComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [DocsLinkComponent]
-})
+      imports: [TableRowComponent]
+    })
     .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DocsLinkComponent);
+    fixture = TestBed.createComponent(TableRowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,35 +1,25 @@
-import { Component, signal } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import {
-  AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent,
-  FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, TableDirective, TemplateIdDirective
-} from '@coreui/angular';
-import { QuestionGroupModel } from '@models/survey-models/question-group.model';
-import { SelectedQuestionModel } from '@models/survey-models/survey-form.model';
+import { ButtonDirective, CardBodyComponent, CardComponent, FormControlDirective, FormDirective, FormLabelDirective } from '@coreui/angular';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
-import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 import { IconDirective } from '@coreui/icons-angular';
-import { cilPen, cilPlus, cilTrash } from '@coreui/icons';
-import { QuestionModel } from '@models/survey-models/question.model';
-import { PredefinedAnswerModel } from '@models/survey-models/predefined-answer.model';
-import { BookIconComponent } from "@components/icons/book-icon.component";
+import { cilExitToApp, cilPen, cilPlus, cilSave, cilTrash } from '@coreui/icons';
 import { CommonModule } from '@angular/common';
 import { CreateHelperComponent } from "./create-helper.component";
+import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 @Component({
   selector: 'app-create',
   imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, CommonModule,
-    RouterLink, RangeDatetimePickerComponent, CreateHelperComponent],
+    IconDirective, RouterLink, CreateHelperComponent, RangeDatetimePickerComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
 
 export class CreateComponent {
   //#region Variables
-  icons: any = { cilPlus, cilTrash, cilPen };
-
-  // questionGroups: QuestionGroupModel[] = [...questionGroupList];
-  // questions: QuestionModel[] = [...questionList];
+  @ViewChild('createHelperComponent') createHelperComponent!: CreateHelperComponent;
+  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp };
 
   createForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -39,25 +29,37 @@ export class CreateComponent {
     descriptionVN: new FormControl(''),
     startDate: new FormControl(''),
     endDate: new FormControl(''),
-    isActive: new FormControl(true)
+    isActive: new FormControl(true),
+    questionGroups: new FormControl([]),
+    questions: new FormControl([])
   });
   //#endregion
 
   //#region Constructor and Hooks
-  constructor(
-    // private questionGroupService: QuestionGroupService,
-    private surveyFormService: SurveyFormService,
-    private router: Router
-  ) { }
-  ngOnInit() {
-    // this.questionGroupService.getEagerAllElements().subscribe((response) => {
-    //   this.intitQuestionGroupData(response.data);
-    // });
+  constructor(private surveyFormService: SurveyFormService, private router: Router) { }
+  onDateRangeChange(event: Date[]) {
+    this.startDate?.setValue(event[0]);
+    this.endDate?.setValue(event[1]);
   }
   //#endregion
 
   //#endregion submit
-  onSubmit() {
+  onSubmit() {    
+    if (this.createForm.valid) {
+      const  questionGroups = this.createHelperComponent.questionGroups;
+      const questions = this.createHelperComponent.questions;
+      this.createForm.patchValue({ questionGroups, questions });
+      console.log(this.createForm.value);
+      this.surveyFormService.create(this.createForm.value).subscribe({
+        next: (res) => {
+          // if (res.success) {
+          //   this.router.navigate(['/surveys/survey-forms']);
+          // } else {
+          //   alert('Error: ' + res.message);
+          // }
+        }
+      });
+    }
   }
 
   get name() { return this.createForm.get('name'); }
