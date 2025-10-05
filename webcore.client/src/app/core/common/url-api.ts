@@ -276,6 +276,9 @@ export enum EUrl {
     createUrlSurveyForm = "/api/surveyForm/create",
     updateUrlSurveyForm = "/api/surveyForm/update",
     softDeleteUrlSurveyForm = "/api/surveyForm/softDelete",
+    restoreUrlSurveyForm = "/api/surveyForm/restore",
+    deleteUrlSurveyForm = "/api/surveyForm/delete",
+    getAllDeletedUrlSurveyForm = "/api/surveyForm/getAllDeleted",
     //surveyReport
 
     //#endregion

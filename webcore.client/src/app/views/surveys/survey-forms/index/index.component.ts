@@ -6,9 +6,9 @@ import { DataTableComponent } from '@components/generals/data-table/data-table.c
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { SurveyFormModel } from '@models/survey-models/survey-form.model';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
-import { cilPlus, cilTrash, cilPen, cilSave } from '@coreui/icons';
+import { cilPlus, cilTrash, cilPen, cilSave, cilX, cilExitToApp, cilLoopCircular, cilSearch } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
-import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective } from '@coreui/angular';
+import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective } from '@coreui/angular';
 import { EColors } from '@common/global';
 import { ToastService } from '@services/helper-services/toast.service';
 
@@ -16,7 +16,7 @@ import { ToastService } from '@services/helper-services/toast.service';
   selector: 'app-index',
   imports: [ReactiveFormsModule, DataTableComponent, RouterLink, IconDirective,
     AccordionButtonDirective,
-    AccordionComponent,
+    AccordionComponent, ButtonDirective,
     AccordionItemComponent, ModalComponent, ModalBodyComponent,
     TemplateIdDirective, ModalFooterComponent, ModalHeaderComponent,
   ],
@@ -29,11 +29,10 @@ export class IndexComponent {
   visibleTrashModal: boolean = false;
   deleteById: number = 0;
   trashData: Pagination<SurveyFormModel> = new Pagination<SurveyFormModel>();
-
   data: Pagination<SurveyFormModel> = new Pagination<SurveyFormModel>();
   trashPageInformation: PageInformation = new PageInformation();
   pageInformation: PageInformation = new PageInformation();
-  icons: any = { cilPlus, cilTrash, cilPen, cilSave };
+  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilX, cilExitToApp, cilLoopCircular, cilSearch };
   filterForm: FormGroup = new FormGroup({
     questionGroupId: new FormControl(-1),
     questionTypeId: new FormControl(-1),
@@ -73,6 +72,7 @@ export class IndexComponent {
       this.trashPageInformation.totalPages = this.trashData.totalPages;
     });
   }
+
   onTrashPageIndexChange(index: any) {
     this.trashPageInformation.pageIndex = index;
     this.getTrashData();
@@ -102,7 +102,18 @@ export class IndexComponent {
       this.toastService.showToast(EColors.success, res.message);
     });
   }
-  onConfirmDelete() {
+
+  //#endregion
+
+  filter() {
+    this.pageInformation.pageIndex = 1;
+    this.getData();
+  }
+  softDeleteData(id: number) {
+    this.deleteById = id;
+    this.toggleLiveDelete();
+  }
+    onConfirmDelete() {
     this.surveyFormService.softDelete(this.deleteById).subscribe((res) => {
       this.toggleLiveDelete();
       this.getData();
@@ -111,13 +122,6 @@ export class IndexComponent {
       this.toastService.showToast(EColors.danger, failure.error.message);
     });
   }
-  //#endregion
-
-  filter() {
-    this.pageInformation.pageIndex = 1;
-    this.getData();
-  }
-
   toggleLiveDelete() {
     this.visibleDelete = !this.visibleDelete;
   }

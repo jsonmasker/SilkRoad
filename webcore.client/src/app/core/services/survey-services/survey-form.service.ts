@@ -52,12 +52,13 @@ export class SurveyFormService {
       })
     );
   }
-  geteagerByid(id: any): Observable<APIResponse<SurveyFormModel>> {
-    return this.http.get<APIResponse<SurveyFormModel>>(EUrl.getEagerByIdUrlSurveyForm + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+  getEagerById(id: any): Observable<APIResponse<SurveyFormModel>> {
+    const url = EUrl.getEagerByIdUrlSurveyForm + `/${id}`;
+    return this.http.get<APIResponse<SurveyFormModel>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
           return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<SurveyFormModel>>(EUrl.getEagerByIdUrlSurveyForm + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+            switchMap(() => this.http.get<APIResponse<SurveyFormModel>>(url, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -105,11 +106,12 @@ export class SurveyFormService {
     );
   }
   softDelete(id: any): Observable<BaseAPIResponse> {
-    return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlSurveyForm + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    const url = EUrl.softDeleteUrlSurveyForm + `/${id}`;
+    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
           return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlSurveyForm + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -119,7 +121,7 @@ export class SurveyFormService {
   }
 
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<SurveyFormModel>>> {
-    const url = '/api/surveyForm/getAllDeleted/' + pageIndex + '/' + pageSize;
+    const url = EUrl.getAllDeletedUrlSurveyForm + `/${pageIndex}/${pageSize}`;
     return this.http.get<APIResponse<Pagination<SurveyFormModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
@@ -134,7 +136,7 @@ export class SurveyFormService {
   }
 
   restore(id: any): Observable<BaseAPIResponse> {
-    const url = '/api/surveyForm/restore/' + id;
+    const url = EUrl.restoreUrlSurveyForm + `/${id}`;
     return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
@@ -149,7 +151,7 @@ export class SurveyFormService {
   }
 
   delete(id: any): Observable<BaseAPIResponse> {
-    const url = '/api/surveyForm/delete/' + id;
+    const url = EUrl.deleteUrlSurveyForm + `/${id}`;
     return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {

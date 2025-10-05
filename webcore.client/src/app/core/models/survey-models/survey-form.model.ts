@@ -1,8 +1,9 @@
 import { BaseModel } from "@models/base.model";
+import { QuestionGroupModel } from "./question-group.model";
+import { QuestionModel } from "./question.model";
 
 export interface SurveyFormModel extends BaseModel {
     id: number;
-    isPeriodic: boolean;
     name: string;
     titleEN: string;
     titleVN: string;
@@ -10,13 +11,15 @@ export interface SurveyFormModel extends BaseModel {
     descriptionVN: string;
     startDate: Date;
     endDate: Date;
-    surveyQuestions: SelectedQuestionModel[];
+    note?: string;
+    questionGroups: QuestionGroupModel[];
+    questions: QuestionModel[];
 }
 
-export interface SelectedQuestionModel {
-    ID: number;
-    questionGroupID: number;
-    questionID: number;
-    priority: number;
-    checked: boolean;
-}
+// export interface SelectedQuestionModel {
+//     ID: number;
+//     questionGroupID: number;
+//     questionID: number;
+//     priority: number;
+//     checked: boolean;
+// }

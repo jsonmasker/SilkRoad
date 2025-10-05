@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonDirective, FormControlDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, TableDirective} from '@coreui/angular';
 import { QuestionGroupModel } from '@models/survey-models/question-group.model';
@@ -17,19 +17,18 @@ import { EQuestionTypes } from '@common/global';
 import { QuestionLibraryService } from '@services/survey-services/question-library.service';
 
 @Component({
-  selector: 'app-create-helper',
+  selector: 'app-survey-form-helper',
   imports: [ReactiveFormsModule, ButtonDirective, CommonModule, TableDirective, IconDirective, BookIconComponent, ModalComponent, ModalHeaderComponent,
     ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, SelectSearchComponent, FormControlDirective, TreeSelectComponent],
-  templateUrl: './create-helper.component.html',
-  styleUrl: './create.component.scss'
+  templateUrl: './survey-form-helper.component.html',
 })
 
-export class CreateHelperComponent implements OnInit {
+export class SurveyFormHelperComponent implements OnInit {
   //#region Variables
   icons: any = { cilPlus, cilTrash, cilPen, cilX, cilSave, cilExitToApp };
 
-  questionGroups: QuestionGroupModel[] = [];
-  questions: QuestionModel[] = [];
+  @Input() questionGroups: QuestionGroupModel[] = [];
+  @Input() questions: QuestionModel[] = [];
   predefinedAnswerList: PredefinedAnswerModel[] = [];
 
   questionTypeList: OptionModel[] = [];

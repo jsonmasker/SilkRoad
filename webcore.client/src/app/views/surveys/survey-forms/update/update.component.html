@@ -2,7 +2,7 @@
 <c-card>
     <c-card-body>
         <!-- Survey Form Creation Form -->
-        <div class="title">
+        <div class="customTitle">
             <span>1. Survey Information</span>
         </div>
         <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmit()">
@@ -20,7 +20,8 @@
                 </div>
                 <div class="col-6">
                     <label cLabel>Start - End Date: <span class="text-danger">(*)</span></label>
-                    <app-range-datetime-picker (onChangeValue)="onDateRangeChange($event)"></app-range-datetime-picker>
+                    <app-range-datetime-picker (onChangeValue)="onDateRangeChange($event)" 
+                    [initialData]="initialTimeRange"></app-range-datetime-picker>
                 </div>
             </div>
             <div class="mb-2 row">
@@ -58,6 +59,8 @@
                 </div>
             </div>
         </form>
+        <app-survey-form-helper #updateHelperComponent [questionGroups]="initQuestionGroups"
+        [questions]="initQuestions"></app-survey-form-helper>
 
         <!-- Button Submit Creation Form -->
         <div class="d-flex justify-content-end mt-4">

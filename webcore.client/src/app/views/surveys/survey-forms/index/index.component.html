@@ -27,14 +27,17 @@
                                         placeholder="Search by name...">
                                 </div>
                                 <div class="col-4">
-                                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <svg [cIcon]="icons.cilSearch" width="20" class="text-white"
+                                            title="Search Icon"></svg>                                  
+                                    </button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="col-4">
                         <div class="justify-content-end d-flex">
-                            <button class="btn btn-warning me-2">
+                            <button class="btn btn-warning me-2" (click)="toggleLiveTrashModal()">
                                 <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Trash Icon"></svg>
                             </button>
                             <a routerLink="./create" class="btn btn-success">
@@ -72,7 +75,7 @@
                     <a routerLink="./update/{{item.id}}" class="btn btn-primary me-2">
                         <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
                     </a>
-                    <button class="btn btn-danger">
+                    <button class="btn btn-danger" (click)="softDeleteData(item.id)">
                         <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
                     </button>
                 </div>

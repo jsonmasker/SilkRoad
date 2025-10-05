@@ -109,9 +109,12 @@ namespace SurveyBusinessLogic.Helpers
                 var data = await _unitOfWork.SurveyFormRepository.GetByIdAsync(model.Id);
                 if (data == null) return false;
                 data.Update(userName);
-                data.Name = model.Name.Trim();
-                data.Note = model.Note?.Trim();
-                data.IsActive = model.IsActive;
+                model.Name = model.Name.Trim();
+                model.TitleEN = model.TitleEN.Trim();
+                model.TitleVN = model.TitleVN.Trim();
+                model.DescriptionEN = model.DescriptionEN.Trim();
+                model.DescriptionVN = model.DescriptionVN.Trim();
+                model.Note = model.Note?.Trim();
                 await _unitOfWork.SaveChangesAsync();
                 return true;
             }
@@ -163,7 +166,7 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<SurveyFormDTO?> GetEagerLoadingByIdAsync(int id)
         {
-            return await Task.Run(() => _unitOfWork.SurveyFormRepository.GetEagerSurveyFormByID(id));
+            return await _unitOfWork.SurveyFormRepository.GetEagerSurveyFormByIdAsync(id);
         }
     }
 }
