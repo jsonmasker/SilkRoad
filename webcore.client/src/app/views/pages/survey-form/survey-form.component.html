@@ -3,7 +3,9 @@
     <h3 class="surveyTitle mb-4">{{surveyForm?.titleVN}}</h3>
     <p class="surveyDescription">{{surveyForm?.descriptionVN}}</p>
     <!-- Question Groups -->
-    <h5>I. Question Groups</h5>
+     @if((surveyForm?.questions?.length ?? 0) > 0 && (surveyForm?.questionGroups?.length ?? 0) > 0) {
+        <h5>I. Question Groups</h5>
+     }
     @for(questionGroup of surveyForm?.questionGroups; track questionGroup.id; let i = $index) {
     <h5 class="questionGroupTitle ms-2">{{i + 1}}. {{questionGroup.nameVN}}</h5>
       <!-- Questions within the group -->
@@ -20,7 +22,9 @@
       }
     }
     <!-- Questions -->
-    <h5 class="mt-4">II. Single Questions</h5>
+     @if((surveyForm?.questions?.length ?? 0) > 0 && (surveyForm?.questionGroups?.length ?? 0) > 0) {
+       <h5 class="mt-4">II. Single Questions</h5>
+     }
     @for(item of surveyForm?.questions; track item.id; let i = $index) {
     <h5 class="questionTitle ms-2">{{i + 1}}. {{item.nameVN}}</h5>
       <!-- Render question by question type -->

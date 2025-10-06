@@ -16,8 +16,9 @@ namespace SurveyDataAccess.Repositories
         {
             return await _dbSet
                 .Where(s => s.SurveyFormId == surveyFormId)
-                .Include(p => p.Questions)
-                .ThenInclude(x => x.PredefinedAnswers)
+                .OrderBy(s => s.Priority)
+                .Include(p => p.Questions.OrderBy(s => s.Priority))
+                .ThenInclude(x => x.PredefinedAnswers.OrderBy(s => s.Priority))
                 .ToListAsync();
         }
         //public IEnumerable<QuestionGroupLibraryDTO> GetEagerAllElements()

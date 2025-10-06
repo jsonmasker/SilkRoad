@@ -12,7 +12,7 @@ using SurveyDataAccess;
 namespace SurveyDataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20251003094032_InitialDB")]
+    [Migration("20251006082816_InitialDB")]
     partial class InitialDB
     {
         /// <inheritdoc />
@@ -347,7 +347,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 10, 3, 16, 40, 31, 615, DateTimeKind.Local).AddTicks(6842),
+                            CreatedAt = new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(8655),
                             IsActive = true,
                             Name = "Câu hỏi đóng",
                             Note = "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn."
@@ -355,7 +355,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 10, 3, 16, 40, 31, 615, DateTimeKind.Local).AddTicks(8360),
+                            CreatedAt = new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9778),
                             IsActive = true,
                             Name = "Câu hỏi mở",
                             Note = "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời."
@@ -363,7 +363,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 10, 3, 16, 40, 31, 615, DateTimeKind.Local).AddTicks(8367),
+                            CreatedAt = new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9782),
                             IsActive = true,
                             Name = "Câu hỏi kết hợp",
                             Note = "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng."
@@ -371,7 +371,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 10, 3, 16, 40, 31, 615, DateTimeKind.Local).AddTicks(8368),
+                            CreatedAt = new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9783),
                             IsActive = true,
                             Name = "Câu hỏi nhiều lựa chọn",
                             Note = "Cho phép chọn nhiều đáp án cùng lúc. (MultipleChoiceQuestion)"
@@ -379,7 +379,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 10, 3, 16, 40, 31, 615, DateTimeKind.Local).AddTicks(8369),
+                            CreatedAt = new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9784),
                             IsActive = true,
                             Name = "Câu hỏi đánh giá",
                             Note = "Cẩu hỏi đáng giá (RatingQuestion) - Cho người dùng đánh giá mức độ trên 5 sao."
@@ -494,12 +494,13 @@ namespace SurveyDataAccess.Migrations
                 {
                     b.HasOne("SurveyDataAccess.DTOs.QuestionGroupDTO", "QuestionGroup")
                         .WithMany("Questions")
-                        .HasForeignKey("QuestionGroupId");
+                        .HasForeignKey("QuestionGroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SurveyDataAccess.DTOs.QuestionTypeDTO", "QuestionType")
                         .WithMany()
                         .HasForeignKey("QuestionTypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SurveyDataAccess.DTOs.SurveyFormDTO", "SurveyForm")

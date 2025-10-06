@@ -40,16 +40,14 @@ namespace SurveyBusinessLogic.Helpers
             return await _unitOfWork.QuestionRepository.GetByIdAsync(id);
         }
 
-        public async Task<ICollection<QuestionDTO>> GetByQuestionGroupIdAsync(Guid questionGroupId)
+        public async Task<IEnumerable<QuestionDTO>> GetByQuestionGroupIdAsync(Guid questionGroupId)
         {
-            var items = await _unitOfWork.QuestionRepository.GetAllAsync(x => x.QuestionGroupId == questionGroupId);
-            return items.ToList();
+            return await _unitOfWork.QuestionRepository.GetEagerLoadingByQuestionGroupIdAsync(questionGroupId);
         }
 
-        public async Task<ICollection<QuestionDTO>> GetBySurveyFormIdAsync(int surveyFormId)
+        public async Task<IEnumerable<QuestionDTO>> GetBySurveyFormIdAsync(int surveyFormId)
         {
-            var items = await _unitOfWork.QuestionRepository.GetAllAsync(x => x.SurveyFormId == surveyFormId);
-            return items.ToList();
+            return await _unitOfWork.QuestionRepository.GetEagerLoadingBySurveyFormIdAsync(surveyFormId);
         }
 
         public async Task<QuestionDTO?> GetEagerLoadingByIdAsync(Guid id)
@@ -60,12 +58,15 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<bool> UpdateAsync(QuestionDTO model)
         {
-            var result = await _unitOfWork.QuestionRepository.UpdateAsync(model, model.Id);
-            if (result)
-            {
-                await _unitOfWork.SaveChangesAsync();
-            }
-            return result;
+            var data = await _unitOfWork.QuestionRepository.GetByIdAsync(model.Id);
+            if (data == null)
+                return false;
+            data.NameEN = model.NameEN.Trim();
+            data.NameVN = model.NameVN.Trim();
+            data.Priority = model.Priority;
+            data.QuestionTypeId = model.QuestionTypeId;
+            await _unitOfWork.SaveChangesAsync();
+            return true;
         }
     }
 }

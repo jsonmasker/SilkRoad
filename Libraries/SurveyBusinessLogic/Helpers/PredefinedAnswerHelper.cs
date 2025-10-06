@@ -40,10 +40,9 @@ namespace SurveyBusinessLogic.Helpers
             return await _unitOfWork.PredefinedAnswerRepository.GetByIdAsync(id);
         }
 
-        public async Task<ICollection<PredefinedAnswerDTO>> GetByQuestionIdAsync(Guid questionId)
+        public async Task<IEnumerable<PredefinedAnswerDTO>> GetByQuestionIdAsync(Guid questionId)
         {
-            var items = await _unitOfWork.PredefinedAnswerRepository.GetAllAsync(x => x.QuestionId == questionId);
-            return items.ToList();
+            return await _unitOfWork.PredefinedAnswerRepository.GetByQuestionIdAsync(questionId);
         }
 
         public async Task<bool> UpdateAsync(PredefinedAnswerDTO model)

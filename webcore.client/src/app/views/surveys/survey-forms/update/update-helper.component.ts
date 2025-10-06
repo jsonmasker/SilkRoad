@@ -19,6 +19,7 @@ import { PredefinedAnswerService } from '@services/survey-services/predefined-an
 import { QuestionService } from '@services/survey-services/question.service';
 import { QuestionGroupService } from '@services/survey-services/question-group.service';
 import { n } from 'node_modules/@angular/cdk/overlay-module.d-C2CxnwqT';
+import { e } from 'node_modules/@angular/cdk/focus-monitor.d-2iZxjw4R';
 
 @Component({
   selector: 'app-update-helper',
@@ -58,12 +59,16 @@ export class UpdateHelperComponent implements OnInit {
   initQuestionTypeId = signal<number | null>(-1);
   initQuestionGroupLibraryId = signal<number | null>(-1);
   initQuestionLibraryId = signal<number | null>(-1);
+
   deleteQuestionGroupId = signal<string | undefined>(undefined);
-  inQuestionGroup = signal<boolean>(false);
-  // updateQuestionIndex = signal<number>(-1);
   deleteQuestionId = signal<string | undefined>(undefined);
   selectedQuestionGroupId = signal<string | undefined>(undefined);
 
+  inQuestionGroup = signal<boolean>(false);
+  selectedQuestionId = signal<string | undefined>(undefined);
+
+  showQuestionChildrenByParentId = signal<string | null>(null);
+  showPredefinedAnswerChildrenByParentId = signal<any[]>([]);
   // Create Question Group Form
   createQuestionGroupForm = new FormGroup({
     nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
@@ -104,6 +109,8 @@ export class UpdateHelperComponent implements OnInit {
   });
   // Update Predefined Answer Form
   updatePredefinedAnswerForm: FormGroup = new FormGroup({
+    id: new FormControl(''),
+    questionId: new FormControl(''),
     nameEN: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
     nameVN: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
     priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(255)])
@@ -147,6 +154,21 @@ export class UpdateHelperComponent implements OnInit {
         next: (res) => {
           if (res.success && res.data) {
             this.questionGroups = res.data;
+            if( this.showQuestionChildrenByParentId()) {
+              const parentId = this.showQuestionChildrenByParentId();
+              const group = this.questionGroups.find(qg => qg.id === parentId);
+              if (group) {
+                group.expanded = true;
+              }
+              var childExpanded = this.showPredefinedAnswerChildrenByParentId();
+              if(childExpanded[1] === true) {
+                const questionId = childExpanded[0];
+                const question = group?.questions?.find(q => q.id === questionId);
+                if (question) {
+                  question.expanded = true;
+                }
+              }
+            }
           }
         }
       });
@@ -158,6 +180,26 @@ export class UpdateHelperComponent implements OnInit {
         next: (res) => {
           if (res.success && res.data) {
             this.questions = res.data;
+             var childExpanded = this.showPredefinedAnswerChildrenByParentId();
+              if(childExpanded[1] === false) {
+                const questionId = childExpanded[0];
+                const question = this.questions?.find(q => q.id === questionId);
+                if (question) {
+                  question.expanded = true;
+                }
+              }
+          }
+        }
+      });
+    }
+  }
+
+  getPredefinedAnswers() {
+    if (this.selectedQuestionId()) {
+      this.predefinedAnswerService.getByQuestionId(this.selectedQuestionId()).subscribe({
+        next: (res) => {
+          if (res.success && res.data) {
+            this.predefinedAnswerList = res.data;
           }
         }
       });
@@ -166,20 +208,20 @@ export class UpdateHelperComponent implements OnInit {
 
   toggleQuestionNode(node: QuestionGroupModel): void {
     node.expanded = !node.expanded;
-    // if (node.expanded && node.id) {
-    //   this.showQuestionChildrenByParentId.set(node.id);
-    // } else {
-    //   this.showQuestionChildrenByParentId.set(null);
-    // }
+    if (node.expanded && node.id) {
+      this.showQuestionChildrenByParentId.set(node.id);
+    } else {
+      this.showQuestionChildrenByParentId.set(null);
+    }
   }
 
   togglePredefinedAnswerNode(node: QuestionModel): void {
     node.expanded = !node.expanded;
-    // if (node.expanded && node.id) {
-    //   this.showPredefinedAnswerChildrenByParentId.set(node.id);
-    // } else {
-    //   this.showPredefinedAnswerChildrenByParentId.set(null);
-    // }
+    if (node.expanded && node.id) {
+      this.showPredefinedAnswerChildrenByParentId.set([node.id, this.inQuestionGroup()]);
+    } else {
+      this.showPredefinedAnswerChildrenByParentId.set([]);
+    }
   }
   //#endregion
 
@@ -336,7 +378,7 @@ export class UpdateHelperComponent implements OnInit {
 
   confirmDeleteQuestionGroup(): void {
     const id = this.deleteQuestionGroupId();
-    if(id){
+    if (id) {
       this.questionGroupService.delete(id).subscribe({
         next: (res) => {
           if (res.success) {
@@ -449,10 +491,12 @@ export class UpdateHelperComponent implements OnInit {
 
   updateQuestion(id: string, inQuestionGroup: boolean): void {
     this.inQuestionGroup.set(inQuestionGroup);
+    this.selectedQuestionId.set(id);
     this.questionService.getEagerLoadingById(id).subscribe({
       next: (res) => {
         if (res.success && res.data) {
           this.updateQuestionForm.patchValue(res.data);
+          this.initQuestionTypeId.set(res.data.questionTypeId);
           // Set predefined answers if they exist
           if (res.data.predefinedAnswers && res.data.predefinedAnswers.length > 0) {
             this.predefinedAnswerList = [...res.data.predefinedAnswers];
@@ -470,8 +514,6 @@ export class UpdateHelperComponent implements OnInit {
     if (this.updateQuestionForm.valid) {
       const question: QuestionModel = {
         id: this.updateQuestionForm.value.id ?? '',
-        surveyFormId: this.surveyFormId,
-        questionGroupId: this.updateQuestionForm.value.questionGroupId ?? '',
         questionTypeId: this.updateQuestionForm.value.questionTypeId ?? 1,
         nameEN: this.updateQuestionForm.value.nameEN ?? '',
         nameVN: this.updateQuestionForm.value.nameVN ?? '',
@@ -487,6 +529,7 @@ export class UpdateHelperComponent implements OnInit {
             }
             this.updateQuestionForm.reset({ questionTypeId: 1, nameEN: '', nameVN: '', priority: 1 });
             this.predefinedAnswerList = [];
+            this.selectedQuestionId.set(undefined);
           }
         }
       });
@@ -518,14 +561,14 @@ export class UpdateHelperComponent implements OnInit {
 
   confirmDeleteQuestion(): void {
     const id = this.deleteQuestionId();
-    if(id){
+    if (id) {
       this.questionService.delete(id).subscribe({
         next: (res) => {
           if (res.success) {
             if (this.inQuestionGroup()) {
               this.getQuestionGroup();
             } else {
-            this.getQuestion();
+              this.getQuestion();
             }
           }
         }
@@ -544,12 +587,30 @@ export class UpdateHelperComponent implements OnInit {
     this.visibleCreatePredefinedAnswerForm.set(false);
   }
 
-
   onSubmitCreatePredefinedAnswer(): void {
-    this.predefinedAnswerList.push(this.createPredefinedAnswerForm.value);
-    // this.toggleCreatePredefinedAnswerModal();
-    this.createPredefinedAnswerForm.reset();
-    this.createPredefinedAnswerForm.patchValue({ priority: 1 });
+    if (this.createPredefinedAnswerForm.valid) {
+      if (this.selectedQuestionId()) {
+        const newPredefinedAnswer: PredefinedAnswerModel = {
+          questionId: this.selectedQuestionId(),
+          nameEN: this.createPredefinedAnswerForm.value.nameEN ?? '',
+          nameVN: this.createPredefinedAnswerForm.value.nameVN ?? '',
+          priority: this.createPredefinedAnswerForm.value.priority ?? 1
+        };
+        this.predefinedAnswerService.create(newPredefinedAnswer).subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.getPredefinedAnswers();
+              this.createPredefinedAnswerForm.reset();
+              this.createPredefinedAnswerForm.patchValue({ priority: 1 });
+            }
+          }
+        });
+      } else {
+        this.predefinedAnswerList.push(this.createPredefinedAnswerForm.value);
+        this.createPredefinedAnswerForm.reset();
+        this.createPredefinedAnswerForm.patchValue({ priority: 1 });
+      }
+    }
   }
   get nameENCreatePredefinedAnswerForm() {
     return this.createPredefinedAnswerForm.get('nameEN');
@@ -566,6 +627,8 @@ export class UpdateHelperComponent implements OnInit {
     this.visibleCreatePredefinedAnswerForm.set(false);
     const selectedPredefinedAnswer = this.predefinedAnswerList[index];
     this.updatePredefinedAnswerForm.patchValue({
+      id: selectedPredefinedAnswer.id ?? '',
+      questionId: selectedPredefinedAnswer.questionId ?? '',
       nameEN: selectedPredefinedAnswer.nameEN,
       nameVN: selectedPredefinedAnswer.nameVN,
       priority: selectedPredefinedAnswer.priority
@@ -573,21 +636,41 @@ export class UpdateHelperComponent implements OnInit {
     // this.toggleUpdatePredefinedAnswerModal();
   }
   onSubmitUpdatePredefinedAnswer(): void {
-    if (this.updatePredefinedAnswerIndex() !== -1) {
-      const index = this.updatePredefinedAnswerIndex();
-      const selectedPredefinedAnswer = this.predefinedAnswerList[index];
+    if (this.updatePredefinedAnswerForm.valid) {
+      if (this.selectedQuestionId()) {
+        const updatedPredefinedAnswer: PredefinedAnswerModel = {
+          id: this.updatePredefinedAnswerForm.value.id ?? '',
+          questionId: this.updatePredefinedAnswerForm.value.questionId ?? '',
+          nameEN: this.updatePredefinedAnswerForm.value.nameEN ?? '',
+          nameVN: this.updatePredefinedAnswerForm.value.nameVN ?? '',
+          priority: this.updatePredefinedAnswerForm.value.priority ?? 1
+        };
+        this.predefinedAnswerService.update(updatedPredefinedAnswer).subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.getPredefinedAnswers();
+              this.updatePredefinedAnswerForm.reset({ nameEN: '', nameVN: '', priority: 1 });
+              this.updatePredefinedAnswerIndex.set(-1);
+            }
+          }
+        });
+      } else if (this.updatePredefinedAnswerIndex() !== -1) {
+        const index = this.updatePredefinedAnswerIndex();
+        const selectedPredefinedAnswer = this.predefinedAnswerList[index];
 
-      const updatedPredefinedAnswer: PredefinedAnswerModel = {
-        ...selectedPredefinedAnswer,
-        nameEN: this.updatePredefinedAnswerForm.value.nameEN ?? '',
-        nameVN: this.updatePredefinedAnswerForm.value.nameVN ?? '',
-        priority: this.updatePredefinedAnswerForm.value.priority ?? 1
-      };
+        const updatedPredefinedAnswer: PredefinedAnswerModel = {
+          ...selectedPredefinedAnswer,
+          nameEN: this.updatePredefinedAnswerForm.value.nameEN ?? '',
+          nameVN: this.updatePredefinedAnswerForm.value.nameVN ?? '',
+          priority: this.updatePredefinedAnswerForm.value.priority ?? 1
+        };
 
-      this.predefinedAnswerList[index] = updatedPredefinedAnswer;
-      this.updatePredefinedAnswerForm.reset({ nameEN: '', nameVN: '', priority: 1 });
-      this.updatePredefinedAnswerIndex.set(-1);
+        this.predefinedAnswerList[index] = updatedPredefinedAnswer;
+        this.updatePredefinedAnswerForm.reset({ nameEN: '', nameVN: '', priority: 1 });
+        this.updatePredefinedAnswerIndex.set(-1);
+      }
     }
+
   }
   get nameENUpdatePredefinedAnswerForm() {
     return this.updatePredefinedAnswerForm.get('nameEN');
@@ -600,7 +683,20 @@ export class UpdateHelperComponent implements OnInit {
   }
 
   deletePredefinedAnswer(index: number): void {
-    this.predefinedAnswerList.splice(index, 1);
+    if (this.selectedQuestionId()) {
+      const predefinedAnswerId = this.predefinedAnswerList[index].id;
+      if (predefinedAnswerId) {
+        this.predefinedAnswerService.delete(predefinedAnswerId).subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.getPredefinedAnswers();
+            }
+          }
+        });
+      }
+    } else {
+      this.predefinedAnswerList.splice(index, 1);
+    }
   }
   //#endregion
 }

@@ -56,8 +56,8 @@ namespace WebCore.Server.Controllers.SurveyControllers
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
-        [HttpGet("GetEagerLoadingByIdAsync/{id}")]
-        public async Task<IActionResult> GetEagerLoadingByIdAsync(Guid id)
+        [HttpGet("getEagerLoadingById/{id}")]
+        public async Task<IActionResult> GetEagerLoadingById(Guid id)
         {
             var data = await _helper.GetEagerLoadingByIdAsync(id);
             if (data == null)

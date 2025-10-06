@@ -31,7 +31,7 @@ export class CreateComponent {
     descriptionVN: new FormControl(''),
     startDate: new FormControl(''),
     endDate: new FormControl(''),
-    isActive: new FormControl(true),
+    isActive: new FormControl(false),
     questionGroups: new FormControl([]),
     questions: new FormControl([])
   });

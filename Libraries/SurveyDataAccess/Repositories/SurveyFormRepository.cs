@@ -12,18 +12,6 @@ namespace SurveyDataAccess.Repositories
            
         }
 
-        public async Task<SurveyFormDTO?> GetEagerSurveyFormByIdAsync(int Id)
-        {
-            var data = await _dbSet.Where(s => s.Id == Id)
-                .Include(p => p.QuestionGroups)
-                    .ThenInclude(qg => qg.Questions)
-                        .ThenInclude(q => q.PredefinedAnswers)
-                .Include(p => p.Questions)
-                    .ThenInclude(q => q.PredefinedAnswers)
-                .AsSplitQuery() // prevents Cartesian explosion when multiple collections are included
-                .FirstOrDefaultAsync();
-            return data;
-        }
 
         //public async Task<SurveyFormDTO?> GetEagerSurveyFormByIdAsync(int id)
         //{

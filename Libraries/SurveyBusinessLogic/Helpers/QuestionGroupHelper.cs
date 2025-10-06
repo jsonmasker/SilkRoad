@@ -40,16 +40,9 @@ namespace SurveyBusinessLogic.Helpers
             return await _unitOfWork.QuestionGroupRepository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<QuestionGroupDTO>> GetBySurveyFormIdAsync(int surveyFormId)
+        public async Task<IEnumerable<QuestionGroupDTO>?> GetBySurveyFormIdAsync(int surveyFormId)
         {
-            var data = await _unitOfWork.QuestionGroupRepository.GetEagerLoadingBySurveyFormIdAsync(surveyFormId);
-            data?.OrderBy(s => s.Priority).ToList().ForEach(
-                s =>
-                {
-                    s.Questions.OrderBy(x => x.Priority).ToList().ForEach(y =>
-                        y.PredefinedAnswers.OrderBy(o => o.Priority));
-                });
-            return data;
+           return await _unitOfWork.QuestionGroupRepository.GetEagerLoadingBySurveyFormIdAsync(surveyFormId);
         }
 
         public async Task<bool> UpdateAsync(QuestionGroupDTO model)

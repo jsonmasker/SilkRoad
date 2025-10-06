@@ -25,8 +25,8 @@ namespace WebCore.Server.Controllers.SurveyControllers
             _localizer = localizer;
         }
 
-        [HttpGet("getBySurveyFormId/{surveyFormId}")]
-        public async Task<IActionResult> GetBySurveyFormId(Guid questionId)
+        [HttpGet("getByQuestionId/{questionId}")]
+        public async Task<IActionResult> getByQuestionId(Guid questionId)
         {
             if (questionId == Guid.Empty)
             {
