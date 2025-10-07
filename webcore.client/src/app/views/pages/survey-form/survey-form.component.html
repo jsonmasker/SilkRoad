@@ -18,9 +18,12 @@
           <h6 class="questionTitle ms-2">{{i + 1}}.{{j + 1}}. {{question.nameVN}}</h6>
           <!-- Render question by question type -->
           @if(question.questionTypeId === questionTypes.ClosedEndedQuestion){
-            <ul class="d-flex justify-content-between flex-wrap">
+            <ul class="radioGroup">
               @for(predefinedAnswer of question.predefinedAnswers; track predefinedAnswer.id) {
-                <li>{{predefinedAnswer.nameVN}}</li>
+                <li>
+                    <input type="radio" id="predefinedAnswer_{{predefinedAnswer.id}}" name="question_{{question.id}}" value="{{predefinedAnswer.id}}">
+                    <label for="predefinedAnswer_{{predefinedAnswer.id}}">{{predefinedAnswer.nameVN}}</label>
+                </li>
               }
             </ul>
           }

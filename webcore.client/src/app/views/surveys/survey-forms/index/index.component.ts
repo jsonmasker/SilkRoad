@@ -11,6 +11,7 @@ import { IconDirective } from '@coreui/icons-angular';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective } from '@coreui/angular';
 import { EColors } from '@common/global';
 import { ToastService } from '@services/helper-services/toast.service';
+import { InternetIconComponent } from "@components/icons/internet-icon.component";
 
 @Component({
   selector: 'app-index',
@@ -18,8 +19,7 @@ import { ToastService } from '@services/helper-services/toast.service';
     AccordionButtonDirective,
     AccordionComponent, ButtonDirective,
     AccordionItemComponent, ModalComponent, ModalBodyComponent,
-    TemplateIdDirective, ModalFooterComponent, ModalHeaderComponent,
-  ],
+    TemplateIdDirective, ModalFooterComponent, ModalHeaderComponent, InternetIconComponent],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })
