@@ -14,11 +14,11 @@ export class QuestionGroupService {
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
 
   getById(id: any): Observable<APIResponse<QuestionGroupModel>> {
-    return this.http.get<APIResponse<QuestionGroupModel>>(EUrl.getByIdUrlQuestionGroup + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<QuestionGroupModel>>(EUrl.getByIdUrlQuestionGroup + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<QuestionGroupModel>>(EUrl.getByIdUrlQuestionGroup + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<QuestionGroupModel>>(EUrl.getByIdUrlQuestionGroup + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -28,11 +28,11 @@ export class QuestionGroupService {
   }
 
   create(questiongroup: QuestionGroupModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlQuestionGroup, questiongroup, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.post<BaseAPIResponse>(EUrl.createUrlQuestionGroup, questiongroup, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlQuestionGroup, questiongroup, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlQuestionGroup, questiongroup, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -42,11 +42,11 @@ export class QuestionGroupService {
   }
   
   update(questiongroup: QuestionGroupModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlQuestionGroup, questiongroup, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(EUrl.updateUrlQuestionGroup, questiongroup, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlQuestionGroup, questiongroup, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlQuestionGroup, questiongroup, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -57,11 +57,11 @@ export class QuestionGroupService {
   
 
   getBySurveyFormId(surveyFormId: any): Observable<APIResponse<QuestionGroupModel[]>> {
-    return this.http.get<APIResponse<QuestionGroupModel[]>>(EUrl.getBySurveyFormIdUrlQuestionGroup + `/${surveyFormId}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<QuestionGroupModel[]>>(EUrl.getBySurveyFormIdUrlQuestionGroup + `/${surveyFormId}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<QuestionGroupModel[]>>(EUrl.getBySurveyFormIdUrlQuestionGroup + `/${surveyFormId}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<QuestionGroupModel[]>>(EUrl.getBySurveyFormIdUrlQuestionGroup + `/${surveyFormId}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -71,11 +71,11 @@ export class QuestionGroupService {
   }
 
   delete(id: any): Observable<BaseAPIResponse> {
-    return this.http.delete<BaseAPIResponse>(EUrl.deleteUrlQuestionGroup + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.delete<BaseAPIResponse>(EUrl.deleteUrlQuestionGroup + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.deleteUrlQuestionGroup + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.deleteUrlQuestionGroup + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);

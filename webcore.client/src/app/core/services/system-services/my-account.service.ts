@@ -15,16 +15,13 @@ export class MyAccountService {
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
 
-  login(account: LoginModel): Observable<APIResponse<JwtModel>> {
-    return this.http.post<APIResponse<JwtModel>>(EUrl.loginUrl, account);
-  }
 
   changePassword(changePasswordModel: ChangePasswordModel): Observable<any> {
-    return this.http.post<ChangePasswordModel>(EUrl.changePasswordUrlMyAccount, changePasswordModel, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.post<ChangePasswordModel>(EUrl.changePasswordUrlMyAccount, changePasswordModel, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.post<ChangePasswordModel>(EUrl.changePasswordUrlMyAccount, changePasswordModel, { headers: this.authenticationService.GetHeaders() }).pipe()));
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<ChangePasswordModel>(EUrl.changePasswordUrlMyAccount, changePasswordModel, { headers: this.authenticationService.getHeaders() }).pipe()));
         } else {
            return throwError(() => error);
         }

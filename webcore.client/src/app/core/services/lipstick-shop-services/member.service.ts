@@ -14,11 +14,11 @@ export class MemberService {
 
   constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
   getAll(query: any): Observable<APIResponse<Pagination<MemberModel>>> {
-    return this.http.get<APIResponse<Pagination<MemberModel>>>(EUrl.getAllUrlMember, { headers: this.authenticationService.GetHeaders(), params: query }).pipe(
+    return this.http.get<APIResponse<Pagination<MemberModel>>>(EUrl.getAllUrlMember, { headers: this.authenticationService.getHeaders(), params: query }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<MemberModel>>>(EUrl.getAllUrlMember, { headers: this.authenticationService.GetHeaders(), params: query }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<MemberModel>>>(EUrl.getAllUrlMember, { headers: this.authenticationService.getHeaders(), params: query }))
           );
         } else {
           return throwError(() => error);

@@ -15,11 +15,11 @@ export class AccountService {
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
 
   getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<AccountModel>>> {
-    return this.http.get<APIResponse<Pagination<AccountModel>>>(EUrl.getAllUrlAccount + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<AccountModel>>>(EUrl.getAllUrlAccount + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<AccountModel>>>(EUrl.getAllUrlAccount + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<AccountModel>>>(EUrl.getAllUrlAccount + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
            return throwError(() => error);
@@ -29,11 +29,11 @@ export class AccountService {
   }
 
   getAccountById(id: number): Observable<APIResponse<AccountModel>> {
-    return this.http.get<APIResponse<AccountModel>>(`${EUrl.getByIdUrlAccount}${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<AccountModel>>(`${EUrl.getByIdUrlAccount}${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<AccountModel>>(`${EUrl.getByIdUrlAccount}${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<AccountModel>>(`${EUrl.getByIdUrlAccount}${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
            return throwError(() => error);
@@ -43,11 +43,11 @@ export class AccountService {
   }
 
   createAccount(account: AccountModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlAccount, account, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.post<BaseAPIResponse>(EUrl.createUrlAccount, account, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlAccount, account, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlAccount, account, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
            return throwError(() => error);
@@ -57,11 +57,11 @@ export class AccountService {
   }
 
   updateAccount(account: AccountModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlAccount, account, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(EUrl.updateUrlAccount, account, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlAccount, account, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlAccount, account, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
            return throwError(() => error);

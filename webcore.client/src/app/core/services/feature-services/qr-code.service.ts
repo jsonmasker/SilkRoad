@@ -12,11 +12,11 @@ export class QrCodeService {
 
     constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
     getAllFonts(): Observable<APIResponse<string[]>> {
-      return this.http.get<APIResponse<string[]>>(EUrl.getAllFonts, { headers: this.authenticationService.GetHeaders() }).pipe(
+      return this.http.get<APIResponse<string[]>>(EUrl.getAllFonts, { headers: this.authenticationService.getHeaders() }).pipe(
         catchError(error => {
           if (error.status === 401) {
-            return this.authenticationService.ReNewToken().pipe(
-              switchMap(() => this.http.get<APIResponse<string[]>>(EUrl.getAllFonts, { headers: this.authenticationService.GetHeaders() }))
+            return this.authenticationService.reNewToken().pipe(
+              switchMap(() => this.http.get<APIResponse<string[]>>(EUrl.getAllFonts, { headers: this.authenticationService.getHeaders() }))
             );
           } else {
             return throwError(() => error);
@@ -27,14 +27,14 @@ export class QrCodeService {
 
     generateAQRCode(form: FormData): Observable<Blob> {
       return this.http.post(EUrl.generateAQRCode, form, {
-        headers: this.authenticationService.GetHeaders(),
+        headers: this.authenticationService.getHeaders(),
         responseType: 'blob', // Ensure the response type is Blob
       }).pipe(
         catchError(error => {
           if (error.status === 401) {
-            return this.authenticationService.ReNewToken().pipe(
+            return this.authenticationService.reNewToken().pipe(
               switchMap(() => this.http.post(EUrl.generateAQRCode, form, {
-                headers: this.authenticationService.GetHeaders(),
+                headers: this.authenticationService.getHeaders(),
                 responseType: 'blob',
               }))
             );
@@ -47,14 +47,14 @@ export class QrCodeService {
     
     generateListQRCode(form: FormData): Observable<Blob> {
       return this.http.post(EUrl.generateListQRCode, form, {
-        headers: this.authenticationService.GetHeaders(),
+        headers: this.authenticationService.getHeaders(),
         responseType: 'blob', // Ensure the response type is Blob
       }).pipe(
         catchError(error => {
           if (error.status === 401) {
-            return this.authenticationService.ReNewToken().pipe(
+            return this.authenticationService.reNewToken().pipe(
               switchMap(() => this.http.post(EUrl.generateListQRCode, form, {
-                headers: this.authenticationService.GetHeaders(),
+                headers: this.authenticationService.getHeaders(),
                 responseType: 'blob',
               }))
             );

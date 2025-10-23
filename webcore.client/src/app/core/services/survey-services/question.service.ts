@@ -15,11 +15,11 @@ export class QuestionService {
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
 
   getById(id: any): Observable<APIResponse<QuestionModel>> {
-    return this.http.get<APIResponse<QuestionModel>>(EUrl.getByIdUrlQuestion + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<QuestionModel>>(EUrl.getByIdUrlQuestion + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<QuestionModel>>(EUrl.getByIdUrlQuestion + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<QuestionModel>>(EUrl.getByIdUrlQuestion + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -28,11 +28,11 @@ export class QuestionService {
     );
   }
   getEagerLoadingById(id: any): Observable<APIResponse<QuestionModel>> {
-    return this.http.get<APIResponse<QuestionModel>>(EUrl.getEagerLoadingByIdUrlQuestion + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<QuestionModel>>(EUrl.getEagerLoadingByIdUrlQuestion + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-            return this.authenticationService.ReNewToken().pipe(
-                switchMap(() => this.http.get<APIResponse<QuestionModel>>(EUrl.getEagerLoadingByIdUrlQuestion + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+            return this.authenticationService.reNewToken().pipe(
+                switchMap(() => this.http.get<APIResponse<QuestionModel>>(EUrl.getEagerLoadingByIdUrlQuestion + `/${id}`, { headers: this.authenticationService.getHeaders() }))
             );
         }
         else {
@@ -44,11 +44,11 @@ export class QuestionService {
 
 
   create(model: QuestionModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlQuestion, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.post<BaseAPIResponse>(EUrl.createUrlQuestion, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlQuestion, model, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlQuestion, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -57,11 +57,11 @@ export class QuestionService {
     );
   }
   update(model: QuestionModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlQuestion, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(EUrl.updateUrlQuestion, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlQuestion, model, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlQuestion, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -71,11 +71,11 @@ export class QuestionService {
   }
 
   getBySurveyFormId(surveyFormId: any): Observable<APIResponse<QuestionModel[]>> {
-    return this.http.get<APIResponse<QuestionModel[]>>(EUrl.getBySurveyFormIdUrlQuestion + `/${surveyFormId}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<QuestionModel[]>>(EUrl.getBySurveyFormIdUrlQuestion + `/${surveyFormId}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<QuestionModel[]>>(EUrl.getBySurveyFormIdUrlQuestion + `/${surveyFormId}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<QuestionModel[]>>(EUrl.getBySurveyFormIdUrlQuestion + `/${surveyFormId}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -85,11 +85,11 @@ export class QuestionService {
   }
 
   getByQuestionGroupId(questionGroupId: any): Observable<APIResponse<QuestionModel[]>> {
-    return this.http.get<APIResponse<QuestionModel[]>>(EUrl.getByQuestionGroupIdUrlQuestion + `/${questionGroupId}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<QuestionModel[]>>(EUrl.getByQuestionGroupIdUrlQuestion + `/${questionGroupId}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<QuestionModel[]>>(EUrl.getByQuestionGroupIdUrlQuestion + `/${questionGroupId}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<QuestionModel[]>>(EUrl.getByQuestionGroupIdUrlQuestion + `/${questionGroupId}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -99,11 +99,11 @@ export class QuestionService {
   }
 
   delete(id: any): Observable<BaseAPIResponse> {
-    return this.http.delete<BaseAPIResponse>(EUrl.deleteUrlQuestion + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.delete<BaseAPIResponse>(EUrl.deleteUrlQuestion + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.deleteUrlQuestion + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.deleteUrlQuestion + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);

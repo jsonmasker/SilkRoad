@@ -15,11 +15,11 @@ export class QuestionTypeService {
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
   getAll(): Observable<APIResponse<QuestionTypeModel[]>> {
-    return this.http.get<APIResponse<QuestionTypeModel[]>>(EUrl.getAllUrlQuestionType, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<QuestionTypeModel[]>>(EUrl.getAllUrlQuestionType, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<QuestionTypeModel[]>>(EUrl.getAllUrlQuestionType, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<QuestionTypeModel[]>>(EUrl.getAllUrlQuestionType, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -29,11 +29,11 @@ export class QuestionTypeService {
   }
     getOptionList(): Observable<APIResponse<OptionModel[]>> {
       const url = EUrl.getOptionListUrlQuestionType;
-      return this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+      return this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
         catchError(error => {
           if (error.status === 401) {
-            return this.authenticationService.ReNewToken().pipe(
-              switchMap(() => this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.GetHeaders() }))
+            return this.authenticationService.reNewToken().pipe(
+              switchMap(() => this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.getHeaders() }))
             );
           } else {
             return throwError(() =>error);

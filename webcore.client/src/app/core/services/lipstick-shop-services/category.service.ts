@@ -14,11 +14,11 @@ export class CategoryService {
 
   constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
   getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<CategoryViewModel>>> {
-    return this.http.get<APIResponse<Pagination<CategoryViewModel>>>(EUrl.getAllUrlCategory + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<CategoryViewModel>>>(EUrl.getAllUrlCategory + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<CategoryViewModel>>>(EUrl.getAllUrlCategory + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<CategoryViewModel>>>(EUrl.getAllUrlCategory + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -27,11 +27,11 @@ export class CategoryService {
     );
   }
   getAllActive(): Observable<APIResponse<CategoryViewModel[]>> {
-    return this.http.get<APIResponse<CategoryViewModel[]>>(EUrl.getAllActiveUrlCategory, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<CategoryViewModel[]>>(EUrl.getAllActiveUrlCategory, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<CategoryViewModel[]>>(EUrl.getAllActiveUrlCategory, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<CategoryViewModel[]>>(EUrl.getAllActiveUrlCategory, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -41,11 +41,11 @@ export class CategoryService {
   }
 
   getById(id: any): Observable<APIResponse<CategoryViewModel>> {
-    return this.http.get<APIResponse<CategoryViewModel>>(EUrl.getByIdUrlCategory + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<CategoryViewModel>>(EUrl.getByIdUrlCategory + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<CategoryViewModel>>(EUrl.getByIdUrlCategory + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<CategoryViewModel>>(EUrl.getByIdUrlCategory + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -55,11 +55,11 @@ export class CategoryService {
   }
 
   create(model: CategoryViewModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlCategory, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.post<BaseAPIResponse>(EUrl.createUrlCategory, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlCategory, model, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlCategory, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -69,11 +69,11 @@ export class CategoryService {
   }
 
   update(model: CategoryViewModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlCategory, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(EUrl.updateUrlCategory, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlCategory, model, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlCategory, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -83,11 +83,11 @@ export class CategoryService {
   }
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<CategoryViewModel>>> {
     const url = EUrl.getAllDeletedUrlCategory.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<CategoryViewModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<CategoryViewModel>>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<CategoryViewModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<CategoryViewModel>>>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -97,11 +97,11 @@ export class CategoryService {
   }
 
   softDelete(id:number):Observable<BaseAPIResponse>{
-  return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlCategory+`/${id}`,{headers:this.authenticationService.GetHeaders()}).pipe(
+  return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlCategory+`/${id}`,{headers:this.authenticationService.getHeaders()}).pipe(
     catchError(error=>{
       if(error.status===401){
-        return this.authenticationService.ReNewToken().pipe(
-          switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlCategory+`/${id}`,{headers:this.authenticationService.GetHeaders()}))
+        return this.authenticationService.reNewToken().pipe(
+          switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlCategory+`/${id}`,{headers:this.authenticationService.getHeaders()}))
         );
       }else{
         return throwError(() => error);
@@ -112,11 +112,11 @@ export class CategoryService {
 
   restore(id: number): Observable<BaseAPIResponse> {
     const url = EUrl.restoreUrlCategory.concat('/', id.toString());
-    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -127,11 +127,11 @@ export class CategoryService {
 
   delete(id: number): Observable<BaseAPIResponse> {
     const url = EUrl.deleteUrlCategory.concat('/', id.toString());
-    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);

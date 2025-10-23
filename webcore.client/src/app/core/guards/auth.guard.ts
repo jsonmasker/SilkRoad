@@ -5,7 +5,7 @@ import { AuthenticationService } from '../services/system-services/authenticatio
 export const authGuard: CanActivateFn = async () => {
   const auth: AuthenticationService = inject(AuthenticationService);
   const router: Router = inject(Router);
-return await auth.CheckLogin().toPromise().then((isAuthenticated) => {
+return await auth.checkLogin().toPromise().then((isAuthenticated) => {
   if (!isAuthenticated) {
     return true; // Allow access to the login page
   }

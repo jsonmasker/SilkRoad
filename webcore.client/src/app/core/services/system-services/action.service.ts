@@ -12,11 +12,11 @@ import { ActionModel } from '@models/system-management-models/module.model';
 export class ActionService {
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
    getAll(pageIndex :number, pageSize : number): Observable<APIResponse<Pagination<ActionModel>>> {
-      return this.http.get<APIResponse<Pagination<ActionModel>>>(EUrl.getAllUrlAction + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+      return this.http.get<APIResponse<Pagination<ActionModel>>>(EUrl.getAllUrlAction + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }).pipe(
         catchError(error => {
           if (error.status === 401) {
-            return this.authenticationService.ReNewToken().pipe(
-              switchMap(() => this.http.get<APIResponse<Pagination<ActionModel>>>(EUrl.getAllUrlAction + `/${pageIndex}/${pageSize}` , { headers: this.authenticationService.GetHeaders() }))
+            return this.authenticationService.reNewToken().pipe(
+              switchMap(() => this.http.get<APIResponse<Pagination<ActionModel>>>(EUrl.getAllUrlAction + `/${pageIndex}/${pageSize}` , { headers: this.authenticationService.getHeaders() }))
             );
           } else {
              return throwError(() => error);
@@ -26,11 +26,11 @@ export class ActionService {
     }
 
     getAllActive(): Observable<APIResponse<ActionModel[]>> {
-      return this.http.get<APIResponse<ActionModel[]>>(EUrl.getAllActiveUrlAction , { headers: this.authenticationService.GetHeaders() }).pipe(
+      return this.http.get<APIResponse<ActionModel[]>>(EUrl.getAllActiveUrlAction , { headers: this.authenticationService.getHeaders() }).pipe(
         catchError(error => {
           if (error.status === 401) {
-            return this.authenticationService.ReNewToken().pipe(
-              switchMap(() => this.http.get<APIResponse<ActionModel[]>>(EUrl.getAllActiveUrlAction  , { headers: this.authenticationService.GetHeaders() }))
+            return this.authenticationService.reNewToken().pipe(
+              switchMap(() => this.http.get<APIResponse<ActionModel[]>>(EUrl.getAllActiveUrlAction  , { headers: this.authenticationService.getHeaders() }))
             );
           } else {
              return throwError(() => error);
@@ -40,11 +40,11 @@ export class ActionService {
     }
 
     getEAction(): Observable<APIResponse<any[]>> {
-      return this.http.get<APIResponse<any[]>>(EUrl.getEActionUrlAction , { headers: this.authenticationService.GetHeaders() }).pipe(
+      return this.http.get<APIResponse<any[]>>(EUrl.getEActionUrlAction , { headers: this.authenticationService.getHeaders() }).pipe(
         catchError(error => {
           if (error.status === 401) {
-            return this.authenticationService.ReNewToken().pipe(
-              switchMap(() => this.http.get<APIResponse<any[]>>(EUrl.getEActionUrlAction , { headers: this.authenticationService.GetHeaders() }))
+            return this.authenticationService.reNewToken().pipe(
+              switchMap(() => this.http.get<APIResponse<any[]>>(EUrl.getEActionUrlAction , { headers: this.authenticationService.getHeaders() }))
             );
           } else {
              return throwError(() => error);
@@ -53,11 +53,11 @@ export class ActionService {
       );
     }
     create(data: FormData): Observable<BaseAPIResponse> {
-      return this.http.post<BaseAPIResponse>(EUrl.createUrlAction, data, { headers: this.authenticationService.GetHeaders() }).pipe(
+      return this.http.post<BaseAPIResponse>(EUrl.createUrlAction, data, { headers: this.authenticationService.getHeaders() }).pipe(
         catchError(error => {
           if (error.status === 401) {
-            return this.authenticationService.ReNewToken().pipe(
-              switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlAction, data, { headers: this.authenticationService.GetHeaders() }))
+            return this.authenticationService.reNewToken().pipe(
+              switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlAction, data, { headers: this.authenticationService.getHeaders() }))
             );
           } else {
              return throwError(() => error);
@@ -66,11 +66,11 @@ export class ActionService {
       );
     }
     getById(id: number): Observable<APIResponse<ActionModel>> {
-      return this.http.get<APIResponse<ActionModel>>(EUrl.getByIdUrlAction +  `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+      return this.http.get<APIResponse<ActionModel>>(EUrl.getByIdUrlAction +  `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
         catchError(error => {
           if (error.status === 401) {
-            return this.authenticationService.ReNewToken().pipe(
-              switchMap(() => this.http.get<APIResponse<ActionModel>>(EUrl.getByIdUrlAction +  `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+            return this.authenticationService.reNewToken().pipe(
+              switchMap(() => this.http.get<APIResponse<ActionModel>>(EUrl.getByIdUrlAction +  `/${id}`, { headers: this.authenticationService.getHeaders() }))
             );
           } else {
              return throwError(() => error);
@@ -80,11 +80,11 @@ export class ActionService {
     }
 
     update(data: ActionModel): Observable<BaseAPIResponse> {
-      return this.http.put<BaseAPIResponse>(EUrl.updateUrlAction, data, { headers: this.authenticationService.GetHeaders() }).pipe(
+      return this.http.put<BaseAPIResponse>(EUrl.updateUrlAction, data, { headers: this.authenticationService.getHeaders() }).pipe(
         catchError(error => {
           if (error.status === 401) {
-            return this.authenticationService.ReNewToken().pipe(
-              switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlAction, data, { headers: this.authenticationService.GetHeaders() }))
+            return this.authenticationService.reNewToken().pipe(
+              switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlAction, data, { headers: this.authenticationService.getHeaders() }))
             );
           } else {
              return throwError(() => error);
