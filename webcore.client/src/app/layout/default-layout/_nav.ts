@@ -246,9 +246,9 @@ export const navItems: INavData[] = [
     name: 'System Management',
     title: true
   },
-  {
-    name: 'Accounts',
-    url: '/accounts',
+   {
+    name: 'Users',
+    url: '/users',
     iconComponent: { name: 'cil-people' }
   },
   {
@@ -257,31 +257,36 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-book' }
   },
   {
-    name: 'Extend',
-    url: '/system-management/extension',
-    iconComponent: { name: 'cil-puzzle' },
-    children: [
-      {
-        name: 'Roles',
-        url: '/system-management/extension/roles',
-        icon: 'nav-icon-bullet'
-      },
-      {
-        name: 'Modules',
-        url: '/system-management/extension/modules',
-        icon: 'nav-icon-bullet'
-      },
-      {
-        name: 'Actions',
-        url: '/system-management/extension/actions',
-        icon: 'nav-icon-bullet'
-      },
-      {
-        name: 'Settings',
-        url: '/system-management/extension/settings',
-        icon: 'nav-icon-bullet'
-      }
-    ]
+    name: 'Settings',
+    url: '/settings',
+    iconComponent: {name: 'cil-settings'}
   },
+  // {
+  //   name: 'Extend',
+  //   url: '/system-management/extension',
+  //   iconComponent: { name: 'cil-puzzle' },
+  //   children: [
+  //     {
+  //       name: 'Roles',
+  //       url: '/system-management/extension/roles',
+  //       icon: 'nav-icon-bullet'
+  //     },
+  //     {
+  //       name: 'Modules',
+  //       url: '/system-management/extension/modules',
+  //       icon: 'nav-icon-bullet'
+  //     },
+  //     {
+  //       name: 'Actions',
+  //       url: '/system-management/extension/actions',
+  //       icon: 'nav-icon-bullet'
+  //     },
+  //     {
+  //       name: 'Settings',
+  //       url: '/system-management/extension/settings',
+  //       icon: 'nav-icon-bullet'
+  //     }
+  //   ]
+  // },
   //#endregion
 ];

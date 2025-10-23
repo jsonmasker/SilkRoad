@@ -162,28 +162,32 @@ export const routes: Routes = [
       //account management
       {
         path: 'my-account',
-        loadChildren: () => import('./views/sm/my-account/routes').then((m) => m.routes)
+        loadChildren: () => import('./views/system/my-account/routes').then((m) => m.routes)
       },
-      {
-        path: 'accounts',
-        loadChildren: () => import('./views/sm/accounts/index/routes').then((m) => m.routes)
+                  {
+        path: 'users',
+        loadChildren: () => import('./views/system/users/routes').then((m) => m.routes)
       },
-      {
-        path: 'accounts/create',
-        loadChildren: () => import('./views/sm/accounts/create/routes').then((m) => m.routes)
-      },
-      {
-        path: 'accounts/update/:id',
-        loadChildren: () => import('./views/sm/accounts/update/routes').then((m) => m.routes)
-      },
+      // {
+      //   path: 'accounts',
+      //   loadChildren: () => import('./views/system/accounts/index/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'accounts/create',
+      //   loadChildren: () => import('./views/system/accounts/create/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'accounts/update/:id',
+      //   loadChildren: () => import('./views/system/accounts/update/routes').then((m) => m.routes)
+      // },
       {
         path: 'logs',
-        loadChildren: () => import('./views/sm/logging/routes').then((m) => m.routes)
+        loadChildren: () => import('./views/system/logging/routes').then((m) => m.routes)
       },
-      {
-        path: 'system-management/extension',
-        loadChildren: () => import('./views/sm/extension/routes').then((m) => m.routes)
-      },
+      // {
+      //   path: 'system-management/extension',
+      //   loadChildren: () => import('./views/system/extension/routes').then((m) => m.routes)
+      // },
       //#endregion
     ]
   },
