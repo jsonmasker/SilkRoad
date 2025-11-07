@@ -62,6 +62,11 @@ export const navItems: INavData[] = [
     url: '/features/qr-code',
     iconComponent: { name: 'cil-qr-code' }
   },
+  {
+    name: 'Convert Word to PDF',
+    url: '/features/convert-word-to-pdf',
+    iconComponent: { name: 'cil-file' }
+  },
   // {
   //   name: 'Email Service',
   //   url: '/features/email-service',

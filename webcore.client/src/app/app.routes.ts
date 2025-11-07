@@ -63,6 +63,10 @@ export const routes: Routes = [
         path: 'features/qr-code',
         loadChildren: () => import('./views/features/qr-code/routes').then((m) => m.routes)
       },
+      {
+        path: 'features/convert-word-to-pdf',
+        loadChildren: () => import('./views/features/convert-word-to-pdf/routes').then((m) => m.routes)
+      },
       // {
       //   path: 'features/email-service',
       //   loadChildren: () => import('./views/features/email-service/routes').then((m) => m.routes)

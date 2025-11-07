@@ -38,6 +38,8 @@ export enum EUrl {
     generateAQRCode = "/api/qrCode/generateAQRCode",
     generateListQRCode = "/api/qrCode/generateListQRCode",
     getAllFonts = "/api/qrCode/getAllFonts",
+    //Word to PDF
+    convertWordToPdf = "/api/convertWordToPdf/convertFile",
     //#endregion
 
     //#region LipstickShop

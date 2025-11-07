@@ -1,50 +1,50 @@
-﻿using Common;
-using Common.Services.ConvertWordToPdfServices;
-using Microsoft.AspNetCore.Mvc;
-using WebCore.Server.Controllers.BaseApiControllers;
+﻿// using Common;
+// using Common.Services.ConvertWordToPdfServices;
+// using Microsoft.AspNetCore.Mvc;
+// using WebCore.Server.Controllers.BaseApiControllers;
 
-namespace WebCore.Server.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class DefaultController : BaseApiController
-    {
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IConvertWordToPdfService _convertWordToPdfService;
-        public DefaultController(IWebHostEnvironment webHostEnvironment, IConvertWordToPdfService convertWordToPdfService)
-        {
-            _webHostEnvironment = webHostEnvironment;
-            _convertWordToPdfService = convertWordToPdfService;
-        }
-        [HttpGet("ping")]
-        public IActionResult Ping()
-        {
-            // Example of using the IConvertWordToPdfService
-            string wordFilePath = Path.Combine(_webHostEnvironment.WebRootPath, "Documents", "MyCV.docx");
-            var data = _convertWordToPdfService.ConvertWordToPdfAsync(wordFilePath);
-            if (data == null)
-            {
-                return Failed(EStatusCodes.InternalServerError, "Failed to convert Word to PDF.");
-            }
+// namespace WebCore.Server.Controllers
+// {
+//     [Route("api/[controller]")]
+//     [ApiController]
+//     public class DefaultController : BaseApiController
+//     {
+//         private readonly IWebHostEnvironment _webHostEnvironment;
+//         private readonly IConvertWordToPdfService _convertWordToPdfService;
+//         public DefaultController(IWebHostEnvironment webHostEnvironment, IConvertWordToPdfService convertWordToPdfService)
+//         {
+//             _webHostEnvironment = webHostEnvironment;
+//             _convertWordToPdfService = convertWordToPdfService;
+//         }
+//         [HttpGet("ping")]
+//         public IActionResult Ping()
+//         {
+//             // Example of using the IConvertWordToPdfService
+//             string wordFilePath = Path.Combine(_webHostEnvironment.WebRootPath, "Documents", "MyCV.docx");
+//             var data = _convertWordToPdfService.ConvertWordToPdfAsync(wordFilePath);
+//             if (data == null)
+//             {
+//                 return Failed(EStatusCodes.InternalServerError, "Failed to convert Word to PDF.");
+//             }
 
-            // Ensure the directory exists before saving the file
-            var directoryPath = Path.Combine(_webHostEnvironment.WebRootPath, "Documents");
-            if (!Directory.Exists(directoryPath))
-            {
-                Directory.CreateDirectory(directoryPath);
-            }
+//             // Ensure the directory exists before saving the file
+//             var directoryPath = Path.Combine(_webHostEnvironment.WebRootPath, "Documents");
+//             if (!Directory.Exists(directoryPath))
+//             {
+//                 Directory.CreateDirectory(directoryPath);
+//             }
 
-            // Save the file to the server
-            int i = Random.Shared.Next(1000, 9999);
-            var fileName = $"MyCV_{i}.pdf";
-            var filePathToSave = Path.Combine(directoryPath, fileName);
-            using (var fileStream = new FileStream(filePathToSave, FileMode.Create, FileAccess.Write))
-            {
-                fileStream.Write(data.Result, 0, data.Result.Length);
-            }
+//             // Save the file to the server
+//             int i = Random.Shared.Next(1000, 9999);
+//             var fileName = $"MyCV_{i}.pdf";
+//             var filePathToSave = Path.Combine(directoryPath, fileName);
+//             using (var fileStream = new FileStream(filePathToSave, FileMode.Create, FileAccess.Write))
+//             {
+//                 fileStream.Write(data.Result, 0, data.Result.Length);
+//             }
 
-            // Return the file path
-            return Succeeded("Ping successful");
-        }
-    }
-}
+//             // Return the file path
+//             return Succeeded("Ping successful");
+//         }
+//     }
+// }
