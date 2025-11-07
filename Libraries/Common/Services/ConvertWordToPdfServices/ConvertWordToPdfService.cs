@@ -14,11 +14,11 @@ namespace Common.Services.ConvertWordToPdfServices
         {
             _appConfig = appConfig;
         }
-        public async Task<byte[]> ConvertWordToPdf(string filePath)
+        public async Task<byte[]?> ConvertWordToPdfAsync(string filePath)
         {
             try
             {
-                string aliasUrl = "api/convertwordtopdf";
+                string aliasUrl = _appConfig.ConvertWordToPdfUrl;
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(_appConfig.PythonServiceUrl);
@@ -50,7 +50,8 @@ namespace Common.Services.ConvertWordToPdfServices
                         }
                         else
                         {
-                            throw new Exception("Error");
+                         
+                            return null;
                         }
                     }
                 }

@@ -20,22 +20,23 @@ namespace WebCore.Server.Controllers
         public IActionResult Ping()
         {
             // Example of using the IConvertWordToPdfService
-            var filePath = @"D:\Document\CV_NguyenHoangTai.docx";
-            var data = _convertWordToPdfService.ConvertWordToPdf(filePath);
+            string wordFilePath = Path.Combine(_webHostEnvironment.WebRootPath, "Documents", "MyCV.docx");
+            var data = _convertWordToPdfService.ConvertWordToPdfAsync(wordFilePath);
             if (data == null)
             {
                 return Failed(EStatusCodes.InternalServerError, "Failed to convert Word to PDF.");
             }
 
             // Ensure the directory exists before saving the file
-            var directoryPath = Path.Combine(_webHostEnvironment.ContentRootPath, "ConvertedFiles");
+            var directoryPath = Path.Combine(_webHostEnvironment.WebRootPath, "Documents");
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
 
             // Save the file to the server
-            var fileName = "ConvertedFile.pdf";
+            int i = Random.Shared.Next(1000, 9999);
+            var fileName = $"MyCV_{i}.pdf";
             var filePathToSave = Path.Combine(directoryPath, fileName);
             using (var fileStream = new FileStream(filePathToSave, FileMode.Create, FileAccess.Write))
             {

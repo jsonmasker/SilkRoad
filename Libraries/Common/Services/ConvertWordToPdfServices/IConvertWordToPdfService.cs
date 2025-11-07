@@ -8,6 +8,6 @@ namespace Common.Services.ConvertWordToPdfServices
 {
     public interface IConvertWordToPdfService
     {
-        public Task<byte[]> ConvertWordToPdf(string filePath);
+        public Task<byte[]?> ConvertWordToPdfAsync(string filePath);
     }
 }

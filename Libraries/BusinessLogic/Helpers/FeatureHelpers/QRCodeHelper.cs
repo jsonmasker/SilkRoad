@@ -3,6 +3,7 @@ using BusinessLogic.IHelpers.IFeatureHelper;
 using ClosedXML.Excel;
 using Common;
 using Common.Models;
+using Common.Services.ConvertWordToPdfServices;
 using Common.Services.FileStorageServices;
 using Common.Services.QRCodeServices;
 using Common.ViewModels.QRViewModels;
@@ -14,16 +15,15 @@ namespace BusinessLogic.Helpers.FeatureHelpers
     public class QRCodeHelper : IQRCodeHelper
     {
         private readonly IQRCodeService _qrCodeService;
-        private readonly IFileStorageService _fileStorageService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         public QRCodeHelper(IQRCodeService qrCodeService,
-            IWebHostEnvironment webHostEnvironment,
-            IFileStorageService fileStorageService)
+            IWebHostEnvironment webHostEnvironment)
         {
             _qrCodeService = qrCodeService;
             _webHostEnvironment = webHostEnvironment;
-            _fileStorageService = fileStorageService;
+
         }
+
         public async Task<byte[]> GenerateQRCodeAsync(QRCodeViewModel model)
         {
             return await _qrCodeService.Base64QRCodeImageAsync(model);

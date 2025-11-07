@@ -2,10 +2,11 @@
 {
     public class ServerAppConfig
     {
-        //QRCode Server
+        //Python Server
         public required string PythonServiceUrl { get; set; }
         public required string GenerateQrCodeUrl { get; set; }
         public required string GetAllFontsUrl { get; set; }
+        public required string ConvertWordToPdfUrl { get; set; }
         //Server
         public required string ServerUrl { get; set; }
         //Client
