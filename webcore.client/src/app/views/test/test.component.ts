@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
+import { TextEditorExampleComponent } from "@components/text-editor/text-editor-example.component";
 
 
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
   styleUrl: './test.component.scss',
-  imports:  []
+  imports: [TextEditorExampleComponent]
 })
 export class TestComponent {
 clicked(): void{

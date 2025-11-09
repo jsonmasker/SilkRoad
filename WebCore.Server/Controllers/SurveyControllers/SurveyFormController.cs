@@ -71,10 +71,10 @@ namespace WebCore.Server.Controllers.SurveyControllers
             if (model == null || !ModelState.IsValid)
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             var userName = User.Identity?.Name;
-            var result = await _helper.CreateAsync(model, userName);
-            if (!result)
+            var data = await _helper.CreateAsync(model, userName);
+            if (data == null)
                 return Failed(EStatusCodes.InternalServerError, _localizer["createFailed"]);
-            return Succeeded(_localizer["createSuccess"]);
+            return Succeeded(data, _localizer["createSuccess"]);
         }
 
         [HttpPut("update")]

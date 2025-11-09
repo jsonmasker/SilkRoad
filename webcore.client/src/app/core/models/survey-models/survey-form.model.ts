@@ -4,6 +4,7 @@ import { QuestionModel } from "./question.model";
 
 export interface SurveyFormModel extends BaseModel {
     id: number;
+    formStyleId: number;
     name: string;
     titleEN: string;
     titleVN: string;
@@ -11,6 +12,9 @@ export interface SurveyFormModel extends BaseModel {
     descriptionVN: string;
     startDate: Date;
     endDate: Date;
+    isActive: boolean;
+    isLimited: boolean;
+    maxParticipants: number;
     note?: string;
     questionGroups: QuestionGroupModel[];
     questions: QuestionModel[];

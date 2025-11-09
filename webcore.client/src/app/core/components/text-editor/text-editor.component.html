@@ -1,0 +1,14 @@
+<div class="text-editor-wrapper">
+  <ngx-editor-menu 
+    [editor]="editor" 
+    [toolbar]="toolbar">
+  </ngx-editor-menu>
+  <ngx-editor
+    [editor]="editor"
+    [ngModel]="html"
+    (ngModelChange)="onContentChange($event)"
+    (blur)="onBlur()"
+    [disabled]="disabled"
+    [placeholder]="placeholder">
+  </ngx-editor>
+</div>

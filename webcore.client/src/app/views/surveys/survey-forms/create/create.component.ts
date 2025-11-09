@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { ButtonDirective, CardBodyComponent, CardComponent, FormControlDirective, FormDirective, FormLabelDirective } from '@coreui/angular';
+import { ButtonDirective, CardBodyComponent, CardComponent, FormControlDirective, FormDirective, FormLabelDirective, AlignDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective } from '@coreui/angular';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
 import { IconDirective } from '@coreui/icons-angular';
 import { cilExitToApp, cilPen, cilPlus, cilSave, cilTrash } from '@coreui/icons';
@@ -10,10 +10,12 @@ import { RangeDatetimePickerComponent } from "@components/generals/range-datetim
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
 import { CreateHelperComponent } from './create-helper.component';
+import { TextEditorComponent } from "@components/text-editor/text-editor.component";
+import { ToolbarItem } from 'ngx-editor';
 @Component({
   selector: 'app-create',
   imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, CommonModule,
-    IconDirective, RouterLink, CreateHelperComponent, RangeDatetimePickerComponent],
+    IconDirective, RouterLink, RangeDatetimePickerComponent, FormSelectDirective, TextEditorComponent, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
@@ -22,8 +24,13 @@ export class CreateComponent {
   //#region Variables
   @ViewChild('createHelperComponent') createHelperComponent!: CreateHelperComponent;
   icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp };
-
+    customToolbar: ToolbarItem[][] = [
+      ['bold', 'italic', 'underline'],
+      ['ordered_list', 'bullet_list'],
+      ['link']
+    ];
   createForm: FormGroup = new FormGroup({
+    formStyleId: new FormControl(1, Validators.required),
     name: new FormControl('', Validators.required),
     titleEN: new FormControl('', Validators.required),
     titleVN: new FormControl('', Validators.required),
@@ -32,6 +39,8 @@ export class CreateComponent {
     startDate: new FormControl(''),
     endDate: new FormControl(''),
     isActive: new FormControl(false),
+    isLimited: new FormControl(false),
+    maxParticipants: new FormControl(0),
     questionGroups: new FormControl([]),
     questions: new FormControl([])
   });
@@ -64,12 +73,14 @@ export class CreateComponent {
       });
     }
   }
-
+  get formStyleId() { return this.createForm.get('formStyleId'); }
   get name() { return this.createForm.get('name'); }
   get titleEN() { return this.createForm.get('titleEN'); }
   get titleVN() { return this.createForm.get('titleVN'); }
   get startDate() { return this.createForm.get('startDate'); }
   get endDate() { return this.createForm.get('endDate'); }
+  get isLimited() { return this.createForm.get('isLimited'); }
+  get maxParticipants() { return this.createForm.get('maxParticipants'); }
 
   //#endregion
 }
