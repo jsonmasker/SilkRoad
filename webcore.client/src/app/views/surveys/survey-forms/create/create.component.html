@@ -6,10 +6,16 @@
             <span>1. Survey Information</span>
         </div> -->
         <form cForm [formGroup]="createForm" (ngSubmit)="onSubmit()">
-                                <c-form-check class="mb-2">
-                        <label cFormCheckLabel for="isLimited">Is Limited</label>
+            <div class="d-flex mb-2">
+                <c-form-check class="me-4">
+                    <label cFormCheckLabel for="isActive">Is Active</label>
+                    <input cFormCheckInput id="isActive" type="checkbox" formControlName="isActive" />
+                </c-form-check>
+                <c-form-check>
+                    <label cFormCheckLabel for="isLimited">Is Limited</label>
                     <input cFormCheckInput id="isLimited" type="checkbox" formControlName="isLimited" />
-                    </c-form-check>
+                </c-form-check>
+            </div>
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="formStyleId">Form Style: <span class="text-danger">(*)</span></label>
@@ -26,17 +32,17 @@
                     }
                 </div>
                 @if(isLimited?.value === true) {
-                    <div class="col-6">
-                        <label cLabel for="maxParticipants">Max Participants: <span class="text-danger">(*)</span></label>
-                        <input cFormControl formControlName="maxParticipants" type="number" min="0" />
-                        @if (maxParticipants?.invalid && (maxParticipants?.dirty || maxParticipants?.touched)) {
-                        <div class="text-danger">
-                            @if (maxParticipants?.hasError('required')) {
-                            <div>Enter Max Participants, please!</div>
-                            }
-                        </div>
+                <div class="col-6">
+                    <label cLabel for="maxParticipants">Max Participants: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="maxParticipants" type="number" min="0" />
+                    @if (maxParticipants?.invalid && (maxParticipants?.dirty || maxParticipants?.touched)) {
+                    <div class="text-danger">
+                        @if (maxParticipants?.hasError('required')) {
+                        <div>Enter Max Participants, please!</div>
                         }
                     </div>
+                    }
+                </div>
                 }
             </div>
             <div class="mb-2 row">
@@ -84,32 +90,29 @@
                 <div class="col-6">
                     <label cLabel for="descriptionEN">DescriptionEN:</label>
                     <!-- <textarea cFormControl formControlName="descriptionEN" rows="3"></textarea> -->
-                        <app-text-editor 
-                        (contentChange)="createForm.patchValue({descriptionEN: $event})"
-                        [toolbar]="customToolbar"
-                        placeholder="Simple editor with limited toolbar...">
-                        </app-text-editor>
+                    <app-text-editor (contentChange)="createForm.patchValue({descriptionEN: $event})"
+                        [toolbar]="customToolbar" placeholder="Simple editor with limited toolbar...">
+                    </app-text-editor>
                 </div>
                 <div class="col-6">
                     <label cLabel for="descriptionVN">DescriptionVN:</label>
-                    <app-text-editor 
-                        (contentChange)="createForm.patchValue({descriptionVN: $event})"
-                        [toolbar]="customToolbar"
-                        placeholder="Simple editor with limited toolbar...">
+                    <app-text-editor (contentChange)="createForm.patchValue({descriptionVN: $event})"
+                        [toolbar]="customToolbar" placeholder="Simple editor with limited toolbar...">
                     </app-text-editor>
                 </div>
+            </div>
+            <div class="d-flex justify-content-end mt-4">
+                <button cButton type="submit" [disabled]="!createForm.valid">
+                    <svg [cIcon]="icons.cilSave" width="25" class="text-white" title="Save Icon"></svg>
+
+                </button>
+                <a cButton type="button" routerLink="/surveys/survey-forms" class="ms-2 btn-info">
+                    <svg [cIcon]="icons.cilExitToApp" width="25" class="text-white" title="Close Icon"></svg>
+                </a>
             </div>
         </form>
         <!-- <app-create-helper #createHelperComponent></app-create-helper> -->
         <!-- Button Submit Creation Form -->
-        <div class="d-flex justify-content-end mt-4">
-            <button cButton type="submit" (click)="onSubmit()" [disabled]="!createForm.valid">
-                <svg [cIcon]="icons.cilSave" width="25" class="text-white" title="Save Icon"></svg>
 
-            </button>
-            <a cButton type="button" routerLink="/surveys/survey-forms" class="ms-2 btn-info">
-                <svg [cIcon]="icons.cilExitToApp" width="25" class="text-white" title="Close Icon"></svg>
-            </a>
-        </div>
     </c-card-body>
 </c-card>

@@ -1,6 +1,7 @@
 <!-- Table of Question Groups -->
+@if(formStyleId == 1){
 <div class="d-flex justify-content-between align-items-center customTitle mt-4">
-    <span>2. Question Groups</span>
+    <span>Question Groups</span>
     <div class="d-flex justify-content-end">
         <button cButton type="button" (click)="toggleCreateQuestionGroupModal()"
             class="btn-success text-white d-flex align-items-center">
@@ -32,7 +33,8 @@
                     <app-book-icon [open]="item.expanded ?? false" [size]="20"></app-book-icon>
                 </button>
                 }
-                <button cButton type="button" (click)="toggleCreateQuestionModal(item.id)" class="btn-success text-white me-2">
+                <button cButton type="button" (click)="toggleCreateQuestionModal(item.id)"
+                    class="btn-success text-white me-2">
                     <svg [cIcon]="icons.cilPlus" width="20" class="text-white" title="Edit Icon"></svg>
                 </button>
                 <button cButton type="button" (click)="updateQuestionGroup(i)" class="btn-primary text-white me-2">
@@ -59,10 +61,12 @@
     <p class="text-center opacity-50"> No question group available. Click Button Add to get started.</p>
 </div>
 }
+}
 
 <!-- Table of Questions -->
+@if(formStyleId == 2){
 <div class="d-flex justify-content-between align-items-center customTitle mt-4">
-    <span>3. Questions</span>
+    <span>Questions</span>
     <div class="d-flex justify-content-end">
         <button cButton type="button" (click)="toggleCreateQuestionModal()"
             class="btn-success text-white d-flex align-items-center">
@@ -95,9 +99,10 @@
     <p class="text-center opacity-50">No question available. Click Button Add to get started.</p>
 </div>
 }
-
+}
 <!-- Question Template and Predefined Answer Template -->
-<ng-template #questionTemplate let-node="node" let-level="level" let-index="index" let-inQuestionGroup="inQuestionGroup">
+<ng-template #questionTemplate let-node="node" let-level="level" let-index="index"
+    let-inQuestionGroup="inQuestionGroup">
     <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
         <td>
             <span [ngStyle]="{'margin-left.px': level * 15}">
@@ -113,10 +118,12 @@
                 <app-book-icon [open]="node.expanded ?? false" [size]="20"></app-book-icon>
             </button>
             }
-            <button cButton type="button" (click)="updateQuestion(node.id, inQuestionGroup)" class="btn-primary text-white me-2">
+            <button cButton type="button" (click)="updateQuestion(node.id, inQuestionGroup)"
+                class="btn-primary text-white me-2">
                 <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
             </button>
-            <button cButton type="button" (click)="deleteQuestion(node.id, inQuestionGroup)" class="btn-danger text-white">
+            <button cButton type="button" (click)="deleteQuestion(node.id, inQuestionGroup)"
+                class="btn-danger text-white">
                 <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Trash Icon"></svg>
             </button>
         </td>
@@ -156,7 +163,8 @@
     <c-modal-body>
         <div class="mb-4">
             <span cLabel class="fw-bold">Search Question Library: </span>
-            <app-select-search [options]="optionList" [selectedValue]="initQuestionGroupLibraryId()" (onChangeValue)="handleQuestionGroupLibraryChange($event)"
+            <app-select-search [options]="optionList" [selectedValue]="initQuestionGroupLibraryId()"
+                (onChangeValue)="handleQuestionGroupLibraryChange($event)"
                 placeholder="Select question group library..."></app-select-search>
         </div>
         <form cForm [formGroup]="createQuestionGroupForm" (ngSubmit)="onSubmitCreateQuestionGroup()">
@@ -315,7 +323,8 @@
     <c-modal-body>
         <div class="mb-4">
             <span cLabel class="fw-bold">Search Question Library: </span>
-            <app-tree-select [options]="treeOptionList" [selectedValue]="initQuestionLibraryId()" (onChangeValue)="handleQuestionLibraryChange($event)"
+            <app-tree-select [options]="treeOptionList" [selectedValue]="initQuestionLibraryId()"
+                (onChangeValue)="handleQuestionLibraryChange($event)"
                 placeholder="Select question group library..."></app-tree-select>
         </div>
         <form cForm [formGroup]="createQuestionForm" (ngSubmit)="onSubmitCreateQuestion()">

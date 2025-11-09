@@ -6,20 +6,20 @@ import { DataTableComponent } from '@components/generals/data-table/data-table.c
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { SurveyFormModel } from '@models/survey-models/survey-form.model';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
-import { cilPlus, cilTrash, cilPen, cilSave, cilX, cilExitToApp, cilLoopCircular, cilSearch, cilQrCode } from '@coreui/icons';
+import { cilPlus, cilTrash, cilPen, cilSave, cilX, cilExitToApp, cilLoopCircular, cilSearch, cilQrCode, cilFile } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
-import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective } from '@coreui/angular';
+import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective, AlignDirective } from '@coreui/angular';
 import { EColors } from '@common/global';
 import { ToastService } from '@services/helper-services/toast.service';
 import { InternetIconComponent } from "@components/icons/internet-icon.component";
+import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
+
 
 @Component({
   selector: 'app-index',
-  imports: [ReactiveFormsModule, DataTableComponent, RouterLink, IconDirective,
-    AccordionButtonDirective,
-    AccordionComponent, ButtonDirective,
-    AccordionItemComponent, ModalComponent, ModalBodyComponent,
-    TemplateIdDirective, ModalFooterComponent, ModalHeaderComponent, InternetIconComponent],
+  imports: [ReactiveFormsModule, DataTableComponent, RouterLink, IconDirective, AccordionButtonDirective, AccordionComponent,
+    ButtonDirective, AccordionItemComponent, ModalComponent, ModalBodyComponent, TemplateIdDirective, ModalFooterComponent,
+    ModalHeaderComponent, NzQRCodeModule, AlignDirective],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })
@@ -27,12 +27,13 @@ export class IndexComponent {
   //#region Variables
   visibleDelete: boolean = false;
   visibleTrashModal: boolean = false;
+  visibleQrCodeModal: boolean = false;
   deleteById: number = 0;
   trashData: Pagination<SurveyFormModel> = new Pagination<SurveyFormModel>();
   data: Pagination<SurveyFormModel> = new Pagination<SurveyFormModel>();
   trashPageInformation: PageInformation = new PageInformation();
   pageInformation: PageInformation = new PageInformation();
-  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilX, cilExitToApp, cilLoopCircular, cilSearch, cilQrCode };
+  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilX, cilExitToApp, cilLoopCircular, cilSearch, cilQrCode, cilFile };
   filterForm: FormGroup = new FormGroup({
     questionGroupId: new FormControl(-1),
     questionTypeId: new FormControl(-1),
@@ -104,7 +105,7 @@ export class IndexComponent {
   }
 
   //#endregion
-
+  //#region Filter
   filter() {
     this.pageInformation.pageIndex = 1;
     this.getData();
@@ -129,4 +130,13 @@ export class IndexComponent {
   handleLiveDeleteChange(event: any) {
     this.visibleDelete = event;
   }
+  //#endregion
+  //#region QR Code Modal
+  toggleLiveQrCodeModal() {
+    this.visibleQrCodeModal = !this.visibleQrCodeModal;
+  }
+  handleLiveQrCodeModalChange(event: any) {
+    this.visibleQrCodeModal = event;
+  }
+  //#endregion
 }

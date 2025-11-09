@@ -79,12 +79,12 @@ export class SurveyFormService {
       })
     );
   }
-  create(model: SurveyFormModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlSurveyForm, model, { headers: this.authenticationService.getHeaders() }).pipe(
+  create(model: SurveyFormModel): Observable<APIResponse<SurveyFormModel>> {
+    return this.http.post<APIResponse<SurveyFormModel>>(EUrl.createUrlSurveyForm, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
           return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlSurveyForm, model, { headers: this.authenticationService.getHeaders() }))
+            switchMap(() => this.http.post<APIResponse<SurveyFormModel>>(EUrl.createUrlSurveyForm, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);

@@ -72,11 +72,13 @@
             <td>{{ item.createdBy }}</td>
             <td>
                 <div class="d-flex justify-content-end">
-                    <!-- <button class="btn btn-info me-2">
+                    <button class="btn btn-info me-2" (click)="toggleLiveQrCodeModal()">
                         <svg [cIcon]="icons.cilQrCode" width="25" class="text-white" title="Restore Icon"></svg>
-                    </button> -->
-                    <a target="_blank" routerLink="/survey-form/{{item.id}}" class="btn btn-info me-2">
-                        <app-internet-icon></app-internet-icon>
+                    </button>
+                    <a target="_blank" routerLink="/survey-form/{{item.id}}" class="btn btn-success me-2">
+                        <!-- <app-internet-icon></app-internet-icon> -->
+                        <svg [cIcon]="icons.cilFile" width="25" class="text-white" title="Restore Icon"></svg>
+
                     </a>
                     <a routerLink="./update/{{item.id}}" class="btn btn-primary me-2">
                         <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
@@ -161,4 +163,24 @@
             <svg [cIcon]="icons.cilTrash" width="22" class="text-white" title="Delete Icon"></svg>
         </button>
     </c-modal-footer>
+</c-modal>
+
+<!-- QR Code Modal -->
+<c-modal backdrop="static" [visible]="visibleQrCodeModal" (visibleChange)="handleLiveQrCodeModalChange($event)"
+    id="verticallyCenteredQrCodeModal">
+    <c-modal-header class="bg-info d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="text-white fw-bold">Survey Form QR Code</h5>
+        <button (click)="toggleLiveQrCodeModal()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
+    </c-modal-header>
+    <c-modal-body>
+        <div class="d-flex justify-content-center">
+            <!-- QR Code content goes here -->
+             <div class="d-flex flex-column align-items-center">
+                 <nz-qrcode nzValue="https://ng.ant.design/"></nz-qrcode>
+                <p class="mt-2">QR Code will be displayed here.</p>
+             </div>
+        </div>
+    </c-modal-body>
 </c-modal>

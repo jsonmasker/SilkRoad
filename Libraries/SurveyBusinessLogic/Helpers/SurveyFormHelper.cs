@@ -82,6 +82,10 @@ namespace SurveyBusinessLogic.Helpers
                 var data = await _unitOfWork.SurveyFormRepository.GetByIdAsync(model.Id);
                 if (data == null) return false;
                 data.Update(userName);
+                data.FormStyleId = model.FormStyleId;
+                data.IsLimited = model.IsLimited;
+                data.IsActive = data.IsActive;
+                data.MaxParticipants = model.MaxParticipants;
                 data.Name = model.Name.Trim();
                 data.TitleEN = model.TitleEN.Trim();
                 data.TitleVN = model.TitleVN.Trim();

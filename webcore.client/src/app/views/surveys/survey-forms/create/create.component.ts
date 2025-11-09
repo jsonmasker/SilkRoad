@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
-import { CreateHelperComponent } from './create-helper.component';
+// import { CreateHelperComponent } from './create-helper.component';
 import { TextEditorComponent } from "@components/text-editor/text-editor.component";
 import { ToolbarItem } from 'ngx-editor';
 @Component({
@@ -22,7 +22,7 @@ import { ToolbarItem } from 'ngx-editor';
 
 export class CreateComponent {
   //#region Variables
-  @ViewChild('createHelperComponent') createHelperComponent!: CreateHelperComponent;
+  // @ViewChild('createHelperComponent') createHelperComponent!: CreateHelperComponent;
   icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp };
     customToolbar: ToolbarItem[][] = [
       ['bold', 'italic', 'underline'],
@@ -55,17 +55,15 @@ export class CreateComponent {
   //#endregion
 
   //#endregion submit
-  onSubmit() {    
+  onSubmit() { 
     if (this.createForm.valid) {
-      const questionGroups = this.createHelperComponent.questionGroups;
-      const questions = this.createHelperComponent.questions;
-      this.createForm.patchValue({ questionGroups, questions });
       console.log(this.createForm.value);
       this.surveyFormService.create(this.createForm.value).subscribe({
         next: (res) => {
           if (res.success) {
-            this.toastService.showToast(EColors.success, 'Survey form created successfully');
-            this.router.navigate(['/surveys/survey-forms']);
+            const data = res.data;
+            this.toastService.showToast(EColors.success, res.message);
+            this.router.navigate(['surveys/survey-forms/update/', data.id]);
           } else {
             this.toastService.showToast(EColors.danger, res.message);
           }

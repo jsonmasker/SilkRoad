@@ -1,11 +1,61 @@
-<h3 class="fw-bold">Update Survey form</h3>
+
+        <div class="d-flex justify-content-between mb-2">
+            <h3 class="fw-bold">Update Survey form</h3>
+            <a cButton type="button" routerLink="/surveys/survey-forms" class="ms-2 btn-info">
+                        <svg [cIcon]="icons.cilExitToApp" width="25" class="text-white" title="Close Icon"></svg>
+                    </a>
+        </div>
 <c-card>
     <c-card-body>
         <!-- Survey Form Creation Form -->
-        <div class="customTitle">
-            <span>1. Survey Information</span>
+        <div class="d-flex justify-content-between align-items-center customTitle mt-4">
+            <span>Survey Information</span>
+            <div class="d-flex justify-content-end">
+                <button cButton type="button" class="btn-success text-white d-flex align-items-center" (click)="enableUpdateForm()" [disabled]="!disableForm">
+                    <svg [cIcon]="icons.cilPen" width="22" class="text-white" title="Plus Icon"></svg>
+                </button>
+            </div>
         </div>
         <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+            <div class="d-flex mb-2">
+                <c-form-check class="me-4">
+                    <label cFormCheckLabel for="isActive">Is Active</label>
+                    <input cFormCheckInput id="isActive" type="checkbox" formControlName="isActive" />
+                </c-form-check>
+                <c-form-check>
+                    <label cFormCheckLabel for="isLimited">Is Limited</label>
+                    <input cFormCheckInput id="isLimited" type="checkbox" formControlName="isLimited" />
+                </c-form-check>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="formStyleId">Form Style: <span class="text-danger">(*)</span></label>
+                    <select cFormControl formControlName="formStyleId" cSelect>
+                        <option value="1">Group Question</option>
+                        <option value="2">Single Question</option>
+                    </select>
+                    @if (formStyleId?.invalid && (formStyleId?.dirty || formStyleId?.touched)) {
+                    <div class="text-danger">
+                        @if (formStyleId?.hasError('required')) {
+                        <div>Select Form Style, please!</div>
+                        }
+                    </div>
+                    }
+                </div>
+                @if(isLimited?.value === true) {
+                <div class="col-6">
+                    <label cLabel for="maxParticipants">Max Participants: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="maxParticipants" type="number" min="0" />
+                    @if (maxParticipants?.invalid && (maxParticipants?.dirty || maxParticipants?.touched)) {
+                    <div class="text-danger">
+                        @if (maxParticipants?.hasError('required')) {
+                        <div>Enter Max Participants, please!</div>
+                        }
+                    </div>
+                    }
+                </div>
+                }
+            </div>
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="name">Name: <span class="text-danger">(*)</span></label>
@@ -20,8 +70,7 @@
                 </div>
                 <div class="col-6">
                     <label cLabel>Start - End Date: <span class="text-danger">(*)</span></label>
-                    <app-range-datetime-picker (onChangeValue)="onDateRangeChange($event)" 
-                    [initialData]="initialTimeRange"></app-range-datetime-picker>
+                    <app-range-datetime-picker [initialData]="initialTimeRange" [isDisabled]="disableForm" (onChangeValue)="onDateRangeChange($event)"></app-range-datetime-picker>
                 </div>
             </div>
             <div class="mb-2 row">
@@ -51,26 +100,41 @@
             <div class="mb-2 row">
                 <div class="col-6">
                     <label cLabel for="descriptionEN">DescriptionEN:</label>
-                    <textarea cFormControl formControlName="descriptionEN" rows="3"></textarea>
+                    <!-- <textarea cFormControl formControlName="descriptionEN" rows="3"></textarea> -->
+                    <app-text-editor [html]="initDescriptionEN"
+                        [disabled]="disableForm"
+                        (contentChange)="updateForm.patchValue({descriptionEN: $event})" [toolbar]="customToolbar"
+                        placeholder="Simple editor with limited toolbar...">
+                    </app-text-editor>
                 </div>
                 <div class="col-6">
                     <label cLabel for="descriptionVN">DescriptionVN:</label>
-                    <textarea cFormControl formControlName="descriptionVN" rows="3"></textarea>
+                    <app-text-editor [html]="initDescriptionVN"
+                        [disabled]="disableForm"
+                        (contentChange)="updateForm.patchValue({descriptionVN: $event})" [toolbar]="customToolbar"
+                        placeholder="Simple editor with limited toolbar...">
+                    </app-text-editor>
                 </div>
             </div>
+            @if(!disableForm){
+                <div class="d-flex justify-content-end mt-4">
+                    <button cButton type="submit" [disabled]="!updateForm.valid">
+                        <svg [cIcon]="icons.cilSave" width="25" class="text-white" title="Save Icon"></svg>
+                    </button>
+                      <button cButton type="button"  class="ms-2 btn-secondary"  (click)="disableUpdateForm()">
+                        <svg [cIcon]="icons.cilX" width="25" class="text-white" title="Save Icon"></svg>
+                    </button>
+                    
+                </div>
+            }
         </form>
-        <app-update-helper [questionGroups]="initQuestionGroups"
-        [questions]="initQuestions" [surveyFormId]="surveyFormId()"></app-update-helper>
+        @if(disableForm && initData) {
+            <app-update-helper 
+            [formStyleId]="initData.formStyleId"
+            [questionGroups]="initQuestionGroups" [questions]="initQuestions"
+                [surveyFormId]="initData.id"></app-update-helper>
+        }
 
-        <!-- Button Submit Creation Form -->
-        <div class="d-flex justify-content-end mt-4">
-            <button cButton type="submit" (click)="onSubmit()" [disabled]="!updateForm.valid">
-            <svg [cIcon]="icons.cilSave" width="25" class="text-white" title="Save Icon"></svg>
 
-            </button>
-            <a cButton type="button" routerLink="/surveys/survey-forms" class="ms-2 btn-info">
-            <svg [cIcon]="icons.cilExitToApp" width="25" class="text-white" title="Close Icon"></svg>
-            </a>
-        </div>
     </c-card-body>
 </c-card>
