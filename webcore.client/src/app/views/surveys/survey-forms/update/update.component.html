@@ -7,19 +7,19 @@
 <c-card>
     <c-card-body>
         <!-- Survey Form Creation Form -->
-        <div class="d-flex justify-content-between align-items-center customTitle mt-4">
-            <span>1. Survey Information</span>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-info me-2" (click)="toggleLivePublicModal()">
-                    <app-internet-icon></app-internet-icon>
-                </button>
-                <button cButton type="button" class="btn-success text-white d-flex align-items-center"
-                    (click)="enableUpdateForm()" [disabled]="!disableForm">
-                    <svg [cIcon]="icons.cilPen" width="22" class="text-white" title="Plus Icon"></svg>
-                </button>
-            </div>
-        </div>
         <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+            <div class="d-flex justify-content-between align-items-center customTitle mb-2">
+                <span>1. Survey Information</span>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-info me-2" (click)="toggleLivePublicModal()">
+                        <app-internet-icon></app-internet-icon>
+                    </button>
+                    <button cButton type="button" class="btn-success text-white d-flex align-items-center"
+                        (click)="enableUpdateForm()" [disabled]="!disableForm">
+                        <svg [cIcon]="icons.cilPen" width="22" class="text-white" title="Plus Icon"></svg>
+                    </button>
+                </div>
+            </div>
             <div class="d-flex mb-2">
                 <c-form-check class="me-4">
                     <label cFormCheckLabel for="isActive">Is Active</label>
@@ -139,7 +139,10 @@
             </div>
             }
         </form>
+        
         @if(disableForm && initData) {
+        <app-config-helper [surveyFormId]="initData.id"></app-config-helper>
+        
         <app-update-helper [questionGroups]="initQuestionGroups" [questions]="initQuestions"
             [surveyFormId]="initData.id"></app-update-helper>
         }

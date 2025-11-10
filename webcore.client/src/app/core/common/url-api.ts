@@ -331,8 +331,12 @@ export enum EUrl {
     updateUrlPredefinedAnswer = "/api/predefinedAnswer/update",
     deleteUrlPredefinedAnswer = "/api/predefinedAnswer/delete",
 
-
-
+    //participantInfoConfig
+    getBySurveyFormIdUrlParticipantInfoConfig = "/api/participantInfoConfig/getBySurveyFormId",
+    getByIdUrlParticipantInfoConfig = "/api/participantInfoConfig/getById",
+    createUrlParticipantInfoConfig = "/api/participantInfoConfig/create",
+    updateUrlParticipantInfoConfig = "/api/participantInfoConfig/update",
+    deleteUrlParticipantInfoConfig = "/api/participantInfoConfig/delete",
 
     //surveyReport
 

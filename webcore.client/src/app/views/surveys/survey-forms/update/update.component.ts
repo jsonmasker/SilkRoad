@@ -18,13 +18,14 @@ import { SurveyFormModel } from '@models/survey-models/survey-form.model';
 import { StoreService } from '@services/survey-services/store.service';
 import { OptionModel } from '@models/option.model';
 import { InternetIconComponent } from "@components/icons/internet-icon.component";
+import { ConfigHelperComponent } from "./config-helper.component";
 
 @Component({
   selector: 'app-update',
   imports: [FormControlDirective, FormLabelDirective, CardComponent, CardBodyComponent, ReactiveFormsModule, FormDirective, ButtonDirective, CommonModule, RouterLink,
     IconDirective, RangeDatetimePickerComponent, FormSelectDirective, TextEditorComponent, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, UpdateHelperComponent, InternetIconComponent,
-  ModalComponent, ModalBodyComponent, ModalFooterComponent,
-    ModalHeaderComponent],
+    ModalComponent, ModalBodyComponent, ModalFooterComponent,
+    ModalHeaderComponent, ConfigHelperComponent],
   templateUrl: './update.component.html',
   styleUrl: './update.component.scss'
 })

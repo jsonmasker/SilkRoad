@@ -1,6 +1,7 @@
 import { BaseModel } from "@models/base.model";
 import { QuestionGroupModel } from "./question-group.model";
 import { QuestionModel } from "./question.model";
+import { ParticipantInfoConfigModel } from "./participant-info-config.model";
 
 export interface SurveyFormModel extends BaseModel {
     id: number;
@@ -20,6 +21,7 @@ export interface SurveyFormModel extends BaseModel {
     note?: string;
     questionGroups: QuestionGroupModel[];
     questions: QuestionModel[];
+    participantInfoConfigs: ParticipantInfoConfigModel[];
 }
 
 // export interface SelectedQuestionModel {

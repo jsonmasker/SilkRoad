@@ -100,6 +100,16 @@ export enum EQuestionTypes
     RatingQuestion = 5
 }
 
+export enum EFieldTypes
+{
+    Text = 1,
+    TextArea = 2,
+    Number = 3,
+    Date = 4,
+    Email = 5,
+    Phone = 6
+}
+
 export function numberEnumToArray(enumObj: any): { key: string, value: number }[] {
     return Object.keys(enumObj)
         .filter(k => !isNaN(Number(enumObj[k])))

@@ -9,7 +9,8 @@
         public string? PlaceholderEN { get; set; }
         public string? PlaceholderVN { get; set; }
         // e.g., text, number, email, date, etc.
-        public required string Type { get; set; }
+        public int TypeId { get; set; }
+        public int Priority { get; set; }
         public int MinLength { get; set; }
         public int MaxLength { get; set; }
         public bool IsRequired { get; set; }

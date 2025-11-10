@@ -1,4 +1,5 @@
-﻿using SurveyBusinessLogic.IHelpers;
+﻿using Microsoft.EntityFrameworkCore;
+using SurveyBusinessLogic.IHelpers;
 using SurveyDataAccess;
 using SurveyDataAccess.DTOs;
 
@@ -12,12 +13,13 @@ namespace SurveyBusinessLogic.Helpers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<ParticipantInfoConfigDTO>> GetAllAsync()
+        public async Task<IEnumerable<ParticipantInfoConfigDTO>> GetBySurveyFormIdAsync(int surveyFormId)
         {
-            return await _unitOfWork.ParticipantInfoConfigRepository.GetAllAsync();
+            var query = _unitOfWork.ParticipantInfoConfigRepository.Query(s => s.SurveyFormId == surveyFormId, orderBy: p => p.OrderBy(x => x.Priority));
+            return await query.ToListAsync();
         }
 
-        public async Task<ParticipantInfoConfigDTO?> GetByIdAsync(int id)
+        public async Task<ParticipantInfoConfigDTO?> GetByIdAsync(Guid id)
         {
             return await _unitOfWork.ParticipantInfoConfigRepository.GetByIdAsync(id);
         }
@@ -42,21 +44,17 @@ namespace SurveyBusinessLogic.Helpers
             data.FieldNameVN = model.FieldNameVN;
             data.PlaceholderEN = model.PlaceholderEN;
             data.PlaceholderVN = model.PlaceholderVN;
-            data.Type = model.Type;
+            data.TypeId = model.TypeId;
             data.MinLength = model.MinLength;
             data.MaxLength = model.MaxLength;
             data.IsRequired = model.IsRequired;
+            data.Priority = model.Priority;
             await _unitOfWork.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            var surveyForm = await _unitOfWork.SurveyFormRepository.GetByIdAsync(id);
-            if (surveyForm == null || surveyForm.IsPublished)
-            {
-                return false;
-            }
             await _unitOfWork.ParticipantInfoConfigRepository.DeleteAsync(id);
             await _unitOfWork.SaveChangesAsync();
             return true;

@@ -17,7 +17,6 @@ namespace SurveyDataAccess.Configurations
             builder.Property(s => s.PlaceholderEN).HasColumnType("varchar(255)");
             builder.Property(s => s.FieldNameVN).HasColumnType("nvarchar(255)");
             builder.Property(s => s.PlaceholderVN).HasColumnType("varchar(255)");
-            builder.Property(s => s.Type).HasColumnType("varchar(50)");
             builder.HasOne<SurveyFormDTO>(s => s.SurveyForm).WithMany(g => g.ParticipantInfoConfigs).HasForeignKey(s => s.SurveyFormId);
         }
     }
