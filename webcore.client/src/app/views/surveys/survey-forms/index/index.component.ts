@@ -19,7 +19,7 @@ import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
   selector: 'app-index',
   imports: [ReactiveFormsModule, DataTableComponent, RouterLink, IconDirective, AccordionButtonDirective, AccordionComponent,
     ButtonDirective, AccordionItemComponent, ModalComponent, ModalBodyComponent, TemplateIdDirective, ModalFooterComponent,
-    ModalHeaderComponent, NzQRCodeModule, AlignDirective],
+    ModalHeaderComponent, NzQRCodeModule],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })

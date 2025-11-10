@@ -223,14 +223,14 @@ export const navItems: INavData[] = [
     url: '/surveys/extension',
     iconComponent: { name: 'cil-puzzle' },
     children: [
-      // {
-      //   name: 'Question Groups',
-      //   url: '/surveys/extension/question-groups',
-      //   icon: 'nav-icon-bullet'
-      // },
       {
         name: 'Question Types',
         url: '/surveys/extension/question-types',
+        icon: 'nav-icon-bullet'
+      },
+           {
+        name: 'Stores',
+        url: '/surveys/extension/stores',
         icon: 'nav-icon-bullet'
       },
       {

@@ -2,14 +2,11 @@
 using Common;
 using Common.Models;
 using Common.Services.FileStorageServices;
-using Common.ViewModels.LipstickClientViewModels;
 using Common.ViewModels.LipstickViewModels;
 using LipstickBusinessLogic.ILipstickHelpers;
 using LipstickDataAccess;
 using LipstickDataAccess.DTOs;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 namespace LipstickBusinessLogic.LipstickHelpers
 {
     public class ProductHelper : IProductHelper
@@ -153,7 +150,7 @@ namespace LipstickBusinessLogic.LipstickHelpers
             };
         }
         private async Task<List<ProductViewModel>> GetProductByTextAsync(string searchText, bool isEnglish, int quantity)
-        {  
+        {
             var data = await _unitOfWork.ProductRepository
                 .Query(x => (isEnglish
                         ? x.NameEN.ToLower().Contains(searchText.ToLower()) || x.DescriptionEN.ToLower().Contains(searchText.ToLower())

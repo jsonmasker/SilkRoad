@@ -8,7 +8,7 @@
         public bool IsActive { get; set; }
         public string? CreatedBy { get; set; }
         public string? ModifiedBy { get; set; }
-           public BaseDTO()
+        public BaseDTO()
         {
             CreatedAt = DateTime.Now;
             ModifiedAt = DateTime.Now;

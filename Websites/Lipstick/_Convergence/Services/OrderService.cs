@@ -41,8 +41,8 @@ namespace Lipstick._Convergence.Services
             }
             return null;
         }
-        
-        public  void NotifyPaymentStatus(SepayModel model)
+
+        public void NotifyPaymentStatus(SepayModel model)
         {
             string obj = JsonConvert.SerializeObject(model);
             _paymentHub.Clients.All.SendAsync("ReceivePaymentStatus", obj);

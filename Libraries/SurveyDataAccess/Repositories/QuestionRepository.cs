@@ -8,7 +8,7 @@ namespace SurveyDataAccess.Repositories
     {
 
         public QuestionRepository(ApplicationContext dbContext) : base(dbContext)
-        {}
+        { }
 
         public async Task<IEnumerable<QuestionDTO>> GetEagerLoadingByQuestionGroupIdAsync(Guid questionGroupId)
         {

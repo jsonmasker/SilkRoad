@@ -1,5 +1,4 @@
-﻿using MemberDataAccess;
-using MemberDataAccess.IRepositories;
+﻿using MemberDataAccess.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

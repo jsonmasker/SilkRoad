@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Common.ViewModels.AIViewModels
+﻿namespace Common.ViewModels.AIViewModels
 {
     public class AIChatbotViewModel
     {

@@ -32,7 +32,7 @@ namespace LipstickBusinessLogic.LipstickHelpers
             }
             return code;
         }
-        
+
         public async Task<bool> CreateAsync(OrderViewModel model)
         {
             OrderDTO order = _mapper.Map<OrderDTO>(model);
@@ -73,7 +73,7 @@ namespace LipstickBusinessLogic.LipstickHelpers
             //Set default values if not provided
             if (pageSize > 0)
                 model.PageSize = pageSize;
-            
+
             // Start the query
             var query = _unitOfWork.OrderRepository.Query();
 
@@ -126,6 +126,6 @@ namespace LipstickBusinessLogic.LipstickHelpers
             await _unitOfWork.SaveChangesAsync();
             return true;
         }
-        
+
     }
 }

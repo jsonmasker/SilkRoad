@@ -1,5 +1,4 @@
-﻿using Azure;
-using Common;
+﻿using Common;
 using Common.Models;
 using Common.ViewModels.LipstickClientViewModels;
 using Lipstick._Convergence.Helpers;
@@ -11,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
-using Org.BouncyCastle.Asn1.Crmf;
 
 namespace Lipstick.Controllers
 {
@@ -27,11 +25,11 @@ namespace Lipstick.Controllers
         private readonly IMyAccountHelper _myAccountHelper;
         private readonly IHubContext<PaymentHub> _paymentHub;
         public CartController(
-            LayoutHelper layoutHelper, 
-            IStringLocalizer<CartController> localizer, 
-            ProductService productService, 
+            LayoutHelper layoutHelper,
+            IStringLocalizer<CartController> localizer,
+            ProductService productService,
             CartHelper cartHelper,
-            OrderService orderService, 
+            OrderService orderService,
             IMyAccountHelper myAccountHelper,
             IHubContext<PaymentHub> paymentHub,
             CartService cartService)
@@ -54,7 +52,7 @@ namespace Lipstick.Controllers
             ViewBag.Layout = await _layoutHelper.GetLayoutAsync(languageCode, (int)EPageTypes.Cart);
             return View();
         }
-            
+
         [HttpGet]
         public async Task<IActionResult> Order()
         {
@@ -197,7 +195,8 @@ namespace Lipstick.Controllers
                     html = Global.RenderRazorViewToString(this, "PartialViews/_CongratulationPartialView")
                 });
                 return Ok(result);
-            }else if(!string.IsNullOrEmpty(orderId) && model.PaymentMethodId == (int)EPaymentTypes.BankTransfer)
+            }
+            else if (!string.IsNullOrEmpty(orderId) && model.PaymentMethodId == (int)EPaymentTypes.BankTransfer)
             {
                 result.OK = true;
                 result.Data = JsonConvert.SerializeObject(new
@@ -213,7 +212,7 @@ namespace Lipstick.Controllers
         }
 
         [HttpPost]
-        public IActionResult ReceivePaymentStatus([FromBody]string obj)
+        public IActionResult ReceivePaymentStatus([FromBody] string obj)
         {
             _paymentHub.Clients.All.SendAsync("ReceivePaymentStatus", obj);
             return Ok();

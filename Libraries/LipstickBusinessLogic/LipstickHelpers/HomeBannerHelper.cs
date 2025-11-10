@@ -53,9 +53,9 @@ namespace LipstickBusinessLogic.LipstickHelpers
         public async Task<Pagination<HomeBannerViewModel>> GetAllAsync(int pageIndex, int pageSize, int bannerTypeId)
         {
             var model = new Pagination<HomeBannerViewModel>();
-            if(pageSize <= 0)
+            if (pageSize <= 0)
                 pageSize = model.PageSize;
-            var data = await _unitOfWork.HomeBannerRepository.GetAllAsync(filter: s => !s.IsDeleted && s.IsActive && (bannerTypeId == -1 ? true: s.BannerTypeId == bannerTypeId));
+            var data = await _unitOfWork.HomeBannerRepository.GetAllAsync(filter: s => !s.IsDeleted && s.IsActive && (bannerTypeId == -1 ? true : s.BannerTypeId == bannerTypeId));
             model.TotalItems = data.Count();
             model.CurrentPage = pageIndex;
             model.TotalPages = (int)Math.Ceiling(model.TotalItems / (double)pageSize);

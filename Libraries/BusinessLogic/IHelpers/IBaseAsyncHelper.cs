@@ -1,5 +1,4 @@
 ﻿using Common.Models;
-using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace BusinessLogic.IHelpers
 {

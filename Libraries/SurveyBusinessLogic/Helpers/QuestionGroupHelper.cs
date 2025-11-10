@@ -1,10 +1,6 @@
 ﻿using SurveyBusinessLogic.IHelpers;
 using SurveyDataAccess;
 using SurveyDataAccess.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SurveyBusinessLogic.Helpers
 {
@@ -42,7 +38,7 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<IEnumerable<QuestionGroupDTO>?> GetBySurveyFormIdAsync(int surveyFormId)
         {
-           return await _unitOfWork.QuestionGroupRepository.GetEagerLoadingBySurveyFormIdAsync(surveyFormId);
+            return await _unitOfWork.QuestionGroupRepository.GetEagerLoadingBySurveyFormIdAsync(surveyFormId);
         }
 
         public async Task<bool> UpdateAsync(QuestionGroupDTO model)

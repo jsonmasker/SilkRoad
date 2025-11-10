@@ -2,11 +2,10 @@
 using Common.ViewModels.LipstickClientViewModels;
 using LipstickBusinessLogic.ILipstickClientHelpers;
 using LipstickDataAccess;
-using Microsoft.Identity.Client;
 
 namespace LipstickBusinessLogic.LipstickClientHelpers
 {
-    public class CartClientHelper: ICartClientHelper
+    public class CartClientHelper : ICartClientHelper
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ServerAppConfig _appConfig;

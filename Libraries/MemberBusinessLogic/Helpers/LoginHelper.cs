@@ -6,7 +6,6 @@ using MemberBusinessLogic.IHelpers;
 using MemberDataAccess.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using static System.Net.WebRequestMethods;
 
 namespace MemberBusinessLogic.Helpers
 {
@@ -19,10 +18,10 @@ namespace MemberBusinessLogic.Helpers
         private const string OtpSessionKey = "UserOtp";
         private const string OtpTimeKey = "UserOtpTime";
 
-        public LoginHelper( UserManager<UserDTO> userManager, SignInManager<UserDTO> signInManager,
+        public LoginHelper(UserManager<UserDTO> userManager, SignInManager<UserDTO> signInManager,
             ISMSService sMSService,
             IHttpContextAccessor httpContextAccessor)
-        { 
+        {
             _userManager = userManager;
             _signInManager = signInManager;
             _httpContextAccessor = httpContextAccessor;
@@ -85,7 +84,7 @@ namespace MemberBusinessLogic.Helpers
                 return result;
             }
             // Validate the provided OTP
-            if(storedOtp == model.Code)
+            if (storedOtp == model.Code)
             {
                 var user = await _userManager.FindByNameAsync(model.PhoneNumber);
                 if (user == null)
@@ -106,7 +105,7 @@ namespace MemberBusinessLogic.Helpers
             var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
             return result.Succeeded;
         }
-    
+
 
 
     }

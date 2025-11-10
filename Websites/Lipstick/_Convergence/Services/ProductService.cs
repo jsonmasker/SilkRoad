@@ -15,7 +15,7 @@ namespace Lipstick._Convergence.Services
         public async Task<Pagination<ProductClientViewModel>?> GetByCategoryIdAndSubCategoryId(string language, int categoryId, int subCategoryId, string userId = "-1", int pageIndex = 1, int pageSize = 8)
         {
             string baseUrl = _appConfig.GetBaseAPIURL();
-            string url = _appConfig.GetProductsByCategoryIdAndSubCategoryIdUrl+ userId + "/" + categoryId + "/" + subCategoryId + "/" + pageIndex + "/" + pageSize;
+            string url = _appConfig.GetProductsByCategoryIdAndSubCategoryIdUrl + userId + "/" + categoryId + "/" + subCategoryId + "/" + pageIndex + "/" + pageSize;
             using (HttpClient httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri(baseUrl);
@@ -35,7 +35,7 @@ namespace Lipstick._Convergence.Services
             }
             return null;
         }
-        public async Task<ProductClientViewModel?> GetById(string language,int id)
+        public async Task<ProductClientViewModel?> GetById(string language, int id)
         {
             string baseUrl = _appConfig.GetBaseAPIURL();
             string url = string.Concat(_appConfig.GetProductByIdUrl, id);

@@ -56,7 +56,7 @@ namespace LipstickBusinessLogic.LipstickHelpers
         public async Task<Pagination<TopicViewModel>> GetAllAsync(int pageIndex, int pageSize)
         {
             var model = new Pagination<TopicViewModel>();
-            if(pageSize <= 0)
+            if (pageSize <= 0)
                 pageSize = model.PageSize;
             var data = await _unitOfWork.TopicRepository.GetAllAsync(filter: s => !s.IsDeleted && s.IsActive);
             model.TotalItems = data.Count();

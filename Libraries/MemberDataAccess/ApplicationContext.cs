@@ -1,7 +1,6 @@
 ﻿using MemberDataAccess.DTOs;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Reflection;
 
 namespace MemberDataAccess

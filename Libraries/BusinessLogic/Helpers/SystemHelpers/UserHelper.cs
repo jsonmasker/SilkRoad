@@ -83,7 +83,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
         public async Task<Pagination<UserViewModel>> GetAllAsync(int pageIndex, int pageSize)
         {
             Pagination<UserViewModel> result = new Pagination<UserViewModel>();
-            if(pageSize < 0)
+            if (pageSize < 0)
                 pageSize = result.PageSize;
             // Query only necessary data with pagination at the database level
             var query = _unitOfWork.UserSystemRepository.Query(s => s.IsActive && !s.IsDeleted);

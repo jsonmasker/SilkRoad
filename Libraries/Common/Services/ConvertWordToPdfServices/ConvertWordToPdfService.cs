@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace Common.Services.ConvertWordToPdfServices
 {
@@ -30,17 +23,17 @@ namespace Common.Services.ConvertWordToPdfServices
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(_appConfig.PythonServiceUrl);
-                    
+
                     // Set timeout for large file processing
                     client.Timeout = TimeSpan.FromMinutes(10);
-                    
+
                     using (var dataContent = new MultipartFormDataContent())
                     {
                         // Use the IFormFile's OpenReadStream() method to get the file content
                         using (var fileStream = file.OpenReadStream())
                         {
                             var streamContent = new StreamContent(fileStream);
-                            
+
                             // Set appropriate content type based on file extension
                             var contentType = Path.GetExtension(file.FileName).ToLowerInvariant() switch
                             {
@@ -48,14 +41,14 @@ namespace Common.Services.ConvertWordToPdfServices
                                 ".doc" => "application/msword",
                                 _ => "application/octet-stream"
                             };
-                            
+
                             streamContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
                             streamContent.Headers.ContentLength = file.Length;
-                            
+
                             dataContent.Add(streamContent, "file", file.FileName);
-                            
+
                             var response = await client.PostAsync(aliasUrl, dataContent);
-                            
+
                             if (response.IsSuccessStatusCode)
                             {
                                 return await response.Content.ReadAsByteArrayAsync();

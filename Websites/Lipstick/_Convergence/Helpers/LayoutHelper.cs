@@ -15,7 +15,7 @@ namespace Lipstick._Convergence.Helpers
             _webContentHelper = webContentHelper;
             _pageIntroService = pageIntroService;
         }
-        public  async Task<LayoutViewModel> GetLayoutAsync(string language, int pageTypeId = (int)EPageTypes.Default)
+        public async Task<LayoutViewModel> GetLayoutAsync(string language, int pageTypeId = (int)EPageTypes.Default)
         {
             LayoutViewModel model = new LayoutViewModel();
             model.HostName = _webContentHelper.GetWebContentValueByKey(EWebContentKey.HostName, language);

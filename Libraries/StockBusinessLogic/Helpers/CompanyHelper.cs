@@ -95,7 +95,7 @@ namespace StockBusinessLogic.Helpers
             var allItems = await _unitOfWork.CompanyRepository.Query(x => !x.IsDeleted && x.IsActive).ToListAsync();
             foreach (var item in allItems)
             {
-               symbols.Add(item.Symbol);
+                symbols.Add(item.Symbol);
             }
             return symbols;
         }

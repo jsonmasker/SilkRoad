@@ -3,9 +3,7 @@ using Common.ViewModels.LipstickClientViewModels;
 using Lipstick._Convergence.Helpers;
 using MemberBusinessLogic.IHelpers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using static System.Net.WebRequestMethods;
 
 namespace Lipstick.Controllers
 {
@@ -50,7 +48,7 @@ namespace Lipstick.Controllers
                 return View();
             }
             var result = await _loginHelper.LoginAsync(model);
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 if (!string.IsNullOrEmpty(model.ReturnUrl))
                 {
@@ -58,7 +56,7 @@ namespace Lipstick.Controllers
                 }
                 return RedirectToAction("Index", "MyAccount");
             }
-            if(result.IsLockedOut)
+            if (result.IsLockedOut)
             {
                 ModelState.AddModelError("", "Your account is locked out.");
                 return View();
@@ -97,7 +95,7 @@ namespace Lipstick.Controllers
             bool checkPhoneNumber = await _registerHelper.CheckPhoneNumberAsync(model.PhoneNumber);
             if (!ModelState.IsValid || !checkPhoneNumber)
             {
-                if(!checkPhoneNumber)
+                if (!checkPhoneNumber)
                     ModelState.AddModelError("", "Phone number is not registered");
                 return View(model);
             }
@@ -122,7 +120,7 @@ namespace Lipstick.Controllers
                 return RedirectToAction("RecoverPassword");
             string languageCode = Global.GetLanguageCode(Request);
             ViewBag.Layout = await _layoutHelper.GetLayoutAsync(languageCode, (int)EPageTypes.VerifyCode);
-            SecurityCodeClientViewModel model = new SecurityCodeClientViewModel() { PhoneNumber= phoneNumber };
+            SecurityCodeClientViewModel model = new SecurityCodeClientViewModel() { PhoneNumber = phoneNumber };
             return View(model);
         }
         /// <summary>
@@ -162,7 +160,8 @@ namespace Lipstick.Controllers
                 return RedirectToAction("Index");
             string languageCode = Global.GetLanguageCode(Request);
             ViewBag.Layout = await _layoutHelper.GetLayoutAsync(languageCode, (int)EPageTypes.ResetPassword);
-            ResetPasswordClientViewModel model = new ResetPasswordClientViewModel() { 
+            ResetPasswordClientViewModel model = new ResetPasswordClientViewModel()
+            {
                 PhoneNumber = phoneNumber,
                 Token = token
             };
@@ -182,10 +181,10 @@ namespace Lipstick.Controllers
             bool result = await _loginHelper.ResetPasswordAsync(model);
             if (!result)
             {
-                ModelState.AddModelError("","Something is wrong!");
+                ModelState.AddModelError("", "Something is wrong!");
                 return View(model);
             }
-            var login = await _loginHelper.LoginAsync(new LoginClientViewModel() { PhoneNumber = model.PhoneNumber, Password = model.Password});
+            var login = await _loginHelper.LoginAsync(new LoginClientViewModel() { PhoneNumber = model.PhoneNumber, Password = model.Password });
             if (login.Succeeded)
             {
                 return RedirectToAction("Index", "MyAccount");

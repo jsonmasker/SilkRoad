@@ -5,7 +5,6 @@ using Common.Services.EMailServices;
 using Common.Services.FileStorageServices;
 using Common.ViewModels.VOCViewModelModels;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using VOCBusinessLogic.IHelpers;
 using VOCDataAccess;
 using VOCDataAccess.DTOs;

@@ -1,9 +1,8 @@
 ﻿using Common;
-using System.Drawing.Printing;
 using Common.Models;
-using Microsoft.AspNetCore.Mvc;
 using Lipstick._Convergence.Helpers;
 using Lipstick._Convergence.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Lipstick.Controllers
 {

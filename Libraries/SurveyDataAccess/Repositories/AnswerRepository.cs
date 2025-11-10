@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using SurveyDataAccess.DTOs;
+﻿using SurveyDataAccess.DTOs;
 using SurveyDataAccess.IRepositories;
 
 namespace SurveyDataAccess.Repositories

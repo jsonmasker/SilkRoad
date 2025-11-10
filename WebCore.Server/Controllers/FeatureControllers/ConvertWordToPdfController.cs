@@ -1,7 +1,6 @@
 using Common;
 using Common.Services.ConvertWordToPdfServices;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers
@@ -30,7 +29,7 @@ namespace WebCore.Server.Controllers
 
                 // Convert the file asynchronously
                 var data = await _convertWordToPdfService.ConvertWordToPdfAsync(file);
-                
+
                 if (data == null)
                 {
                     return Failed(EStatusCodes.BadRequest, "Invalid file. Please upload a valid Word document and size under 15 MB.");
@@ -47,7 +46,7 @@ namespace WebCore.Server.Controllers
             {
                 // Log the exception if you have logging configured
                 // _logger.LogError(ex, "Error converting file {FileName}", file?.FileName);
-                
+
                 return Failed(EStatusCodes.InternalServerError, $"An error occurred during file conversion: {ex.Message}");
             }
         }

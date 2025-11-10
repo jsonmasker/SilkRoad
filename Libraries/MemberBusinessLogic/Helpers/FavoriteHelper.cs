@@ -23,16 +23,16 @@ namespace MemberBusinessLogic.Helpers
         public bool HandleFavoriteProduct(int productId, int userId)
         {
             // Check if the product is already favorited by the user
-            var favoritedProduct =  _unitOfWork.FavoriteRepository.GetFavoriteProduct(productId, userId);
+            var favoritedProduct = _unitOfWork.FavoriteRepository.GetFavoriteProduct(productId, userId);
             if (favoritedProduct != null)
             {
                 // If favorited, remove it from favorites
-                 _unitOfWork.FavoriteRepository.Delete(favoritedProduct);
+                _unitOfWork.FavoriteRepository.Delete(favoritedProduct);
             }
             else
             {
                 // If not favorited, add it to favorites
-                 _unitOfWork.FavoriteRepository.Create(new FavoriteDTO
+                _unitOfWork.FavoriteRepository.Create(new FavoriteDTO
                 {
                     ProductId = productId,
                     UserId = userId
@@ -43,6 +43,6 @@ namespace MemberBusinessLogic.Helpers
             _unitOfWork.SaveChanges();
             // Return true if the product was favorited, false if it was removed from favorites
             return favoritedProduct == null;
-        } 
+        }
     }
 }

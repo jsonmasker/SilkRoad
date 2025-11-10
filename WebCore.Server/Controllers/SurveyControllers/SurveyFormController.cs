@@ -1,5 +1,4 @@
-﻿using ClosedXML.Excel;
-using Common;
+﻿using Common;
 using Common.Models;
 using Common.Services.ActionLoggingServices;
 using Microsoft.AspNetCore.Authorization;
@@ -55,7 +54,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
                 return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
-         
+
         [HttpGet("getEagerById/{id}")]
         public async Task<IActionResult> GetEagerById(int id)
         {

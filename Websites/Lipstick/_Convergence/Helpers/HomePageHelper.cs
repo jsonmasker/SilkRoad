@@ -1,7 +1,6 @@
 ﻿using Common;
 using Common.ViewModels.LipstickClientViewModels;
 using Lipstick._Convergence.Services;
-using System.Drawing.Printing;
 
 namespace Lipstick._Convergence.Helpers
 {
@@ -26,7 +25,7 @@ namespace Lipstick._Convergence.Helpers
             homePageViewModel.Topics = await _topicService.GetTopicsInHomePage(language);
             homePageViewModel.MainBanners = banners?.Where(x => x.BannerTypeId == (int)EBanners.MainBanner).ToList();
             homePageViewModel.SubBanners = banners?.Where(x => x.BannerTypeId == (int)EBanners.SubBanner).ToList();
-            if(lastestProducts != null && lastestProducts.Items != null)
+            if (lastestProducts != null && lastestProducts.Items != null)
             {
                 homePageViewModel.LatestProducts = lastestProducts.Items.ToList();
             }

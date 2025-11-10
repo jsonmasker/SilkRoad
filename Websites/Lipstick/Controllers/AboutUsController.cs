@@ -18,7 +18,7 @@ namespace Lipstick.Controllers
         {
             string languageCode = Global.GetLanguageCode(Request);
             ViewBag.Layout = await _layoutHelper.GetLayoutAsync(languageCode, (int)EPageTypes.AboutUs);
-            var data = await _informationPageService.GetInforPageByPageTypeId(languageCode,(int)EPageTypes.AboutUs);
+            var data = await _informationPageService.GetInforPageByPageTypeId(languageCode, (int)EPageTypes.AboutUs);
             return View(data);
         }
     }

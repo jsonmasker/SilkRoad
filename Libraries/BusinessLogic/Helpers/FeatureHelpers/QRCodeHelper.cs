@@ -1,14 +1,11 @@
-﻿using System.IO.Compression;
-using BusinessLogic.IHelpers.IFeatureHelper;
+﻿using BusinessLogic.IHelpers.IFeatureHelper;
 using ClosedXML.Excel;
 using Common;
 using Common.Models;
-using Common.Services.ConvertWordToPdfServices;
-using Common.Services.FileStorageServices;
 using Common.Services.QRCodeServices;
 using Common.ViewModels.QRViewModels;
 using Microsoft.AspNetCore.Hosting;
-using Newtonsoft.Json;
+using System.IO.Compression;
 
 namespace BusinessLogic.Helpers.FeatureHelpers
 {
@@ -31,7 +28,7 @@ namespace BusinessLogic.Helpers.FeatureHelpers
 
         public async Task<string> GenerateListQRCodeAsync(QRCodeListViewModel model)
         {
-            string path = Path.Combine(_webHostEnvironment.WebRootPath, EModules.Feature.ToString(),EFolderNames.QRCodes.ToString());
+            string path = Path.Combine(_webHostEnvironment.WebRootPath, EModules.Feature.ToString(), EFolderNames.QRCodes.ToString());
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -96,7 +93,7 @@ namespace BusinessLogic.Helpers.FeatureHelpers
             for (int i = 1; i <= quantity; i++)
             {
                 //string.IsNullOrEmpty(prefix) ? i.ToString(format) :
-                string name = string.IsNullOrEmpty(prefix) ? i.ToString(format) : string.Concat(prefix,"_",i.ToString(format));
+                string name = string.IsNullOrEmpty(prefix) ? i.ToString(format) : string.Concat(prefix, "_", i.ToString(format));
                 string code = prefix + Global.GenerateRandomString(numberOfCharacter, randomType);
                 //Check code is exist in QRVoucherModel list
                 bool check = voucherModels.Any(x => x.Code == code);
@@ -110,7 +107,7 @@ namespace BusinessLogic.Helpers.FeatureHelpers
             return voucherModels;
 
         }
-       
+
         /// <summary>
         /// Export data to excel
         /// </summary>

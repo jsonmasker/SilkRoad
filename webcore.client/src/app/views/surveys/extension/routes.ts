@@ -13,6 +13,13 @@ export const routes: Routes = [
         pathMatch: 'full'
       },
       {
+        path: 'stores',
+        loadComponent: () => import('./stores/stores.component').then(m => m.StoresComponent),
+        data: {
+          title: 'Stores'
+        }
+      },
+      {
         path: 'question-types',
         loadComponent: () => import('./question-types/question-types.component').then(m => m.QuestionTypesComponent),
         data: {
@@ -47,27 +54,7 @@ export const routes: Routes = [
           title: 'Update Question Library'
         }
       }
-      // {
-      //   path: 'survey-forms',
-      //   loadComponent: () => import('./survey-forms/index/index.component').then(m => m.IndexComponent),
-      //   data: {
-      //     title: 'Survey Forms'
-      //   }
-      // },
-      // {
-      //   path: 'survey-forms/create',
-      //   loadComponent: () => import('./survey-forms/create/create.component').then(m => m.CreateComponent),
-      //   data: {
-      //     title: 'Create Survey Form'
-      //   }
-      // },
-      // {
-      //   path: 'survey-forms/update/:id',
-      //   loadComponent: () => import('./survey-forms/update/update.component').then(m => m.UpdateComponent),
-      //   data: {
-      //     title: 'Update Survey Form'
-      //   }
-      // }
+
 
     ]
   }

@@ -8,7 +8,7 @@ namespace SurveyDataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<QuestionLibraryDTO> builder)
         {
-            builder.ToTable("Table_QuestionLibraries");
+            builder.ToTable("QuestionLibraries");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
             builder.Property(s => s.QuestionGroupLibraryId).IsRequired();

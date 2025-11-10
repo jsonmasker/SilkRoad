@@ -3,7 +3,7 @@ using Common.ViewModels.LipstickViewModels;
 
 namespace LipstickBusinessLogic.ILipstickHelpers
 {
-    public interface IPageTypeHelper 
+    public interface IPageTypeHelper
     {
         public Task<Pagination<PageTypeViewModel>> GetAllAsync(int pageIndex, int pageSize);
         public IEnumerable<PageTypeViewModel> GetAllActive();

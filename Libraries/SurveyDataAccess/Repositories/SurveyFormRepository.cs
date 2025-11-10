@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SurveyDataAccess.DTOs;
+﻿using SurveyDataAccess.DTOs;
 using SurveyDataAccess.IRepositories;
 
 namespace SurveyDataAccess.Repositories
@@ -9,7 +8,7 @@ namespace SurveyDataAccess.Repositories
 
         public SurveyFormRepository(ApplicationContext dbContext) : base(dbContext)
         {
-           
+
         }
 
 

@@ -12,8 +12,8 @@ using SurveyDataAccess;
 namespace SurveyDataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20251109014134_UpdateSurveyForm")]
-    partial class UpdateSurveyForm
+    [Migration("20251110034602_InitalDB")]
+    partial class InitalDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,7 +58,7 @@ namespace SurveyDataAccess.Migrations
 
                     b.HasIndex("ParticipantId");
 
-                    b.ToTable("Table_Answers", (string)null);
+                    b.ToTable("Answers", (string)null);
                 });
 
             modelBuilder.Entity("SurveyDataAccess.DTOs.ParticipantDTO", b =>
@@ -74,18 +74,6 @@ namespace SurveyDataAccess.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("varchar(100)");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("varchar(10)");
-
                     b.Property<int>("SurveyFormId")
                         .HasColumnType("int");
 
@@ -93,7 +81,93 @@ namespace SurveyDataAccess.Migrations
 
                     b.HasIndex("SurveyFormId");
 
-                    b.ToTable("Table_Participants", (string)null);
+                    b.ToTable("Participants", (string)null);
+                });
+
+            modelBuilder.Entity("SurveyDataAccess.DTOs.ParticipantInfoConfigDTO", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FieldNameEN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("FieldNameVN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaxLength")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinLength")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlaceholderEN")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("PlaceholderVN")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("SurveyFormId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SurveyFormId");
+
+                    b.ToTable("ParticipantInfoConfigs", (string)null);
+                });
+
+            modelBuilder.Entity("SurveyDataAccess.DTOs.ParticipantInfoDTO", b =>
+                {
+                    b.Property<Guid>("ParticipantInfoConfigId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ParticipantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DateValue")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("NumberValue")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TextValue")
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.HasKey("ParticipantInfoConfigId", "ParticipantId");
+
+                    b.HasIndex("ParticipantId");
+
+                    b.ToTable("ParticipantInfos", (string)null);
                 });
 
             modelBuilder.Entity("SurveyDataAccess.DTOs.PredefinedAnswerDTO", b =>
@@ -121,7 +195,7 @@ namespace SurveyDataAccess.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Table_PredefinedAnswers", (string)null);
+                    b.ToTable("PredefinedAnswers", (string)null);
                 });
 
             modelBuilder.Entity("SurveyDataAccess.DTOs.PredefinedAnswerLibraryDTO", b =>
@@ -149,7 +223,7 @@ namespace SurveyDataAccess.Migrations
 
                     b.HasIndex("QuestionLibraryId");
 
-                    b.ToTable("Table_PredefinedAnswerLibraries", (string)null);
+                    b.ToTable("PredefinedAnswerLibraries", (string)null);
                 });
 
             modelBuilder.Entity("SurveyDataAccess.DTOs.QuestionDTO", b =>
@@ -187,7 +261,7 @@ namespace SurveyDataAccess.Migrations
 
                     b.HasIndex("SurveyFormId");
 
-                    b.ToTable("Table_Questions", (string)null);
+                    b.ToTable("Questions", (string)null);
                 });
 
             modelBuilder.Entity("SurveyDataAccess.DTOs.QuestionGroupDTO", b =>
@@ -215,7 +289,7 @@ namespace SurveyDataAccess.Migrations
 
                     b.HasIndex("SurveyFormId");
 
-                    b.ToTable("Table_QuestionGroups", (string)null);
+                    b.ToTable("QuestionGroups", (string)null);
                 });
 
             modelBuilder.Entity("SurveyDataAccess.DTOs.QuestionGroupLibraryDTO", b =>
@@ -260,7 +334,7 @@ namespace SurveyDataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Table_QuestionGroupLibraries", (string)null);
+                    b.ToTable("QuestionGroupLibraries", (string)null);
                 });
 
             modelBuilder.Entity("SurveyDataAccess.DTOs.QuestionLibraryDTO", b =>
@@ -315,7 +389,7 @@ namespace SurveyDataAccess.Migrations
 
                     b.HasIndex("QuestionTypeId");
 
-                    b.ToTable("Table_QuestionLibraries", (string)null);
+                    b.ToTable("QuestionLibraries", (string)null);
                 });
 
             modelBuilder.Entity("SurveyDataAccess.DTOs.QuestionTypeDTO", b =>
@@ -341,13 +415,13 @@ namespace SurveyDataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Table_QuestionTypes", (string)null);
+                    b.ToTable("QuestionTypes", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 11, 9, 8, 41, 33, 907, DateTimeKind.Local).AddTicks(1562),
+                            CreatedAt = new DateTime(2025, 11, 10, 10, 46, 2, 296, DateTimeKind.Local).AddTicks(5460),
                             IsActive = true,
                             Name = "Câu hỏi đóng",
                             Note = "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn."
@@ -355,7 +429,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 11, 9, 8, 41, 33, 907, DateTimeKind.Local).AddTicks(2667),
+                            CreatedAt = new DateTime(2025, 11, 10, 10, 46, 2, 296, DateTimeKind.Local).AddTicks(8261),
                             IsActive = true,
                             Name = "Câu hỏi mở",
                             Note = "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời."
@@ -363,7 +437,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 11, 9, 8, 41, 33, 907, DateTimeKind.Local).AddTicks(2671),
+                            CreatedAt = new DateTime(2025, 11, 10, 10, 46, 2, 296, DateTimeKind.Local).AddTicks(8272),
                             IsActive = true,
                             Name = "Câu hỏi kết hợp",
                             Note = "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng."
@@ -371,7 +445,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 11, 9, 8, 41, 33, 907, DateTimeKind.Local).AddTicks(2672),
+                            CreatedAt = new DateTime(2025, 11, 10, 10, 46, 2, 296, DateTimeKind.Local).AddTicks(8274),
                             IsActive = true,
                             Name = "Câu hỏi nhiều lựa chọn",
                             Note = "Cho phép chọn nhiều đáp án cùng lúc. (MultipleChoiceQuestion)"
@@ -379,11 +453,64 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 11, 9, 8, 41, 33, 907, DateTimeKind.Local).AddTicks(2673),
+                            CreatedAt = new DateTime(2025, 11, 10, 10, 46, 2, 296, DateTimeKind.Local).AddTicks(8275),
                             IsActive = true,
                             Name = "Câu hỏi đánh giá",
                             Note = "Cẩu hỏi đáng giá (RatingQuestion) - Cho người dùng đánh giá mức độ trên 5 sao."
                         });
+                });
+
+            modelBuilder.Entity("SurveyDataAccess.DTOs.StoreDTO", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DistrictId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<string>("Representative")
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Stores", (string)null);
                 });
 
             modelBuilder.Entity("SurveyDataAccess.DTOs.SurveyFormDTO", b =>
@@ -423,6 +550,9 @@ namespace SurveyDataAccess.Migrations
                     b.Property<bool>("IsLimited")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
                     b.Property<int>("MaxParticipants")
                         .HasColumnType("int");
 
@@ -442,6 +572,9 @@ namespace SurveyDataAccess.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("StoreId")
+                        .HasColumnType("int");
+
                     b.Property<string>("TitleEN")
                         .IsRequired()
                         .HasColumnType("nvarchar(255)");
@@ -452,7 +585,7 @@ namespace SurveyDataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Table_SurveyForms", (string)null);
+                    b.ToTable("SurveyForms", (string)null);
                 });
 
             modelBuilder.Entity("SurveyDataAccess.DTOs.AnswerDTO", b =>
@@ -475,6 +608,28 @@ namespace SurveyDataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("SurveyForm");
+                });
+
+            modelBuilder.Entity("SurveyDataAccess.DTOs.ParticipantInfoConfigDTO", b =>
+                {
+                    b.HasOne("SurveyDataAccess.DTOs.SurveyFormDTO", "SurveyForm")
+                        .WithMany("ParticipantInfoConfigs")
+                        .HasForeignKey("SurveyFormId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SurveyForm");
+                });
+
+            modelBuilder.Entity("SurveyDataAccess.DTOs.ParticipantInfoDTO", b =>
+                {
+                    b.HasOne("SurveyDataAccess.DTOs.ParticipantDTO", "Participant")
+                        .WithMany("ParticipantInfos")
+                        .HasForeignKey("ParticipantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Participant");
                 });
 
             modelBuilder.Entity("SurveyDataAccess.DTOs.PredefinedAnswerDTO", b =>
@@ -556,6 +711,8 @@ namespace SurveyDataAccess.Migrations
             modelBuilder.Entity("SurveyDataAccess.DTOs.ParticipantDTO", b =>
                 {
                     b.Navigation("Answers");
+
+                    b.Navigation("ParticipantInfos");
                 });
 
             modelBuilder.Entity("SurveyDataAccess.DTOs.QuestionDTO", b =>
@@ -585,6 +742,8 @@ namespace SurveyDataAccess.Migrations
 
             modelBuilder.Entity("SurveyDataAccess.DTOs.SurveyFormDTO", b =>
                 {
+                    b.Navigation("ParticipantInfoConfigs");
+
                     b.Navigation("Participants");
 
                     b.Navigation("QuestionGroups");

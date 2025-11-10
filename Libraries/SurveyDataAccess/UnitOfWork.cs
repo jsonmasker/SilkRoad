@@ -14,7 +14,8 @@ namespace SurveyDataAccess
 
         public IPredefinedAnswerRepository PredefinedAnswerRepository { get; private set; }
         public IPredefinedAnswerLibraryRepository PredefinedAnswerLibraryRepository { get; private set; }
-
+        public IParticipantInfoRepository ParticipantInfoRepository { get; private set; }
+        public IParticipantInfoConfigRepository ParticipantInfoConfigRepository { get; private set; }
         public IQuestionGroupRepository QuestionGroupRepository { get; private set; }
         public IQuestionGroupLibraryRepository QuestionGroupLibraryRepository { get; private set; }
         public IQuestionTypeRepository QuestionTypeRepository { get; private set; }
@@ -23,7 +24,7 @@ namespace SurveyDataAccess
         public IQuestionLibraryRepository QuestionLibraryRepository { get; private set; }
 
         public ISurveyFormRepository SurveyFormRepository { get; private set; }
-
+        public IStoreRepository StoreRepository { get; private set; }
         public IAnswerRepository AnswerRepository { get; private set; }
         public UnitOfWork(ApplicationContext databaseContext)
         {
@@ -38,6 +39,9 @@ namespace SurveyDataAccess
             QuestionLibraryRepository = new QuestionLibraryRepository(context);
             SurveyFormRepository = new SurveyFormRepository(context);
             AnswerRepository = new AnswerRepository(context);
+            ParticipantInfoRepository = new ParticipantInfoRepository(context);
+            ParticipantInfoConfigRepository = new ParticipantInfoConfigRepository(context);
+            StoreRepository = new StoreRepository(context);
         }
         public void SaveChanges()
         {

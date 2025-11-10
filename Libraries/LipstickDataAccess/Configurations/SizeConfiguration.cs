@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using LipstickDataAccess.DTOs;
 using Microsoft.EntityFrameworkCore;
-using LipstickDataAccess.DTOs;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LipstickDataAccess.Configurations
 {

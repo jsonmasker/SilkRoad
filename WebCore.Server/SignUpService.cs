@@ -73,6 +73,8 @@ namespace WebCore.Server
             services.AddScoped<IQuestionGroupHelper, QuestionGroupHelper>();
             services.AddScoped<IQuestionHelper, QuestionHelper>();
             services.AddScoped<IPredefinedAnswerHelper, PredefinedAnswerHelper>();
+            services.AddScoped<IStoreHelper, StoreHelper>();
+            services.AddScoped<IParticipantInfoConfigHelper, ParticipantInfoConfigHelper>();
             #endregion
             #region Restaurant
             //services.AddScoped<ICategoryHelper, CategoryHelper>();

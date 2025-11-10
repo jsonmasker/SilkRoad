@@ -1,5 +1,4 @@
 ﻿using Common.Models;
-using RestaurantBusinessLogic.Models;
 
 namespace RestaurantBusinessLogic.IHelpers
 {

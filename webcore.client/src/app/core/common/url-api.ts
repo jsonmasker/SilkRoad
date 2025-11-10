@@ -283,6 +283,17 @@ export enum EUrl {
     getAllUrlQuestionType = "/api/questionType/getAll",
     getOptionListUrlQuestionType = "/api/questionType/getOptionList",
 
+    //store
+    getAllUrlStore = "/api/store/getAll",
+    // getAllActiveUrlStore = "/api/store/getAllActive",
+    getByIdUrlStore = "/api/store/getById",
+    createUrlStore = "/api/store/create",
+    updateUrlStore = "/api/store/update",
+    softDeleteUrlStore = "/api/store/softDelete",
+    restoreUrlStore = "/api/store/restore",
+    deleteUrlStore = "/api/store/delete",
+    getAllDeletedUrlStore = "/api/store/getAllDeleted",
+
     //surveyForm
     getAllUrlSurveyForm = "/api/surveyForm/getAll",
     getAllActiveUrlSurveyForm = "/api/surveyForm/getAllActive",

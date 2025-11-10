@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using Common;
+﻿using Common;
 using Common.Models;
 using Common.ViewModels.LipstickClientViewModels;
 using LipstickBusinessLogic.ILipstickClientHelpers;
 using LipstickDataAccess;
 using LipstickDataAccess.DTOs;
-using Microsoft.EntityFrameworkCore;
 
 namespace LipstickBusinessLogic.LipstickClientHelpers
 {
@@ -196,7 +194,7 @@ namespace LipstickBusinessLogic.LipstickClientHelpers
             //});
 
             //return model;
-           throw new NotImplementedException("GetUserOrderHistoryByPhoneNumber method is not implemented yet.");
+            throw new NotImplementedException("GetUserOrderHistoryByPhoneNumber method is not implemented yet.");
         }
 
         public async Task<Pagination<OrderClientViewModel>> GetAllByUserId(int pageIndex, int pageSize, int userId)

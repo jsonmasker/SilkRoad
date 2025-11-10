@@ -17,7 +17,7 @@ namespace Lipstick.Controllers
         public async Task<IActionResult> Index()
         {
             string languageCode = Global.GetLanguageCode(Request);
-            ViewBag.Layout =await _layoutHelper.GetLayoutAsync(languageCode, (int)EPageTypes.ExchangeNReturnPolicy);
+            ViewBag.Layout = await _layoutHelper.GetLayoutAsync(languageCode, (int)EPageTypes.ExchangeNReturnPolicy);
             var data = await _informationPageService.GetInforPageByPageTypeId(languageCode, (int)EPageTypes.ExchangeNReturnPolicy);
             return View(data);
         }

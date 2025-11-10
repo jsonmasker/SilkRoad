@@ -8,7 +8,7 @@ namespace SurveyDataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<PredefinedAnswerDTO> builder)
         {
-            builder.ToTable("Table_PredefinedAnswers");
+            builder.ToTable("PredefinedAnswers");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id)
                 .HasDefaultValueSql("NEWID()")

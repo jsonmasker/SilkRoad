@@ -7,8 +7,8 @@
         public string NameEN { get; set; }
         public int Priority { get; set; }
         public bool IsActive { get; set; }
-        public ColorViewModel() 
-        { 
+        public ColorViewModel()
+        {
             IsActive = true;
         }
     }

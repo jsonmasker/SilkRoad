@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Common
+﻿namespace Common
 {
     //client content key
 
@@ -177,7 +175,7 @@ namespace Common
     {
         Image,
         Video
-    }    
+    }
     public enum EQRCodeTypes
     {
         Number,

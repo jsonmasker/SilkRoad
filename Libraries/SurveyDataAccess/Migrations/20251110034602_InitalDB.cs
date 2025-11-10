@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SurveyDataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDB : Migration
+    public partial class InitalDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Table_QuestionGroupLibraries",
+                name: "QuestionGroupLibraries",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -32,11 +32,11 @@ namespace SurveyDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Table_QuestionGroupLibraries", x => x.Id);
+                    table.PrimaryKey("PK_QuestionGroupLibraries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Table_QuestionTypes",
+                name: "QuestionTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -48,15 +48,42 @@ namespace SurveyDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Table_QuestionTypes", x => x.Id);
+                    table.PrimaryKey("PK_QuestionTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Table_SurveyForms",
+                name: "Stores",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    DistrictId = table.Column<int>(type: "int", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(255)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "varchar(10)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(255)", nullable: true),
+                    Representative = table.Column<string>(type: "nvarchar(255)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stores", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SurveyForms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StoreId = table.Column<int>(type: "int", nullable: true),
+                    FormStyleId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     TitleEN = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     TitleVN = table.Column<string>(type: "nvarchar(255)", nullable: false),
@@ -64,6 +91,9 @@ namespace SurveyDataAccess.Migrations
                     DescriptionVN = table.Column<string>(type: "nvarchar(1000)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsLimited = table.Column<bool>(type: "bit", nullable: false),
+                    IsPublished = table.Column<bool>(type: "bit", nullable: false),
+                    MaxParticipants = table.Column<int>(type: "int", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(500)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -74,11 +104,11 @@ namespace SurveyDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Table_SurveyForms", x => x.Id);
+                    table.PrimaryKey("PK_SurveyForms", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Table_QuestionLibraries",
+                name: "QuestionLibraries",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -98,47 +128,75 @@ namespace SurveyDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Table_QuestionLibraries", x => x.Id);
+                    table.PrimaryKey("PK_QuestionLibraries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Table_QuestionLibraries_Table_QuestionGroupLibraries_QuestionGroupLibraryId",
+                        name: "FK_QuestionLibraries_QuestionGroupLibraries_QuestionGroupLibraryId",
                         column: x => x.QuestionGroupLibraryId,
-                        principalTable: "Table_QuestionGroupLibraries",
+                        principalTable: "QuestionGroupLibraries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Table_QuestionLibraries_Table_QuestionTypes_QuestionTypeId",
+                        name: "FK_QuestionLibraries_QuestionTypes_QuestionTypeId",
                         column: x => x.QuestionTypeId,
-                        principalTable: "Table_QuestionTypes",
+                        principalTable: "QuestionTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Table_Participants",
+                name: "ParticipantInfoConfigs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
                     SurveyFormId = table.Column<int>(type: "int", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "varchar(10)", nullable: true),
-                    Email = table.Column<string>(type: "varchar(255)", nullable: true),
-                    FullName = table.Column<string>(type: "nvarchar(255)", nullable: true),
-                    Note = table.Column<string>(type: "nvarchar(500)", nullable: true),
+                    FieldNameEN = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    FieldNameVN = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    PlaceholderEN = table.Column<string>(type: "varchar(255)", nullable: true),
+                    PlaceholderVN = table.Column<string>(type: "varchar(255)", nullable: true),
+                    Type = table.Column<string>(type: "varchar(50)", nullable: false),
+                    MinLength = table.Column<int>(type: "int", nullable: false),
+                    MaxLength = table.Column<int>(type: "int", nullable: false),
+                    IsRequired = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ParticipantInfoConfigs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ParticipantInfoConfigs_SurveyForms_SurveyFormId",
+                        column: x => x.SurveyFormId,
+                        principalTable: "SurveyForms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Participants",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
+                    SurveyFormId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "varchar(100)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Table_Participants", x => x.Id);
+                    table.PrimaryKey("PK_Participants", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Table_Participants_Table_SurveyForms_SurveyFormId",
+                        name: "FK_Participants_SurveyForms_SurveyFormId",
                         column: x => x.SurveyFormId,
-                        principalTable: "Table_SurveyForms",
+                        principalTable: "SurveyForms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Table_QuestionGroups",
+                name: "QuestionGroups",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
@@ -149,17 +207,17 @@ namespace SurveyDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Table_QuestionGroups", x => x.Id);
+                    table.PrimaryKey("PK_QuestionGroups", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Table_QuestionGroups_Table_SurveyForms_SurveyFormId",
+                        name: "FK_QuestionGroups_SurveyForms_SurveyFormId",
                         column: x => x.SurveyFormId,
-                        principalTable: "Table_SurveyForms",
+                        principalTable: "SurveyForms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Table_PredefinedAnswerLibraries",
+                name: "PredefinedAnswerLibraries",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
@@ -170,17 +228,17 @@ namespace SurveyDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Table_PredefinedAnswerLibraries", x => x.Id);
+                    table.PrimaryKey("PK_PredefinedAnswerLibraries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Table_PredefinedAnswerLibraries_Table_QuestionLibraries_QuestionLibraryId",
+                        name: "FK_PredefinedAnswerLibraries_QuestionLibraries_QuestionLibraryId",
                         column: x => x.QuestionLibraryId,
-                        principalTable: "Table_QuestionLibraries",
+                        principalTable: "QuestionLibraries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Table_Answers",
+                name: "Answers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -195,17 +253,38 @@ namespace SurveyDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Table_Answers", x => x.Id);
+                    table.PrimaryKey("PK_Answers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Table_Answers_Table_Participants_ParticipantId",
+                        name: "FK_Answers_Participants_ParticipantId",
                         column: x => x.ParticipantId,
-                        principalTable: "Table_Participants",
+                        principalTable: "Participants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Table_Questions",
+                name: "ParticipantInfos",
+                columns: table => new
+                {
+                    ParticipantInfoConfigId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ParticipantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TextValue = table.Column<string>(type: "nvarchar(1000)", nullable: true),
+                    NumberValue = table.Column<int>(type: "int", nullable: true),
+                    DateValue = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ParticipantInfos", x => new { x.ParticipantInfoConfigId, x.ParticipantId });
+                    table.ForeignKey(
+                        name: "FK_ParticipantInfos_Participants_ParticipantId",
+                        column: x => x.ParticipantId,
+                        principalTable: "Participants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Questions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
@@ -218,28 +297,28 @@ namespace SurveyDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Table_Questions", x => x.Id);
+                    table.PrimaryKey("PK_Questions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Table_Questions_Table_QuestionGroups_QuestionGroupId",
+                        name: "FK_Questions_QuestionGroups_QuestionGroupId",
                         column: x => x.QuestionGroupId,
-                        principalTable: "Table_QuestionGroups",
+                        principalTable: "QuestionGroups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Table_Questions_Table_QuestionTypes_QuestionTypeId",
+                        name: "FK_Questions_QuestionTypes_QuestionTypeId",
                         column: x => x.QuestionTypeId,
-                        principalTable: "Table_QuestionTypes",
+                        principalTable: "QuestionTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Table_Questions_Table_SurveyForms_SurveyFormId",
+                        name: "FK_Questions_SurveyForms_SurveyFormId",
                         column: x => x.SurveyFormId,
-                        principalTable: "Table_SurveyForms",
+                        principalTable: "SurveyForms",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Table_PredefinedAnswers",
+                name: "PredefinedAnswers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
@@ -250,75 +329,85 @@ namespace SurveyDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Table_PredefinedAnswers", x => x.Id);
+                    table.PrimaryKey("PK_PredefinedAnswers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Table_PredefinedAnswers_Table_Questions_QuestionId",
+                        name: "FK_PredefinedAnswers_Questions_QuestionId",
                         column: x => x.QuestionId,
-                        principalTable: "Table_Questions",
+                        principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Table_QuestionTypes",
+                table: "QuestionTypes",
                 columns: new[] { "Id", "CreatedAt", "IsActive", "Name", "Note" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(8655), true, "Câu hỏi đóng", "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn." },
-                    { 2, new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9778), true, "Câu hỏi mở", "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời." },
-                    { 3, new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9782), true, "Câu hỏi kết hợp", "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng." },
-                    { 4, new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9783), true, "Câu hỏi nhiều lựa chọn", "Cho phép chọn nhiều đáp án cùng lúc. (MultipleChoiceQuestion)" },
-                    { 5, new DateTime(2025, 10, 6, 15, 28, 15, 396, DateTimeKind.Local).AddTicks(9784), true, "Câu hỏi đánh giá", "Cẩu hỏi đáng giá (RatingQuestion) - Cho người dùng đánh giá mức độ trên 5 sao." }
+                    { 1, new DateTime(2025, 11, 10, 10, 46, 2, 296, DateTimeKind.Local).AddTicks(5460), true, "Câu hỏi đóng", "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn." },
+                    { 2, new DateTime(2025, 11, 10, 10, 46, 2, 296, DateTimeKind.Local).AddTicks(8261), true, "Câu hỏi mở", "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời." },
+                    { 3, new DateTime(2025, 11, 10, 10, 46, 2, 296, DateTimeKind.Local).AddTicks(8272), true, "Câu hỏi kết hợp", "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng." },
+                    { 4, new DateTime(2025, 11, 10, 10, 46, 2, 296, DateTimeKind.Local).AddTicks(8274), true, "Câu hỏi nhiều lựa chọn", "Cho phép chọn nhiều đáp án cùng lúc. (MultipleChoiceQuestion)" },
+                    { 5, new DateTime(2025, 11, 10, 10, 46, 2, 296, DateTimeKind.Local).AddTicks(8275), true, "Câu hỏi đánh giá", "Cẩu hỏi đáng giá (RatingQuestion) - Cho người dùng đánh giá mức độ trên 5 sao." }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Table_Answers_ParticipantId",
-                table: "Table_Answers",
+                name: "IX_Answers_ParticipantId",
+                table: "Answers",
                 column: "ParticipantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Table_Participants_SurveyFormId",
-                table: "Table_Participants",
+                name: "IX_ParticipantInfoConfigs_SurveyFormId",
+                table: "ParticipantInfoConfigs",
                 column: "SurveyFormId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Table_PredefinedAnswerLibraries_QuestionLibraryId",
-                table: "Table_PredefinedAnswerLibraries",
+                name: "IX_ParticipantInfos_ParticipantId",
+                table: "ParticipantInfos",
+                column: "ParticipantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Participants_SurveyFormId",
+                table: "Participants",
+                column: "SurveyFormId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PredefinedAnswerLibraries_QuestionLibraryId",
+                table: "PredefinedAnswerLibraries",
                 column: "QuestionLibraryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Table_PredefinedAnswers_QuestionId",
-                table: "Table_PredefinedAnswers",
+                name: "IX_PredefinedAnswers_QuestionId",
+                table: "PredefinedAnswers",
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Table_QuestionGroups_SurveyFormId",
-                table: "Table_QuestionGroups",
+                name: "IX_QuestionGroups_SurveyFormId",
+                table: "QuestionGroups",
                 column: "SurveyFormId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Table_QuestionLibraries_QuestionGroupLibraryId",
-                table: "Table_QuestionLibraries",
+                name: "IX_QuestionLibraries_QuestionGroupLibraryId",
+                table: "QuestionLibraries",
                 column: "QuestionGroupLibraryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Table_QuestionLibraries_QuestionTypeId",
-                table: "Table_QuestionLibraries",
+                name: "IX_QuestionLibraries_QuestionTypeId",
+                table: "QuestionLibraries",
                 column: "QuestionTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Table_Questions_QuestionGroupId",
-                table: "Table_Questions",
+                name: "IX_Questions_QuestionGroupId",
+                table: "Questions",
                 column: "QuestionGroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Table_Questions_QuestionTypeId",
-                table: "Table_Questions",
+                name: "IX_Questions_QuestionTypeId",
+                table: "Questions",
                 column: "QuestionTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Table_Questions_SurveyFormId",
-                table: "Table_Questions",
+                name: "IX_Questions_SurveyFormId",
+                table: "Questions",
                 column: "SurveyFormId");
         }
 
@@ -326,34 +415,43 @@ namespace SurveyDataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Table_Answers");
+                name: "Answers");
 
             migrationBuilder.DropTable(
-                name: "Table_PredefinedAnswerLibraries");
+                name: "ParticipantInfoConfigs");
 
             migrationBuilder.DropTable(
-                name: "Table_PredefinedAnswers");
+                name: "ParticipantInfos");
 
             migrationBuilder.DropTable(
-                name: "Table_Participants");
+                name: "PredefinedAnswerLibraries");
 
             migrationBuilder.DropTable(
-                name: "Table_QuestionLibraries");
+                name: "PredefinedAnswers");
 
             migrationBuilder.DropTable(
-                name: "Table_Questions");
+                name: "Stores");
 
             migrationBuilder.DropTable(
-                name: "Table_QuestionGroupLibraries");
+                name: "Participants");
 
             migrationBuilder.DropTable(
-                name: "Table_QuestionGroups");
+                name: "QuestionLibraries");
 
             migrationBuilder.DropTable(
-                name: "Table_QuestionTypes");
+                name: "Questions");
 
             migrationBuilder.DropTable(
-                name: "Table_SurveyForms");
+                name: "QuestionGroupLibraries");
+
+            migrationBuilder.DropTable(
+                name: "QuestionGroups");
+
+            migrationBuilder.DropTable(
+                name: "QuestionTypes");
+
+            migrationBuilder.DropTable(
+                name: "SurveyForms");
         }
     }
 }

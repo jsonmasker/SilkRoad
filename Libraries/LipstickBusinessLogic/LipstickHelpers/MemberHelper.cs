@@ -21,7 +21,7 @@ namespace LipstickBusinessLogic.LipstickHelpers
             Pagination<MemberViewModel> model = new Pagination<MemberViewModel>();
             if (pageSize > 0)
                 model.PageSize = pageSize;
-            var member = _context.TableUsers.Where(s => 
+            var member = _context.TableUsers.Where(s =>
                 !s.IsDeleted &&
                 (phoneNumber == null ? true : s.PhoneNumber.Contains(phoneNumber)) &&
                 (email == null ? true : s.Email.Contains(email))

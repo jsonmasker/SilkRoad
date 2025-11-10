@@ -41,7 +41,7 @@ namespace Lipstick.Controllers
             _myAccountHelper = myAccountHelper;
         }
         #endregion
-        
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -73,7 +73,8 @@ namespace Lipstick.Controllers
             ViewBag.Genders = new SelectList(genders, "Id", "Name");
             if (string.IsNullOrEmpty(userId) || !ModelState.IsValid)
             {
-                result.Data = JsonConvert.SerializeObject(new { 
+                result.Data = JsonConvert.SerializeObject(new
+                {
                     UpdateComponent = Global.RenderRazorViewToString(this, "PartialViews/_UpdateAccountPartialView", model),
                     ToastComponent = Global.RenderRazorViewToString(this, "PartialViews/_ToastPartialView", toastItem)
                 }).ToString();
@@ -121,7 +122,7 @@ namespace Lipstick.Controllers
                 return Ok(result);
             }
             var identityResult = await _myAccountHelper.ChangePasswordAsync(int.Parse(userId), model);
-            if(identityResult.Succeeded)
+            if (identityResult.Succeeded)
             {
                 result.OK = true;
                 //changePasswordPartialView = Global.RenderRazorViewToString(this, "PartialViews/_ChangePasswordPartialView", model);
@@ -147,7 +148,7 @@ namespace Lipstick.Controllers
         }
 
         [HttpPost]
-        public IActionResult HandleFavoriteProduct([FromHeader]int productId)
+        public IActionResult HandleFavoriteProduct([FromHeader] int productId)
         {
             DataObjectResult result = new DataObjectResult();
             string userId = User.Claims.First().Value;
@@ -155,7 +156,7 @@ namespace Lipstick.Controllers
             {
                 return BadRequest();
             }
-            result.OK =  _favoriteHelper.HandleFavoriteProduct(productId, int.Parse(userId));
+            result.OK = _favoriteHelper.HandleFavoriteProduct(productId, int.Parse(userId));
             return Ok(result);
         }
 

@@ -129,6 +129,6 @@ namespace WebCore.Server.Controllers.SurveyControllers
                 return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["deleteSuccess"]);
         }
-      
+
     }
 }

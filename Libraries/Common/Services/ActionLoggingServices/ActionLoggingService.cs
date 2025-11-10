@@ -1,7 +1,6 @@
 ﻿using Common.Models;
 using Common.Services.JwtServices;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson.IO;
 using MongoDB.Driver;
 
 namespace Common.Services.ActionLoggingServices
@@ -27,7 +26,7 @@ namespace Common.Services.ActionLoggingServices
         public async Task<Pagination<UserActionModel>> GetAllAsync(string? controllerName, string? actionName, DateTime? startDate, DateTime? endDate, int pageIndex, int pageSize)
         {
             Pagination<UserActionModel> result = new Pagination<UserActionModel>();
-            if(pageSize > 0)
+            if (pageSize > 0)
                 result.PageSize = pageSize;
             var filterBuilder = Builders<UserActionModel>.Filter;
             var filter = filterBuilder.Empty;
@@ -66,7 +65,7 @@ namespace Common.Services.ActionLoggingServices
         public async Task CreateAsync(UserActionModel userAction) =>
             await _userActionsCollection.InsertOneAsync(userAction);
 
-        public async Task CreateAsync(string token, string controllerName, Enum action, Enum actionStatus, object? obj = null )
+        public async Task CreateAsync(string token, string controllerName, Enum action, Enum actionStatus, object? obj = null)
         {
             try
             {
@@ -81,7 +80,8 @@ namespace Common.Services.ActionLoggingServices
                 };
 
                 await _userActionsCollection.InsertOneAsync(userAction);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw (ex);
             }

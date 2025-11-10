@@ -1,7 +1,6 @@
 ﻿using Common;
 using Common.Models;
 using Common.ViewModels.LipstickClientViewModels;
-using Common.ViewModels.LipstickViewModels;
 using LipstickBusinessLogic.ILipstickClientHelpers;
 using LipstickDataAccess;
 using MongoDB.Driver.Linq;
@@ -49,7 +48,7 @@ namespace LipstickBusinessLogic.LipstickClientHelpers
             };
         }
 
-        public Pagination<BlogClientViewModel> GetByTopicId(string language, int topicId,  int pageIndex, int pageSize)
+        public Pagination<BlogClientViewModel> GetByTopicId(string language, int topicId, int pageIndex, int pageSize)
         {
             var model = new Pagination<BlogClientViewModel>();
             if (pageSize > 0)

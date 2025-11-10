@@ -5,7 +5,6 @@ using Common.Models;
 using Common.ViewModels.SystemViewModels;
 using DataAccess;
 using DataAccess.DTOs;
-using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace BusinessLogic.Helpers.SystemHelpers
 {

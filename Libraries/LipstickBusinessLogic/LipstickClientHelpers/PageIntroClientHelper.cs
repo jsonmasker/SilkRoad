@@ -1,9 +1,7 @@
 ﻿using Common;
 using Common.ViewModels.LipstickClientViewModels;
-using Common.ViewModels.LipstickViewModels;
 using LipstickBusinessLogic.ILipstickClientHelpers;
 using LipstickDataAccess;
-using Microsoft.Identity.Client;
 
 namespace LipstickBusinessLogic.LipstickClientHelpers
 {

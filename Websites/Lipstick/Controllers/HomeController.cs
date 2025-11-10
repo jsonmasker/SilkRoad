@@ -1,11 +1,9 @@
 ﻿using Common;
-using Common.Models;
 using Lipstick._Convergence.Helpers;
 using Lipstick.ViewModels;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace Lipstick.Controllers
 {
@@ -52,14 +50,14 @@ namespace Lipstick.Controllers
             }
             return Redirect(Request.Headers["Referer"].ToString());
         }
-        
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
-        
+
+
         public async Task<IActionResult> Lost()
         {
             string languageCode = Global.GetLanguageCode(Request);

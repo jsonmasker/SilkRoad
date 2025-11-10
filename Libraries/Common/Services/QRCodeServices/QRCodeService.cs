@@ -1,6 +1,6 @@
-﻿using System.Net.Http.Headers;
+﻿using Common.ViewModels.QRViewModels;
+using System.Net.Http.Headers;
 using System.Text.Json;
-using Common.ViewModels.QRViewModels;
 
 namespace Common.Services.QRCodeServices
 {

@@ -1,5 +1,5 @@
-﻿using MemberDataAccess.Repositories;
-using MemberDataAccess.IRepositories;
+﻿using MemberDataAccess.IRepositories;
+using MemberDataAccess.Repositories;
 namespace MemberDataAccess
 {
     public class UnitOfWork : IUnitOfWork
