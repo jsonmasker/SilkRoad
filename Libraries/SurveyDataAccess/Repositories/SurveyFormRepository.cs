@@ -18,15 +18,15 @@ namespace SurveyDataAccess.Repositories
             var data = await _dbSet
                 .Where(s => s.Id == id)
                 .Include(s => s.QuestionGroups)
-                    .ThenInclude(qg => qg.Questions)
+                    !.ThenInclude(qg => qg.Questions)
                         .ThenInclude(q => q.QuestionType)
                 .Include(s => s.QuestionGroups)
-                    .ThenInclude(qg => qg.Questions)
+                    !.ThenInclude(qg => qg.Questions)
                         .ThenInclude(q => q.PredefinedAnswers)
                 .Include(s => s.Questions)
-                    .ThenInclude(q => q.QuestionType)
+                    !.ThenInclude(q => q.QuestionType)
                 .Include(s => s.Questions)
-                    .ThenInclude(q => q.PredefinedAnswers)
+                    !.ThenInclude(q => q.PredefinedAnswers)
                 .AsSplitQuery() // prevents Cartesian explosion when multiple collections are included
                 .FirstOrDefaultAsync();
 

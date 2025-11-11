@@ -25,7 +25,7 @@
                     </button>
                     }
                     }
-                    <a target="_blank" routerLink="/survey-form/{{initData?.id}}" class="btn btn-success me-2">
+                    <a target="_blank" routerLink="/review-form/{{initData?.id}}" class="btn btn-success me-2">
                         <svg [cIcon]="icons.cilFile" width="25" class="text-white" title="Restore Icon"></svg>
                     </a>
                     @if(!initData?.isPublished) {
@@ -168,8 +168,7 @@
         @if(disableForm && initData) {
         <app-config-helper [surveyFormId]="initData.id" [disableForm]="initData.isPublished"></app-config-helper>
 
-        <app-update-helper [questionGroups]="initQuestionGroups" [questions]="initQuestions"
-            [surveyFormId]="initData.id" [disableForm]="initData.isPublished"></app-update-helper>
+        <app-update-helper [surveyFormId]="initData.id" [disableForm]="initData.isPublished"></app-update-helper>
         }
 
 

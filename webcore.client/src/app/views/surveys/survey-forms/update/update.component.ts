@@ -33,8 +33,6 @@ import { NoInternetIconComponent } from "@components/icons/no-internet-icon.comp
 export class UpdateComponent implements OnInit {
   //#region Variables
   initData: SurveyFormModel | null = null;
-  initQuestionGroups: QuestionGroupModel[] = [];
-  initQuestions: QuestionModel[] = [];
   initialTimeRange: Date[] = [];
   initDescriptionEN: string = '';
   initDescriptionVN: string = '';
@@ -79,11 +77,9 @@ export class UpdateComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    this.surveyFormService.getEagerById(id).subscribe({
+    this.surveyFormService.getById(id).subscribe({
       next: (response) => {
         if (response.success) {
-          this.initQuestionGroups = response.data.questionGroups;
-          this.initQuestions = response.data.questions;
           this.initialTimeRange = [new Date(response.data.startDate), new Date(response.data.endDate)];
           this.initDescriptionEN = response.data.descriptionEN;
           this.initDescriptionVN = response.data.descriptionVN;

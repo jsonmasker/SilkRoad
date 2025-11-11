@@ -31,7 +31,7 @@ export const routes: Routes = [
   },
   {
     path:'survey-form/:id',
-    loadComponent: () => import('./survey-form/survey-form.component').then(m => m.SurveyFormComponent),
+    loadComponent: () => import('./form-styles/survey-form/survey-form.component').then(m => m.SurveyFormComponent),
     data: {
       title: 'Survey Form'
     }
