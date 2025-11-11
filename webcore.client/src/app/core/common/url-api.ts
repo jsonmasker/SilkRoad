@@ -296,6 +296,7 @@ export enum EUrl {
 
     //surveyForm
     getAllUrlSurveyForm = "/api/surveyForm/getAll",
+    filterUrlSurveyForm = "/api/surveyForm/filter",
     getAllActiveUrlSurveyForm = "/api/surveyForm/getAllActive",
     getByIdUrlSurveyForm = "/api/surveyForm/getById",
     getEagerByIdUrlSurveyForm = "/api/surveyForm/getEagerById",
@@ -307,6 +308,9 @@ export enum EUrl {
     deleteUrlSurveyForm = "/api/surveyForm/delete",
     getAllDeletedUrlSurveyForm = "/api/surveyForm/getAllDeleted",
     publicUrlSurveyForm = "/api/surveyForm/public",
+    unPublicUrlSurveyForm = "/api/surveyForm/unPublic",
+    deactivateUrlSurveyForm = "/api/surveyForm/deactivate",
+    activateUrlSurveyForm = "/api/surveyForm/activate",
 
     //QuestionGroup
     getBySurveyFormIdUrlQuestionGroup = "/api/questionGroup/getBySurveyFormId",

@@ -6,5 +6,6 @@ namespace SurveyDataAccess.IRepositories
     {
         //public bool CheckExistenceBySurveyFormID(int surveyFormID);
         public ParticipantDTO? GetEagerParticipantById(int id);
+        public Task<bool> HasAnyParticipantsAsync(int surveyFormId);
     }
 }

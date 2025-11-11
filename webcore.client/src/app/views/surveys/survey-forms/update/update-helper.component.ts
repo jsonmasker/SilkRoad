@@ -33,6 +33,7 @@ export class UpdateHelperComponent implements OnInit {
   @Input() surveyFormId: number = -1;
   @Input() questionGroups: QuestionGroupModel[] = [];
   @Input() questions: QuestionModel[] = [];
+  @Input() disableForm: boolean = false;
   predefinedAnswerList: PredefinedAnswerModel[] = [];
 
   questionTypeList: OptionModel[] = [];

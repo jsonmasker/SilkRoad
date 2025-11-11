@@ -2,6 +2,7 @@
     <span>2. Participant Information Configurations</span>
     <div class="d-flex justify-content-end">
         <button cButton type="button" (click)="toggleCreateModal()"
+            [disabled]="disableForm"
             class="btn-success text-white d-flex align-items-center">
             <svg [cIcon]="icons.cilPlus" width="22" class="text-white" title="Plus Icon"></svg>
         </button>
@@ -28,10 +29,10 @@
             <td>{{ item.isRequired }}</td>
             <td>{{ item.priority }}</td>
             <td class="text-end">
-                <button cButton type="button" (click)="update(item?.id)" class="btn-primary text-white me-2">
+                <button cButton type="button" (click)="update(item?.id)" class="btn-primary text-white me-2" [disabled]="disableForm">
                     <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
                 </button>
-                <button cButton type="button" (click)="delete(item?.id)" class="btn-danger text-white">
+                <button cButton type="button" (click)="delete(item?.id)" class="btn-danger text-white" [disabled]="disableForm">
                     <svg [cIcon]="icons.cilTrash" width="20" class="text-white" title="Trash Icon"></svg>
                 </button>
             </td>

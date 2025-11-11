@@ -6,16 +6,19 @@ namespace SurveyDataAccess.Repositories
 {
     public class ParticipantRepository : GenericRepository<ParticipantDTO>, IParticipantRepository
     {
-        private readonly DbSet<ParticipantDTO> _participant;
         public ParticipantRepository(ApplicationContext dbContext) : base(dbContext)
         {
-            _participant = dbContext.Set<ParticipantDTO>();
         }
         public ParticipantDTO? GetEagerParticipantById(int id)
         {
             //var data = _participant.Where(s => s.Id == id).Include(s => s.Answers).FirstOrDefault();
             //return data;
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> HasAnyParticipantsAsync(int surveyFormId)
+        {
+            return await _dbSet.AnyAsync(s => s.SurveyFormId == surveyFormId);
         }
         //public bool CheckExistenceBySurveyFormID(int surveyFormID)
         //{
