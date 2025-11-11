@@ -1,28 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
 import { FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormControlDirective, FormDirective, FormLabelDirective } from '@coreui/angular';
 import { SurveyFormModel } from '@models/survey-models/survey-form.model';
-import { EQuestionTypes } from '@common/global';
+import { ELanguages, EQuestionTypes } from '@common/global';
+import { ParticipantInfoComponent } from "../participant-info";
 
 @Component({
   selector: 'app-default',
   templateUrl: './default.component.html',
   styleUrl: './default.component.scss',
-  imports: [CommonModule, FormControlDirective, FormLabelDirective, FormDirective, ReactiveFormsModule]
+  imports: [CommonModule, ReactiveFormsModule, ParticipantInfoComponent]
 })
 export class DefaultComponent implements OnInit {
-  language: string = 'en';
-  surveyForm: SurveyFormModel | null = null;
-  questionTypes : any = EQuestionTypes;
+   @ViewChild('participantInfoComponent') participantInfoComponent!: ParticipantInfoComponent;
+  eLanguages = ELanguages;
+  selectedLanguage: string = ELanguages.Vietnamese;
+  surveyForm!: SurveyFormModel;
+  questionTypes: any = EQuestionTypes;
 
-  participantForm: FormGroup = new FormGroup({
-    fullName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10,15}$')])
-  });
+  participantForm: FormGroup = new FormGroup({});
 
   constructor(
     private route: ActivatedRoute,
@@ -34,16 +33,30 @@ export class DefaultComponent implements OnInit {
     this.surveyFormService.getReviewFormById(surveyId).subscribe({
       next: (res) => {
         this.surveyForm = res.data;
-        console.log('Fetched survey form:', res.data);
+        console.log('Fetched survey form:', this.surveyForm);
       },
       error: (err) => {
         console.error('Error fetching survey form:', err);
       }
     });
   }
-  onSubmit() { }
 
-  get fullName() { return this.participantForm.get('fullname'); }
-  get email() { return this.participantForm.get('email'); }
-  get phoneNumber() { return this.participantForm.get('phoneNumber'); }
+  onChangeLanguage(): void {
+    this.selectedLanguage = this.selectedLanguage === ELanguages.Vietnamese ? ELanguages.English : ELanguages.Vietnamese;
+    console.log('Language changed to:', this.selectedLanguage);
+  }
+
+  onStartSurvey(): void {
+    if(this.surveyForm.participantInfoConfigs && this.surveyForm.participantInfoConfigs.length > 0) {
+      if(this.participantInfoComponent.participantForm.valid) {
+        const participantData = this.participantInfoComponent.participantForm.value;
+        console.log('Participant Info Submitted:', participantData);
+      }else{
+        this.participantInfoComponent.supportMarkAsTouched();
+      }
+      
+    }else{
+      console.log('No participant info required, starting survey directly.');
+    }
+  }
 }

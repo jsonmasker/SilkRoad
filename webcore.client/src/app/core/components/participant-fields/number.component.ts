@@ -1,9 +1,9 @@
-import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, Input, forwardRef, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-participant-textarea',
+  selector: 'app-participant-number',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
@@ -14,31 +14,26 @@ import { CommonModule } from '@angular/common';
           <span class="text-danger">*</span>
         }
       </label>
-      <textarea
+      <input
         [id]="fieldId"
+        type="number"
         class="form-control"
         [placeholder]="placeholder"
         [formControl]="control"
-        [minlength]="minLength"
-        [maxlength]="maxLength"
-        [rows]="rows"
+        [min]="minValue"
+        [max]="maxValue"
         [class.is-invalid]="control.invalid && control.touched"
-      ></textarea>
-      @if (maxLength > 0) {
-        <div class="form-text">
-          {{ control.value?.length || 0 }} / {{ maxLength }} characters
-        </div>
-      }
+      />
       @if (control.invalid && control.touched) {
         <div class="invalid-feedback">
           @if (control.errors?.['required']) {
             <div>{{ label }} is required</div>
           }
-          @if (control.errors?.['minlength']) {
-            <div>Minimum length is {{ minLength }} characters</div>
+          @if (control.errors?.['min']) {
+            <div>Minimum value is {{ minValue }}</div>
           }
-          @if (control.errors?.['maxlength']) {
-            <div>Maximum length is {{ maxLength }} characters</div>
+          @if (control.errors?.['max']) {
+            <div>Maximum value is {{ maxValue }}</div>
           }
         </div>
       }
@@ -47,21 +42,20 @@ import { CommonModule } from '@angular/common';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ParticipantTextAreaComponent),
+      useExisting: forwardRef(() => ParticipantNumberComponent),
       multi: true
     }
   ]
 })
-export class ParticipantTextAreaComponent implements ControlValueAccessor {
+export class ParticipantNumberComponent implements ControlValueAccessor, OnInit {
   @Input() fieldId: string = '';
   @Input() label: string = '';
   @Input() placeholder: string = '';
   @Input() required: boolean = false;
-  @Input() minLength: number = 0;
-  @Input() maxLength: number = 500;
-  @Input() rows: number = 4;
+  @Input() minValue: number | null = null;
+  @Input() maxValue: number | null = null;
 
-  control = new FormControl('');
+  control = new FormControl<number | null>(null);
   
   private onChange = (value: any) => {};
   private onTouched = () => {};
@@ -70,6 +64,17 @@ export class ParticipantTextAreaComponent implements ControlValueAccessor {
     this.control.valueChanges.subscribe(value => {
       this.onChange(value);
     });
+  }
+
+  ngOnInit() {
+    const validators = [];
+    if (this.minValue !== null) {
+      validators.push(Validators.min(this.minValue));
+    }
+    if (this.maxValue !== null) {
+      validators.push(Validators.max(this.maxValue));
+    }
+    this.control.setValidators(validators);
   }
 
   writeValue(value: any): void {

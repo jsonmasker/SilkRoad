@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TextEditorExampleComponent } from "@components/text-editor/text-editor-example.component";
-import { NoInternetIconComponent } from "@components/icons/no-internet-icon.component";
+import { ParticipantInfoDemoComponent } from "../pages/form-styles/participant-info";
 
 
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
   styleUrl: './test.component.scss',
-  imports: []
+  imports: [ParticipantInfoDemoComponent]
 })
 export class TestComponent {
 clicked(): void{
