@@ -52,11 +52,18 @@ namespace BusinessLogic.Helpers.SystemHelpers
             }
             return result.Succeeded;
         }
-
+        public async Task<IEnumerable<OptionModel>> GetOptionListAsync()
+        {
+            return (await _unitOfWork.RoleRepository.GetAllAsync()).Select(x => new OptionModel
+            {
+                Id = x.Id,
+                Name = x.Name
+            });
+        }
         public async Task<Pagination<RoleViewModel>> GetAllAsync(int pageIndex, int pageSize)
         {
             Pagination<RoleViewModel> model = new Pagination<RoleViewModel>();
-            if(pageSize < 0)
+            if (pageSize < 0)
                 pageSize = model.PageSize;
             IEnumerable<RoleDTO> data = await _unitOfWork.RoleRepository.
                 GetAllAsync(filter: s => s.IsActive && !s.IsDeleted);

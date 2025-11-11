@@ -5,6 +5,6 @@ namespace LipstickBusinessLogic.ILipstickHelpers
 {
     public interface ISizeHelper : IBaseHelper<SizeViewModel>
     {
-        public Task<Pagination<SizeViewModel>> GetAllAsync(int pageIndex,int pageSize);
+        public Task<Pagination<SizeViewModel>> GetAllAsync(int pageIndex, int pageSize);
     }
 }

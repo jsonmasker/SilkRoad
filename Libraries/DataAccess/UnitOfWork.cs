@@ -1,11 +1,14 @@
 ﻿using DataAccess.IRepositories;
 using DataAccess.Repositories;
+using Microsoft.EntityFrameworkCore.Storage;
 namespace DataAccess
 {
     public class UnitOfWork : IUnitOfWork
     {
         private ApplicationContext context;
         private bool disposed = false;
+        private IDbContextTransaction? _transaction;
+
 
         #region System
         public IUserRepository UserSystemRepository { get; private set; }
@@ -52,17 +55,39 @@ namespace DataAccess
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        public void BeginTransaction()
+        public IDbContextTransaction BeginTransaction()
         {
-            throw new NotImplementedException();
+            _transaction = context.Database.BeginTransaction();
+            return _transaction;
         }
         public void Commit()
         {
-            throw new NotImplementedException();
+            try
+            {
+                _transaction?.Commit();
+            }
+            catch
+            {
+                Rollback();
+                throw;
+            }
+            finally
+            {
+                _transaction?.Dispose();
+                _transaction = null;
+            }
         }
         public void Rollback()
         {
-            throw new NotImplementedException();
+            try
+            {
+                _transaction?.Rollback();
+            }
+            finally
+            {
+                _transaction?.Dispose();
+                _transaction = null;
+            }
         }
         public async Task SaveChangesAsync()
         {

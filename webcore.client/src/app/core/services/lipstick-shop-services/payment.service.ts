@@ -14,11 +14,11 @@ export class PaymentService {
 
   constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
   getAll(query: any): Observable<APIResponse<Pagination<PaymentViewModel>>> {
-    return this.http.get<APIResponse<Pagination<PaymentViewModel>>>(EUrl.getAllUrlPayment, { headers: this.authenticationService.GetHeaders(), params: query }).pipe(
+    return this.http.get<APIResponse<Pagination<PaymentViewModel>>>(EUrl.getAllUrlPayment, { headers: this.authenticationService.getHeaders(), params: query }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<PaymentViewModel>>>(EUrl.getAllUrlPayment, { headers: this.authenticationService.GetHeaders(), params: query }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<PaymentViewModel>>>(EUrl.getAllUrlPayment, { headers: this.authenticationService.getHeaders(), params: query }))
           );
         } else {
           return throwError(() => error);
@@ -28,11 +28,11 @@ export class PaymentService {
   }
 
   getById(id: any): Observable<APIResponse<PaymentViewModel>> {
-    return this.http.get<APIResponse<PaymentViewModel>>(EUrl.getByIdUrlPayment + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<PaymentViewModel>>(EUrl.getByIdUrlPayment + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<PaymentViewModel>>(EUrl.getByIdUrlPayment + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<PaymentViewModel>>(EUrl.getByIdUrlPayment + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);

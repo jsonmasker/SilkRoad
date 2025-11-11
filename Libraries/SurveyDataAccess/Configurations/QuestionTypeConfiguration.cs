@@ -8,7 +8,7 @@ namespace SurveyDataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<QuestionTypeDTO> builder)
         {
-            builder.ToTable("Table_QuestionTypes");
+            builder.ToTable("QuestionTypes");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
             builder.Property(s => s.Name).HasColumnType("nvarchar(255)");

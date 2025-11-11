@@ -13,11 +13,11 @@ export class SettingService {
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
 
   getAllSettings(): Observable<SettingModel[]> {
-    return this.http.get<SettingModel[]>(EUrl.getAllUrlSetting, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<SettingModel[]>(EUrl.getAllUrlSetting, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<SettingModel[]>(EUrl.getAllUrlSetting, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<SettingModel[]>(EUrl.getAllUrlSetting, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
            return throwError(() => error);
@@ -27,11 +27,11 @@ export class SettingService {
   }
 
   getSettingByKey(key: any): Observable<SettingModel> {
-    return this.http.get<SettingModel>(EUrl.getByKeyUrlSetting + `/${key}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<SettingModel>(EUrl.getByKeyUrlSetting + `/${key}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<SettingModel>(EUrl.getByKeyUrlSetting + `/${key}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<SettingModel>(EUrl.getByKeyUrlSetting + `/${key}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
            return throwError(() => error);
@@ -41,11 +41,11 @@ export class SettingService {
   }
 
   updateSetting(setting: SettingModel): Observable<SettingModel> {
-    return this.http.put<SettingModel>(EUrl.updateUrlSetting, setting, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<SettingModel>(EUrl.updateUrlSetting, setting, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<SettingModel>(EUrl.updateUrlSetting, setting, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<SettingModel>(EUrl.updateUrlSetting, setting, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
            return throwError(() => error);

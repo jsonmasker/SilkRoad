@@ -1,4 +1,5 @@
 ﻿using DataAccess.IRepositories;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DataAccess
 {
@@ -15,7 +16,7 @@ namespace DataAccess
         IActionRepository ActionRepository { get; }
         #endregion
 
-        void BeginTransaction();
+        IDbContextTransaction BeginTransaction();
         void Commit();
         void Rollback();
         void SaveChanges();

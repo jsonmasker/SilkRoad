@@ -1,0 +1,233 @@
+.text-editor-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  
+  ::ng-deep {
+    // NGX Editor Menu Styling
+    ngx-editor-menu {
+      .NgxEditor__MenuBar {
+        background-color: #f8fafc;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 8px 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        
+        .NgxEditor__MenuItem {
+          border: 1px solid transparent;
+          background: transparent;
+          color: #374151;
+          padding: 6px 8px;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 14px;
+          transition: all 0.2s ease;
+          
+          &:hover {
+            background-color: #e5e7eb;
+            border-color: #d1d5db;
+          }
+          
+          &.NgxEditor__MenuItem--Active {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #2563eb;
+          }
+          
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
+        
+        .NgxEditor__Dropdown {
+          select {
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 13px;
+            background-color: white;
+            color: #374151;
+            cursor: pointer;
+            
+            &:hover {
+              border-color: #9ca3af;
+            }
+            
+            &:focus {
+              outline: none;
+              border-color: #3b82f6;
+              box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+            }
+          }
+        }
+        
+        .NgxEditor__Separator {
+          width: 1px;
+          height: 20px;
+          background-color: #d1d5db;
+          margin: 0 4px;
+        }
+      }
+    }
+    
+    // NGX Editor Content Area Styling
+    ngx-editor {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      
+      .NgxEditor {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        
+        .NgxEditor__Content {
+          flex: 1;
+          min-height: 200px;
+          
+          .ProseMirror {
+            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #374151;
+            outline: none;
+            min-height: 180px;
+            
+            &:focus {
+              outline: none;
+            }
+            
+            // Typography styles
+            h1, h2, h3, h4, h5, h6 {
+              font-weight: 600;
+              margin: 1em 0 0.5em 0;
+              color: #1f2937;
+            }
+            
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.5em; }
+            h3 { font-size: 1.25em; }
+            h4 { font-size: 1.1em; }
+            h5 { font-size: 1em; }
+            h6 { font-size: 0.9em; }
+            
+            p {
+              margin: 0.5em 0;
+            }
+            
+            blockquote {
+              border-left: 4px solid #d1d5db;
+              padding-left: 16px;
+              margin: 16px 0;
+              font-style: italic;
+              color: #6b7280;
+            }
+            
+            code {
+              background-color: #f3f4f6;
+              padding: 2px 6px;
+              border-radius: 4px;
+              font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+              font-size: 0.9em;
+              color: #dc2626;
+            }
+            
+            pre {
+              background-color: #f3f4f6;
+              padding: 12px;
+              border-radius: 6px;
+              overflow-x: auto;
+              margin: 12px 0;
+              
+              code {
+                background: none;
+                padding: 0;
+                color: #374151;
+              }
+            }
+            
+            ul, ol {
+              padding-left: 20px;
+              margin: 8px 0;
+            }
+            
+            li {
+              margin: 4px 0;
+            }
+            
+            a {
+              color: #3b82f6;
+              text-decoration: underline;
+              
+              &:hover {
+                color: #1d4ed8;
+              }
+            }
+            
+            img {
+              max-width: 100%;
+              height: auto;
+              border-radius: 4px;
+              margin: 8px 0;
+            }
+            
+            // Placeholder styling
+            .ProseMirror-placeholder {
+              color: #9ca3af;
+              pointer-events: none;
+            }
+            
+            // Selection styling
+            ::selection {
+              background-color: rgba(59, 130, 246, 0.2);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Disabled state
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+  // Focus state
+  &:focus-within {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  }
+  
+  // Responsive design
+  @media (max-width: 768px) {
+    ::ng-deep {
+      ngx-editor-menu .NgxEditor__MenuBar {
+        padding: 6px 8px;
+        
+        .NgxEditor__MenuItem {
+          padding: 4px 6px;
+          font-size: 12px;
+        }
+        
+        .NgxEditor__Dropdown select {
+          padding: 2px 4px;
+          font-size: 12px;
+        }
+      }
+      
+      ngx-editor .NgxEditor .NgxEditor__Content .ProseMirror {
+        padding: 12px;
+        font-size: 13px;
+        min-height: 150px;
+      }
+    }
+  }
+}

@@ -4,7 +4,6 @@ using Common.ViewModels.LipstickClientViewModels;
 using LipstickBusinessLogic.ILipstickClientHelpers;
 using LipstickDataAccess;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 
 namespace LipstickBusinessLogic.LipstickClientHelpers
 {

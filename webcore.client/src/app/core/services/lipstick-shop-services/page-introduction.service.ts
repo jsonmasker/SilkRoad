@@ -14,11 +14,11 @@ export class PageIntroductionService {
 
   constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
   getAll(pageTypeId: number, pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<PageIntroductionViewModel>>> {
-    return this.http.get<APIResponse<Pagination<PageIntroductionViewModel>>>(EUrl.getAllUrlPageIntroduction + `/${pageTypeId}/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<PageIntroductionViewModel>>>(EUrl.getAllUrlPageIntroduction + `/${pageTypeId}/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<PageIntroductionViewModel>>>(EUrl.getAllUrlPageIntroduction + `/${pageTypeId}/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<PageIntroductionViewModel>>>(EUrl.getAllUrlPageIntroduction + `/${pageTypeId}/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -27,11 +27,11 @@ export class PageIntroductionService {
     );
   }
   getAllActive(): Observable<APIResponse<PageIntroductionViewModel[]>> {
-    return this.http.get<APIResponse<PageIntroductionViewModel[]>>(EUrl.getAllActiveUrlPageIntroduction, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<PageIntroductionViewModel[]>>(EUrl.getAllActiveUrlPageIntroduction, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<PageIntroductionViewModel[]>>(EUrl.getAllActiveUrlPageIntroduction, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<PageIntroductionViewModel[]>>(EUrl.getAllActiveUrlPageIntroduction, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -41,11 +41,11 @@ export class PageIntroductionService {
   }
 
   getById(id: any): Observable<APIResponse<PageIntroductionViewModel>> {
-    return this.http.get<APIResponse<PageIntroductionViewModel>>(EUrl.getByIdUrlPageIntroduction + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<PageIntroductionViewModel>>(EUrl.getByIdUrlPageIntroduction + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<PageIntroductionViewModel>>(EUrl.getByIdUrlPageIntroduction + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<PageIntroductionViewModel>>(EUrl.getByIdUrlPageIntroduction + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -55,11 +55,11 @@ export class PageIntroductionService {
   }
 
   create(formData: FormData): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlPageIntroduction, formData, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.post<BaseAPIResponse>(EUrl.createUrlPageIntroduction, formData, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlPageIntroduction, formData, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlPageIntroduction, formData, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -69,11 +69,11 @@ export class PageIntroductionService {
   }
 
   update(formData: FormData): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlPageIntroduction, formData, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(EUrl.updateUrlPageIntroduction, formData, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlPageIntroduction, formData, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlPageIntroduction, formData, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -83,11 +83,11 @@ export class PageIntroductionService {
   }
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<PageIntroductionViewModel>>> {
     const url = EUrl.getAllDeletedUrlPageIntroduction.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<PageIntroductionViewModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<PageIntroductionViewModel>>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<PageIntroductionViewModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<PageIntroductionViewModel>>>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -97,11 +97,11 @@ export class PageIntroductionService {
   }
 
   softDelete(id:number):Observable<BaseAPIResponse>{
-  return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlPageIntroduction+`/${id}`,{headers:this.authenticationService.GetHeaders()}).pipe(
+  return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlPageIntroduction+`/${id}`,{headers:this.authenticationService.getHeaders()}).pipe(
     catchError(error=>{
       if(error.status===401){
-        return this.authenticationService.ReNewToken().pipe(
-          switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlPageIntroduction+`/${id}`,{headers:this.authenticationService.GetHeaders()}))
+        return this.authenticationService.reNewToken().pipe(
+          switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlPageIntroduction+`/${id}`,{headers:this.authenticationService.getHeaders()}))
         );
       }else{
         return throwError(() => error);
@@ -112,11 +112,11 @@ export class PageIntroductionService {
 
   restore(id: number): Observable<BaseAPIResponse> {
     const url = EUrl.restoreUrlPageIntroduction.concat('/', id.toString());
-    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -127,11 +127,11 @@ export class PageIntroductionService {
 
   delete(id: number): Observable<BaseAPIResponse> {
     const url = EUrl.deleteUrlPageIntroduction.concat('/', id.toString());
-    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);

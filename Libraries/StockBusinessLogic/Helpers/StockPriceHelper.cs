@@ -1,12 +1,6 @@
 ﻿using StockBusinessLogic.IHelpers;
-using StockBusinessLogic.Models;
 using StockDataAccess;
 using StockDataAccess.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StockBusinessLogic.Helpers
 {
@@ -25,8 +19,8 @@ namespace StockBusinessLogic.Helpers
             if (company == null)
                 return false;
 
-            var lastPrice =  await _unitOfWork.StockPriceRepository.GetLastPriceAsync(company.Id);
-            if( lastPrice != null && lastPrice.Date >= new DateTimeOffset(company.IPODate).ToUnixTimeSeconds())
+            var lastPrice = await _unitOfWork.StockPriceRepository.GetLastPriceAsync(company.Id);
+            if (lastPrice != null && lastPrice.Date >= new DateTimeOffset(company.IPODate).ToUnixTimeSeconds())
                 return false;
 
             long fromUnixTime = new DateTimeOffset(company.IPODate).ToUnixTimeSeconds();

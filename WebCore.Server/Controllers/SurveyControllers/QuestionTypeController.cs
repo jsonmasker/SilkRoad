@@ -28,7 +28,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
             //string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
-            [HttpGet("GetOptionList")]
+        [HttpGet("GetOptionList")]
         public async Task<IActionResult> GetOptionList()
         {
             var data = await _helper.GetOptionListAsync();

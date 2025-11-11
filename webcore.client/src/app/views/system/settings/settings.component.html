@@ -1,0 +1,75 @@
+<h1>Setting List</h1>
+
+<c-card class="mb-4">
+  <c-card-header i18n="@@dataTable">Data table</c-card-header>
+  <c-card-body>
+    <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0">
+      <thead class="text-nowrap text-truncate">
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Name</th>
+          <th scope="col">Label</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of settingList; track $index) {
+          <tr>
+              <td>{{ $index + 1 }}</td>
+              <td>{{ item.key }}</td>
+              <td>{{ item.value | slice:0:50 }} 
+                @if (item.value.length > 50) {
+                  ...
+                }
+              <td>
+                <div class="d-flex justify-content-end">
+                  <button (click)="updateData(item.key)" class="btn btn-primary me-2">
+                    <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+                  </button>
+                </div>
+              </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </c-card-body>
+</c-card>
+
+<!--Update Model-->
+<c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)" id="verticallyCenteredUpdateModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Update Setting Configuration</h5>
+    <button (click)="toggleLiveUpdateModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+    <c-modal-body>
+      <div class="mb-2 row">
+        <div class="col-6">
+          <label cLabel for="key" class="me-2">Key: </label>
+          <input cFormControl formControlName="key" readonly>
+        </div>
+      </div>
+      <div class="mb-2 row">
+        <div class="col-12">
+          <label cLabel for="value">Value: <span class="text-danger">(*)</span></label>
+          <textarea cFormControl formControlName="value" rows="3"></textarea>
+          @if (valueUpdateForm?.invalid && (valueUpdateForm?.dirty || valueUpdateForm?.touched)) {
+            <div class="text-danger">
+              @if (valueUpdateForm?.hasError('required')) {
+                <div>Value is required.</div>
+              }
+            </div>
+          }
+        </div>     
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveUpdateModel()" cButton color="secondary" i18n="@@close">
+        <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+      </button>
+      <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">
+        <svg [cIcon]="icons.cilSave" width="20" class="text-white" title="Save Icon"></svg>
+      </button>
+    </c-modal-footer>
+  </form>
+</c-modal>

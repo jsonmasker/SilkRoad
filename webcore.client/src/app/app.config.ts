@@ -36,6 +36,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     importProvidersFrom(SidebarModule, DropdownModule),
     IconSetService,
-    provideAnimationsAsync(), provideNzI18n(en_US), provideAnimationsAsync(), provideHttpClient()
+    provideAnimationsAsync(), provideNzI18n(en_US), provideHttpClient()
   ]
 };

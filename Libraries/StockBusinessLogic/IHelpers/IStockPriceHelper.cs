@@ -1,10 +1,4 @@
-﻿using StockBusinessLogic.Models;
-using StockDataAccess.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using StockDataAccess.DTOs;
 
 namespace StockBusinessLogic.IHelpers
 {

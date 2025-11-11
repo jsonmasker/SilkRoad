@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SurveyDataAccess.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SurveyDataAccess.Configurations
 {
@@ -13,7 +8,7 @@ namespace SurveyDataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<PredefinedAnswerLibraryDTO> builder)
         {
-            builder.ToTable("Table_PredefinedAnswerLibraries");
+            builder.ToTable("PredefinedAnswerLibraries");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id)
                 .HasDefaultValueSql("NEWID()")

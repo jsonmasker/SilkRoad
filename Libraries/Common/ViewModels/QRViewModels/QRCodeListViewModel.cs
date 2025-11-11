@@ -4,7 +4,7 @@ namespace Common.ViewModels.QRViewModels
 {
     public class QRCodeListViewModel : QRCodeViewModel
     {
-        [Range(1,10000)]
+        [Range(1, 10000)]
         public int Quantity { get; set; }
         public string? Prefix { get; set; }
         [Range(5, 20)]

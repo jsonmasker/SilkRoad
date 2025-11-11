@@ -15,11 +15,11 @@ export class TableService {
 
   getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<TableModel>>> {
     const url = EUrl.getAllUrlTable.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<TableModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<TableModel>>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<TableModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<TableModel>>>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -29,11 +29,11 @@ export class TableService {
   }
   getOptionList(): Observable<APIResponse<OptionModel[]>> {
     const url = EUrl.getOptionListUrlTable;
-    return this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<OptionModel[]>>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -44,11 +44,11 @@ export class TableService {
 
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<TableModel>>> {
     const url = EUrl.getAllDeletedUrlTable.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<TableModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<TableModel>>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<TableModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<TableModel>>>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -59,11 +59,11 @@ export class TableService {
 
   getById(id: number): Observable<APIResponse<TableModel>> {
     const url = EUrl.getByIdUrlTable.concat('/',id.toString());
-    return this.http.get<APIResponse<TableModel>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<TableModel>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<TableModel>>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<TableModel>>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -73,11 +73,11 @@ export class TableService {
   }
 
   create(model: TableModel): Observable<BaseAPIResponse> {
-    return this.http.post<APIResponse<TableModel>>(EUrl.createUrlTable, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.post<APIResponse<TableModel>>(EUrl.createUrlTable, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.post<APIResponse<TableModel>>(EUrl.createUrlTable, model, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<APIResponse<TableModel>>(EUrl.createUrlTable, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -87,11 +87,11 @@ export class TableService {
   }
 
   update(model: TableModel): Observable<BaseAPIResponse> {
-    return this.http.put<APIResponse<TableModel>>(EUrl.updateUrlTable, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<APIResponse<TableModel>>(EUrl.updateUrlTable, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<APIResponse<TableModel>>(EUrl.updateUrlTable, model, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<APIResponse<TableModel>>(EUrl.updateUrlTable, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -102,11 +102,11 @@ export class TableService {
 
   softDelete(id: number): Observable<BaseAPIResponse> {
     const url = EUrl.softDeleteUrlTable.concat('/',id.toString());
-    return this.http.put<APIResponse<void>>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<APIResponse<void>>(url, {}, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<APIResponse<void>>(url, {}, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<APIResponse<void>>(url, {}, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -117,11 +117,11 @@ export class TableService {
 
   restore(id: number): Observable<BaseAPIResponse> {
     const url = EUrl.restoreUrlTable.concat('/',id.toString());
-    return this.http.put<APIResponse<void>>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<APIResponse<void>>(url, {}, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<APIResponse<void>>(url, {}, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<APIResponse<void>>(url, {}, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -132,11 +132,11 @@ export class TableService {
 
   delete(id: number): Observable<BaseAPIResponse> {
     const url = EUrl.deleteUrlTable.concat('/',id.toString());
-    return this.http.delete<APIResponse<void>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.delete<APIResponse<void>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.delete<APIResponse<void>>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.delete<APIResponse<void>>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);

@@ -59,7 +59,8 @@ namespace LipstickBusinessLogic.LipstickClientHelpers
                 }
 
                 return true;
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 // Log the exception (ex) here if needed
                 return false;

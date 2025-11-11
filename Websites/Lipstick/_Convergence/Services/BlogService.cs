@@ -39,7 +39,7 @@ namespace Lipstick._Convergence.Services
         public async Task<Pagination<BlogClientViewModel>?> GetByTopicId(string language, int topicId, int pageIndex, int pageSize)
         {
             string baseUrl = _appConfig.GetBaseAPIURL();
-            string url =string.Concat(_appConfig.GetBlogsByTopicIdUrl,topicId, "/", pageIndex, "/", pageSize);
+            string url = string.Concat(_appConfig.GetBlogsByTopicIdUrl, topicId, "/", pageIndex, "/", pageSize);
             using (HttpClient httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri(baseUrl);
@@ -81,7 +81,7 @@ namespace Lipstick._Convergence.Services
             }
             return null;
         }
-        public async Task<BlogClientViewModel?> GetById(string language,int id)
+        public async Task<BlogClientViewModel?> GetById(string language, int id)
         {
             string baseUrl = _appConfig.GetBaseAPIURL();
             string url = string.Concat(_appConfig.GetBlogByIdUrl, id);

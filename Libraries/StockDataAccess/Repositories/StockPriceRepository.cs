@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StockDataAccess.DTOs;
 using StockDataAccess.IRepositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StockDataAccess.Repositories
 {

@@ -14,11 +14,11 @@ export class SurveyFormService {
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
   getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<SurveyFormModel>>> {
     const url = EUrl.getAllUrlSurveyForm +'/' + pageIndex + '/' + pageSize;
-    return this.http.get<APIResponse<Pagination<SurveyFormModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<SurveyFormModel>>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<SurveyFormModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<SurveyFormModel>>>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -26,12 +26,13 @@ export class SurveyFormService {
       })
     );
   }
+
   getAllActive(): Observable<APIResponse<SurveyFormModel[]>> {
-    return this.http.get<APIResponse<SurveyFormModel[]>>(EUrl.getAllActiveUrlSurveyForm, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<SurveyFormModel[]>>(EUrl.getAllActiveUrlSurveyForm, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<SurveyFormModel[]>>(EUrl.getAllActiveUrlSurveyForm, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<SurveyFormModel[]>>(EUrl.getAllActiveUrlSurveyForm, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -39,12 +40,13 @@ export class SurveyFormService {
       })
     );
   }
+
   getById(id: any): Observable<APIResponse<SurveyFormModel>> {
-    return this.http.get<APIResponse<SurveyFormModel>>(EUrl.getByIdUrlSurveyForm + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<SurveyFormModel>>(EUrl.getByIdUrlSurveyForm + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<SurveyFormModel>>(EUrl.getByIdUrlSurveyForm + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<SurveyFormModel>>(EUrl.getByIdUrlSurveyForm + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -52,13 +54,14 @@ export class SurveyFormService {
       })
     );
   }
+
   getEagerById(id: any): Observable<APIResponse<SurveyFormModel>> {
     const url = EUrl.getEagerByIdUrlSurveyForm + `/${id}`;
-    return this.http.get<APIResponse<SurveyFormModel>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<SurveyFormModel>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<SurveyFormModel>>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<SurveyFormModel>>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -66,12 +69,13 @@ export class SurveyFormService {
       })
     );
   }
+
   getEagerUIById(id: any): Observable<APIResponse<SurveyFormModel>> {
-    return this.http.get<APIResponse<SurveyFormModel>>(EUrl.getEagerUIByIdUrlSurveyForm + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<SurveyFormModel>>(EUrl.getEagerUIByIdUrlSurveyForm + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<SurveyFormModel>>(EUrl.getEagerUIByIdUrlSurveyForm + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<SurveyFormModel>>(EUrl.getEagerUIByIdUrlSurveyForm + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -79,12 +83,13 @@ export class SurveyFormService {
       })
     );
   }
-  create(model: SurveyFormModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlSurveyForm, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+
+  create(model: SurveyFormModel): Observable<APIResponse<SurveyFormModel>> {
+    return this.http.post<APIResponse<SurveyFormModel>>(EUrl.createUrlSurveyForm, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlSurveyForm, model, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<APIResponse<SurveyFormModel>>(EUrl.createUrlSurveyForm, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -92,12 +97,13 @@ export class SurveyFormService {
       })
     );
   }
+
   update(model: SurveyFormModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlSurveyForm, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(EUrl.updateUrlSurveyForm, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlSurveyForm, model, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlSurveyForm, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -105,13 +111,14 @@ export class SurveyFormService {
       })
     );
   }
+
   softDelete(id: any): Observable<BaseAPIResponse> {
     const url = EUrl.softDeleteUrlSurveyForm + `/${id}`;
-    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -122,11 +129,11 @@ export class SurveyFormService {
 
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<SurveyFormModel>>> {
     const url = EUrl.getAllDeletedUrlSurveyForm + `/${pageIndex}/${pageSize}`;
-    return this.http.get<APIResponse<Pagination<SurveyFormModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<SurveyFormModel>>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<SurveyFormModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<SurveyFormModel>>>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -137,11 +144,11 @@ export class SurveyFormService {
 
   restore(id: any): Observable<BaseAPIResponse> {
     const url = EUrl.restoreUrlSurveyForm + `/${id}`;
-    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -152,11 +159,26 @@ export class SurveyFormService {
 
   delete(id: any): Observable<BaseAPIResponse> {
     const url = EUrl.deleteUrlSurveyForm + `/${id}`;
-    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
+
+  public(id: any): Observable<BaseAPIResponse> {
+    const url = EUrl.publicUrlSurveyForm + `/${id}`;
+    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);

@@ -18,8 +18,6 @@ import { QuestionLibraryService } from '@services/survey-services/question-libra
 import { PredefinedAnswerService } from '@services/survey-services/predefined-answer.service';
 import { QuestionService } from '@services/survey-services/question.service';
 import { QuestionGroupService } from '@services/survey-services/question-group.service';
-import { n } from 'node_modules/@angular/cdk/overlay-module.d-C2CxnwqT';
-import { e } from 'node_modules/@angular/cdk/focus-monitor.d-2iZxjw4R';
 
 @Component({
   selector: 'app-update-helper',

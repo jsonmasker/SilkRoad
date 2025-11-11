@@ -13,11 +13,11 @@ export class ProvinceService {
 
 constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
   getAll(): Observable<APIResponse<ProvinceModel[]>> {
-    return this.http.get<APIResponse<ProvinceModel[]>>(EUrl.getAllUrlProvince, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<ProvinceModel[]>>(EUrl.getAllUrlProvince, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<ProvinceModel[]>>(EUrl.getAllUrlProvince, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<ProvinceModel[]>>(EUrl.getAllUrlProvince, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);

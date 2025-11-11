@@ -65,7 +65,7 @@ namespace LipstickBusinessLogic.LipstickHelpers
             }
             return enumList;
         }
-        
+
         public bool Update(PageTypeViewModel model)
         {
             var data = _unitOfWork.PageTypeRepository.GetById(model.Id);

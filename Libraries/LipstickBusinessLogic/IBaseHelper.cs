@@ -1,6 +1,4 @@
-﻿using Common.Models;
-
-namespace LipstickBusinessLogic
+﻿namespace LipstickBusinessLogic
 {
     public interface IBaseHelper<T> where T : class
     {

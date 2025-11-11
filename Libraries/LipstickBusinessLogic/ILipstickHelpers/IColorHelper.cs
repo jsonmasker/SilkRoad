@@ -5,6 +5,6 @@ namespace LipstickBusinessLogic.ILipstickHelpers
 {
     public interface IColorHelper : IBaseHelper<ColorViewModel>
     {
-        public Task<Pagination<ColorViewModel>> GetAllAsync(int pageIndex,int pageSize);
+        public Task<Pagination<ColorViewModel>> GetAllAsync(int pageIndex, int pageSize);
     }
 }

@@ -15,7 +15,7 @@ namespace Common.ViewModels.LipstickClientViewModels
         public string Email { get; set; }
         [Required]
         public string ShippingAddress { get; set; }
-        [Range(1,63)]
+        [Range(1, 63)]
         public int ProvinceId { get; set; }
         [Range(1, 999)]
         public int DistrictId { get; set; }

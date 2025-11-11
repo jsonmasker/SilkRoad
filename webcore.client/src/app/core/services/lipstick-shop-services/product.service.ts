@@ -14,11 +14,11 @@ export class ProductService {
 
   constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
   getAll(): Observable<APIResponse<Pagination<ProductViewModel>>> {
-    return this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -28,11 +28,11 @@ export class ProductService {
   }
 
   getById(id: any): Observable<APIResponse<ProductViewModel>> {
-    return this.http.get<APIResponse<ProductViewModel>>(EUrl.getByIdUrlProduct + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<ProductViewModel>>(EUrl.getByIdUrlProduct + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<ProductViewModel>>(EUrl.getByIdUrlProduct + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<ProductViewModel>>(EUrl.getByIdUrlProduct + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -41,11 +41,11 @@ export class ProductService {
     );
   }
   getAllByFilter(query: any): Observable<APIResponse<Pagination<ProductViewModel>>> {
-    return this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct, { headers: this.authenticationService.GetHeaders(), params: query }).pipe(
+    return this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct, { headers: this.authenticationService.getHeaders(), params: query }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct, { headers: this.authenticationService.GetHeaders(), params: query }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct, { headers: this.authenticationService.getHeaders(), params: query }))
           );
         } else {
           return throwError(() => error);
@@ -55,11 +55,11 @@ export class ProductService {
   }
 
   getBySearchText(searchText: any): Observable<APIResponse<ProductViewModel[]>> {
-    return this.http.get<APIResponse<ProductViewModel[]>>(EUrl.getBySearchTextUrlProduct + `/${searchText}`, { headers: this.authenticationService.GetHeaders()} ).pipe(
+    return this.http.get<APIResponse<ProductViewModel[]>>(EUrl.getBySearchTextUrlProduct + `/${searchText}`, { headers: this.authenticationService.getHeaders()} ).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<ProductViewModel[]>>(EUrl.getBySearchTextUrlProduct + `/${searchText}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<ProductViewModel[]>>(EUrl.getBySearchTextUrlProduct + `/${searchText}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -69,11 +69,11 @@ export class ProductService {
   }
 
   create(model: FormData): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlProduct, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.post<BaseAPIResponse>(EUrl.createUrlProduct, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlProduct, model, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlProduct, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -83,11 +83,11 @@ export class ProductService {
   }
 
   update(model: FormData): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlProduct, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(EUrl.updateUrlProduct, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlProduct, model, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlProduct, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -96,11 +96,11 @@ export class ProductService {
     );
   }
   softDelete(id:number):Observable<BaseAPIResponse>{
-  return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlProduct+`/${id}`,{headers:this.authenticationService.GetHeaders()}).pipe(
+  return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlProduct+`/${id}`,{headers:this.authenticationService.getHeaders()}).pipe(
     catchError(error=>{
       if(error.status===401){
-        return this.authenticationService.ReNewToken().pipe(
-          switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlProduct+`/${id}`,{headers:this.authenticationService.GetHeaders()}))
+        return this.authenticationService.reNewToken().pipe(
+          switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlProduct+`/${id}`,{headers:this.authenticationService.getHeaders()}))
         );
       }else{
         return throwError(() => error);

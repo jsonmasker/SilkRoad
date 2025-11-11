@@ -6,6 +6,6 @@ namespace LipstickBusinessLogic.ILipstickHelpers
     public interface IPageContentHelper : IBaseHelper<PageContentViewModel>
     {
         public IEnumerable<PageContentViewModel> GetByPageTypeId(int pageTypeId);
-        public Task<Pagination<PageContentViewModel>> GetAllAsync(int pageIndex,int pageSize);
+        public Task<Pagination<PageContentViewModel>> GetAllAsync(int pageIndex, int pageSize);
     }
 }

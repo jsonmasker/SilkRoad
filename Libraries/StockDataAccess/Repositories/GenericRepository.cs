@@ -85,7 +85,7 @@ namespace StockDataAccess.Repositories
         public virtual void Delete(object id)
         {
             TEntity? entityToDelete = _dbSet.Find(id);
-            if(entityToDelete != null)
+            if (entityToDelete != null)
                 Delete(entityToDelete);
         }
 
@@ -103,7 +103,7 @@ namespace StockDataAccess.Repositories
 
             _dbSet.Attach(entityToUpdate);
             _context.Entry(entityToUpdate).State = EntityState.Modified;
-            
+
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null,

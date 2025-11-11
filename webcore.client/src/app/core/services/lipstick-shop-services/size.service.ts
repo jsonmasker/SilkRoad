@@ -14,11 +14,11 @@ export class SizeService {
 
   constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
   getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<SizeViewModel>>> {
-    return this.http.get<APIResponse<Pagination<SizeViewModel>>>(EUrl.getAllUrlSize + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<SizeViewModel>>>(EUrl.getAllUrlSize + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<SizeViewModel>>>(EUrl.getAllUrlSize + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<SizeViewModel>>>(EUrl.getAllUrlSize + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -27,11 +27,11 @@ export class SizeService {
     );
   }
   getAllActive(): Observable<APIResponse<SizeViewModel[]>> {
-    return this.http.get<APIResponse<SizeViewModel[]>>(EUrl.getAllActiveUrlSize, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<SizeViewModel[]>>(EUrl.getAllActiveUrlSize, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<SizeViewModel[]>>(EUrl.getAllActiveUrlSize, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<SizeViewModel[]>>(EUrl.getAllActiveUrlSize, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -41,11 +41,11 @@ export class SizeService {
   }
 
   getById(id: any): Observable<APIResponse<SizeViewModel>> {
-    return this.http.get<APIResponse<SizeViewModel>>(EUrl.getByIdUrlSize + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<SizeViewModel>>(EUrl.getByIdUrlSize + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<SizeViewModel>>(EUrl.getByIdUrlSize + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<SizeViewModel>>(EUrl.getByIdUrlSize + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -55,11 +55,11 @@ export class SizeService {
   }
 
   create(model: SizeViewModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlSize, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.post<BaseAPIResponse>(EUrl.createUrlSize, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlSize, model, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlSize, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -69,11 +69,11 @@ export class SizeService {
   }
 
   update(model: SizeViewModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlSize, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(EUrl.updateUrlSize, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlSize, model, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlSize, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -83,11 +83,11 @@ export class SizeService {
   }
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<SizeViewModel>>> {
     const url = EUrl.getAllDeletedUrlSize.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<SizeViewModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<SizeViewModel>>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<SizeViewModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<SizeViewModel>>>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -97,11 +97,11 @@ export class SizeService {
   }
 
   softDelete(id:number):Observable<BaseAPIResponse>{
-  return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlSize+`/${id}`,{headers:this.authenticationService.GetHeaders()}).pipe(
+  return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlSize+`/${id}`,{headers:this.authenticationService.getHeaders()}).pipe(
     catchError(error=>{
       if(error.status===401){
-        return this.authenticationService.ReNewToken().pipe(
-          switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlSize+`/${id}`,{headers:this.authenticationService.GetHeaders()}))
+        return this.authenticationService.reNewToken().pipe(
+          switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlSize+`/${id}`,{headers:this.authenticationService.getHeaders()}))
         );
       }else{
         return throwError(() => error);
@@ -112,11 +112,11 @@ export class SizeService {
 
   restore(id: number): Observable<BaseAPIResponse> {
     const url = EUrl.restoreUrlSize.concat('/', id.toString());
-    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -127,11 +127,11 @@ export class SizeService {
 
   delete(id: number): Observable<BaseAPIResponse> {
     const url = EUrl.deleteUrlSize.concat('/', id.toString());
-    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);

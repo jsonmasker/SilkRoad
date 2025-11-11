@@ -17,7 +17,7 @@ namespace Lipstick._Convergence.Services
             string url = _appConfig.GetAllActiveHomeBannerUrl;
             using (HttpClient httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri(baseUrl); 
+                httpClient.BaseAddress = new Uri(baseUrl);
                 httpClient.DefaultRequestHeaders.Add(Constants.ApiKeyHeaderName, _appConfig.ApiKey);
                 httpClient.DefaultRequestHeaders.Add(Constants.Language, language);
                 HttpResponseMessage response = await httpClient.GetAsync(url);

@@ -51,55 +51,28 @@ namespace SurveyBusinessLogic.Helpers
             };
         }
 
-        public async Task<bool> CreateAsync(SurveyFormDTO model, string? userName = null)
+        public async Task<SurveyFormDTO?> CreateAsync(SurveyFormDTO model, string? userName = null)
         {
-            //using (var transaction = _unitOfWork.BeginTransaction())
-            //{
-                try
-                {
-                    //var questionGroups = model.QuestionGroups;
-                    //var questions = model.Questions;
-
-                    model.Create(userName);
-                    model.Name = model.Name.Trim();
-                    model.TitleEN = model.TitleEN.Trim();
-                    model.TitleVN = model.TitleVN.Trim();
-                    model.DescriptionEN = model.DescriptionEN.Trim();
-                    model.DescriptionVN = model.DescriptionVN.Trim();
-                    model.Note = model.Note?.Trim();
-                    //model.QuestionGroups = [];
-                    //model.Questions = [];
+            try
+            {
+                model.Create(userName);
+                model.Name = model.Name.Trim();
+                model.TitleEN = model.TitleEN.Trim();
+                model.TitleVN = model.TitleVN.Trim();
+                model.DescriptionEN = model.DescriptionEN.Trim();
+                model.DescriptionVN = model.DescriptionVN.Trim();
+                model.Note = model.Note?.Trim();
 
                 await _unitOfWork.SurveyFormRepository.CreateAsync(model);
                 await _unitOfWork.SaveChangesAsync();
-                //if (questionGroups != null && questionGroups.Count() > 0)
-                //{
-                //    foreach (var item in questionGroups)
-                //    {
-                //        item.SurveyFormId = model.Id;
-                //        _unitOfWork.QuestionGroupRepository.Create(item);
-                //    }
-                //}
-                //if (questions != null && questions.Count() > 0)
-                //{
-                //    foreach (var item in questions)
-                //    {
-                //        item.SurveyFormId = model.Id;
-                //        _unitOfWork.QuestionRepository.Create(item);
-                //    }
-                //}
-                //_unitOfWork.SaveChanges();
-                //transaction.Commit();
 
-                return true;
-                }
-                catch
-                {
+                return model;
+            }
+            catch
+            {
+                return null;
+            }
 
-                    //transaction.Rollback();
-                    return false;
-                }
-            //}
         }
 
         public async Task<bool> UpdateAsync(SurveyFormDTO model, string? userName = null)
@@ -109,6 +82,10 @@ namespace SurveyBusinessLogic.Helpers
                 var data = await _unitOfWork.SurveyFormRepository.GetByIdAsync(model.Id);
                 if (data == null) return false;
                 data.Update(userName);
+                data.FormStyleId = model.FormStyleId;
+                data.IsLimited = model.IsLimited;
+                data.IsActive = data.IsActive;
+                data.MaxParticipants = model.MaxParticipants;
                 data.Name = model.Name.Trim();
                 data.TitleEN = model.TitleEN.Trim();
                 data.TitleVN = model.TitleVN.Trim();
@@ -170,11 +147,21 @@ namespace SurveyBusinessLogic.Helpers
             var questionGroups = await _unitOfWork.QuestionGroupRepository.GetEagerLoadingBySurveyFormIdAsync(id);
             var questions = await _unitOfWork.QuestionRepository.GetEagerLoadingBySurveyFormIdAsync(id);
             if (data == null) return null;
-            if( questionGroups == null) questionGroups = new List<QuestionGroupDTO>();
-            if( questions == null) questions = new List<QuestionDTO>();
+            if (questionGroups == null) questionGroups = new List<QuestionGroupDTO>();
+            if (questions == null) questions = new List<QuestionDTO>();
             data.QuestionGroups = questionGroups.ToList();
             data.Questions = questions.ToList();
             return data;
+        }
+
+        public async Task<bool> PublishAsync(int id, string? userName = null)
+        {
+            var data = await _unitOfWork.SurveyFormRepository.GetByIdAsync(id);
+            if(data == null) return false;
+            data.IsPublished = true;
+            data.Update(userName);
+            await _unitOfWork.SaveChangesAsync();
+            return true;
         }
     }
 }

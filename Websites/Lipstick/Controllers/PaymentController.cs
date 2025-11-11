@@ -1,7 +1,6 @@
 ﻿using Common;
 using Lipstick._Convergence.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace Lipstick.Controllers
 {

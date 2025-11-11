@@ -1,7 +1,7 @@
-﻿using Common.ViewModels.LipstickClientViewModels;
-using Common;
-using Newtonsoft.Json;
+﻿using Common;
 using Common.Models;
+using Common.ViewModels.LipstickClientViewModels;
+using Newtonsoft.Json;
 
 namespace Lipstick._Convergence.Services
 {
@@ -36,10 +36,10 @@ namespace Lipstick._Convergence.Services
             }
             return null;
         }
-        public async Task<Pagination<ProductClientViewModel>> GetProductSearchResult(string language, string searchText,  int pageIndex, int pageSize)
+        public async Task<Pagination<ProductClientViewModel>> GetProductSearchResult(string language, string searchText, int pageIndex, int pageSize)
         {
             string baseUrl = _appConfig.GetBaseAPIURL();
-            string url = string.Concat(_appConfig.GetProductSearchResultUrl,searchText, "/", pageIndex, "/", pageSize);
+            string url = string.Concat(_appConfig.GetProductSearchResultUrl, searchText, "/", pageIndex, "/", pageSize);
             using (HttpClient httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri(baseUrl);

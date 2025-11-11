@@ -1,7 +1,7 @@
-﻿using System.Text;
-using Common;
+﻿using Common;
 using Common.ViewModels.LipstickClientViewModels;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace Lipstick._Convergence.Services
 {

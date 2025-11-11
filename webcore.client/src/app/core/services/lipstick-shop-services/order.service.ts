@@ -14,11 +14,11 @@ export class OrderService {
 
   constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
   getAll(query: any): Observable<APIResponse<Pagination<OrderModel>>> {
-    return this.http.get<APIResponse<Pagination<OrderModel>>>(EUrl.getAllUrlOrder, { headers: this.authenticationService.GetHeaders(), params: query }).pipe(
+    return this.http.get<APIResponse<Pagination<OrderModel>>>(EUrl.getAllUrlOrder, { headers: this.authenticationService.getHeaders(), params: query }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<OrderModel>>>(EUrl.getAllUrlOrder, { headers: this.authenticationService.GetHeaders(), params: query }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<OrderModel>>>(EUrl.getAllUrlOrder, { headers: this.authenticationService.getHeaders(), params: query }))
           );
         } else {
           return throwError(() => error);
@@ -28,11 +28,11 @@ export class OrderService {
   }
 
   getById(id: any): Observable<APIResponse<OrderModel>> {
-    return this.http.get<APIResponse<OrderModel>>(EUrl.getByIdUrlOrder + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<OrderModel>>(EUrl.getByIdUrlOrder + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<OrderModel>>(EUrl.getByIdUrlOrder + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<OrderModel>>(EUrl.getByIdUrlOrder + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -42,11 +42,11 @@ export class OrderService {
   }
 
   create(model: OrderModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlOrder, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.post<BaseAPIResponse>(EUrl.createUrlOrder, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlOrder, model, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlOrder, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -57,11 +57,11 @@ export class OrderService {
 
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<OrderModel>>> {
     const url = EUrl.getAllDeletedUrlOrder.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<OrderModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<OrderModel>>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<OrderModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<OrderModel>>>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -71,11 +71,11 @@ export class OrderService {
   }
 
   update(model: OrderModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlOrder, model, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(EUrl.updateUrlOrder, model, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlOrder, model, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlOrder, model, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -85,11 +85,11 @@ export class OrderService {
   }
 
   softDelete(id: number): Observable<BaseAPIResponse> {
-    return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlOrder + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlOrder + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlOrder + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlOrder + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -100,11 +100,11 @@ export class OrderService {
 
   restore(id: number): Observable<BaseAPIResponse> {
     const url = EUrl.restoreUrlOrder.concat('/', id.toString());
-    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);

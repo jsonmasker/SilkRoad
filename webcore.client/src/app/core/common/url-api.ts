@@ -37,6 +37,9 @@ export enum EUrl {
     //QRCode
     generateAQRCode = "/api/qrCode/generateAQRCode",
     generateListQRCode = "/api/qrCode/generateListQRCode",
+    getAllFonts = "/api/qrCode/getAllFonts",
+    //Word to PDF
+    convertWordToPdf = "/api/convertWordToPdf/convertFile",
     //#endregion
 
     //#region LipstickShop
@@ -208,8 +211,11 @@ export enum EUrl {
     getByIdUrlAccount = "/api/user/getById/",
     createUrlAccount = "/api/user/create",
     updateUrlAccount = "/api/user/update",
+    deactivateUserUrlAccount = "/api/user/deactivateUser/",
+    activateUserUrlAccount = "/api/user/activateUser/",
     //Role
     getAllUrlRole = "/api/role/getAll",
+    getOptionListUrlRole = "/api/role/getOptionList",
     getAllActiveUrlRole = "/api/role/getAllActive",
     getByIdUrlRole = "/api/role/getById",
     createUrlRole = "/api/role/create",
@@ -277,6 +283,17 @@ export enum EUrl {
     getAllUrlQuestionType = "/api/questionType/getAll",
     getOptionListUrlQuestionType = "/api/questionType/getOptionList",
 
+    //store
+    getAllUrlStore = "/api/store/getAll",
+    getOptionListUrlStore = "/api/store/getOptionList",
+    getByIdUrlStore = "/api/store/getById",
+    createUrlStore = "/api/store/create",
+    updateUrlStore = "/api/store/update",
+    softDeleteUrlStore = "/api/store/softDelete",
+    restoreUrlStore = "/api/store/restore",
+    deleteUrlStore = "/api/store/delete",
+    getAllDeletedUrlStore = "/api/store/getAllDeleted",
+
     //surveyForm
     getAllUrlSurveyForm = "/api/surveyForm/getAll",
     getAllActiveUrlSurveyForm = "/api/surveyForm/getAllActive",
@@ -289,6 +306,7 @@ export enum EUrl {
     restoreUrlSurveyForm = "/api/surveyForm/restore",
     deleteUrlSurveyForm = "/api/surveyForm/delete",
     getAllDeletedUrlSurveyForm = "/api/surveyForm/getAllDeleted",
+    publicUrlSurveyForm = "/api/surveyForm/public",
 
     //QuestionGroup
     getBySurveyFormIdUrlQuestionGroup = "/api/questionGroup/getBySurveyFormId",
@@ -313,8 +331,12 @@ export enum EUrl {
     updateUrlPredefinedAnswer = "/api/predefinedAnswer/update",
     deleteUrlPredefinedAnswer = "/api/predefinedAnswer/delete",
 
-
-
+    //participantInfoConfig
+    getBySurveyFormIdUrlParticipantInfoConfig = "/api/participantInfoConfig/getBySurveyFormId",
+    getByIdUrlParticipantInfoConfig = "/api/participantInfoConfig/getById",
+    createUrlParticipantInfoConfig = "/api/participantInfoConfig/create",
+    updateUrlParticipantInfoConfig = "/api/participantInfoConfig/update",
+    deleteUrlParticipantInfoConfig = "/api/participantInfoConfig/delete",
 
     //surveyReport
 

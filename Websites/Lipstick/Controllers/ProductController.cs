@@ -3,7 +3,6 @@ using Common.Models;
 using Lipstick._Convergence.Helpers;
 using Lipstick._Convergence.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace Lipstick.Controllers
 {
@@ -63,7 +62,7 @@ namespace Lipstick.Controllers
             var data = await _productService.GetByCategoryIdAndSubCategoryId(languageCode, categoryId, subCategoryId, userId, pageIndex, pageSize);
             if (data != null)
             {
-                result.OK = true;     
+                result.OK = true;
                 result.Data = Global.RenderRazorViewToString(this, "PartialViews/_ProductListPartialView", data.Items);
                 return Ok(result);
             }

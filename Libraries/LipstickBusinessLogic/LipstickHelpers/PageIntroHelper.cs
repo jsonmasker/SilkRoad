@@ -48,7 +48,7 @@ namespace LipstickBusinessLogic.LipstickHelpers
             var model = new Pagination<PageIntroViewModel>();
             if (pageSize < 1)
                 pageSize = model.PageSize;
-            var data = await _unitOfWork.PageIntroRepository.GetAllAsync(filter: s => 
+            var data = await _unitOfWork.PageIntroRepository.GetAllAsync(filter: s =>
             !s.IsDeleted && s.IsActive &&
             (pageTypeId == -1 ? true : s.PageTypeId == pageTypeId)
             );

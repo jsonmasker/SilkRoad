@@ -27,7 +27,7 @@ export const authenticationGuard: CanActivateFn = async () => {
   const router = inject(Router);
 
   try {
-    const isAuthenticated = await firstValueFrom(auth.CheckLogin());
+    const isAuthenticated = await firstValueFrom(auth.checkLogin());
 
     if (isAuthenticated) {
       return true; // acceso permitido

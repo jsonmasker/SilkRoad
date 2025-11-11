@@ -1,5 +1,4 @@
-﻿using MemberDataAccess;
-using MemberDataAccess.DTOs;
+﻿using MemberDataAccess.DTOs;
 using MemberDataAccess.IRepositories;
 using Microsoft.EntityFrameworkCore;
 

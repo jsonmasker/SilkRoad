@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Text;
-
-
-namespace Common.Services.SMSServices
+﻿namespace Common.Services.SMSServices
 {
     public class SMSService : ISMSService
     {

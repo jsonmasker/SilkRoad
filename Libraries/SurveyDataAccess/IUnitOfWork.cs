@@ -11,11 +11,14 @@ namespace SurveyDataAccess
         IPredefinedAnswerLibraryRepository PredefinedAnswerLibraryRepository { get; }
         IQuestionGroupRepository QuestionGroupRepository { get; }
         IQuestionGroupLibraryRepository QuestionGroupLibraryRepository { get; }
+        IParticipantInfoRepository ParticipantInfoRepository { get; }
+        IParticipantInfoConfigRepository ParticipantInfoConfigRepository { get; }
         IQuestionTypeRepository QuestionTypeRepository { get; }
         IQuestionRepository QuestionRepository { get; }
         IQuestionLibraryRepository QuestionLibraryRepository { get; }
         ISurveyFormRepository SurveyFormRepository { get; }
         IAnswerRepository AnswerRepository { get; }
+        IStoreRepository StoreRepository { get; }
         IDbContextTransaction BeginTransaction();
         void Commit();
         void Rollback();

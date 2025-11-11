@@ -1,0 +1,271 @@
+<h3 class="fw-bold">Users</h3>
+<c-accordion class="mb-4">
+    <c-accordion-item #item0="cAccordionItem" [visible]="true">
+        <ng-template cTemplateId="accordionHeaderTemplate">
+            <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+                Filter:
+            </button>
+        </ng-template>
+        <ng-template cTemplateId="accordionBodyTemplate">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-8">
+                        <!-- <form cForm [formGroup]="filterForm" (ngSubmit)="filter()"> -->
+                        <div class="row">
+                            <div class="col-4">
+                                <select class="form-control" [(ngModel)]="roleIdFilter" cSelect>
+                                    <option value="-1">All roles</option>
+                                    @for (item of roles; track $index) {
+                                    <option [value]="item.id">{{ item.name }}</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" [(ngModel)]="textSearchFilter" class="form-control"
+                                    placeholder="Search by name...">
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" (click)="onSubmitFilter()" class="btn btn-primary">
+                                    <svg [cIcon]="icons.cilSearch" width="20" class="text-white"
+                                        title="Search Icon"></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- </form> -->
+                    </div>
+                    <div class="col-4">
+                        <div class="justify-content-end d-flex">
+                            <button (click)="toggleLiveCreateModel()" class="btn btn-success">
+                                <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </c-accordion-item>
+</c-accordion>
+
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+    (changePageSize)="onPageSizeChange($event)">
+    <thead class="text-nowrap text-truncate">
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Email</th>
+            <th scope="col">Is Active</th>
+            <th scope="col">Created By</th>
+            <th scope="col">Modified By</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of data.items; track item?.id; let i = $index) {
+        <tr>
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.userName }}</td>
+            <td>{{ item.email }}</td>
+            <td>
+                @if (item.isActive) {
+                <span class="badge bg-success">Active</span>
+                } @else {
+                <span class="badge bg-danger">Inactive</span>
+                }
+            </td>
+            <td>{{ item.createdBy }}</td>
+            <td>{{ item.modifiedBy }}</td>
+            <td class="text-end">
+                @if(item.isActive){
+                <button class="btn btn-danger me-2" (click)="deactivateData(item.id)">
+                    <svg [cIcon]="icons.cilBan" width="20" class="text-white" title="Deactivate Icon"></svg>
+                </button>
+                }@else{
+                <button class="btn btn-success me-2" (click)="activateData(item.id)">
+                    <svg [cIcon]="icons.cilCheckCircle" width="20" class="text-white" title="Activate Icon"></svg>
+                </button>
+                }
+                <button class="btn btn-primary" (click)="updateData(item.id)">
+                    <svg [cIcon]="icons.cilPen" width="20" class="text-white" title="Edit Icon"></svg>
+                </button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</app-data-table>
+
+<!-- Create Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
+    id="verticallyCenteredCreateModal" size="lg">
+    <c-modal-header class="bg-success d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="fw-bold text-white">Add User</h5>
+        <button (click)="toggleLiveCreateModel()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
+    </c-modal-header>
+    <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
+        <c-modal-body>
+
+            <div class="mb-2">
+                <c-form-check>
+                    <input cFormCheckInput formControlName="isActive" type="checkbox" class="me-2" />
+                    <label cFormCheckLabel for="isActive">Active</label>
+                </c-form-check>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-12 col-sm-6">
+                    <label cLabel for="roleId">Select Role: <span class="text-danger">(*)</span></label>
+                    <select cFormControl formControlName="roleId" cSelect>
+                        <option value="-1">Select Role</option>
+                        @for (item of roles; track $index) {
+                        <option [value]="item.id">{{ item.name }}</option>
+                        }
+                    </select>
+                    @if (roleIdCreateForm?.invalid && (roleIdCreateForm?.dirty || roleIdCreateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (roleIdCreateForm?.hasError('min')) {
+                        <div>Select a role, please!</div>
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="col-12 col-sm-6">
+                    <label cLabel for="phoneNumber">PhoneNumber:</label>
+                    <input cFormControl formControlName="phoneNumber" type="text" maxlength="10" />
+                    @if (phoneNumberCreateForm?.invalid && (phoneNumberCreateForm?.dirty ||
+                    phoneNumberCreateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (phoneNumberCreateForm?.hasError('phoneNumber')) {
+                        <div class="text-danger">Phone number must be vietnamese
+                            phone number!</div>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+            <div class="mb-2">
+                <label cLabel for="email">Email:<span class="text-danger">(*)</span></label>
+                <input cFormControl formControlName="email" type="text" />
+                @if (emailCreateForm?.invalid && (emailCreateForm?.dirty || emailCreateForm?.touched)) {
+                <div class="text-danger">
+                    @if (emailCreateForm?.hasError('required')) {
+                    <div>Enter your email, please!</div>
+                    }
+                    @if (emailCreateForm?.hasError('email')) {
+                    <div>Email is invalid!</div>
+                    }
+                </div>
+                }
+            </div>
+            <div class="row mb-2">
+                <div class="col-12 col-sm-6">
+                    <label cLabel for="userName">UserName:<span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="userName" type="text" />
+                    @if (userNameCreateForm?.invalid && (userNameCreateForm?.dirty || userNameCreateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (userNameCreateForm?.hasError('required')) {
+                        <div>Enter your username, please!</div>
+                        }
+                        @if (userNameCreateForm?.hasError('userName')) {
+                        <div>Username length must be between 6 and 50 characters,
+                            must not contain spaces, must be null!</div>
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="col-12 col-sm-6">
+                    <label cLabel for="password">Password:<span class="text-danger">(*)</span></label>
+                    <input cFormControl minlength="6" maxlength="20" formControlName="password" type="password" />
+                    @if (passwordCreateForm?.invalid && (passwordCreateForm?.dirty || passwordCreateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (passwordCreateForm?.hasError('required')) {
+                        <div>Enter your password, please!</div>
+                        }
+                        @if (passwordCreateForm?.hasError('minlength') || passwordCreateForm?.hasError('maxlength')) {
+                        <div>Password length must be between 6 and 20
+                            characters!</div>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+        </c-modal-body>
+        <c-modal-footer>
+            <button (click)="toggleLiveCreateModel()" cButton color="secondary">
+                <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+            </button>
+            <button cButton type="submit" [disabled]="!createForm.valid" color="primary">
+                <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+            </button>
+        </c-modal-footer>
+    </form>
+</c-modal>
+<!--Update Model-->
+<c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)"
+    id="verticallyCenteredUpdateModal" size="lg">
+    <c-modal-header class="bg-primary d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="text-white fw-bold">Update User</h5>
+        <button (click)="toggleLiveUpdateModel()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
+    </c-modal-header>
+    <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+        <c-modal-body>
+            <div class="mb-2">
+                <c-form-check>
+                    <input cFormCheckInput formControlName="isActive" id="isActive" type="checkbox" class="me-2" />
+                    <label cFormCheckLabel for="isActive">Active</label>
+                </c-form-check>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-12 col-sm-6">
+                    <label cLabel for="roleId">Select Role: <span class="text-danger">(*)</span></label>
+                    <select cFormControl formControlName="roleId" cSelect>
+                        <option value="-1">Select Role</option>
+                        @for (item of roles; track $index) {
+                        <option [value]="item.id">{{ item.name }}</option>
+                        }
+                    </select>
+                    @if (roleIdUpdateForm?.invalid && (roleIdUpdateForm?.dirty || roleIdUpdateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (roleIdUpdateForm?.hasError('min')) {
+                        <div>Select a role, please!</div>
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="col-12 col-sm-6">
+                    <label cLabel for="phoneNumber">PhoneNumber:</label>
+                    <input cFormControl formControlName="phoneNumber" type="text" maxlength="10" />
+                    @if (phoneNumberUpdateForm?.invalid && (phoneNumberUpdateForm?.dirty ||
+                    phoneNumberUpdateForm?.touched)) {
+                    <div class="text-danger">
+                        @if (phoneNumberUpdateForm?.hasError('phoneNumber')) {
+                        <div class="text-danger">Phone number must be vietnamese
+                            phone number!</div>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12 col-sm-6">
+                    <label cLabel for="email">Email:<span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="email" type="text" />
+                </div>
+                <div class="col-12 col-sm-6">
+                    <label cLabel for="userName">UserName:<span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="userName" type="text" />
+                </div>
+            </div>
+
+        </c-modal-body>
+        <c-modal-footer>
+            <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
+                <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+            </button>
+            <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">
+                <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+            </button>
+        </c-modal-footer>
+    </form>
+</c-modal>

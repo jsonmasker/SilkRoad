@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace LipstickDataAccess.DTOs
+﻿namespace LipstickDataAccess.DTOs
 {
     public class OrderDTO
     {

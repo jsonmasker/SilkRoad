@@ -1,29 +1,26 @@
-﻿using System.IO.Compression;
-using BusinessLogic.IHelpers.IFeatureHelper;
+﻿using BusinessLogic.IHelpers.IFeatureHelper;
 using ClosedXML.Excel;
 using Common;
 using Common.Models;
-using Common.Services.FileStorageServices;
 using Common.Services.QRCodeServices;
 using Common.ViewModels.QRViewModels;
 using Microsoft.AspNetCore.Hosting;
-using Newtonsoft.Json;
+using System.IO.Compression;
 
 namespace BusinessLogic.Helpers.FeatureHelpers
 {
     public class QRCodeHelper : IQRCodeHelper
     {
         private readonly IQRCodeService _qrCodeService;
-        private readonly IFileStorageService _fileStorageService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         public QRCodeHelper(IQRCodeService qrCodeService,
-            IWebHostEnvironment webHostEnvironment,
-            IFileStorageService fileStorageService)
+            IWebHostEnvironment webHostEnvironment)
         {
             _qrCodeService = qrCodeService;
             _webHostEnvironment = webHostEnvironment;
-            _fileStorageService = fileStorageService;
+
         }
+
         public async Task<byte[]> GenerateQRCodeAsync(QRCodeViewModel model)
         {
             return await _qrCodeService.Base64QRCodeImageAsync(model);
@@ -31,7 +28,7 @@ namespace BusinessLogic.Helpers.FeatureHelpers
 
         public async Task<string> GenerateListQRCodeAsync(QRCodeListViewModel model)
         {
-            string path = Path.Combine(_webHostEnvironment.WebRootPath, EModules.Feature.ToString(),EFolderNames.QRCodes.ToString());
+            string path = Path.Combine(_webHostEnvironment.WebRootPath, EModules.Feature.ToString(), EFolderNames.QRCodes.ToString());
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -96,7 +93,7 @@ namespace BusinessLogic.Helpers.FeatureHelpers
             for (int i = 1; i <= quantity; i++)
             {
                 //string.IsNullOrEmpty(prefix) ? i.ToString(format) :
-                string name = string.IsNullOrEmpty(prefix) ? i.ToString(format) : string.Concat(prefix,"_",i.ToString(format));
+                string name = string.IsNullOrEmpty(prefix) ? i.ToString(format) : string.Concat(prefix, "_", i.ToString(format));
                 string code = prefix + Global.GenerateRandomString(numberOfCharacter, randomType);
                 //Check code is exist in QRVoucherModel list
                 bool check = voucherModels.Any(x => x.Code == code);
@@ -110,7 +107,7 @@ namespace BusinessLogic.Helpers.FeatureHelpers
             return voucherModels;
 
         }
-       
+
         /// <summary>
         /// Export data to excel
         /// </summary>
@@ -132,6 +129,11 @@ namespace BusinessLogic.Helpers.FeatureHelpers
                 }
                 workbook.SaveAs(filePath);
             }
+        }
+
+        public Task<List<string>> GetAllFontsAsync()
+        {
+            return _qrCodeService.GetAllFontsAsync();
         }
     }
 }

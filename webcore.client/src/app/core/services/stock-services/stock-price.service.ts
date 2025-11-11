@@ -15,11 +15,11 @@ export class StockPriceService {
   constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
   
   getAll(symbol : any): Observable<StockPriceModel[]> {
-    return this.http.get<StockPriceModel[]>(EUrl.getAllUrlStockPrice + `/${symbol}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<StockPriceModel[]>(EUrl.getAllUrlStockPrice + `/${symbol}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<StockPriceModel[]>(EUrl.getAllUrlStockPrice + `/${symbol}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<StockPriceModel[]>(EUrl.getAllUrlStockPrice + `/${symbol}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -28,11 +28,11 @@ export class StockPriceService {
     );
   }
   getNewData(symbol:string): Observable<BaseAPIResponse> {
-      return this.http.post<BaseAPIResponse>(EUrl.getNewDataUrlStockPrice + `/${symbol}`,{ headers: this.authenticationService.GetHeaders() }).pipe(
+      return this.http.post<BaseAPIResponse>(EUrl.getNewDataUrlStockPrice + `/${symbol}`,{ headers: this.authenticationService.getHeaders() }).pipe(
         catchError(error => {
           if (error.status === 401) {
-            return this.authenticationService.ReNewToken().pipe(
-              switchMap(() => this.http.post<BaseAPIResponse>(EUrl.getNewDataUrlStockPrice + `/${symbol}`,  { headers: this.authenticationService.GetHeaders() }))
+            return this.authenticationService.reNewToken().pipe(
+              switchMap(() => this.http.post<BaseAPIResponse>(EUrl.getNewDataUrlStockPrice + `/${symbol}`,  { headers: this.authenticationService.getHeaders() }))
             );
           } else {
             return throwError(() => error);

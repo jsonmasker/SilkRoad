@@ -3,7 +3,6 @@ using Common;
 using Common.Models;
 using Common.Services.FileStorageServices;
 using Common.ViewModels.LipstickViewModels;
-using Common.ViewModels.VOCViewModelModels;
 using LipstickBusinessLogic.ILipstickHelpers;
 using LipstickDataAccess;
 using LipstickDataAccess.DTOs;
@@ -57,7 +56,7 @@ namespace LipstickBusinessLogic.LipstickHelpers
             var model = new Pagination<BlogViewModel>();
             if (pageSize <= 0)
                 pageSize = model.PageSize;
-            var data = await _unitOfWork.BlogRepository.GetAllAsync(filter: s => !s.IsDeleted && s.IsActive && (topicId == -1 ? true: s.TopicId == topicId));
+            var data = await _unitOfWork.BlogRepository.GetAllAsync(filter: s => !s.IsDeleted && s.IsActive && (topicId == -1 ? true : s.TopicId == topicId));
             model.TotalItems = data.Count();
             model.CurrentPage = pageIndex;
             model.TotalPages = (int)Math.Ceiling(model.TotalItems / (double)pageSize);

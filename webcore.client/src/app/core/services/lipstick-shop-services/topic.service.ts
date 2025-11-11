@@ -13,11 +13,11 @@ import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 export class TopicService {
 constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
   getAll(pageIndex:number , pageSize : number): Observable<APIResponse<Pagination<TopicViewModel>>> {
-    return this.http.get<APIResponse<Pagination<TopicViewModel>>>(EUrl.getAllUrlTopic + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<TopicViewModel>>>(EUrl.getAllUrlTopic + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<TopicViewModel>>>(EUrl.getAllUrlTopic + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<TopicViewModel>>>(EUrl.getAllUrlTopic + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -26,11 +26,11 @@ constructor(private http: HttpClient,private authenticationService: Authenticati
     );
   }
   getAllActive(): Observable<APIResponse<TopicViewModel[]>> {
-    return this.http.get<APIResponse<TopicViewModel[]>>(EUrl.getAllActiveUrlTopic, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<TopicViewModel[]>>(EUrl.getAllActiveUrlTopic, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<TopicViewModel[]>>(EUrl.getAllActiveUrlTopic, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<TopicViewModel[]>>(EUrl.getAllActiveUrlTopic, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -40,11 +40,11 @@ constructor(private http: HttpClient,private authenticationService: Authenticati
   }
 
   getById(id: any): Observable<APIResponse<TopicViewModel>> {
-    return this.http.get<APIResponse<TopicViewModel>>(EUrl.getByIdUrlTopic + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<TopicViewModel>>(EUrl.getByIdUrlTopic + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<TopicViewModel>>(EUrl.getByIdUrlTopic + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<TopicViewModel>>(EUrl.getByIdUrlTopic + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -54,11 +54,11 @@ constructor(private http: HttpClient,private authenticationService: Authenticati
   }
 
   create(unit: FormData): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlTopic, unit, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.post<BaseAPIResponse>(EUrl.createUrlTopic, unit, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlTopic, unit, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlTopic, unit, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -68,11 +68,11 @@ constructor(private http: HttpClient,private authenticationService: Authenticati
   }
 
   update(unit: FormData): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlTopic, unit, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(EUrl.updateUrlTopic, unit, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlTopic, unit, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlTopic, unit, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -82,11 +82,11 @@ constructor(private http: HttpClient,private authenticationService: Authenticati
   }
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<TopicViewModel>>> {
     const url = EUrl.getAllDeletedUrlTopic.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<TopicViewModel>>>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.get<APIResponse<Pagination<TopicViewModel>>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<TopicViewModel>>>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.get<APIResponse<Pagination<TopicViewModel>>>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -96,11 +96,11 @@ constructor(private http: HttpClient,private authenticationService: Authenticati
   }
 
   softDelete(id: any): Observable<BaseAPIResponse> {
-    return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlTopic + `/${id}`, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlTopic + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlTopic + `/${id}`, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlTopic + `/${id}`, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -111,11 +111,11 @@ constructor(private http: HttpClient,private authenticationService: Authenticati
 
   restore(id: number): Observable<BaseAPIResponse> {
     const url = EUrl.restoreUrlTopic.concat('/', id.toString());
-    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);
@@ -126,11 +126,11 @@ constructor(private http: HttpClient,private authenticationService: Authenticati
 
   delete(id: number): Observable<BaseAPIResponse> {
     const url = EUrl.deleteUrlTopic.concat('/', id.toString());
-    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }).pipe(
+    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }).pipe(
       catchError(error => {
         if (error.status === 401) {
-          return this.authenticationService.ReNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.GetHeaders() }))
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }))
           );
         } else {
           return throwError(() => error);

@@ -1,5 +1,4 @@
-﻿using ClosedXML.Excel;
-using Common;
+﻿using Common;
 using Common.Models;
 using Common.Services.ActionLoggingServices;
 using Microsoft.AspNetCore.Authorization;
@@ -55,7 +54,7 @@ namespace WebCore.Server.Controllers.SurveyControllers
                 return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
-         
+
         [HttpGet("getEagerById/{id}")]
         public async Task<IActionResult> GetEagerById(int id)
         {
@@ -71,10 +70,10 @@ namespace WebCore.Server.Controllers.SurveyControllers
             if (model == null || !ModelState.IsValid)
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
             var userName = User.Identity?.Name;
-            var result = await _helper.CreateAsync(model, userName);
-            if (!result)
+            var data = await _helper.CreateAsync(model, userName);
+            if (data == null)
                 return Failed(EStatusCodes.InternalServerError, _localizer["createFailed"]);
-            return Succeeded(_localizer["createSuccess"]);
+            return Succeeded(data, _localizer["createSuccess"]);
         }
 
         [HttpPut("update")]
@@ -116,6 +115,16 @@ namespace WebCore.Server.Controllers.SurveyControllers
             if (!result)
                 return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["deleteSuccess"]);
+        }
+
+        [HttpPut("public/{id}")]
+        public async Task<IActionResult> Public(int id)
+        {
+            var userName = User.Identity?.Name;
+            var result = await _helper.PublishAsync(id, userName);
+            if (!result)
+                return Failed(EStatusCodes.InternalServerError, _localizer["updateFailed"]);
+            return Succeeded(_localizer["updateSuccess"]);
         }
 
     }
