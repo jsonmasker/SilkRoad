@@ -64,4 +64,11 @@ export const pageRoutes: Routes = [
       title: 'Default Form'
     }
   },
+    {
+    path: 'test-component',
+    loadComponent: () => import('./test/test.component').then(m => m.TestComponent),
+    data: {
+      title: 'Test Component'
+    }
+  },
 ];
