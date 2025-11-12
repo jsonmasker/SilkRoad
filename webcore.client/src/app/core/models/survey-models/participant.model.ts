@@ -2,7 +2,7 @@ import { AnswerModel } from "./answer.model";
 import { ParticipantInfoModel } from "./participant-info.model";
 
 export interface ParticipantModel {
-    id?: string;
+    id: any;
     surveyFormId: number;
     createdAt?: Date;
     isCompleted?: boolean;

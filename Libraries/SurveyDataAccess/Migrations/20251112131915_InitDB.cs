@@ -187,6 +187,7 @@ namespace SurveyDataAccess.Migrations
                     IsComplete = table.Column<bool>(type: "bit", nullable: false),
                     IsRejected = table.Column<bool>(type: "bit", nullable: false),
                     IsHighlighted = table.Column<bool>(type: "bit", nullable: false),
+                    IsReviewMode = table.Column<bool>(type: "bit", nullable: false),
                     Reason = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -273,6 +274,7 @@ namespace SurveyDataAccess.Migrations
                 {
                     ParticipantInfoConfigId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ParticipantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TypeId = table.Column<int>(type: "int", nullable: false),
                     TextValue = table.Column<string>(type: "nvarchar(1000)", nullable: true),
                     NumberValue = table.Column<int>(type: "int", nullable: true),
                     DateValue = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -348,11 +350,11 @@ namespace SurveyDataAccess.Migrations
                 columns: new[] { "Id", "CreatedAt", "IsActive", "Name", "Note" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 11, 12, 14, 39, 12, 241, DateTimeKind.Local).AddTicks(4755), true, "Câu hỏi đóng", "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn." },
-                    { 2, new DateTime(2025, 11, 12, 14, 39, 12, 241, DateTimeKind.Local).AddTicks(5932), true, "Câu hỏi mở", "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời." },
-                    { 3, new DateTime(2025, 11, 12, 14, 39, 12, 241, DateTimeKind.Local).AddTicks(5937), true, "Câu hỏi kết hợp", "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng." },
-                    { 4, new DateTime(2025, 11, 12, 14, 39, 12, 241, DateTimeKind.Local).AddTicks(5939), true, "Câu hỏi nhiều lựa chọn", "Cho phép chọn nhiều đáp án cùng lúc. (MultipleChoiceQuestion)" },
-                    { 5, new DateTime(2025, 11, 12, 14, 39, 12, 241, DateTimeKind.Local).AddTicks(5939), true, "Câu hỏi đánh giá", "Cẩu hỏi đáng giá (RatingQuestion) - Cho người dùng đánh giá mức độ trên 5 sao." }
+                    { 1, new DateTime(2025, 11, 12, 20, 19, 15, 211, DateTimeKind.Local).AddTicks(3021), true, "Câu hỏi đóng", "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn." },
+                    { 2, new DateTime(2025, 11, 12, 20, 19, 15, 211, DateTimeKind.Local).AddTicks(4107), true, "Câu hỏi mở", "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời." },
+                    { 3, new DateTime(2025, 11, 12, 20, 19, 15, 211, DateTimeKind.Local).AddTicks(4112), true, "Câu hỏi kết hợp", "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng." },
+                    { 4, new DateTime(2025, 11, 12, 20, 19, 15, 211, DateTimeKind.Local).AddTicks(4113), true, "Câu hỏi nhiều lựa chọn", "Cho phép chọn nhiều đáp án cùng lúc. (MultipleChoiceQuestion)" },
+                    { 5, new DateTime(2025, 11, 12, 20, 19, 15, 211, DateTimeKind.Local).AddTicks(4114), true, "Câu hỏi đánh giá", "Cẩu hỏi đáng giá (RatingQuestion) - Cho người dùng đánh giá mức độ trên 5 sao." }
                 });
 
             migrationBuilder.CreateIndex(

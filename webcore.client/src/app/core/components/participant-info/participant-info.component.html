@@ -34,10 +34,17 @@
       }
 
       <!-- Date Time Field -->
-      @if (field.typeId === fieldTypes.Date) {
+      @if (field.typeId === fieldTypes.Datetime) {
       <app-participant-datetime [fieldId]="field.id" [label]="getFieldLabel(field)"
         [required]="field.isRequired" [formControlName]="field.id">
       </app-participant-datetime>
+      }
+
+            <!-- Date Time Field -->
+      @if (field.typeId === fieldTypes.Date) {
+      <app-participant-date [fieldId]="field.id" [label]="getFieldLabel(field)"
+        [required]="field.isRequired" [formControlName]="field.id">
+      </app-participant-date>
       }
 
       <!-- Number Field -->

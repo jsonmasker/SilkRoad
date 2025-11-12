@@ -12,7 +12,7 @@ using SurveyDataAccess;
 namespace SurveyDataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20251112073912_InitDB")]
+    [Migration("20251112131915_InitDB")]
     partial class InitDB
     {
         /// <inheritdoc />
@@ -81,6 +81,9 @@ namespace SurveyDataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsRejected")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReviewMode")
                         .HasColumnType("bit");
 
                     b.Property<string>("Reason")
@@ -176,6 +179,9 @@ namespace SurveyDataAccess.Migrations
 
                     b.Property<string>("TextValue")
                         .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
 
                     b.HasKey("ParticipantInfoConfigId", "ParticipantId");
 
@@ -435,7 +441,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 11, 12, 14, 39, 12, 241, DateTimeKind.Local).AddTicks(4755),
+                            CreatedAt = new DateTime(2025, 11, 12, 20, 19, 15, 211, DateTimeKind.Local).AddTicks(3021),
                             IsActive = true,
                             Name = "Câu hỏi đóng",
                             Note = "Câu hỏi đóng (Closed-ended question) – Chỉ có các câu trả lời sẵn."
@@ -443,7 +449,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 11, 12, 14, 39, 12, 241, DateTimeKind.Local).AddTicks(5932),
+                            CreatedAt = new DateTime(2025, 11, 12, 20, 19, 15, 211, DateTimeKind.Local).AddTicks(4107),
                             IsActive = true,
                             Name = "Câu hỏi mở",
                             Note = "Câu hỏi mở (Open-ended question) – Người dùng nhập câu trả lời."
@@ -451,7 +457,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 11, 12, 14, 39, 12, 241, DateTimeKind.Local).AddTicks(5937),
+                            CreatedAt = new DateTime(2025, 11, 12, 20, 19, 15, 211, DateTimeKind.Local).AddTicks(4112),
                             IsActive = true,
                             Name = "Câu hỏi kết hợp",
                             Note = "Câu hỏi kết hợp (Hybrid question) hoặc Câu hỏi mở rộng (Extended question) – Vừa có câu trả lời sẵn, vừa cho phép người dùng nhập câu trả lời riêng."
@@ -459,7 +465,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 11, 12, 14, 39, 12, 241, DateTimeKind.Local).AddTicks(5939),
+                            CreatedAt = new DateTime(2025, 11, 12, 20, 19, 15, 211, DateTimeKind.Local).AddTicks(4113),
                             IsActive = true,
                             Name = "Câu hỏi nhiều lựa chọn",
                             Note = "Cho phép chọn nhiều đáp án cùng lúc. (MultipleChoiceQuestion)"
@@ -467,7 +473,7 @@ namespace SurveyDataAccess.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 11, 12, 14, 39, 12, 241, DateTimeKind.Local).AddTicks(5939),
+                            CreatedAt = new DateTime(2025, 11, 12, 20, 19, 15, 211, DateTimeKind.Local).AddTicks(4114),
                             IsActive = true,
                             Name = "Câu hỏi đánh giá",
                             Note = "Cẩu hỏi đáng giá (RatingQuestion) - Cho người dùng đánh giá mức độ trên 5 sao."

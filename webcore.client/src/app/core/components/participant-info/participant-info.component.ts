@@ -8,8 +8,10 @@ import { ParticipantPhoneComponent } from '@components/participant-fields/phone-
 import { ParticipantTextAreaComponent } from '@components/participant-fields/text-erea.component';
 import { ParticipantDateTimeComponent } from '@components/participant-fields/date-time.component';
 import { ParticipantNumberComponent } from '@components/participant-fields/number.component';
-import { EFieldTypes } from '@common/global';
+import { EColors, EFieldTypes } from '@common/global';
 import { ParticipantInfoModel } from '@models/survey-models/participant-info.model';
+import { ParticipantDateComponent } from '@components/participant-fields';
+import { ToastService } from '@services/helper-services/toast.service';
 
 @Component({
   selector: 'app-participant-info',
@@ -21,6 +23,7 @@ import { ParticipantInfoModel } from '@models/survey-models/participant-info.mod
     ParticipantEmailComponent,
     ParticipantPhoneComponent,
     ParticipantTextAreaComponent,
+    ParticipantDateComponent,
     ParticipantDateTimeComponent,
     ParticipantNumberComponent
   ],
@@ -37,7 +40,7 @@ export class ParticipantInfoComponent implements OnInit {
   //#endregion
 
   //#region Constructor & Configurations
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private toastService: ToastService) { }
 
   ngOnInit() {
     this.buildForm();
@@ -81,18 +84,9 @@ export class ParticipantInfoComponent implements OnInit {
     return field.placeholderEN || '';
   }
 
-  // getFieldId(field: ParticipantInfoConfigModel): string {
-  //   return field.id || `field_${field.priority}`;
-  // }
-
-  // getFieldControl(field: ParticipantInfoConfigModel) {
-  //   const fieldId = this.getFieldId(field);
-  //   return this.participantForm.get(fieldId);
-  // }
   //#endregion
 
   onSubmit(): void {
-    debugger;
     if (this.participantForm.valid) {
       const participantData = this.participantForm.value;
       const participantInfos: ParticipantInfoModel[] = [];
@@ -125,10 +119,15 @@ export class ParticipantInfoComponent implements OnInit {
 
       this.onSubmitParticipantInfo.emit(participantInfos);
     } else {
-      Object.keys(this.participantForm.controls).forEach(key => {
-        this.participantForm.get(key)?.markAsTouched();
-      });
-      console.log('Participant Info Form is invalid.');
+      // Object.keys(this.participantForm.controls).forEach(key => {
+      //   this.participantForm.get(key)?.markAsTouched();
+      // });
+      // console.log('Participant Info Form is invalid.');
+      let message = 'Please fill out all required fields correctly.';
+      if (this.selectedLanguage === 'VN') {
+        message = 'Vui lòng điền đầy đủ tất cả các trường bắt buộc một cách chính xác.';
+      }
+      this.toastService.showToast(EColors.danger, message);
     }
   }
 }

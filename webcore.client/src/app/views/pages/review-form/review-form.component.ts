@@ -17,7 +17,7 @@ import { SilverSurveyFormComponent } from "../../form-styles/silver-survey-form/
   imports: [CommonModule, ReactiveFormsModule, DefaultSurveyFormComponent, GoldSurveyFormComponent, SilverSurveyFormComponent]
 })
 export class ReviewFormComponent implements OnInit {
-  initSurvey!: SurveyFormModel;
+  initSurvey: SurveyFormModel | null = null;
   eFormStyles = EFormStyles;
   constructor(
     private route: ActivatedRoute,
