@@ -1,5 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClosedXML.Excel;
+using Common;
+using Common.Services.ActionLoggingServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using Ollama;
+using SurveyBusinessLogic.IHelpers;
+using SurveyBusinessLogic.Models;
+using SurveyDataAccess.DTOs;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.SurveyControllers
@@ -9,69 +17,91 @@ namespace WebCore.Server.Controllers.SurveyControllers
     [Authorize]
     public class ParticipantController : BaseApiController
     {
-        //private readonly IParticipantHelper _participantHelper;
-        //private readonly IActionloggingService _actionLog;
-        //private readonly IStringLocalizer<SharedResource> _localizer;
-        //public ParticipantController(IParticipantHelper participant, IActionloggingService actionLog, IStringLocalizer<SharedResource> localizer)
-        //{
-        //    _participantHelper = participant;
-        //    _actionLog = actionLog;
-        //    _localizer = localizer;
-        //}
-        //[HttpGet("GetAll")]
-        ////[AuthorizeEnumPolicy(ERoleClaimGroup.SurveyResult, ERoleClaim.View, EModule.Survey)]
-        //public async Task<IActionResult> GetAll(DateTime? startDate, DateTime? endDate, int surveyFormId = -1, int pageIndex = 1, int pageSize = 10)
-        //{
+        private readonly IParticipantHelper _helper;
+        private readonly IStringLocalizer<SharedResource> _localizer;
+        public ParticipantController(IParticipantHelper helper, IStringLocalizer<SharedResource> localizer)
+        {
+            _helper = helper;
+            _localizer = localizer;
+        }
 
-        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-        //    string controllerName = ControllerContext.ActionDescriptor.ControllerName;
-        //    if (pageIndex < 1)
-        //    {
-        //        _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Failed);
-        //        return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
-        //    }
-        //    Pagination<ParticipantViewModel> data = await _participantHelper.GetAllAsync(startDate, endDate, surveyFormId, pageIndex, pageSize);
-        //    _actionLog.CreateAsync(token, controllerName, EUserAction.View, EUserActionStatus.Successful);
-        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
-        //}
-        //[HttpPost("Create")]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> Create([FromBody] SurveyUIViewModel model)
-        //{
-        //    await _participantHelper.CreateAsync(model);
-        //    return Ok();
-        //}
-        //[HttpGet("GetEagerById/{id}")]
-        ////[AuthorizeEnumPolicy(ERoleClaimGroup.SurveyResult, ERoleClaim.View, EModule.Survey)]
-        //public async Task<IActionResult> GetEagerById(int id)
-        //{
-        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-        //    var data = _participantHelper.GetEagerCustomerSurveyByID(id);
-        //    if (data == null)
-        //    {
-        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Failed);
-        //        return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
-        //    }
-        //    _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.ViewDetails, EUserActionStatus.Successful);
+        [HttpPost("filter")]
+        public async  Task<IActionResult> Filter([FromBody] ParticipantFilterModel filter)
+        {
+            if (filter == null )
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
+            var result = await _helper.FilterAsync(filter);
+            return Succeeded(result, _localizer["createSuccess"]);
+        }
 
-        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
-        //}
-        //[HttpGet("ExportExcel")]
-        ////[AuthorizeEnumPolicy(ERoleClaimGroup.SurveyResult, ERoleClaim.Export, EModule.Survey)]
-        //public async Task<IActionResult> ExportExcel(DateTime? startTime, DateTime? finishTime, int surveyFormId)
-        //{
-        //    string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-        //    string path = await _participantHelper.ExportExcel(startTime, finishTime, surveyFormId);
-        //    if (string.IsNullOrEmpty(path))
-        //    {
-        //        _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Export, EUserActionStatus.Failed);
-        //        return Failed(EStatusCodes.NotFound, _localizer["dataNotFound"]);
-        //    }
-        //    _actionLog.CreateAsync(token, ControllerContext.ActionDescriptor.ControllerName, EUserAction.Export, EUserActionStatus.Successful);
-        //    var fileBytes = await System.IO.File.ReadAllBytesAsync(path);
-        //    var fileName = Path.GetFileName(path);
-        //    //return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-        //    return Succeeded(File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName), _localizer["dataFetchedSuccessfully"]);
-        //}
+        [HttpPost("ExportExcel")]
+        public async Task<IActionResult> ExportExcel([FromBody] ParticipantFilterModel filter)
+        {
+            if (filter == null)
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
+            var result = await _helper.ExportExcel(filter);
+            return Succeeded(result, _localizer["createSuccess"]);
+        }
+
+        /// <summary>
+        /// Meaning to create a participant along with answers. Complete the survey
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("Create")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Create([FromBody] ParticipantDTO model)
+        {
+            if (model == null || !ModelState.IsValid || model.Answers == null || model.Answers.Count <= 0)
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
+            var result = await _helper.CreateAsync(model);
+            if (!result)
+                return Failed(EStatusCodes.InternalServerError, _localizer["createFailed"]);
+            return Succeeded(_localizer["createSuccess"]);
+        }
+
+        /// <summary>
+        /// Meaning to initialize a participant before adding answers
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("InitParticipant")]
+        [AllowAnonymous]
+        public async Task<IActionResult> InitParticipant([FromBody] ParticipantDTO model)
+        {
+            if (model == null || !ModelState.IsValid )
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
+            var participant = await _helper.InitAsync(model);
+            if (participant == null)
+                return Failed(EStatusCodes.InternalServerError, _localizer["createFailed"]);
+            return Succeeded(participant, _localizer["createSuccess"]);
+        }
+
+        /// <summary>
+        /// Meaning to add answers to an existing participant
+        /// </summary>
+        /// <param name="answers"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        [HttpPost("addAnswers")]
+        [AllowAnonymous]
+        public async Task<IActionResult> InitParticipant([FromBody] List<AnswerDTO> answers)
+        {
+            if (answers == null || answers.Count <= 0)
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
+            bool result = await _helper.AddAnswersAsync(answers);
+            if (!result)
+                return Failed(EStatusCodes.InternalServerError, _localizer["createFailed"]);
+            return Succeeded(_localizer["createSuccess"]);
+        }
+
+        [HttpGet("GetById/{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var data = await _helper.GetByIdAsync(id);
+            if (data == null)
+                return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
     }
 }
