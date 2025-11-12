@@ -1,30 +1,36 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
 import { FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SurveyFormModel } from '@models/survey-models/survey-form.model';
 import { ELanguages, EQuestionTypes } from '@common/global';
-import { SurveyInformationComponent } from './components/survey-information/survey-information.component';
 import { SurveyContentComponent } from './components/survey-content/survey-content.component';
-import { AlignDirective } from "@coreui/angular";
 import { AnswerModel } from '@models/survey-models/answer.model';
 import { ParticipantService } from '@services/survey-services/participant.service';
+import { GoldThankYouComponent } from "./gold-thank-you.component";
+import { GoldSurveyBodyComponent } from "./gold-survey-body.component";
 
 @Component({
   selector: 'app-gold-survey-form',
-  imports: [CommonModule, ReactiveFormsModule, SurveyInformationComponent, SurveyContentComponent, AlignDirective],
+  imports: [CommonModule, ReactiveFormsModule, SurveyContentComponent, GoldThankYouComponent, GoldSurveyBodyComponent],
   templateUrl: './gold-survey-form.component.html',
   styleUrl: './gold-survey-form.component.scss'
 })
-export class GoldSurveyFormComponent implements OnInit {
+export class GoldSurveyFormComponent {
+  //#region Properties
+  @Input() surveyForm!: SurveyFormModel;
+  @Input() isReviewMode: boolean = false;
+
   eLanguages = ELanguages;
   selectedLanguage: string = ELanguages.Vietnamese;
-  surveyForm: SurveyFormModel | null = null;
-  questionTypes : any = EQuestionTypes;
+  questionTypes: any = EQuestionTypes;
+  initParticipant: boolean = false;
+  finished: boolean = false;
   currentPaticipantId = signal<string>('');
   answerList: AnswerModel[] = [];
-
+  //#endregion
+  //#region Constructor
   constructor(
     private route: ActivatedRoute,
     private surveyFormService: SurveyFormService,
@@ -32,28 +38,29 @@ export class GoldSurveyFormComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
-    const surveyId = this.route.snapshot.paramMap.get('id');    
-    var validForm = true;
-    // var validForm = this.surveyFormService.checkValidForm(surveyId);
-    if (!validForm) {
-      this.router.navigate(['gold-finish', surveyId]);
-      return;
-    }
-    this.surveyFormService.getReviewFormById(surveyId).subscribe({
-      next: (res) => {
-        this.surveyForm = res.data;
-      },
-      error: (err) => {
-        console.error('Error fetching survey form:', err);
-      }
-    });
-  }
-
   handleChangeLanguage() {
     this.selectedLanguage = this.selectedLanguage === ELanguages.Vietnamese ? ELanguages.English : ELanguages.Vietnamese;
   }
+  //#endregion
   
+  // ngOnInit(): void {
+  //   const surveyId = this.route.snapshot.paramMap.get('id');    
+  //   var validForm = true;
+  //   // var validForm = this.surveyFormService.checkValidForm(surveyId);
+  //   if (!validForm) {
+  //     this.router.navigate(['gold-finish', surveyId]);
+  //     return;
+  //   }
+  //   this.surveyFormService.getReviewFormById(surveyId).subscribe({
+  //     next: (res) => {
+  //       this.surveyForm = res.data;
+  //     },
+  //     error: (err) => {
+  //       console.error('Error fetching survey form:', err);
+  //     }
+  //   });
+  // }
+
   onUpdateCurrentParticipantId(id: string): void {
     this.currentPaticipantId.set(id);
     console.log('Updated Participant ID:', id);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SurveyFormService } from '@services/survey-services/survey-form.service';
 import { FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -8,14 +8,15 @@ import { SurveyFormModel } from '@models/survey-models/survey-form.model';
 import { EQuestionTypes } from '@common/global';
 
 @Component({
-  selector: 'app-review-form',
-  templateUrl: './review-form.component.html',
-  styleUrl: './review-form.component.scss',
+  selector: 'app-default-survey-form',
+  templateUrl: './default-survey-form.component.html',
+  styleUrl: './default-survey-form.component.scss',
   imports: [CommonModule, FormControlDirective, FormLabelDirective, FormDirective, ReactiveFormsModule]
 })
-export class ReviewFormComponent implements OnInit {
-  language: string = 'en';
-  surveyForm: SurveyFormModel | null = null;
+export class DefaultSurveyFormComponent {
+  @Input() surveyForm!: SurveyFormModel;
+  @Input() isReviewMode: boolean = false;
+  language: string = 'EN';
   questionTypes : any = EQuestionTypes;
 
   participantForm: FormGroup = new FormGroup({
@@ -29,17 +30,6 @@ export class ReviewFormComponent implements OnInit {
     private surveyFormService: SurveyFormService
   ) { }
 
-  ngOnInit(): void {
-    const surveyId = this.route.snapshot.paramMap.get('id');
-    this.surveyFormService.getEagerById(surveyId).subscribe({
-      next: (res) => {
-        this.surveyForm = res.data;
-      },
-      error: (err) => {
-        console.error('Error fetching survey form:', err);
-      }
-    });
-  }
   onSubmit() { }
 
   get fullName() { return this.participantForm.get('fullname'); }

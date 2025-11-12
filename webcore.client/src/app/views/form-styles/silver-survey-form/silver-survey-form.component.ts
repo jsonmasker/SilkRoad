@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { SurveyFormModel } from '@models/survey-models/survey-form.model';
 
 @Component({
   selector: 'app-silver-survey-form',
@@ -7,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './silver-survey-form.component.scss'
 })
 export class SilverSurveyFormComponent {
+  @Input() surveyForm!: SurveyFormModel;
+  @Input() isReviewMode: boolean = false;
 
 }

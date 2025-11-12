@@ -1,0 +1,44 @@
+<div class="surveyPage">
+    <div class="surveyFormContainer">
+        <div class="header">
+            <img class="logo" src="./assets/images/thisologo1.png" alt="logo" />
+            <span class="fw-bold language" (click)="handleChangeLanguage()">{{selectedLanguage}}</span>
+        </div>
+        <div class="body">
+    
+                <!-- @if (!initParticipant) {
+                    <app-survey-information 
+                        [selectedLanguage]="selectedLanguage" 
+                        [initSurveyForm]="surveyForm"
+                        (onUpdateCurrentParticipantId)="onUpdateCurrentParticipantId($event)">
+                    </app-survey-information>
+                } @else {
+                    <app-survey-content 
+                        [selectedLanguage]="selectedLanguage" 
+                        [initSurveyForm]="surveyForm"
+                        [participantId]="currentPaticipantId()"
+                        (onSubmitParticipantForm)="onSubmitParticipantForm($event)">
+                    </app-survey-content>
+                } -->
+                @if(!initParticipant) {
+                    <app-gold-survey-body 
+                        [selectedLanguage]="selectedLanguage" 
+                        [surveyForm]="surveyForm"
+                        (onUpdateCurrentParticipantId)="onUpdateCurrentParticipantId($event)">
+                    </app-gold-survey-body>
+                } @else if(!finished) {
+                    <app-survey-content 
+                        [selectedLanguage]="selectedLanguage" 
+                        [initSurveyForm]="surveyForm"
+                        [participantId]="currentPaticipantId()"
+                        (onSubmitParticipantForm)="onSubmitParticipantForm($event)">
+                    </app-survey-content>
+                }
+                @if(finished) {
+                    <app-gold-thank-you 
+                        [selectedLanguage]="selectedLanguage">
+                    </app-gold-thank-you>
+                }
+        </div>
+    </div>
+</div>

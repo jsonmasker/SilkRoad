@@ -1,10 +1,10 @@
-<div class="surveyPage">
-    <div class="surveyFormContainer">
-        <div class="header">
-            <img class="logo" src="../../../../assets/images/thisologo1.png" alt="logo" />
-            <span class="fw-bold language" (click)="handleChangeLanguage()">{{selectedLanguage}}</span>
-        </div>
-        <div class="body d-flex flex-column align-items-center">
+import { Component, Input } from '@angular/core';
+import { ELanguages } from '@common/global';
+
+@Component({
+  selector: 'app-gold-thank-you',
+  imports: [],
+  template:`    <div class="d-flex flex-column align-items-center">
             <div class="textContent mt-4 mb-4 d-flex flex-column gap-2">
                 @if (selectedLanguage === eLanguages.English)
                 {
@@ -19,7 +19,10 @@
                     <span>Mỗi phản hồi của Quý khách là nguồn động lực quý giá, giúp Thiso Mall ngày càng hoàn thiện hơn.</span>
                 }
             </div>
-            <img style="max-width:50%;" src="../../../../assets/images/Pose5_Rainbow.gif" alt="..." />
-        </div>
-    </div>
-</div>
+            <img style="max-width:50%;" src="./assets/images/Pose5_Rainbow.gif" alt="..." />
+        </div>`
+})
+export class GoldThankYouComponent {
+  @Input() selectedLanguage: string = ELanguages.Vietnamese;
+  eLanguages = ELanguages;
+}

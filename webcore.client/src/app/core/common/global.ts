@@ -112,6 +112,12 @@ export enum EFieldTypes
     PhoneNumber = 6
 }
 
+export enum EFormStyles{
+    DefaultForm = -1,
+    GoldForm = 1,
+    SilverForm = 2
+}
+
 export enum ELanguages
 {
     English = 'EN',

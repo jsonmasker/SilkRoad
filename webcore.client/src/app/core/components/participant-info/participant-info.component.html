@@ -1,5 +1,5 @@
 @if (participantForm) {
-<form [formGroup]="participantForm" >
+<form [formGroup]="participantForm" (ngSubmit)="onSubmit()">
   <div class="row">
     @for (field of participantFields; track trackByField($index, field)) {
     <div class="col-md-6 mb-2" [class.col-md-12]="field.typeId === fieldTypes.TextArea">

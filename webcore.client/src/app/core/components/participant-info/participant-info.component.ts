@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ParticipantInfoConfigModel } from '@models/survey-models/participant-info-config.model';
@@ -9,6 +9,7 @@ import { ParticipantTextAreaComponent } from '@components/participant-fields/tex
 import { ParticipantDateTimeComponent } from '@components/participant-fields/date-time.component';
 import { ParticipantNumberComponent } from '@components/participant-fields/number.component';
 import { EFieldTypes } from '@common/global';
+import { ParticipantInfoModel } from '@models/survey-models/participant-info.model';
 
 @Component({
   selector: 'app-participant-info',
@@ -30,6 +31,7 @@ export class ParticipantInfoComponent implements OnInit {
   //#region Attributes & Inputs
   @Input() selectedLanguage: string = 'EN';
   @Input() participantFields: ParticipantInfoConfigModel[] = [];
+  @Output() onSubmitParticipantInfo = new EventEmitter<ParticipantInfoModel[]>();
   participantForm!: FormGroup;
   fieldTypes = EFieldTypes;
   //#endregion
@@ -93,12 +95,37 @@ export class ParticipantInfoComponent implements OnInit {
   }
   //#endregion
 
-  supportMarkAsTouched(): void {
-    console.log('Mark all fields as touched to show validation errors');
-    // Mark all fields as touched to show validation errors
-    Object.keys(this.participantForm.controls).forEach(key => {
-      this.participantForm.get(key)?.markAsTouched();
-    });
-  }
+  onSubmit(): void {
+    debugger;
+    if (this.participantForm.valid) {
+      const participantData = this.participantForm.value;
+      const participantInfos: ParticipantInfoModel[] = [];
+      this.participantFields.forEach(field => {
+        const fieldId = this.getFieldId(field);
+        const rawValue = participantData[fieldId];
+        if (rawValue !== undefined && rawValue !== null && rawValue !== '') {
+          const info: ParticipantInfoModel = {
+            participantInfoConfigId: field.id || '',
+          };
+          if (field.typeId === EFieldTypes.TextArea || field.typeId === EFieldTypes.Text || field.typeId === EFieldTypes.PhoneNumber || field.typeId === EFieldTypes.Email) {
+            info.textValue = String(rawValue);
+          } else if (field.typeId === EFieldTypes.Number) {
+            const num = Number(rawValue);
+            if (!isNaN(num)) info.numberValue = num;
+          } else if (field.typeId === EFieldTypes.Date) {
+            const date = new Date(rawValue);
+            if (!isNaN(date.getTime())) info.dateValue = date;
+          }
+          participantInfos.push(info);
+        }
+      });
 
+      this.onSubmitParticipantInfo.emit(participantInfos);
+    } else {
+      Object.keys(this.participantForm.controls).forEach(key => {
+        this.participantForm.get(key)?.markAsTouched();
+      });
+      console.log('Participant Info Form is invalid.');
+    }
+  }
 }
