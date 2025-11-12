@@ -1,4 +1,4 @@
-export const baseUrl = "http://localhost:50567/#/";
+export const baseUrl = "https://dev.thiso.vn/#/";
 
 export const chatbotHubUrl = baseUrl + "chat";
 export const ollamaUrl = baseUrl + "api/Ollama/GetResponse";
