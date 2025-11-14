@@ -13,12 +13,12 @@ import { ParticipantModel } from '@models/survey-models/participant.model';
 import { QuestionModel } from '@models/survey-models/question.model';
 
 @Component({
-  selector: 'app-gold-survey-form',
+  selector: 'app-split-survey-form',
   imports: [CommonModule, ReactiveFormsModule, ParticipantInfoComponent],
-  templateUrl: './gold-survey-form.component.html',
-  styleUrl: './gold-survey-form.component.scss'
+  templateUrl: './split-survey-form.component.html',
+  styleUrl: './split-survey-form.component.scss'
 })
-export class GoldSurveyFormComponent implements OnInit {
+export class SplitSurveyFormComponent implements OnInit {
   //#region Properties
   @Input() surveyForm!: SurveyFormModel;
   @Input() isReviewMode: boolean = false;
@@ -26,9 +26,9 @@ export class GoldSurveyFormComponent implements OnInit {
   eLanguages = ELanguages;
   selectedLanguage: string = ELanguages.Vietnamese;
   questionTypes: any = EQuestionTypes;
-  initParticipant: boolean = false;
+  initParticipant: boolean = true;
   finished: boolean = false;
-  currentPaticipantId = signal<string>('');
+  currentPaticipantId = signal<string>('okey');
   answerList: AnswerModel[] = [];
   numberOfQuestions: number = 0;
   // participantInfos: ParticipantInfoModel[] = [];

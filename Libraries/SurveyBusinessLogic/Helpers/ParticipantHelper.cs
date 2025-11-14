@@ -22,14 +22,14 @@ namespace SurveyBusinessLogic.Helpers
 
         public async Task<Pagination<ParticipantDTO>> FilterAsync(ParticipantFilterModel filter)
         {
-            var query = _unitOfWork.ParticipantRepository.Query(x => true).AsNoTracking();
+            var query = _unitOfWork.ParticipantRepository.Query(includeProperties: "ParticipantInfos").AsNoTracking();
             if (filter.SurveyFormId != -1)
             {
                 query = query.Where(s => s.SurveyFormId == filter.SurveyFormId);
             }
             if (filter.IsComplete != null)
             {
-                query = query.Where(s => s.IsComplete == filter.IsComplete);
+                query = query.Where(s => s.IsCompleted == filter.IsComplete);
             }
             if (filter.IsRejected != null)
             {
@@ -70,7 +70,7 @@ namespace SurveyBusinessLogic.Helpers
         /// <returns></returns>
         public async Task<bool> CreateAsync(ParticipantDTO model)
         {
-            model.IsComplete = true;
+            model.IsCompleted = true;
             await _unitOfWork.ParticipantRepository.CreateAsync(model);
             await _unitOfWork.SaveChangesAsync();
             return true;
@@ -82,7 +82,7 @@ namespace SurveyBusinessLogic.Helpers
         /// <returns></returns>
         public async Task<ParticipantDTO?> InitAsync(ParticipantDTO model)
         {
-            model.IsComplete = false;
+            model.IsCompleted = false;
             await _unitOfWork.ParticipantRepository.CreateAsync(model);
             await _unitOfWork.SaveChangesAsync();
             return model;
@@ -99,7 +99,7 @@ namespace SurveyBusinessLogic.Helpers
             AnswerDTO firstAswer = answers[0];
             ParticipantDTO? participant = await _unitOfWork.ParticipantRepository.GetByIdAsync(firstAswer.ParticipantId);
             if (participant == null) return false;
-            participant.IsComplete = true;
+            participant.IsCompleted = true;
 
             foreach (AnswerDTO answer in answers)
             {

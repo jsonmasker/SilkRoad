@@ -512,6 +512,7 @@ export class UpdateHelperComponent implements OnInit {
   }
 
   onSubmitUpdateQuestion(): void {
+    debugger;
     if (this.updateQuestionForm.valid) {
       const question: QuestionModel = {
         id: this.updateQuestionForm.value.id ?? '',
@@ -532,6 +533,9 @@ export class UpdateHelperComponent implements OnInit {
             this.predefinedAnswerList = [];
             this.selectedQuestionId.set(undefined);
           }
+        },
+        error: (err) => {
+          console.error('Error updating question:', err);
         }
       });
       // Reset the question type select component

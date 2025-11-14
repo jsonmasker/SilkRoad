@@ -1,4 +1,4 @@
-<h3 class="fw-bold">Survey Forms</h3>
+<h3 class="fw-bold">Participants</h3>
 <c-accordion class="mb-4">
     <c-accordion-item #item0="cAccordionItem" [visible]="true">
         <ng-template cTemplateId="accordionHeaderTemplate">
@@ -79,7 +79,12 @@
     <thead class="text-nowrap text-truncate">
         <tr>
             <th scope="col">STT</th>
-            <th scope="col">CreatedAt</th>
+            <th scope="col">Fields</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Is Completed</th>
+            <th scope="col">Is Highlighted</th>
+            <th scope="col">Is Review Mode</th>
+            <th scope="col">Is Rejected</th>
             <th></th>
         </tr>
     </thead>
@@ -87,7 +92,12 @@
         @for (item of data.items; track item?.id; let i = $index) {
         <tr>
             <td>{{ i+1 }}</td>
+            <td>{{ item?.participantInfos?.[0]?.textValue ?? '###' }}</td>
             <td>{{ item.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ item.isCompleted }}</td>
+            <td>{{ item.isHighlighted }}</td>
+            <td>{{ item.isReviewMode }}</td>
+            <td>{{ item.isRejected }}</td>
             <td>
                 <div class="d-flex justify-content-end">
                     <!-- <a target="_blank" routerLink="/gold-survey-form/{{item.id}}" class="btn btn-success me-2">

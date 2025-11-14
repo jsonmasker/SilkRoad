@@ -284,7 +284,7 @@ namespace SurveyBusinessLogic.Helpers
             // Check limited participant
             if (data.IsLimited)
             {
-                var query = _unitOfWork.ParticipantRepository.Query(s => s.SurveyFormId == id && s.IsComplete && !s.IsRejected);
+                var query = _unitOfWork.ParticipantRepository.Query(s => s.SurveyFormId == id && s.IsCompleted && !s.IsRejected);
                 int countParticipants = await query.CountAsync();
                 // If reach max participants, return null
                 if (countParticipants >= data.MaxParticipants)
