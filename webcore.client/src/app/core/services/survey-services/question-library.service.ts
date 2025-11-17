@@ -26,6 +26,20 @@ export class QuestionLibraryService {
       })
     );
   }
+  getByFilter(filter: any): Observable<APIResponse<Pagination<QuestionLibraryModel>>> {
+    const url = EUrl.filterUrlQuestionLibrary;
+    return this.http.post<APIResponse<Pagination<QuestionLibraryModel>>>(url, filter, { headers: this.authenticationService.getHeaders() }).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          return this.authenticationService.reNewToken().pipe(
+            switchMap(() => this.http.post<APIResponse<Pagination<QuestionLibraryModel>>>(url, filter, { headers: this.authenticationService.getHeaders() }))
+          );
+        } else {
+          return throwError(() => error);
+        }
+      })
+    );
+  }
 
 //   getOptionList(): Observable<APIResponse<OptionModel[]>> {
 //     const url = EUrl.getOptionListUrlQuestionLibrary;

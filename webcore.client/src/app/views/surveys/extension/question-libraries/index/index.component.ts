@@ -40,6 +40,8 @@ export class IndexComponent {
   trashData: Pagination<QuestionLibraryModel> = new Pagination<QuestionLibraryModel>();
 
   filterForm: FormGroup = new FormGroup({
+    pageIndex: new FormControl(1),
+    pageSize: new FormControl(10),
     questionGroupId: new FormControl(-1),
     questionTypeId: new FormControl(-1),
     searchText: new FormControl('')
@@ -60,7 +62,11 @@ export class IndexComponent {
     this.getData();
   }
   getData() {
-    this.questionLibraryService.getAll(this.pageInformation.pageIndex, this.pageInformation.pageSize).subscribe((res) => {
+    this.filterForm.patchValue({
+      pageIndex: this.pageInformation.pageIndex,
+      pageSize: this.pageInformation.pageSize
+    });
+    this.questionLibraryService.getByFilter(this.filterForm.value).subscribe((res) => {
       this.data = res.data;
       console.log(this.data);
     });

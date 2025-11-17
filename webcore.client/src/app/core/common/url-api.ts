@@ -268,7 +268,8 @@ export enum EUrl {
     deleteUrlQuestionGroupLibrary = "/api/questionGroupLibrary/delete",
 
     //questionLibrary
-    getAllUrlQuestionLibrary = "/api/questionLibrary/getAll",
+  getAllUrlQuestionLibrary = "/api/questionLibrary/getAll",
+  filterUrlQuestionLibrary = "/api/questionLibrary/getByFilter",
     getAllDeletedUrlQuestionLibrary = "/api/questionLibrary/getAllDeleted",
     getEagerLoadingByIdUrlQuestionLibrary = "/api/questionLibrary/getEagerLoadingById",
     getByIdUrlQuestionLibrary = "/api/questionLibrary/getById",

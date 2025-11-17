@@ -1,5 +1,7 @@
 ﻿using Common.Models;
+using Microsoft.EntityFrameworkCore;
 using SurveyBusinessLogic.IHelpers;
+using SurveyBusinessLogic.Models;
 using SurveyDataAccess;
 using SurveyDataAccess.DTOs;
 
@@ -30,6 +32,44 @@ namespace SurveyBusinessLogic.Helpers
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 CurrentPage = pageIndex,
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                Items = items
+            };
+        }
+
+
+        public async Task<Pagination<QuestionLibraryDTO>> GetByFilterAsync(QuestionLibraryFilterModel filter)
+        {
+            var query =  _unitOfWork.QuestionLibraryRepository.Query(orderBy: p => p.OrderBy(s => s.Priority)).AsNoTracking();
+            if (!string.IsNullOrEmpty(filter.SearchText))
+            {
+                string searchText = filter.SearchText.Trim().ToLower();
+                query = query.Where(x => x.NameEN.ToLower().Contains(searchText) || x.NameVN.ToLower().Contains(searchText));
+            }
+            if (filter.QuestionGroupId > 0)
+            {
+                query = query.Where(x => x.QuestionGroupLibraryId == filter.QuestionGroupId);
+            }
+            if (filter.QuestionTypeId > 0)
+            {
+                query = query.Where(x => x.QuestionTypeId == filter.QuestionTypeId);
+            }
+
+            int totalItems = query.Count();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)filter.PageSize);
+            if (filter.PageIndex > totalPages)
+                filter.PageIndex = totalPages > 0 ? totalPages : 1;
+            var items = query.Skip((filter.PageIndex - 1) * filter.PageSize).Take(filter.PageSize).ToList();
+            foreach (var item in items)
+            {
+                item.PredefinedAnswerLibraries = await _unitOfWork.PredefinedAnswerLibraryRepository.GetByQuestionLibraryIdAsync(item.Id);
+            }
+            return new Pagination<QuestionLibraryDTO>
+            {
+                PageIndex = filter.PageIndex,
+                PageSize = filter.PageSize,
+                CurrentPage = filter.PageIndex,
                 TotalItems = totalItems,
                 TotalPages = totalPages,
                 Items = items
