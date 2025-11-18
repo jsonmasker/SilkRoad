@@ -18,7 +18,7 @@ import { QuestionModel } from '@models/survey-models/question.model';
   templateUrl: './split-survey-form.component.html',
   styleUrl: './split-survey-form.component.scss'
 })
-export class SplitSurveyFormComponent implements OnInit {
+export class SplitSurveyFormComponent {
   //#region Properties
   @Input() surveyForm!: SurveyFormModel;
   @Input() isReviewMode: boolean = false;
@@ -30,7 +30,7 @@ export class SplitSurveyFormComponent implements OnInit {
   finished: boolean = false;
   currentPaticipantId = signal<string>('okey');
   answerList: AnswerModel[] = [];
-  numberOfQuestions: number = 0;
+  // numberOfQuestions: number = 0;
   // participantInfos: ParticipantInfoModel[] = [];
   //#endregion
   
@@ -41,17 +41,7 @@ export class SplitSurveyFormComponent implements OnInit {
     private participantService: ParticipantService,
     private router: Router
   ) { }
-  ngOnInit(): void {
-   this.numberOfQuestions =
-    (
-      (this.surveyForm.questionGroups.reduce(
-        (total, group) => total + (group.questions.length || 0),
-        0
-      ) || 0)
-      +
-      (this.surveyForm.questions.length || 0)
-    );
-  }
+
 
   handleChangeLanguage() {
     this.selectedLanguage = this.selectedLanguage === ELanguages.Vietnamese ? ELanguages.English : ELanguages.Vietnamese;
@@ -151,15 +141,15 @@ export class SplitSurveyFormComponent implements OnInit {
 
   onSubmitParticipantForm(): void {
     console.log('Final Submitted Answers:', this.answerList);
-    this.participantService.addAnswers(this.answerList).subscribe({
-      next: (res) => {
-        console.log('Answers submitted successfully:', res);
-        this.navigateToThankYouPage();
-      },
-      error: (err) => {
-        console.error('Error submitting answers:', err);
-      }
-    });
+    // this.participantService.addAnswers(this.answerList).subscribe({
+    //   next: (res) => {
+    //     console.log('Answers submitted successfully:', res);
+    //     this.navigateToThankYouPage();
+    //   },
+    //   error: (err) => {
+    //     console.error('Error submitting answers:', err);
+    //   }
+    // });
   }
   //#endregion
 }
