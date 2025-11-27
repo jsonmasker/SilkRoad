@@ -10,33 +10,6 @@ export const navItems: INavData[] = [
       text: 'NEW'
     }
   },
-  //#region Stock Market
-  {
-    title: true,
-    name: 'Stock Market'
-  },
-  {
-    name: 'Industries',
-    url: '/stock/industries',
-    iconComponent: { name: 'cil-chart-pie' }
-  },
-  {
-    name: 'Companies',
-    url: '/stock/companies',
-    iconComponent: { name: 'cil-building' }
-  },
-    {
-    name: 'Chart',
-    url: '/stock/chart',
-    iconComponent: { name: 'cil-bar-chart' }
-  },
-        {
-    name: 'Trade Histories',
-    url: '/stock/chart',
-    iconComponent: { name: 'cil-notes' }
-  },
-
-  //#endregion
   //#region Features
   {
     title: true,
@@ -73,6 +46,67 @@ export const navItems: INavData[] = [
   //   iconComponent: { name: 'cil-envelope-closed' }
   // },
   //#endregion
+
+  //#region Stock Market
+  {
+    title: true,
+    name: 'Stock Market'
+  },
+  {
+    name: 'Industries',
+    url: '/stock/industries',
+    iconComponent: { name: 'cil-chart-pie' }
+  },
+  {
+    name: 'Companies',
+    url: '/stock/companies',
+    iconComponent: { name: 'cil-building' }
+  },
+  {
+    name: 'Chart',
+    url: '/stock/chart',
+    iconComponent: { name: 'cil-bar-chart' }
+  },
+  {
+    name: 'Trade Histories',
+    url: '/stock/chart',
+    iconComponent: { name: 'cil-notes' }
+  },
+  //#endregion
+  //#region Personal Finance
+  {
+    title: true,
+    name: 'Personal Finance'
+  },
+  {
+    name: 'Reports',
+    url: '/personal-finance/reports',
+    iconComponent: { name: 'cil-speedometer' }
+  },
+    {
+    name: 'Incomes',
+    url: '/personal-finance/incomes',
+    iconComponent: { name: 'cil-bar-chart' }
+  },
+  {
+    name: 'Expenses',
+    url: '/personal-finance/expenses',
+    iconComponent: { name: 'cil-notes' }
+  },
+  {
+    name: 'Extend',
+    url: '/personal-finance/extension',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Categories',
+        url: '/personal-finance/extension/categories',
+        icon: 'nav-icon-bullet'
+      },
+    ]
+  },
+  //#endregion
+  
   //#region Restaurant
   {
     name: 'Restaurant',
@@ -104,6 +138,7 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-line-style' }
   },
   //#endregion
+  
   //#region Lipstick Shop
   {
     title: true,
@@ -197,6 +232,7 @@ export const navItems: INavData[] = [
     ]
   },
   //#endregion
+  
   //#region Surveys
 
   {
@@ -228,7 +264,7 @@ export const navItems: INavData[] = [
         url: '/surveys/extension/question-types',
         icon: 'nav-icon-bullet'
       },
-           {
+      {
         name: 'Stores',
         url: '/surveys/extension/stores',
         icon: 'nav-icon-bullet'
@@ -246,12 +282,13 @@ export const navItems: INavData[] = [
     ]
   },
   //#endregion
+  
   //#region System Management
   {
     name: 'System Management',
     title: true
   },
-   {
+  {
     name: 'Users',
     url: '/users',
     iconComponent: { name: 'cil-people' }
@@ -264,7 +301,7 @@ export const navItems: INavData[] = [
   {
     name: 'Settings',
     url: '/settings',
-    iconComponent: {name: 'cil-settings'}
+    iconComponent: { name: 'cil-settings' }
   },
   // {
   //   name: 'Extend',

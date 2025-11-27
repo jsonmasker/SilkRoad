@@ -2,7 +2,7 @@ using Common;
 using Common.Services.ConvertWordToPdfServices;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebCore.Server.Controllers
+namespace WebCore.Server.Controllers.FeatureControllers
 {
     [Route("api/[controller]")]
     [ApiController]

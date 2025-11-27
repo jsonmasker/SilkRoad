@@ -58,6 +58,9 @@ namespace WebCore.Server
                 //Survey DB
                 builder.Services.AddDbContext<SurveyDataAccess.ApplicationContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SurveySqlConnection")));
+                //Personal Finance DB
+                builder.Services.AddDbContext<PersonalFinanceDataAccess.ApplicationContext>(options =>
+               options.UseSqlServer(builder.Configuration.GetConnectionString("PersonalFinanceSqlConnection")));
                 //Lipstick DB
                 builder.Services.AddDbContext<LipstickDataAccess.ApplicationContext>(options =>
                     options.UseSqlServer(builder.Configuration.GetConnectionString("LipstickSqlConnection")));
