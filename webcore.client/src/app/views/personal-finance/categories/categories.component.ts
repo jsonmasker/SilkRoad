@@ -1,17 +1,16 @@
-import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonCloseDirective, ButtonDirective, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective,
-   FormSelectDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent } from '@coreui/angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { EColors } from '@common/global';
 import { DataTableComponent } from "@components/generals/data-table/data-table.component";
 import { BookIconComponent } from "@components/icons/book-icon.component";
-import { CategoryService } from '@services/personal-finance-services';
+import { CategoryService, SubCategoryService } from '@services/personal-finance-services';
 import { CategoryModel } from '@models/personal-finance-models';
+import { ButtonCloseDirective, ButtonDirective, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent} from '@coreui/angular';
+import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX } from '@coreui/icons';
 
 @Component({
   selector: 'app-categories',
@@ -19,10 +18,10 @@ import { CategoryModel } from '@models/personal-finance-models';
   styleUrl: './categories.component.scss',
   imports: [ModalBodyComponent, CommonModule, FormControlDirective, FormLabelDirective,
     ModalComponent, ButtonDirective, FormCheckComponent, FormDirective, ReactiveFormsModule,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent, IconDirective, FormSelectDirective, BookIconComponent],
-
+    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent, IconDirective, BookIconComponent]
 })
 export class CategoriesComponent implements OnInit {
+  //#region Properties
   pageInformation: PageInformation = new PageInformation();
   trashPageInformation: PageInformation = new PageInformation();
   visibleTrashModal: boolean = false;
@@ -32,9 +31,12 @@ export class CategoriesComponent implements OnInit {
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
   deleteById: number = 0;
-  defaultTags: string[] = [];
   data: Pagination<CategoryModel> = new Pagination<CategoryModel>();
-  showChildrenByParentId  = signal<number | null>(null);
+  showChildrenByParentId = signal<number | null>(null);
+  visibleCreateSubCategoryModal: boolean = false;
+  visibleUpdateSubCategoryModal: boolean = false;
+  visibleDeleteSubCategory: boolean = false;
+  deleteSubCategoryById: number = 0;
 
   createForm: FormGroup = new FormGroup({
     nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
@@ -43,6 +45,7 @@ export class CategoriesComponent implements OnInit {
     isActive: new FormControl(true, Validators.required),
     priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(100)])
   });
+
   updateForm: FormGroup = new FormGroup({
     id: new FormControl(0, Validators.required),
     nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
@@ -52,7 +55,28 @@ export class CategoriesComponent implements OnInit {
     priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(100)])
   });
 
-  constructor(private categoryService: CategoryService,
+  createSubCategoryForm: FormGroup = new FormGroup({
+    categoryId: new FormControl(0, Validators.required),
+    nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    note: new FormControl('', Validators.maxLength(500)),
+    isActive: new FormControl(true, Validators.required),
+    priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(100)])
+  });
+
+  updateSubCategoryForm: FormGroup = new FormGroup({
+    id: new FormControl(0, Validators.required),
+    categoryId: new FormControl(0, Validators.required),
+    nameVN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    nameEN: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    note: new FormControl('', Validators.maxLength(500)),
+    isActive: new FormControl(true, Validators.required),
+    priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(100)])
+  });
+  //#endregion
+
+  //#region Constructor & ngOnInit
+  constructor(private categoryService: CategoryService, private subCategoryService : SubCategoryService,
     private toastService: ToastService) { }
   ngOnInit(): void {
     this.getData();
@@ -66,37 +90,36 @@ export class CategoriesComponent implements OnInit {
       this.pageInformation.totalPages = this.data.totalPages;
       // Reset visibleSubItems for fresh data
       this.data.items.forEach(item => {
-          item.expanded = false; // Reset expanded state for each item
-          if (this.showChildrenByParentId() === item.id) {
-            item.expanded = true; // Set expanded state if it matches the current showChildrenBy
-            // parentId
-          }
-        });
+        item.expanded = false; // Reset expanded state for each item
+        if (this.showChildrenByParentId() === item.id) {
+          item.expanded = true; // Set expanded state if it matches the current showChildrenBy
+          // parentId
+        }
+      });
     });
   }
-  // Wrapper functions for child component context binding
-  public toggleLiveCreateModelWrapper = (id: number | null) => this.toggleLiveCreateModel(id);
-  public updateDataWrapper = (id: number) => this.updateData(id);
-  public softDeleteDataWrapper = (id: number) => this.softDeleteData(id);
-  
+
   onPageIndexChange(index: any) {
     this.pageInformation.pageIndex = index;
     this.getData();
   }
+  
   onPageSizeChange(size: any) {
     this.pageInformation.pageSize = size;
     this.pageInformation.pageIndex = 1;
     this.getData();
   }
-    onChangeMultipleOptions(event:string[], type: string) {
-      if (type === 'create') {
-        this.createForm.patchValue({ tags: JSON.stringify(event) });
-      }else if (type === 'update') {
-        this.updateForm.patchValue({ tags: JSON.stringify(event) });
-      }
+  
+  onChangeMultipleOptions(event: string[], type: string) {
+    if (type === 'create') {
+      this.createForm.patchValue({ tags: JSON.stringify(event) });
+    } else if (type === 'update') {
+      this.updateForm.patchValue({ tags: JSON.stringify(event) });
+    }
   }
+  
   //table tree
-    toggleNode(node: CategoryModel): void {
+  toggleNode(node: CategoryModel): void {
     node.expanded = !node.expanded;
     if (node.expanded) {
       this.showChildrenByParentId.set(node.id);
@@ -104,6 +127,7 @@ export class CategoriesComponent implements OnInit {
       this.showChildrenByParentId.set(null);
     }
   }
+  //#endregion
 
   //#region Trash
   getTrashData() {
@@ -149,6 +173,7 @@ export class CategoriesComponent implements OnInit {
   //   this.visibleSubItemId = id;
   // }
   //#endregion
+
   //#region Create Form
   onSubmitCreateForm() {
     if (this.createForm.valid) {
@@ -157,7 +182,7 @@ export class CategoriesComponent implements OnInit {
         this.getData();
         this.toastService.showToast(EColors.success, res.message);
         this.createForm.reset();
-        this.createForm.patchValue({ isActive: true, parentId: null });
+        this.createForm.patchValue({ isActive: true, priority: 1 });
       }, (failure) => {
         console.error(failure);
         this.toastService.showToast(EColors.danger, failure.error.message);
@@ -165,13 +190,8 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
-  toggleLiveCreateModel(parentId: number | null = null) {
+  toggleLiveCreateModel() {
     this.visibleCreateModal = !this.visibleCreateModal;
-    if (parentId != null) {
-      this.createForm.patchValue({ parentId });
-    }else{
-      this.createForm.patchValue({ parentId: null });
-    }
   }
 
   handleLiveCreateModelChange(event: any) {
@@ -233,6 +253,34 @@ export class CategoriesComponent implements OnInit {
   }
   handleLiveDeleteChange(event: any) {
     this.visibleDelete = event;
+  }
+  //#endregion
+
+  //#region Sub Category Create Form
+  toggleLiveCreateSubCategoryModel(categoryId: number| null = null) {
+    this.createSubCategoryForm.patchValue({ categoryId: categoryId });
+    this.visibleCreateSubCategoryModal = !this.visibleCreateSubCategoryModal;
+  }
+  handleLiveCreateSubCategoryModelChange(event: any) {
+    this.visibleCreateSubCategoryModal = event;
+  }
+  get nameVNCreateSubCategoryForm() { return this.createSubCategoryForm.get('nameVN'); }
+  get nameENCreateSubCategoryForm() { return this.createSubCategoryForm.get('nameEN'); }
+  get priorityCreateSubCategoryForm() { return this.createSubCategoryForm.get('priority'); }
+  get noteCreateSubCategoryForm() { return this.createSubCategoryForm.get('note'); }
+  onSubmitCreateSubCategoryForm() {
+    if (this.createSubCategoryForm.valid) {
+      this.subCategoryService.create(this.createSubCategoryForm.value).subscribe((res) => {
+        this.toggleLiveCreateSubCategoryModel(0);
+        this.getData();
+        this.toastService.showToast(EColors.success, res.message);
+        this.createSubCategoryForm.reset();
+        this.createSubCategoryForm.patchValue({ isActive: true, priority: 1 });
+      }, (failure) => {
+        console.error(failure);
+        this.toastService.showToast(EColors.danger, failure.error.message);
+      });
+    }
   }
   //#endregion
 }

@@ -38,6 +38,15 @@ export enum EUrl {
   softDeleteUrlCategoryPF = "/api/categoryPF/softDelete",
   restoreUrlCategoryPF = "/api/categoryPF/restore",
   deleteUrlCategoryPF = "/api/categoryPF/delete",
+  //SubCategory
+  getAllUrlSubCategoryPF = "/api/subCategoryPF/getAll",
+  getAllDeletedUrlSubCategoryPF = "/api/subCategoryPF/getAllDeleted",
+  getByIdUrlSubCategoryPF = "/api/subCategoryPF/getById",
+  createUrlSubCategoryPF = "/api/subCategoryPF/create",
+  updateUrlSubCategoryPF = "/api/subCategoryPF/update",
+  softDeleteUrlSubCategoryPF = "/api/subCategoryPF/softDelete",
+  restoreUrlSubCategoryPF = "/api/subCategoryPF/restore",
+  deleteUrlSubCategoryPF = "/api/subCategoryPF/delete",
   //#endregion
 
   //#region Hubs

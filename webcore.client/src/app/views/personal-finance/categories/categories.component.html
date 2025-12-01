@@ -12,7 +12,8 @@
   <thead class="text-nowrap text-truncate">
     <tr>
       <th scope="col">No</th>
-      <th scope="col">Name</th>
+      <th scope="col">Name EN</th>
+      <th scope="col">Name VN</th>
       <th scope="col">Is Active</th>
       <th scope="col">Created By</th>
       <th scope="col">Modified By</th>
@@ -27,7 +28,6 @@
   </tbody>
 </app-data-table>
 
-
 <ng-template #nodeTemplate let-node="node" let-level="level" let-index="index">
   <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
     <td>
@@ -35,7 +35,8 @@
         {{ index + 1 }}
       </span>
     </td>
-    <td>{{ node.name }}</td>
+    <td>{{ node.nameEN }}</td>
+    <td>{{ node.nameVN }}</td>
     <td>{{ node.isActive }}</td>
     <td>{{ node.createdBy }}</td>
     <td>{{ node.modifiedBy }}</td>
@@ -46,7 +47,7 @@
           <app-book-icon [open]="node.expanded"></app-book-icon>
         </button>
         }
-        <button (click)="toggleLiveCreateModel(node.id)" class="btn btn-success me-2">
+        <button (click)="toggleLiveCreateSubCategoryModel(node.id)" class="btn btn-success me-2">
           <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
         </button>
         <button (click)="updateData(node.id)"
@@ -61,12 +62,12 @@
     </td>
   </tr>
 
-  @if (node.expanded && (node?.children?.length ?? 0) > 0) {
+  <!-- @if (node.expanded && (node?.children?.length ?? 0) > 0) {
   @for (child of node.children; track child.id; let i = $index) {
   <ng-container [ngTemplateOutlet]="nodeTemplate"
     [ngTemplateOutletContext]="{ node: child, index: i, level: level + 1 }"></ng-container>
   }
-  }
+  } -->
 </ng-template>
 
 <!-- Create Modal -->
@@ -98,6 +99,20 @@
         </div>
       </div>
       <div class="mb-2 row">
+       
+          <div class="col-6">
+            <label cLabel for="nameEN">Name EN: <span class="text-danger">(*)</span></label>
+            <input cFormControl formControlName="nameEN">
+            @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
+            <div class="text-danger">
+              @if (nameENCreateForm?.hasError('required')) {
+              <div>
+                Name is required.
+              </div>
+              }
+            </div>
+            }
+          </div>
         <div class="col-6">
           <label cLabel for="nameVN">Name VN: <span class="text-danger">(*)</span></label>
           <input cFormControl formControlName="nameVN">
@@ -112,19 +127,6 @@
           }
         </div>
 
-          <div class="col-6">
-            <label cLabel for="nameEN">Name EN: <span class="text-danger">(*)</span></label>
-            <input cFormControl formControlName="nameEN">
-            @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
-            <div class="text-danger">
-              @if (nameENCreateForm?.hasError('required')) {
-              <div>
-                Name is required.
-              </div>
-              }
-            </div>
-            }
-          </div>
 
       </div>
       <div class="mb-2">
@@ -167,7 +169,7 @@
         </c-form-check>
         <div>
           <label for="priority" class="me-2">Priority: </label>
-          <input formControlName="priority" type="number" class="me-2 priorityInput">
+          <input formControlName="priority" type="number" class="me-2 number-control">
           @if (priorityUpdateForm?.invalid && (priorityUpdateForm?.dirty || priorityUpdateForm?.touched)) {
           <div class="text-danger">
             @if (priorityUpdateForm?.hasError('min') || priorityUpdateForm?.hasError('max')) {
@@ -181,7 +183,7 @@
       </div>
 
       <div class="mb-2 row">
-        <div class="col-12">
+        <div class="col-6">
           <label cLabel for="nameEN">Name EN: <span class="text-danger">(*)</span></label>
           <input cFormControl formControlName="nameEN">
           @if (nameENUpdateForm?.invalid && (nameENUpdateForm?.dirty || nameENUpdateForm?.touched)) {
@@ -194,8 +196,8 @@
           </div>
           }
         </div>
-        <div class="mb-2 row">
-          <div class="col-12">
+
+          <div class="col-6">
             <label cLabel for="nameVN">Name VN: <span class="text-danger">(*)</span></label>
             <input cFormControl formControlName="nameVN">
             @if (nameVNUpdateForm?.invalid && (nameVNUpdateForm?.dirty || nameVNUpdateForm?.touched)) {
@@ -208,7 +210,7 @@
             </div>
             }
           </div>
-        </div>
+
       </div>
       <div class="mb-2">
         <label cLabel for="note">Note: </label>
@@ -298,4 +300,87 @@
     </div>
     }
   </c-modal-body>
+</c-modal>
+<!-- Create Sub Category Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateSubCategoryModal" (visibleChange)="handleLiveCreateSubCategoryModelChange($event)"
+  id="verticallyCenteredCreateSubCategoryModal" size="lg">
+  <c-modal-header>
+    <h5 cModalTitle>Create Sub Category</h5>
+    <button (click)="toggleLiveCreateSubCategoryModel()" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="createSubCategoryForm" (ngSubmit)="onSubmitCreateSubCategoryForm()">
+    <c-modal-body>
+      <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="isActive" id="isActive" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="isActive" class="me-2">Active </label>
+        </c-form-check>
+        <div>
+          <label for="priority" class="me-2">Priority: </label>
+          <input formControlName="priority" type="number" class="me-2 number-control ">
+          @if (priorityCreateForm?.invalid && (priorityCreateForm?.dirty || priorityCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (priorityCreateForm?.hasError('min') || priorityCreateForm?.hasError('max')) {
+            <div>
+              Priority must be between 1 and 9999.
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="mb-2 row">
+       
+          <div class="col-6">
+            <label cLabel for="nameEN">Name EN: <span class="text-danger">(*)</span></label>
+            <input cFormControl formControlName="nameEN">
+            @if (nameENCreateForm?.invalid && (nameENCreateForm?.dirty || nameENCreateForm?.touched)) {
+            <div class="text-danger">
+              @if (nameENCreateForm?.hasError('required')) {
+              <div>
+                Name is required.
+              </div>
+              }
+            </div>
+            }
+          </div>
+        <div class="col-6">
+          <label cLabel for="nameVN">Name VN: <span class="text-danger">(*)</span></label>
+          <input cFormControl formControlName="nameVN">
+          @if (nameVNCreateForm?.invalid && (nameVNCreateForm?.dirty || nameVNCreateForm?.touched)) {
+          <div class="text-danger">
+            @if (nameVNCreateForm?.hasError('required')) {
+            <div>
+              Name is required.
+            </div>
+            }
+          </div>
+          }
+        </div>
+
+
+      </div>
+      <div class="mb-2">
+        <label cLabel for="note">Note: </label>
+        <textarea cFormControl formControlName="note" rows="3"></textarea>
+        @if (noteCreateForm?.invalid && (noteCreateForm?.dirty || noteCreateForm?.touched)) {
+        <div class="text-danger">
+          @if (noteCreateForm?.hasError('maxlength')) {
+          <div>
+            Maximum 500 characters.
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="toggleLiveCreateModel()" cButton color="secondary">
+        <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+      </button>
+      <button cButton type="submit" [disabled]="!createForm.valid" color="primary">
+        <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+      </button>
+    </c-modal-footer>
+  </form>
 </c-modal>
