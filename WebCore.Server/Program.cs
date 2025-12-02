@@ -176,20 +176,21 @@ namespace WebCore.Server
                         BearerFormat = "JWT",
                         Scheme = "bearer"
                     });
-                    //opt.AddSecurityRequirement(new OpenApiSecurityRequirement
-                    //{
-                    //    {
-                    //        new OpenApiSecurityScheme
-                    //        {
-                    //            Reference = new OpenApiReference
-                    //            {
-                    //                Type=ReferenceType.SecurityScheme,
-                    //                Id="Bearer"
-                    //            }
-                    //        },
-                    //        new string[]{}
-                    //    }
-                    //});
+                    opt.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+                    {
+                        //{
+                        //    new OpenApiSecurityScheme
+                        //    {
+                        //        Reference = new OpenApiReference
+                        //        {
+                        //            Type=ReferenceType.SecurityScheme,
+                        //            Id="Bearer"
+                        //        }
+                        //    },
+                        //    new string[]{}
+                        //}
+                        [new OpenApiSecuritySchemeReference("bearer", document)] = []
+                    });
                 });
                 #endregion
                 builder.Services.SignUp();

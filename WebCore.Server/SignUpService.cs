@@ -115,7 +115,7 @@ namespace WebCore.Server
             services.AddScoped<IActionLoggingService, ActionLoggingService>();
             services.AddTransient<IApiKeyValidation, ApiKeyValidation>();
             services.AddScoped<ApiKeyAuthFilter>();
-            //services.AddAutoMapper(typeof(Program));
+            services.AddAutoMapper(typeof(Program));
             services.AddScoped<ChatService>();
             #endregion
             return services;
