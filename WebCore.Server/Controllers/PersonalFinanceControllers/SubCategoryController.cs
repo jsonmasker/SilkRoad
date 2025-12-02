@@ -11,15 +11,15 @@ using WebCore.Server.Controllers.BaseApiControllers;
 namespace WebCore.Server.Controllers.PersonalFinanceControllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/pf/[controller]")]
     [ApiController]
     [Authorize]
-    public class SubCategoryPFController : BaseApiController
+    public class SubCategoryController : BaseApiController
     {
         private readonly ISubCategoryHelper _helper;
         private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public SubCategoryPFController(ISubCategoryHelper helper,
+        public SubCategoryController(ISubCategoryHelper helper,
         IActionLoggingService actionLog, IStringLocalizer<SharedResource> localizer)
         {
             _helper = helper;
