@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EColors } from '@common/global';
@@ -14,7 +14,7 @@ import { DataTableComponent } from '@components/generals/data-table/data-table.c
 
 @Component({
   selector: 'app-actions',
-  imports: [ ModalBodyComponent, NgFor, NgIf, FormControlDirective, FormLabelDirective,
+  imports: [ ModalBodyComponent, FormControlDirective, FormLabelDirective,
     ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule, FormSelectDirective,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent],
   templateUrl: './actions.component.html',

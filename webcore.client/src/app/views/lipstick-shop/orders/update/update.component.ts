@@ -1,4 +1,4 @@
-import { DecimalPipe, NgFor, NgIf } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -20,10 +20,10 @@ import { ProvinceService } from '@services/system-services/province.service';
   selector: 'app-update',
   imports: [
     FormDirective, FormLabelDirective, FormSelectDirective,
-    FormControlDirective, ButtonDirective, RouterLink, CardComponent, CardBodyComponent, NgFor,
+    FormControlDirective, ButtonDirective, RouterLink, CardComponent, CardBodyComponent,
     ReactiveFormsModule, AccordionButtonDirective, AccordionComponent,
     AccordionItemComponent, TemplateIdDirective,
-    TableDirective, NgIf, DecimalPipe
+    TableDirective, DecimalPipe
   ],
   templateUrl: './update.component.html',
   styleUrl: './update.component.scss'

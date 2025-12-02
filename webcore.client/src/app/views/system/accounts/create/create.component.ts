@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -16,7 +16,7 @@ import { EColors } from '@common/global';
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [ FormDirective, FormLabelDirective, NgFor, NgIf,
+  imports: [ FormDirective, FormLabelDirective,
     FormControlDirective, ButtonDirective,FormSelectDirective,
      RouterLink, CardComponent, CardBodyComponent,
       FormCheckComponent, ReactiveFormsModule],

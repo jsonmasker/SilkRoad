@@ -22,6 +22,10 @@ export const routes: Routes = [
     },
     children: [
       {
+        path: 'test',
+        loadChildren: () => import('./views/test/routes').then((m) => m.routes)
+      },
+      {
         path: 'introduction',
         loadChildren: () => import('./views/introduction/routes').then((m) => m.routes)
       },
@@ -34,19 +38,39 @@ export const routes: Routes = [
         loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
       },
       //#region Stock Market
-      // {
-      //   path: 'stock/industries',
-      //   loadChildren: () => import('./views/stocks/industry/routes').then((m) => m.routes)
-      // },
-      // {
-      //   path: 'stock/companies',
-      //   loadChildren: () => import('./views/stocks/company/routes').then((m) => m.routes)
-      // },
-      // {
-      //   path: 'stock/chart',
-      //   loadChildren: () => import('./views/stocks/chart/routes').then((m) => m.routes)
-      // },
+      {
+        path: 'stock/industries',
+        loadChildren: () => import('./views/stocks/industry/routes').then((m) => m.routes)
+      },
+      {
+        path: 'stock/companies',
+        loadChildren: () => import('./views/stocks/company/routes').then((m) => m.routes)
+      },
+      {
+        path: 'stock/chart',
+        loadChildren: () => import('./views/stocks/chart/routes').then((m) => m.routes)
+      },
       //#endregion
+      
+      //#region Personal Finance
+      {
+        path: 'personal-finance/categories',
+        loadChildren: () => import('./views/personal-finance/categories/routes').then((m) => m.routes)
+      },
+      {
+        path: 'personal-finance/expenses',
+        loadChildren: () => import('./views/personal-finance/expenses/routes').then((m) => m.routes)
+      },
+      {
+        path: 'personal-finance/income',
+        loadChildren: () => import('./views/personal-finance/income/routes').then((m) => m.routes)
+      },
+      {
+        path: 'personal-finance/reports',
+        loadChildren: () => import('./views/personal-finance/reports/routes').then((m) => m.routes)
+      },
+      //#endregion
+
       //#region Features
       // {
       //   path: 'features/chatgpt',
@@ -73,6 +97,7 @@ export const routes: Routes = [
       //   loadChildren: () => import('./views/features/email-service/routes').then((m) => m.routes)
       // },
       //#endregion
+      
       //#region Lipstick
       // Report
       {
@@ -133,6 +158,7 @@ export const routes: Routes = [
         loadChildren: () => import('./views/lipstick-shop/members/routes').then((m) => m.routes)
       },
       //#endregion
+      
       //#region Surveys
       {
         path: 'surveys/reports',
@@ -143,7 +169,7 @@ export const routes: Routes = [
         loadChildren: () => import('./views/surveys/participants/index/routes').then((m) => m.routes)
       },
       {
-        path: 'surveys/participants/update/:id',
+        path: 'surveys/participants/details/:id',
         loadChildren: () => import('./views/surveys/participants/details/routes').then((m) => m.routes)
       },
       {
@@ -163,6 +189,7 @@ export const routes: Routes = [
         loadChildren: () => import('./views/surveys/extension/routes').then((m) => m.routes)
       },
       //#endregion
+      
       //#region System Management
       //account management
       {

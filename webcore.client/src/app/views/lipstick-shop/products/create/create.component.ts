@@ -1,4 +1,3 @@
-import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -22,8 +21,8 @@ import { ToastService } from '@services/helper-services/toast.service';
 @Component({
   selector: 'app-create',
   imports: [FormDirective, FormLabelDirective, FormSelectDirective,
-    FormControlDirective, ButtonDirective, NgIf, CkeditorComponent,
-    RouterLink, CardComponent, CardBodyComponent, IconDirective, NgFor,
+    FormControlDirective, ButtonDirective, CkeditorComponent,
+    RouterLink, CardComponent, CardBodyComponent, IconDirective,
     FormCheckComponent, ReactiveFormsModule],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'

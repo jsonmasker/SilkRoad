@@ -1,4 +1,4 @@
-import { DecimalPipe, NgFor, NgIf } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective } from '@coreui/angular';
@@ -15,7 +15,7 @@ import { PaymentViewModel } from '@models/lipstick-shop-models/payment.model';
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 @Component({
   selector: 'app-payments',
-  imports: [ModalBodyComponent, NgFor, FormControlDirective, FormLabelDirective,
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective,
     ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule, DecimalPipe,
     ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent],
   templateUrl: './payments.component.html',

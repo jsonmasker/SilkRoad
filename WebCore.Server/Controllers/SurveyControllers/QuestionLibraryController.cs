@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using SurveyBusinessLogic.IHelpers;
+using SurveyBusinessLogic.Models;
 using SurveyDataAccess.DTOs;
 using WebCore.Server.Controllers.BaseApiControllers;
 
@@ -14,16 +15,11 @@ namespace WebCore.Server.Controllers.SurveyControllers
     public class QuestionLibraryController : BaseApiController
     {
         private readonly IQuestionLibraryHelper _helper;
-        //private readonly IJwtService _jwtService;
-        //private readonly IActionloggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
         public QuestionLibraryController(IQuestionLibraryHelper helper,
-            //IJwtService jwtService, IActionloggingService actionLog,
             IStringLocalizer<SharedResource> localizer)
         {
             _helper = helper;
-            //_jwtService = jwtService;
-            //_actionLog = actionLog;
             _localizer = localizer;
         }
 
@@ -36,6 +32,17 @@ namespace WebCore.Server.Controllers.SurveyControllers
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             }
             var data = await _helper.GetAllAsync(pageIndex, pageSize);
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
+
+        [HttpPost("getByFilter")]
+        public async Task<IActionResult> GetByFilter([FromBody] QuestionLibraryFilterModel filter)
+        {
+            if (filter.PageIndex < 1 || filter.PageSize < 1)
+            {
+                return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
+            }
+            var data = await _helper.GetByFilterAsync(filter);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 

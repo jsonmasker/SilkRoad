@@ -6,7 +6,7 @@
         public int SurveyFormId { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public string? CreatedBy { get; set; }
-        public bool IsComplete { get; set; } = false;
+        public bool IsCompleted { get; set; } = false;
         public bool IsRejected { get; set; } = false;
         public bool IsHighlighted { get; set; } = false;
         public bool IsReviewMode { get; set; } = false;

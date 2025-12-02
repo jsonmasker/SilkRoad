@@ -1,4 +1,4 @@
-<h3 class="fw-bold">Survey Forms</h3>
+<h3 class="fw-bold">Participants</h3>
 <c-accordion class="mb-4">
     <c-accordion-item #item0="cAccordionItem" [visible]="true">
         <ng-template cTemplateId="accordionHeaderTemplate">
@@ -52,13 +52,20 @@
                                     </select>
                                 </div>
                                  <div class="col-4">
-                                    <input formControlName="startDate" type="date" class="form-control"/>
+                                    <!-- <input formControlName="startDate" type="date" class="form-control"/> -->
+                                     <app-range-datetime-picker (onChangeValue)="filterForm.patchValue({startDate: $event[0],endDate: $event[1]})"></app-range-datetime-picker>
                                 </div>
-                                 <div class="col-4">
+                                 <!-- <div class="col-4">
                                     <input formControlName="endDate" type="date" class="form-control"/>
+                                </div> -->
+                                 <div class="col-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        <svg [cIcon]="icons.cilSearch" width="20" class="text-white"
+                                            title="Search Icon"></svg>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                
                                 <div class="col-4">
                                     <button type="submit" class="btn btn-primary">
@@ -66,7 +73,7 @@
                                             title="Search Icon"></svg>
                                     </button>
                                 </div>
-                            </div>
+                            </div> -->
                         </form>
                     </div>
                 </div>
@@ -79,7 +86,12 @@
     <thead class="text-nowrap text-truncate">
         <tr>
             <th scope="col">STT</th>
-            <th scope="col">CreatedAt</th>
+            <th scope="col">Fields</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Is Completed</th>
+            <th scope="col">Is Highlighted</th>
+            <th scope="col">Is Review Mode</th>
+            <th scope="col">Is Rejected</th>
             <th></th>
         </tr>
     </thead>
@@ -87,7 +99,12 @@
         @for (item of data.items; track item?.id; let i = $index) {
         <tr>
             <td>{{ i+1 }}</td>
+            <td>{{ item?.participantInfos?.[0]?.textValue ?? '###' }}</td>
             <td>{{ item.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ item.isCompleted }}</td>
+            <td>{{ item.isHighlighted }}</td>
+            <td>{{ item.isReviewMode }}</td>
+            <td>{{ item.isRejected }}</td>
             <td>
                 <div class="d-flex justify-content-end">
                     <!-- <a target="_blank" routerLink="/gold-survey-form/{{item.id}}" class="btn btn-success me-2">
@@ -105,7 +122,7 @@
                     <button class="btn btn-danger me-2" (click)="reject(item.id)">
                         <svg [cIcon]="icons.cilX" width="25" class="text-white" title="Delete Icon"></svg>
                     </button> -->
-                    <a routerLink="./review-form/{{item.id}}" class="btn btn-primary">
+                    <a routerLink="./details/{{item.id}}" class="btn btn-primary">
                         <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
                     </a>
                 </div>

@@ -89,7 +89,7 @@ export class Page423Component implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize(): void {
     clearInterval(this.snowflakeInterval);
     setTimeout(() => this.generateSnowflakes(), 1000);

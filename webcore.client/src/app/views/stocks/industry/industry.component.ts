@@ -10,6 +10,7 @@ import { IndustryModel } from '@models/stock-models/industry.model';
 import { IndustryService } from '@services/stock-services/industry.service';
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 
+
 @Component({
   selector: 'app-industry',
   imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective,

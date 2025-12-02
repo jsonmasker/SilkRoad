@@ -13,22 +13,23 @@ namespace SurveyDataAccess.Repositories
         }
 
 
-        public async Task<SurveyFormDTO?> GetEagerSurveyFormByIdAsync(int id)
+        public async Task<SurveyFormDTO?> GetEagerLoadingByIdAsync(int id)
         {
             var data = await _dbSet
                 .Where(s => s.Id == id)
                 .Include(s => s.ParticipantInfoConfigs)
-                .Include(s => s.QuestionGroups)
-                    !.ThenInclude(qg => qg.Questions)
-                        .ThenInclude(q => q.QuestionType)
-                .Include(s => s.QuestionGroups)
-                    !.ThenInclude(qg => qg.Questions)
-                        .ThenInclude(q => q.PredefinedAnswers)
-                .Include(s => s.Questions)
-                    !.ThenInclude(q => q.QuestionType)
-                .Include(s => s.Questions)
-                    !.ThenInclude(q => q.PredefinedAnswers)
+                //.Include(s => s.QuestionGroups)
+                //    !.ThenInclude(qg => qg.Questions)
+                //        .ThenInclude(q => q.QuestionType)
+                .Include(s => s.QuestionGroups!.OrderBy(p => p.Priority))
+                    !.ThenInclude(qg => qg.Questions!.OrderBy(p => p.Priority))
+                        .ThenInclude(q => q.PredefinedAnswers!.OrderBy(p => p.Priority))
+                //.Include(s => s.Questions)
+                //    !.ThenInclude(q => q.QuestionType)
+                .Include(s => s.Questions!.OrderBy(p => p.Priority))
+                    !.ThenInclude(q => q.PredefinedAnswers!.OrderBy(p => p.Priority))
                 .AsSplitQuery() // prevents Cartesian explosion when multiple collections are included
+                .AsNoTracking()
                 .FirstOrDefaultAsync();
 
             return data;

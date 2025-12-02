@@ -61,6 +61,7 @@ namespace WebCore.Server
             services.AddTransient<IWebhookHelper, WebhookHelper>();
             //services.AddScoped<IOrderHelper>
             #endregion
+
             #region Survey
             services.AddScoped<SurveyDataAccess.IUnitOfWork, SurveyDataAccess.UnitOfWork>();
             services.AddScoped<IParticipantHelper, ParticipantHelper>();
@@ -76,14 +77,13 @@ namespace WebCore.Server
             services.AddScoped<IStoreHelper, StoreHelper>();
             services.AddScoped<IParticipantInfoConfigHelper, ParticipantInfoConfigHelper>();
             #endregion
-            #region Restaurant
-            //services.AddScoped<ICategoryHelper, CategoryHelper>();
-            //services.AddScoped<IChatMessageHelper, ChatMessageHelper>();
-            //services.AddScoped<IDishHelper, DishHelper>();
-            //services.AddScoped<IReservationHelper, ReservationHelper>();
-            //services.AddScoped<ITableHelper, TableHelper>();
-            //services.AddScoped<IUnitHelper, UnitHelper>();
+
+            #region Personal Finance
+            services.AddScoped<PersonalFinanceDataAccess.IUnitOfWork, PersonalFinanceDataAccess.UnitOfWork>();
+            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.ICategoryHelper, PersonalFinanceBusinessLogic.Helpers.CategoryHelper>();
+            services.AddScoped<PersonalFinanceBusinessLogic.IHelpers.ISubCategoryHelper, PersonalFinanceBusinessLogic.Helpers.SubCategoryHelper>();
             #endregion
+
             #region Stock
             services.AddScoped<StockDataAccess.IUnitOfWork, StockDataAccess.UnitOfWork>();
             //stock
@@ -91,6 +91,7 @@ namespace WebCore.Server
             services.AddScoped<IStockPriceHelper, StockPriceHelper>();
             services.AddScoped<IIndustryHelper, IndustryHelper>();
             #endregion
+
             #region System Database
             services.AddScoped<DataAccess.IUnitOfWork, DataAccess.UnitOfWork>();
             //system
@@ -104,6 +105,7 @@ namespace WebCore.Server
             //services.AddScoped<IRoleClaimHelper, RoleClaimHelper>();
             services.AddScoped<ISettingHelper, SettingHelper>();
             #endregion
+
             #region Service
             //service
             services.AddScoped<IMailService, MailService>();

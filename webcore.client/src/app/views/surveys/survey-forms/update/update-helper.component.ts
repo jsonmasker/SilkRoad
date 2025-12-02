@@ -123,6 +123,7 @@ export class UpdateHelperComponent implements OnInit {
     private questionService: QuestionService,
     private predefinedAnswerService: PredefinedAnswerService,
     private questionTypeService: QuestionTypeService) { }
+
   ngOnInit(): void {
     this.questionGroupLibraryService.getOptionList().subscribe({
       next: (res) => {
@@ -420,7 +421,8 @@ export class UpdateHelperComponent implements OnInit {
   }
 
   onchangeQuestionType(event: any) {
-    // this.questionForm.patchValue({questionTypeId: event});
+    this.createQuestionForm.patchValue({questionTypeId: event});
+    this.updateQuestionForm.patchValue({questionTypeId: event});
     if (event == EQuestionTypes.ClosedEndedQuestion ||
       event == EQuestionTypes.HybridQuestion ||
       event == EQuestionTypes.MultipleChoiceQuestion) {
@@ -532,6 +534,9 @@ export class UpdateHelperComponent implements OnInit {
             this.predefinedAnswerList = [];
             this.selectedQuestionId.set(undefined);
           }
+        },
+        error: (err) => {
+          console.error('Error updating question:', err);
         }
       });
       // Reset the question type select component

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Serilog;
 using System.Globalization;
 using System.Reflection;
@@ -58,6 +58,9 @@ namespace WebCore.Server
                 //Survey DB
                 builder.Services.AddDbContext<SurveyDataAccess.ApplicationContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SurveySqlConnection")));
+                //Personal Finance DB
+                builder.Services.AddDbContext<PersonalFinanceDataAccess.ApplicationContext>(options =>
+               options.UseSqlServer(builder.Configuration.GetConnectionString("PersonalFinanceSqlConnection")));
                 //Lipstick DB
                 builder.Services.AddDbContext<LipstickDataAccess.ApplicationContext>(options =>
                     options.UseSqlServer(builder.Configuration.GetConnectionString("LipstickSqlConnection")));
@@ -173,19 +176,20 @@ namespace WebCore.Server
                         BearerFormat = "JWT",
                         Scheme = "bearer"
                     });
-                    opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    opt.AddSecurityRequirement(document => new OpenApiSecurityRequirement
                     {
-                        {
-                            new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference
-                                {
-                                    Type=ReferenceType.SecurityScheme,
-                                    Id="Bearer"
-                                }
-                            },
-                            new string[]{}
-                        }
+                        //{
+                        //    new OpenApiSecurityScheme
+                        //    {
+                        //        Reference = new OpenApiReference
+                        //        {
+                        //            Type=ReferenceType.SecurityScheme,
+                        //            Id="Bearer"
+                        //        }
+                        //    },
+                        //    new string[]{}
+                        //}
+                        [new OpenApiSecuritySchemeReference("bearer", document)] = []
                     });
                 });
                 #endregion
@@ -214,6 +218,7 @@ options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
                 app.UseCors("CorsPolicy");
                 app.UseHttpsRedirection();
 
+                app.UseAuthentication();
                 app.UseAuthorization();
 
                 app.MapControllers();

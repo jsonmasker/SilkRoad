@@ -1,4 +1,3 @@
-import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -29,8 +28,8 @@ interface IProductImageFile {
   selector: 'app-update',
   imports: [
       FormDirective, FormLabelDirective, FormSelectDirective,
-      FormControlDirective, ButtonDirective, NgIf, CkeditorComponent,
-      RouterLink, CardComponent, CardBodyComponent, IconDirective, NgFor,
+      FormControlDirective, ButtonDirective, CkeditorComponent,
+      RouterLink, CardComponent, CardBodyComponent, IconDirective,
       FormCheckComponent, ReactiveFormsModule],
   templateUrl: './update.component.html',
   styleUrl: './update.component.scss'

@@ -115,9 +115,8 @@ export enum EFieldTypes
 }
 
 export enum EFormStyles{
-    DefaultForm = -1,
-    GoldForm = 1,
-    SilverForm = 2
+    DefaultForm = 1,
+    SplitForm = 2
 }
 
 export enum ELanguages

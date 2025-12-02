@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PageInformation, Pagination } from '@models/pagination.model';
-import { cilPlus, cilTrash, cilPen, cilSave, cilSearch } from '@coreui/icons';
+import { cilPlus, cilTrash, cilPen, cilSave, cilSearch, cilX, cilExitToApp } from '@coreui/icons';
 import { RouterLink } from '@angular/router';
-import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, TemplateIdDirective } from '@coreui/angular';
+import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective } from '@coreui/angular';
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 import { IconDirective } from '@coreui/icons-angular';
 import { QuestionGroupLibraryService } from '@services/survey-services/question-group-library.service';
@@ -14,14 +14,13 @@ import { SelectSearchComponent } from "@components/selects/select-search/select-
 import { QuestionLibraryModel } from '@models/survey-models/question-library.model';
 import { CommonModule } from '@angular/common';
 import { BookIconComponent } from "@components/icons/book-icon.component";
+import { ToastService } from '@services/helper-services/toast.service';
+import { EColors } from '@common/global';
 
 @Component({
   selector: 'app-index',
-  imports: [ReactiveFormsModule, DataTableComponent, RouterLink, CommonModule,
-    AccordionButtonDirective,
-    AccordionComponent,
-    AccordionItemComponent,
-    TemplateIdDirective, IconDirective, SelectSearchComponent, BookIconComponent],
+  imports: [ReactiveFormsModule, DataTableComponent, RouterLink, CommonModule, AccordionButtonDirective, AccordionComponent, AccordionItemComponent, TemplateIdDirective,
+    IconDirective, SelectSearchComponent, BookIconComponent, ModalComponent, ModalBodyComponent, ButtonDirective, ModalFooterComponent, ModalHeaderComponent ],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })
@@ -31,9 +30,18 @@ export class IndexComponent {
   questionGroupLibraries: OptionModel[] = [];
   questionTypes: OptionModel[] = [];
   pageInformation: PageInformation = new PageInformation();
-  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilSearch };
-  showChildrenByParentId  = signal<number | null>(null);
+  icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilSearch, cilX, cilExitToApp };
+  showChildrenByParentId = signal<number | null>(null);
+
+  trashPageInformation: PageInformation = new PageInformation();
+  visibleDelete: boolean = false;
+  visibleTrashModal: boolean = false;
+  deleteById: number = 0;
+  trashData: Pagination<QuestionLibraryModel> = new Pagination<QuestionLibraryModel>();
+
   filterForm: FormGroup = new FormGroup({
+    pageIndex: new FormControl(1),
+    pageSize: new FormControl(10),
     questionGroupId: new FormControl(-1),
     questionTypeId: new FormControl(-1),
     searchText: new FormControl('')
@@ -42,6 +50,7 @@ export class IndexComponent {
   //#region Constructor and hooks
   constructor(private questionLibraryService: QuestionLibraryService,
     private questionGroupLibraryService: QuestionGroupLibraryService,
+    private toastService: ToastService,
     private questionTypeService: QuestionTypeService) { }
   ngOnInit() {
     this.questionGroupLibraryService.getOptionList().subscribe((res) => {
@@ -53,7 +62,11 @@ export class IndexComponent {
     this.getData();
   }
   getData() {
-    this.questionLibraryService.getAll(1,10).subscribe((res) => {
+    this.filterForm.patchValue({
+      pageIndex: this.pageInformation.pageIndex,
+      pageSize: this.pageInformation.pageSize
+    });
+    this.questionLibraryService.getByFilter(this.filterForm.value).subscribe((res) => {
       this.data = res.data;
       console.log(this.data);
     });
@@ -74,13 +87,12 @@ export class IndexComponent {
     });
     this.getData();
   }
-  //#endregion
   filter() {
     this.pageInformation.pageIndex = 1;
     this.getData();
   }
-    //table tree
-    toggleNode(node: QuestionLibraryModel): void {
+  //table tree
+  toggleNode(node: QuestionLibraryModel): void {
     node.expanded = !node.expanded;
     if (node.expanded) {
       this.showChildrenByParentId.set(node.id);
@@ -88,4 +100,66 @@ export class IndexComponent {
       this.showChildrenByParentId.set(null);
     }
   }
+  //#endregion
+    //#region Trash
+    getTrashData() {
+      this.questionLibraryService.getAllDeleted(this.trashPageInformation.pageIndex, this.trashPageInformation.pageSize).subscribe((res) => {
+        this.trashData = res.data;
+        this.trashPageInformation.currentPage = this.trashData.currentPage;
+        this.trashPageInformation.totalItems = this.trashData.totalItems;
+        this.trashPageInformation.totalPages = this.trashData.totalPages;
+      });
+    }
+    onTrashPageIndexChange(index: any) {
+      this.trashPageInformation.pageIndex = index;
+      this.getTrashData();
+    }
+    onTrashPageSizeChange(size: any) {
+      this.trashPageInformation.pageSize = size;
+      this.trashPageInformation.pageIndex = 1;
+      this.getTrashData();
+    }
+    toggleLiveTrashModal() {
+      this.getTrashData();
+      this.visibleTrashModal = !this.visibleTrashModal;
+    }
+    handleLiveTrashModalChange(event: any) {
+      this.visibleTrashModal = event;
+    }
+    restoreData(id: number) {
+      this.questionLibraryService.restore(id).subscribe((res) => {
+        this.getTrashData();
+        this.getData();
+        this.toastService.showToast(EColors.success, res.message);
+      });
+    }
+    deleteDataTrash(id: number) {
+      this.questionLibraryService.delete(id).subscribe((res) => {
+        this.getTrashData();
+        this.toastService.showToast(EColors.success, res.message);
+      });
+    }
+    //#endregion
+   //#region Delete
+  softDeleteData(id: number) {
+    this.deleteById = id;
+    this.toggleLiveDelete();
+  }
+  onConfirmDelete() {
+    this.questionLibraryService.softDelete(this.deleteById).subscribe((res) => {
+      this.toggleLiveDelete();
+      this.getData();
+      this.toastService.showToast(EColors.success, res.message);
+    }, (failure) => {
+      this.toastService.showToast(EColors.danger, failure.error.message);
+    });
+  }
+  toggleLiveDelete() {
+    this.visibleDelete = !this.visibleDelete;
+  }
+
+  handleLiveDeleteChange(event: any) {
+    this.visibleDelete = event;
+  }
+  //#endregion
 }

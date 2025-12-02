@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Params } from '@angular/router';
@@ -10,7 +10,6 @@ import { MemberService } from '@services/lipstick-shop-services/member.service';
 @Component({
   selector: 'app-members',
   imports: [
-    NgFor, 
     ReactiveFormsModule,
     DataTableComponent],
   templateUrl: './members.component.html',
