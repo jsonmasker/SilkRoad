@@ -27,3 +27,6 @@ export { RoleService } from './role.service';
 
 // Setting Services
 export { SettingService } from './setting.service';
+
+//Auth Interceptor Service
+export { authInterceptorService } from './auth-interceptor.service';

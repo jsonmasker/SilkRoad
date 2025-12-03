@@ -4,109 +4,38 @@ import { EUrl } from '@common/url-api';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { ProductViewModel } from '@models/lipstick-shop-models/product.model';
 import { Pagination } from '@models/pagination.model';
-import { AuthenticationService } from '@services/system-services/authentication.service';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
+  constructor(private http: HttpClient) { }
   getAll(): Observable<APIResponse<Pagination<ProductViewModel>>> {
-    return this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct);
   }
 
   getById(id: any): Observable<APIResponse<ProductViewModel>> {
-    return this.http.get<APIResponse<ProductViewModel>>(EUrl.getByIdUrlProduct + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<ProductViewModel>>(EUrl.getByIdUrlProduct + `/${id}`, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<ProductViewModel>>(EUrl.getByIdUrlProduct + `/${id}`);
   }
   getAllByFilter(query: any): Observable<APIResponse<Pagination<ProductViewModel>>> {
-    return this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct, { headers: this.authenticationService.getHeaders(), params: query }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct, { headers: this.authenticationService.getHeaders(), params: query }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<Pagination<ProductViewModel>>>(EUrl.getAllUrlProduct);
   }
 
   getBySearchText(searchText: any): Observable<APIResponse<ProductViewModel[]>> {
-    return this.http.get<APIResponse<ProductViewModel[]>>(EUrl.getBySearchTextUrlProduct + `/${searchText}`, { headers: this.authenticationService.getHeaders()} ).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<ProductViewModel[]>>(EUrl.getBySearchTextUrlProduct + `/${searchText}`, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<ProductViewModel[]>>(EUrl.getBySearchTextUrlProduct + `/${searchText}` );
   }
 
   create(model: FormData): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlProduct, model, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlProduct, model, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.post<BaseAPIResponse>(EUrl.createUrlProduct, model);
   }
 
   update(model: FormData): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlProduct, model, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlProduct, model, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.put<BaseAPIResponse>(EUrl.updateUrlProduct, model);
   }
   softDelete(id:number):Observable<BaseAPIResponse>{
-  return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlProduct+`/${id}`,{headers:this.authenticationService.getHeaders()}).pipe(
-    catchError(error=>{
-      if(error.status===401){
-        return this.authenticationService.reNewToken().pipe(
-          switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlProduct+`/${id}`,{headers:this.authenticationService.getHeaders()}))
-        );
-      }else{
-        return throwError(() => error);
-      }
-    })
-  );
+  return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlProduct+`/${id}`);
   }
 }
 

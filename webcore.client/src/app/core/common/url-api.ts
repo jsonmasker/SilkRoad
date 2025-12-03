@@ -112,6 +112,7 @@ export enum EUrl {
   restoreUrlCategory = "/api/category/restore",
   softDeleteUrlCategory = "/api/category/softDelete",
   deleteUrlCategory = "/api/category/delete",
+  
   //SubCategory
   getAllUrlSubCategory = "/api/subcategory/getAll",
   getAllDeletedUrlSubCategory = "/api/subcategory/getAllDeleted",

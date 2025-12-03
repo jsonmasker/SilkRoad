@@ -6,125 +6,44 @@ import { Pagination } from '@models/pagination.model';
 import { AnswerModel } from '@models/survey-models/answer.model';
 import { ParticipantModel } from '@models/survey-models/participant.model';
 // import { SurveyUIModel } from '@models/survey-models/survey-ui.model';
-import { AuthenticationService } from '@services/system-services/authentication.service';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParticipantService {
 
-  constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
+  constructor(private http: HttpClient) { }
   getAll(query: any): Observable<APIResponse<Pagination<ParticipantModel>>> {
-    return this.http.get<APIResponse<Pagination<ParticipantModel>>>(EUrl.getAllUrlParticipant, { headers: this.authenticationService.getHeaders(), params: query }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<ParticipantModel>>>(EUrl.getAllUrlParticipant, { headers: this.authenticationService.getHeaders(), params: query }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<Pagination<ParticipantModel>>>(EUrl.getAllUrlParticipant, { params: query });
   }
 
   filter(query: any): Observable<APIResponse<Pagination<ParticipantModel>>> {
-    return this.http.post<APIResponse<Pagination<ParticipantModel>>>(EUrl.filterUrlParticipant, query, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.post<APIResponse<Pagination<ParticipantModel>>>(EUrl.filterUrlParticipant, query, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.post<APIResponse<Pagination<ParticipantModel>>>(EUrl.filterUrlParticipant, query);
   }
   
   getById(id: any): Observable<APIResponse<ParticipantModel>> {
     const url = `${EUrl.getByIdUrlParticipant}/${id}`;
-    return this.http.get<APIResponse<ParticipantModel>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<ParticipantModel>>(url, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<ParticipantModel>>(url);
   }
 
   initParticipant(model: ParticipantModel): Observable<APIResponse<ParticipantModel>> {
-    return this.http.post<APIResponse<ParticipantModel>>(EUrl.initParticipantUrlParticipant, model, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.post<APIResponse<ParticipantModel>>(EUrl.initParticipantUrlParticipant, model, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.post<APIResponse<ParticipantModel>>(EUrl.initParticipantUrlParticipant, model);
   }
 
   addAnswers(answers: AnswerModel[]): Observable<APIResponse<boolean>> {
-    return this.http.post<APIResponse<boolean>>(EUrl.addAnswersUrlParticipant, JSON.stringify(answers), { headers: this.authenticationService.getHeaders().set('Content-Type', 'application/json') }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.post<APIResponse<boolean>>(EUrl.addAnswersUrlParticipant, JSON.stringify(answers), { headers: this.authenticationService.getHeaders().set('Content-Type', 'application/json') }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.post<APIResponse<boolean>>(EUrl.addAnswersUrlParticipant, JSON.stringify(answers), { headers: { 'Content-Type': 'application/json' } });
   }
 
   highlight(id: number): Observable<APIResponse<boolean>> {
-    return this.http.post<APIResponse<boolean>>(EUrl.highlightUrlParticipant + `/${id}`, null, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.post<APIResponse<boolean>>(EUrl.highlightUrlParticipant + `/${id}`, null, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.post<APIResponse<boolean>>(EUrl.highlightUrlParticipant + `/${id}`, null);
   }
 
   removeHighlight(id: number): Observable<APIResponse<boolean>> {
-    return this.http.post<APIResponse<boolean>>(EUrl.removeHighlightUrlParticipant + `/${id}`, null, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.post<APIResponse<boolean>>(EUrl.removeHighlightUrlParticipant + `/${id}`, null, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.post<APIResponse<boolean>>(EUrl.removeHighlightUrlParticipant + `/${id}`, null);
   }
 
   reject(participantId: any, reason: any): Observable<APIResponse<boolean>> {
-    return this.http.post<APIResponse<boolean>>(EUrl.rejectUrlParticipant + `/${participantId}`, JSON.stringify(reason), { headers: this.authenticationService.getHeaders().set('Content-Type', 'application/json') }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.post<APIResponse<boolean>>(EUrl.rejectUrlParticipant + `/${participantId}`, JSON.stringify(reason), { headers: this.authenticationService.getHeaders().set('Content-Type', 'application/json') }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.post<APIResponse<boolean>>(EUrl.rejectUrlParticipant + `/${participantId}`, JSON.stringify(reason), { headers: { 'Content-Type': 'application/json' } });
   }
 }

@@ -4,139 +4,48 @@ import { EUrl } from '@common/url-api';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { ColorViewModel } from '@models/lipstick-shop-models/color.model';
 import { Pagination } from '@models/pagination.model';
-import { AuthenticationService } from '@services/system-services/authentication.service';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ColorService {
 
-  constructor(private http: HttpClient,private authenticationService: AuthenticationService) { }
+  constructor(private http: HttpClient) { }
   getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<ColorViewModel>>> {
-    return this.http.get<APIResponse<Pagination<ColorViewModel>>>(EUrl.getAllUrlColor + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<ColorViewModel>>>(EUrl.getAllUrlColor + `/${pageIndex}/${pageSize}`, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<Pagination<ColorViewModel>>>(EUrl.getAllUrlColor + `/${pageIndex}/${pageSize}`);
   }
   getAllActive(): Observable<APIResponse<ColorViewModel[]>> {
-    return this.http.get<APIResponse<ColorViewModel[]>>(EUrl.getAllActiveUrlColor, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<ColorViewModel[]>>(EUrl.getAllActiveUrlColor, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<ColorViewModel[]>>(EUrl.getAllActiveUrlColor);
   }
 
   getById(id: any): Observable<APIResponse<ColorViewModel>> {
-    return this.http.get<APIResponse<ColorViewModel>>(EUrl.getByIdUrlColor + `/${id}`, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<ColorViewModel>>(EUrl.getByIdUrlColor + `/${id}`, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<ColorViewModel>>(EUrl.getByIdUrlColor + `/${id}`);
   }
 
   create(model: ColorViewModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlColor, model, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.post<BaseAPIResponse>(EUrl.createUrlColor, model, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.post<BaseAPIResponse>(EUrl.createUrlColor, model);
   }
 
   update(model: ColorViewModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlColor, model, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(EUrl.updateUrlColor, model, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.put<BaseAPIResponse>(EUrl.updateUrlColor, model);
   }
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<ColorViewModel>>> {
     const url = EUrl.getAllDeletedUrlColor.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<ColorViewModel>>>(url, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<APIResponse<Pagination<ColorViewModel>>>(url, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<APIResponse<Pagination<ColorViewModel>>>(url);
   }
 
   softDelete(id:number):Observable<BaseAPIResponse>{
-  return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlColor+`/${id}`,{headers:this.authenticationService.getHeaders()}).pipe(
-    catchError(error=>{
-      if(error.status===401){
-        return this.authenticationService.reNewToken().pipe(
-          switchMap(()=>this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlColor+`/${id}`,{headers:this.authenticationService.getHeaders()}))
-        );
-      }else{
-        return throwError(() => error);
-      }
-    })
-  );
+    return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlColor+`/${id}`);
   }
 
   restore(id: number): Observable<BaseAPIResponse> {
     const url = EUrl.restoreUrlColor.concat('/', id.toString());
-    return this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.put<BaseAPIResponse>(url, {}, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.put<BaseAPIResponse>(url, {});
   }
 
   delete(id: number): Observable<BaseAPIResponse> {
     const url = EUrl.deleteUrlColor.concat('/', id.toString());
-    return this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.delete<BaseAPIResponse>(url, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
+    return this.http.delete<BaseAPIResponse>(url);
   }
 }

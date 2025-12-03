@@ -1,28 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ModuleModel } from '@models/system-management-models/module.model';
 import { EUrl } from '@common/url-api';
-import { AuthenticationService } from './authentication.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModuleService {
 
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService ) { }
+  constructor(private http: HttpClient ) { }
 
   getModules(): Observable<ModuleModel[]> {
-    return this.http.get<ModuleModel[]>(EUrl.getAllUrlModule, { headers: this.authenticationService.getHeaders() }).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return this.authenticationService.reNewToken().pipe(
-            switchMap(() => this.http.get<ModuleModel[]>(EUrl.getAllUrlModule, { headers: this.authenticationService.getHeaders() }))
-          );
-        } else {
-           return throwError(() => error);
-        }
-      })
-    );
+    return this.http.get<ModuleModel[]>(EUrl.getAllUrlModule);
   }
 }
