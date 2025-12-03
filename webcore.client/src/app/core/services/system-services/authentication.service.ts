@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, switchMap } from 'rxjs';
-import { EUrl } from '@common/url-api';
+import { EMyAccountSystemUrl } from '@common/url-api';
 import { JwtModel } from '@models/system-management-models/jwt.model';
 import { jwtDecode } from 'jwt-decode';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
@@ -30,7 +30,7 @@ export class AuthenticationService {
   }
 
   login(account: LoginModel): Observable<BaseAPIResponse> {
-    return this.http.post<APIResponse<string>>(EUrl.loginUrl, account).pipe(
+    return this.http.post<APIResponse<string>>(EMyAccountSystemUrl.loginUrl, account).pipe(
       switchMap((response: APIResponse<string>) => {
         if (response.success) {
           this.accessTokenSignal.set(response.data);
@@ -50,18 +50,16 @@ export class AuthenticationService {
   }
 
   refresh(): Observable<RefreshResponse> {
-          const url = EUrl.validateRefreshTokenUrl;
-      return this.http.post<RefreshResponse>(
-        url,
-        {},
-        { withCredentials: true } // bắt buộc để gửi cookie HttpOnly
-      );
-    }
+    return this.http.post<RefreshResponse>(
+      EMyAccountSystemUrl.validateRefreshTokenUrl,
+      {},
+      { withCredentials: true } // bắt buộc để gửi cookie HttpOnly
+    );
+  }
 
   checkLogin(): Observable<boolean> {
     return new Observable<boolean>(observer => {
-      const url = EUrl.validateRefreshTokenUrl;
-      this.http.get(url).subscribe({
+      this.http.get(EMyAccountSystemUrl.validateRefreshTokenUrl).subscribe({
         next: () => {
           observer.next(true);
           observer.complete();

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EUrl } from '@common/url-api';
+import { EQRCodeFeatureUrl } from '@common/url-api';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { Observable } from 'rxjs';
 
@@ -10,18 +10,19 @@ import { Observable } from 'rxjs';
 export class QrCodeService {
 
     constructor(private http: HttpClient) { }
+
     getAllFonts(): Observable<APIResponse<string[]>> {
-      return this.http.get<APIResponse<string[]>>(EUrl.getAllFonts);
+      return this.http.get<APIResponse<string[]>>(EQRCodeFeatureUrl.getAllFontsUrl);
     }
 
     generateAQRCode(form: FormData): Observable<Blob> {
-      return this.http.post(EUrl.generateAQRCode, form, {
+      return this.http.post(EQRCodeFeatureUrl.generateAQRCodeUrl, form, {
         responseType: 'blob', // Ensure the response type is Blob
       });
     }
     
     generateListQRCode(form: FormData): Observable<Blob> {
-      return this.http.post(EUrl.generateListQRCode, form, {
+      return this.http.post(EQRCodeFeatureUrl.generateListQRCodeUrl, form, {
         responseType: 'blob', // Ensure the response type is Blob
       });
     }

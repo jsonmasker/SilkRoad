@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { EUrl } from '@common/url-api';
+import { EActionLoggingSystemUrl } from '@common/url-api';
 import { Observable } from 'rxjs';
 import { APIResponse } from '@models/api-response.model';
 import { Pagination } from '@models/pagination.model';
@@ -16,10 +16,10 @@ export class ActionLoggingService {
   constructor(private http: HttpClient) { }
 
   getAll(query: any): Observable<APIResponse<Pagination<ActionLoggingModel>>> {
-    return this.http.get<APIResponse<Pagination<ActionLoggingModel>>>(EUrl.getAllUrlActionLogging, { params: query });
+    return this.http.get<APIResponse<Pagination<ActionLoggingModel>>>(EActionLoggingSystemUrl.getAllUrl, { params: query });
   }
 
   getById(id: any): Observable<APIResponse<ActionLoggingModel>> {
-    return this.http.get<APIResponse<ActionLoggingModel>>(EUrl.getByIdUrlActionLogging + `/${id}`);
+    return this.http.get<APIResponse<ActionLoggingModel>>(`${EActionLoggingSystemUrl.getByIdUrl}/${id}`);
   }
 }

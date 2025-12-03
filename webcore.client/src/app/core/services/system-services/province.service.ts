@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { APIResponse } from '@models/api-response.model';
 import { ProvinceModel } from '@models/province.model';
-import { EUrl } from '@common/url-api';
+import { EProvinceSystemUrl } from '@common/url-api';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,9 @@ import { EUrl } from '@common/url-api';
 export class ProvinceService {
 
 constructor(private http: HttpClient) { }
+
   getAll(): Observable<APIResponse<ProvinceModel[]>> {
-    return this.http.get<APIResponse<ProvinceModel[]>>(EUrl.getAllUrlProvince);
+    return this.http.get<APIResponse<ProvinceModel[]>>(EProvinceSystemUrl.getAllUrl);
   }
   
 }

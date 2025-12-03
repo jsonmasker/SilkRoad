@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { Pagination } from '@models/pagination.model';
-import { EUrl } from '@common/url-api';
+import { ECategoryPersonalFinanceUrl } from '@common/url-api';
 import { catchError, switchMap } from 'rxjs';
 
 import { CategoryModel } from '@models/personal-finance-models';
@@ -13,8 +13,7 @@ export class CategoryService {
   constructor(private http: HttpClient) {}
 
   getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<CategoryModel>>> {
-    const url = EUrl.getAllUrlCategoryPF.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<CategoryModel>>>(url);
+    return this.http.get<APIResponse<Pagination<CategoryModel>>>(`${ECategoryPersonalFinanceUrl.getAllUrl}/${pageIndex}/${pageSize}`);
   }
 
   // getOptionList(): Observable<APIResponse<OptionModel[]>> {
@@ -47,36 +46,30 @@ export class CategoryService {
   // }
 
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<CategoryModel>>> {
-    const url = EUrl.getAllDeletedUrlCategoryPF.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<CategoryModel>>>(url);
+    return this.http.get<APIResponse<Pagination<CategoryModel>>>(`${ECategoryPersonalFinanceUrl.getAllDeletedUrl}/${pageIndex}/${pageSize}`);
   }
 
   getById(id: number): Observable<APIResponse<CategoryModel>> {
-    const url = EUrl.getByIdUrlCategoryPF.concat('/',id.toString());
-    return this.http.get<APIResponse<CategoryModel>>(url);
+    return this.http.get<APIResponse<CategoryModel>>(`${ECategoryPersonalFinanceUrl.getByIdUrl}/${id}`);
   }
 
   create(model: FormData): Observable<BaseAPIResponse> {
-    const url = EUrl.createUrlCategoryPF;
-    return this.http.post<BaseAPIResponse>(url, model);
+    return this.http.post<BaseAPIResponse>(ECategoryPersonalFinanceUrl.createUrl, model);
   }
 
   update(model: FormData): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlCategoryPF, model);
+    return this.http.put<BaseAPIResponse>(ECategoryPersonalFinanceUrl.updateUrl, model);
   }
 
   softDelete(id: number): Observable<BaseAPIResponse> {
-    const url = EUrl.softDeleteUrlCategoryPF.concat('/',id.toString());
-    return this.http.put<BaseAPIResponse>(url, {});
+    return this.http.put<BaseAPIResponse>(`${ECategoryPersonalFinanceUrl.softDeleteUrl}/${id}`, {});
   }
 
   restore(id: number): Observable<BaseAPIResponse> {
-    const url = EUrl.restoreUrlCategoryPF.concat('/',id.toString());
-    return this.http.put<BaseAPIResponse>(url, {});
+    return this.http.put<BaseAPIResponse>(`${ECategoryPersonalFinanceUrl.restoreUrl}/${id}`, {});
   }
 
   delete(id: number): Observable<BaseAPIResponse> {
-    const url = EUrl.deleteUrlCategoryPF.concat('/',id.toString());
-    return this.http.delete<BaseAPIResponse>(url);
+    return this.http.delete<BaseAPIResponse>(`${ECategoryPersonalFinanceUrl.deleteUrl}/${id}`);
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EUrl } from '@common/url-api';
+import { EParticipantSurveyUrl } from '@common/url-api';
 import { APIResponse } from '@models/api-response.model';
 import { Pagination } from '@models/pagination.model';
 import { AnswerModel } from '@models/survey-models/answer.model';
@@ -15,35 +15,35 @@ export class ParticipantService {
 
   constructor(private http: HttpClient) { }
   getAll(query: any): Observable<APIResponse<Pagination<ParticipantModel>>> {
-    return this.http.get<APIResponse<Pagination<ParticipantModel>>>(EUrl.getAllUrlParticipant, { params: query });
+    return this.http.get<APIResponse<Pagination<ParticipantModel>>>(EParticipantSurveyUrl.getAllUrl, { params: query });
   }
 
   filter(query: any): Observable<APIResponse<Pagination<ParticipantModel>>> {
-    return this.http.post<APIResponse<Pagination<ParticipantModel>>>(EUrl.filterUrlParticipant, query);
+    return this.http.post<APIResponse<Pagination<ParticipantModel>>>(EParticipantSurveyUrl.filterUrl, query);
   }
   
   getById(id: any): Observable<APIResponse<ParticipantModel>> {
-    const url = `${EUrl.getByIdUrlParticipant}/${id}`;
+    const url = `${EParticipantSurveyUrl.getByIdUrl}/${id}`;
     return this.http.get<APIResponse<ParticipantModel>>(url);
   }
 
   initParticipant(model: ParticipantModel): Observable<APIResponse<ParticipantModel>> {
-    return this.http.post<APIResponse<ParticipantModel>>(EUrl.initParticipantUrlParticipant, model);
+    return this.http.post<APIResponse<ParticipantModel>>(EParticipantSurveyUrl.initParticipantUrl, model);
   }
 
   addAnswers(answers: AnswerModel[]): Observable<APIResponse<boolean>> {
-    return this.http.post<APIResponse<boolean>>(EUrl.addAnswersUrlParticipant, JSON.stringify(answers), { headers: { 'Content-Type': 'application/json' } });
+    return this.http.post<APIResponse<boolean>>(EParticipantSurveyUrl.addAnswersUrl, JSON.stringify(answers), { headers: { 'Content-Type': 'application/json' } });
   }
 
   highlight(id: number): Observable<APIResponse<boolean>> {
-    return this.http.post<APIResponse<boolean>>(EUrl.highlightUrlParticipant + `/${id}`, null);
+    return this.http.post<APIResponse<boolean>>(EParticipantSurveyUrl.highlightUrl + `/${id}`, null);
   }
 
   removeHighlight(id: number): Observable<APIResponse<boolean>> {
-    return this.http.post<APIResponse<boolean>>(EUrl.removeHighlightUrlParticipant + `/${id}`, null);
+    return this.http.post<APIResponse<boolean>>(EParticipantSurveyUrl.removeHighlightUrl + `/${id}`, null);
   }
 
   reject(participantId: any, reason: any): Observable<APIResponse<boolean>> {
-    return this.http.post<APIResponse<boolean>>(EUrl.rejectUrlParticipant + `/${participantId}`, JSON.stringify(reason), { headers: { 'Content-Type': 'application/json' } });
+    return this.http.post<APIResponse<boolean>>(EParticipantSurveyUrl.rejectUrl + `/${participantId}`, JSON.stringify(reason), { headers: { 'Content-Type': 'application/json' } });
   }
 }

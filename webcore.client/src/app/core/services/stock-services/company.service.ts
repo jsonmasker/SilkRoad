@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { Pagination } from '@models/pagination.model';
-import { EUrl } from '@common/url-api';
+import { ECompanyStockMarketUrl } from '@common/url-api';
 import { CompanyModel } from '@models/stock-models/company.model';
 
 @Injectable({ providedIn: 'root' })
@@ -11,50 +11,42 @@ export class CompanyService {
   constructor(private http: HttpClient) {}
 
   getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<CompanyModel>>> {
-    const url = EUrl.getAllUrlCompany.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<CompanyModel>>>(url);
+    return this.http.get<APIResponse<Pagination<CompanyModel>>>(`${ECompanyStockMarketUrl.getAllUrl}/${pageIndex}/${pageSize}`);
   }
 
   getAllActive(): Observable<APIResponse<CompanyModel[]>> {
-    const url = EUrl.getAllActiveUrlCompany;
-    return this.http.get<APIResponse<CompanyModel[]>>(url);
+    return this.http.get<APIResponse<CompanyModel[]>>(ECompanyStockMarketUrl.getAllActiveUrl);
   }
 
   getAllSymbols(): Observable<APIResponse<string[]>> {
-    const url = EUrl.getAllSymbolsUrlCompany;
-    return this.http.get<APIResponse<string[]>>(url);
+    return this.http.get<APIResponse<string[]>>(ECompanyStockMarketUrl.getAllSymbolsUrl);
   }
 
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<CompanyModel>>> {
-    const url = EUrl.getAllDeletedUrlCompany.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<CompanyModel>>>(url);
+    return this.http.get<APIResponse<Pagination<CompanyModel>>>(`${ECompanyStockMarketUrl.getAllDeletedUrl}/${pageIndex}/${pageSize}`);
   }
 
   getById(id: number): Observable<APIResponse<CompanyModel>> {
-    const url = EUrl.getByIdUrlCompany.concat('/',id.toString());
-    return this.http.get<APIResponse<CompanyModel>>(url);
+    return this.http.get<APIResponse<CompanyModel>>(`${ECompanyStockMarketUrl.getByIdUrl}/${id}`);
   }
 
   create(model: CompanyModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlCompany, model);
+    return this.http.post<BaseAPIResponse>(ECompanyStockMarketUrl.createUrl, model);
   }
 
   update(model: CompanyModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlCompany, model);
+    return this.http.put<BaseAPIResponse>(ECompanyStockMarketUrl.updateUrl, model);
   }
 
   softDelete(id: number): Observable<BaseAPIResponse> {
-    const url = EUrl.softDeleteUrlCompany.concat('/',id.toString());
-    return this.http.put<BaseAPIResponse>(url, {});
+    return this.http.put<BaseAPIResponse>(`${ECompanyStockMarketUrl.softDeleteUrl}/${id}`, {});
   }
 
   restore(id: number): Observable<BaseAPIResponse> {
-    const url = EUrl.restoreUrlCompany.concat('/',id.toString());
-    return this.http.put<BaseAPIResponse>(url, {});
+    return this.http.put<BaseAPIResponse>(`${ECompanyStockMarketUrl.restoreUrl}/${id}`, {});
   }
 
   delete(id: number): Observable<BaseAPIResponse> {
-    const url = EUrl.deleteUrlCompany.concat('/',id.toString());
-    return this.http.delete<BaseAPIResponse>(url);
+    return this.http.delete<BaseAPIResponse>(`${ECompanyStockMarketUrl.deleteUrl}/${id}`);
   }
 }

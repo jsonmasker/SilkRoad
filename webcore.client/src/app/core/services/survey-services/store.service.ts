@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EUrl } from '@common/url-api';
+import { EStoreSurveyUrl } from '@common/url-api';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { OptionModel } from '@models/option.model';
 import { Pagination } from '@models/pagination.model';
@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 export class StoreService {  
   constructor(private http: HttpClient) { }
   getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<StoreModel>>> {
-    const url = EUrl.getAllUrlStore +'/' + pageIndex + '/' + pageSize;
+    const url = `${EStoreSurveyUrl.getAllUrl}/${pageIndex}/${pageSize}`;
     return this.http.get<APIResponse<Pagination<StoreModel>>>(url);
   }
 //   getAllActive(): Observable<APIResponse<StoreModel[]>> {
@@ -30,35 +30,34 @@ export class StoreService {
 //     );
 //   }
   getById(id: any): Observable<APIResponse<StoreModel>> {
-    return this.http.get<APIResponse<StoreModel>>(EUrl.getByIdUrlStore + `/${id}`);
+    return this.http.get<APIResponse<StoreModel>>(`${EStoreSurveyUrl.getByIdUrl}/${id}`);
   }
- getOptionList(): Observable<APIResponse<OptionModel[]>> {
-      const url = EUrl.getOptionListUrlStore;
-      return this.http.get<APIResponse<OptionModel[]>>(url);
+ 
+  getOptionList(): Observable<APIResponse<OptionModel[]>> {
+      return this.http.get<APIResponse<OptionModel[]>>(EStoreSurveyUrl.getOptionListUrl);
     }
+
   create(model: StoreModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlStore, model);
+    return this.http.post<BaseAPIResponse>(EStoreSurveyUrl.createUrl, model);
   }
+
   update(model: StoreModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlStore, model);
+    return this.http.put<BaseAPIResponse>(EStoreSurveyUrl.updateUrl, model);
   }
+
   softDelete(id: any): Observable<BaseAPIResponse> {
-    const url = EUrl.softDeleteUrlStore + `/${id}`;
-    return this.http.delete<BaseAPIResponse>(url);
+    return this.http.delete<BaseAPIResponse>(`${EStoreSurveyUrl.softDeleteUrl}/${id}`);
   }
 
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<StoreModel>>> {
-    const url = EUrl.getAllDeletedUrlStore + `/${pageIndex}/${pageSize}`;
-    return this.http.get<APIResponse<Pagination<StoreModel>>>(url);
+    return this.http.get<APIResponse<Pagination<StoreModel>>>(`${EStoreSurveyUrl.getAllDeletedUrl}/${pageIndex}/${pageSize}`);
   }
 
   restore(id: any): Observable<BaseAPIResponse> {
-    const url = EUrl.restoreUrlStore + `/${id}`;
-    return this.http.put<BaseAPIResponse>(url, {});
+    return this.http.put<BaseAPIResponse>(`${EStoreSurveyUrl.restoreUrl}/${id}`, {});
   }
 
   delete(id: any): Observable<BaseAPIResponse> {
-    const url = EUrl.deleteUrlStore + `/${id}`;
-    return this.http.delete<BaseAPIResponse>(url);
+    return this.http.delete<BaseAPIResponse>(`${EStoreSurveyUrl.deleteUrl}/${id}`);
   }
 }

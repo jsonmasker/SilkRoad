@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { EUrl } from '@common/url-api';
+import { EStockPriceStockMarketUrl } from '@common/url-api';
 import { StockPriceModel } from '@models/stock-models/stock-history.model';
 import { BaseAPIResponse } from '@models/api-response.model';
-
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +11,11 @@ import { BaseAPIResponse } from '@models/api-response.model';
 export class StockPriceService {
   constructor(private http: HttpClient) { }
   
-  getAll(symbol : any): Observable<StockPriceModel[]> {
-    return this.http.get<StockPriceModel[]>(EUrl.getAllUrlStockPrice + `/${symbol}`);
+  getAll(symbol: any): Observable<StockPriceModel[]> {
+    return this.http.get<StockPriceModel[]>(`${EStockPriceStockMarketUrl.getAllUrl}/${symbol}`);
   }
-  getNewData(symbol:string): Observable<BaseAPIResponse> {
-      return this.http.post<BaseAPIResponse>(EUrl.getNewDataUrlStockPrice + `/${symbol}`, {});
-    }
+
+  getNewData(symbol: string): Observable<BaseAPIResponse> {
+    return this.http.post<BaseAPIResponse>(`${EStockPriceStockMarketUrl.getNewDataUrl}/${symbol}`, {});
+  }
 }

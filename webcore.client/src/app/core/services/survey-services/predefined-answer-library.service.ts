@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EUrl } from '@common/url-api';
+import { EPredefinedAnswerLibrarySurveyUrl } from '@common/url-api';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { PredefinedAnswerLibraryModel } from '@models/survey-models/predefined-answer-library.model';
 import { Observable } from 'rxjs';
@@ -12,22 +12,22 @@ export class PredefinedAnswerLibraryService {
   constructor(private http: HttpClient) { }
 
   getByQuestionLibraryId(questionLibraryId: any): Observable<APIResponse<PredefinedAnswerLibraryModel[]>> {
-    return this.http.get<APIResponse<PredefinedAnswerLibraryModel[]>>(EUrl.getByQuestionLibraryIdUrlPredefinedAnswerLibrary + `/${questionLibraryId}`);
+    return this.http.get<APIResponse<PredefinedAnswerLibraryModel[]>>(`${EPredefinedAnswerLibrarySurveyUrl.getByQuestionLibraryIdUrl}/${questionLibraryId}`);
   }
 
   getById(id: any): Observable<APIResponse<PredefinedAnswerLibraryModel>> {
-    return this.http.get<APIResponse<PredefinedAnswerLibraryModel>>(EUrl.getByIdUrlPredefinedAnswerLibrary + `/${id}`);
+    return this.http.get<APIResponse<PredefinedAnswerLibraryModel>>(`${EPredefinedAnswerLibrarySurveyUrl.getByIdUrl}/${id}`);
   }
 
   create(model: PredefinedAnswerLibraryModel): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlPredefinedAnswerLibrary, model);
+    return this.http.post<BaseAPIResponse>(EPredefinedAnswerLibrarySurveyUrl.createUrl, model);
   }
 
   update(model: PredefinedAnswerLibraryModel): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlPredefinedAnswerLibrary, model);
+    return this.http.put<BaseAPIResponse>(EPredefinedAnswerLibrarySurveyUrl.updateUrl, model);
   }
 
   delete(id: any): Observable<BaseAPIResponse> {
-    return this.http.delete<BaseAPIResponse>(EUrl.deleteUrlPredefinedAnswerLibrary + `/${id}`);
+    return this.http.delete<BaseAPIResponse>(`${EPredefinedAnswerLibrarySurveyUrl.deleteUrl}/${id}`);
   }
 }

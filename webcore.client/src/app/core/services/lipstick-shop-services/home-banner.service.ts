@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EUrl } from '@common/url-api';
+import { EHomeBannerLipstickShopUrl } from '@common/url-api';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { HomeBannerViewModel } from '@models/lipstick-shop-models/home-banner.model';
 import { Pagination } from '@models/pagination.model';
@@ -13,46 +13,45 @@ import { Observable } from 'rxjs';
 export class HomeBannerService {
 
   constructor(private http: HttpClient) { }
-  getAll(pageIndex: number, pageSize: number, bannerTypeId: number): Observable<APIResponse<Pagination<HomeBannerViewModel>>> {
-    return this.http.get<APIResponse<Pagination<HomeBannerViewModel>>>(EUrl.getAllUrlHomeBanner + `/${pageIndex}/${pageSize}/${bannerTypeId}`);
-  }
 
-  getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<HomeBannerViewModel>>> {
-    const url = EUrl.getAllDeletedUrlHomeBanner.concat(`/${pageIndex}/${pageSize}`);
-    return this.http.get<APIResponse<Pagination<HomeBannerViewModel>>>(url);
+  getAll(pageIndex: number, pageSize: number, bannerTypeId: number): Observable<APIResponse<Pagination<HomeBannerViewModel>>> {
+    return this.http.get<APIResponse<Pagination<HomeBannerViewModel>>>(`${EHomeBannerLipstickShopUrl.getAllUrl}/${pageIndex}/${pageSize}/${bannerTypeId}`);
   }
 
   getAllActive(): Observable<APIResponse<HomeBannerViewModel[]>> {
-    return this.http.get<APIResponse<HomeBannerViewModel[]>>(EUrl.getAllActiveUrlHomeBanner);
+    return this.http.get<APIResponse<HomeBannerViewModel[]>>(EHomeBannerLipstickShopUrl.getAllActiveUrl);
+  }
+
+  getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<HomeBannerViewModel>>> {
+    return this.http.get<APIResponse<Pagination<HomeBannerViewModel>>>(`${EHomeBannerLipstickShopUrl.getAllDeletedUrl}/${pageIndex}/${pageSize}`);
   }
 
   getByBannerTypeId(bannerTypeId: number): Observable<APIResponse<HomeBannerViewModel[]>> {
-    return this.http.get<APIResponse<HomeBannerViewModel[]>>(EUrl.getByBannerTypeId + `/${bannerTypeId}`);;
+    return this.http.get<APIResponse<HomeBannerViewModel[]>>(`${EHomeBannerLipstickShopUrl.getByBannerTypeIdUrl}/${bannerTypeId}`);
   }
 
   getById(id: any): Observable<APIResponse<HomeBannerViewModel>> {
-    return this.http.get<APIResponse<HomeBannerViewModel>>(EUrl.getByIdUrlHomeBanner + `/${id}`);
+    return this.http.get<APIResponse<HomeBannerViewModel>>(`${EHomeBannerLipstickShopUrl.getByIdUrl}/${id}`);
   }
 
   create(model: FormData): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(EUrl.createUrlHomeBanner, model);
+    return this.http.post<BaseAPIResponse>(EHomeBannerLipstickShopUrl.createUrl, model);
   }
 
   update(model: FormData): Observable<BaseAPIResponse> {
-    return this.http.put<BaseAPIResponse>(EUrl.updateUrlHomeBanner, model);
+    return this.http.put<BaseAPIResponse>(EHomeBannerLipstickShopUrl.updateUrl, model);
   }
 
   softDelete(id: number): Observable<BaseAPIResponse> {
-    return this.http.delete<BaseAPIResponse>(EUrl.softDeleteUrlHomeBanner + `/${id}`);
+    return this.http.delete<BaseAPIResponse>(`${EHomeBannerLipstickShopUrl.softDeleteUrl}/${id}`);
   }
+
   restore(id: number): Observable<BaseAPIResponse> {
-    const url = EUrl.restoreUrlHomeBanner.concat('/', id.toString());
-    return this.http.put<BaseAPIResponse>(url, {});
+    return this.http.put<BaseAPIResponse>(`${EHomeBannerLipstickShopUrl.restoreUrl}/${id}`, {});
   }
 
   delete(id: number): Observable<BaseAPIResponse> {
-    const url = EUrl.deleteUrlHomeBanner.concat('/', id.toString());
-    return this.http.delete<BaseAPIResponse>(url);
+    return this.http.delete<BaseAPIResponse>(`${EHomeBannerLipstickShopUrl.deleteUrl}/${id}`);
   }
 
 }
