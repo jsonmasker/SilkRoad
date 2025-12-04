@@ -1,12 +1,7 @@
 ﻿using BusinessLogic.IHelpers.ISystemHelpers;
 using Common;
 using Common.Models;
-using Common.Services.ActionLoggingServices;
 using Common.ViewModels.SystemViewModels;
-using DataAccess.DTOs;
-using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using WebCore.Server.Controllers.BaseApiControllers;
@@ -63,7 +58,7 @@ namespace WebCore.Server.Controllers.SystemControllers
                     HttpOnly = true,
                     Secure = true,
                     SameSite = SameSiteMode.Strict,
-                    Path = "api/myaccount/validateRefreshToken"
+                    Path = "api/Auth/*"
                 });
 
                 return Succeeded(jwt.Token, _localizer["loginSuccess"]);
@@ -138,8 +133,8 @@ namespace WebCore.Server.Controllers.SystemControllers
 
         //}
 
-        [HttpGet("RefeshToken")]
-        public async Task<IActionResult> RefeshToken()
+        [HttpGet("RefreshToken")]
+        public async Task<IActionResult> RefreshToken()
         {
             string? refreshToken = Request.Cookies["refresh_token"];
             if (string.IsNullOrWhiteSpace(refreshToken))
@@ -155,6 +150,25 @@ namespace WebCore.Server.Controllers.SystemControllers
             {
                 return Failed(EStatusCodes.BadRequest, _localizer["refreshTokenInvalid"]);
             }
+        }
+
+        [HttpGet("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            string? refreshToken = Request.Cookies["refresh_token"];
+            if (!string.IsNullOrWhiteSpace(refreshToken))
+            {
+                await _myAccountHelper.RevokeRefreshTokenAsync(refreshToken);
+                Response.Cookies.Delete("refresh_token", new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Path = "api/Auth/*"
+
+                });
+            }
+            return Succeeded(_localizer["logoutSuccess"]);
         }
     }
 }

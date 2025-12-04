@@ -20,5 +20,6 @@ namespace BusinessLogic.IHelpers.ISystemHelpers
         public Task<bool> ChangePasswordAsync(ChangePasswordViewModel model);
         public Task<bool> RecoverPassword(RecoverPasswordViewModel model);
         public Task<bool> ResetPasswordAsync(ResetPasswordViewModel model);
+        public Task<bool> RevokeRefreshTokenAsync(string refreshToken);
     }
 }

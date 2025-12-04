@@ -8,7 +8,7 @@ export { ActionLoggingService } from './action-logging.service';
 export { ActionService } from './action.service';
 
 // Authentication Services
-export { AuthenticationService } from './authentication.service';
+export { AuthService } from './auth.service';
 
 // Log Services
 export { LogService } from './log.service';

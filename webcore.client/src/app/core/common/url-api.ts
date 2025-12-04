@@ -260,17 +260,23 @@
   getAllUrl = "/api/payment/getAll",
   getByIdUrl = "/api/payment/getById",
   }
+  //#endregion
+
   //#region System
 
   //My Account
+  export enum EAuthSystemUrl{
+    loginUrl = "/api/auth/login",
+    externalLoginUrl = "/api/auth/externalLogin",
+    validateRefreshTokenUrl = "/api/auth/validateRefreshToken",
+    refreshTokenUrl = "/api/auth/refreshToken",
+    logoutUrl = "/api/auth/logout",
+  }
+
   export enum EMyAccountSystemUrl{
   changePasswordUrl = "/api/MyAccount/changePassword",
-  loginUrl = "/api/MyAccount/login",
   recoverPasswordUrl = "/api/MyAccount/recoverPassword",
   resetPasswordUrl = "/api/MyAccount/resetPassword",
-  refreshTokenUrl = "/api/MyAccount/refreshToken",
-  validateRefreshTokenUrl = "/api/MyAccount/validateRefreshToken",
-  reNewToken = "/api/MyAccount/renewToken",
   }
   //province
   export enum EProvinceSystemUrl{
@@ -327,8 +333,6 @@
 
   //participant
   export enum EParticipantSurveyUrl{
-
-
     getAllUrl = "/api/participant/getAll",
     getByIdUrl = "/api/participant/getById",
     exportExcelUrl = "/api/participant/exportExcel",
@@ -468,5 +472,3 @@
   }
 
   //#endregion
-
-

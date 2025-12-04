@@ -7,7 +7,7 @@ import { EyeIconComponent } from '@components/icons/eye-icon.component';
 import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.component';
 import { LoadingService } from '@services/helper-services/loading.service';
 import { ParticleCanvasComponent } from '@components/generals/particle-canvas/particle-canvas.component';
-import { AuthenticationService } from '@services/system-services/authentication.service';
+import { AuthService } from '@services/system-services/auth.service';
 import { SocialAuthService, GoogleSigninButtonDirective } from '@abacritt/angularx-social-login';
 
 @Component({
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   //#endregion
 
   //#region Lifecycle Hooks
-  constructor(private authenticationService: AuthenticationService,
+  constructor(private authenticationService: AuthService,
     private router: Router, 
     private loadingService: LoadingService,
     // private socialAuthService: SocialAuthService

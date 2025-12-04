@@ -5,10 +5,8 @@ using Common.Services.JwtServices;
 using Common.ViewModels.SystemViewModels;
 using DataAccess;
 using DataAccess.DTOs;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -259,6 +257,24 @@ namespace BusinessLogic.Helpers.SystemHelpers
         public async Task<Microsoft.AspNetCore.Identity.SignInResult> CheckPasswordSignInAsync(UserDTO user, string password)
         {
             return await _signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure: true);
+        }
+
+        public async Task<bool> RevokeRefreshTokenAsync(string refreshToken)
+        {
+            try
+            {
+                var data = await _unitOfWork.UserTokenRepository.GetUserTokenByRefreshToken(refreshToken);
+                if (data == null)
+                    return false;
+                
+                _unitOfWork.UserTokenRepository.Delete(data);
+                await _unitOfWork.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
