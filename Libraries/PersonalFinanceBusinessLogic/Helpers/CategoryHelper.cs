@@ -1,4 +1,5 @@
 ﻿using Common.Models;
+using Microsoft.EntityFrameworkCore;
 using PersonalFinanceBusinessLogic.IHelpers;
 using PersonalFinanceDataAccess;
 using PersonalFinanceDataAccess.DTOs;
@@ -15,12 +16,12 @@ namespace PersonalFinanceBusinessLogic.Helpers
 
         public async Task<Pagination<CategoryDTO>> GetAllAsync(int pageIndex, int pageSize)
         {
-            var allItems = await _unitOfWork.CategoryRepository.GetAllAsync(x => !x.IsDeleted);
-            int totalItems = allItems.Count();
+            var query =  _unitOfWork.CategoryRepository.Query(x => !x.IsDeleted, includeProperties: "SubCategories");
+            int totalItems = await query.CountAsync();
             int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
             if (pageIndex > totalPages)
                 pageIndex = totalPages > 0 ? totalPages : 1;
-            var items = allItems.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            var items = await query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
             return new Pagination<CategoryDTO>
             {
                 PageIndex = pageIndex,

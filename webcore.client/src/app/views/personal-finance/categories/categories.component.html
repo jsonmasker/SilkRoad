@@ -14,6 +14,7 @@
       <th scope="col">No</th>
       <th scope="col">Name EN</th>
       <th scope="col">Name VN</th>
+      <th scope="col">Priority</th>
       <th scope="col">Is Active</th>
       <th scope="col">Created By</th>
       <th scope="col">Modified By</th>
@@ -37,12 +38,13 @@
     </td>
     <td>{{ node.nameEN }}</td>
     <td>{{ node.nameVN }}</td>
+    <td>{{ node.priority }}</td>
     <td>{{ node.isActive }}</td>
     <td>{{ node.createdBy }}</td>
     <td>{{ node.modifiedBy }}</td>
     <td>
       <div class="d-flex justify-content-end">
-        @if ((node?.children?.length ?? 0) > 0) {
+        @if ((node?.subCategories?.length ?? 0) > 0) {
         <button (click)="toggleNode(node)" class="btn btn-info me-2">
           <app-book-icon [open]="node.expanded"></app-book-icon>
         </button>
@@ -51,10 +53,10 @@
           <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
         </button>
         <button (click)="updateData(node.id)"
-          class="btn btn-primary {{ (node?.children?.length ?? 0) <= 0 ? 'me-2' : '' }}">
+          class="btn btn-primary {{ (node?.subCategories?.length ?? 0) <= 0 ? 'me-2' : '' }}">
           <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
         </button>
-        @if ((node?.children?.length ?? 0) <= 0) { <button (click)="softDeleteData(node.id)" class="btn btn-danger">
+        @if ((node?.subCategories?.length ?? 0) <= 0) { <button (click)="softDeleteData(node.id)" class="btn btn-danger">
           <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
           </button>
           }
@@ -62,12 +64,39 @@
     </td>
   </tr>
 
-  <!-- @if (node.expanded && (node?.children?.length ?? 0) > 0) {
-  @for (child of node.children; track child.id; let i = $index) {
-  <ng-container [ngTemplateOutlet]="nodeTemplate"
+  @if (node.expanded && (node?.subCategories?.length ?? 0) > 0) {
+  @for (child of node.subCategories; track child.id; let i = $index) {
+  <ng-container [ngTemplateOutlet]="nodeSubTemplate"
     [ngTemplateOutletContext]="{ node: child, index: i, level: level + 1 }"></ng-container>
   }
-  } -->
+  }
+</ng-template>
+
+<ng-template #nodeSubTemplate let-node="node" let-level="level" let-index="index">
+  <tr class="tree-row" [class.expanded]="node.expanded" [class.children]="level > 0">
+    <td>
+      <span [ngStyle]="{'margin-left.px': level * 30}">
+        {{ index + 1 }}
+      </span>
+    </td>
+    <td>{{ node.nameEN }}</td>
+    <td>{{ node.nameVN }}</td>
+    <td>{{ node.priority }}</td>
+    <td>{{ node.isActive }}</td>
+    <td>{{ node.createdBy }}</td>
+    <td>{{ node.modifiedBy }}</td>
+    <td>
+      <div class="d-flex justify-content-end">
+        <button (click)="updateData(node.id)" class="btn btn-primary me-2">
+          <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+        </button>
+        <button (click)="softDeleteData(node.id)" class="btn btn-danger">
+          <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+          </button>
+          
+      </div>
+    </td>
+  </tr>
 </ng-template>
 
 <!-- Create Modal -->
@@ -378,7 +407,7 @@
       <button (click)="toggleLiveCreateModel()" cButton color="secondary">
         <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
       </button>
-      <button cButton type="submit" [disabled]="!createForm.valid" color="primary">
+      <button cButton type="submit" [disabled]="!createSubCategoryForm.valid" color="primary">
         <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
       </button>
     </c-modal-footer>
