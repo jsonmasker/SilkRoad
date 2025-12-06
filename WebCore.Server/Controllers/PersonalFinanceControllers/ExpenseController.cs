@@ -13,7 +13,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
 {
     [Route("api/pf/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ExpenseController : BaseApiController
     {
         private readonly IExpenseHelper _helper;

@@ -38,10 +38,10 @@ export class LoginComponent implements OnInit {
   ) {
   }
   ngOnInit(): void {
-    // const isAuthenticated = this.authenticationService.checkLogin();
-    // if (isAuthenticated) {
-    //   this.router.navigate(['/introduction']);
-    // }
+    const isAuthenticated = this.authenticationService.checkLogin();
+    if (isAuthenticated) {
+      this.router.navigate(['/introduction']);
+    }
 
     this.socialAuthService.authState.subscribe((user) => {
       if (user) {

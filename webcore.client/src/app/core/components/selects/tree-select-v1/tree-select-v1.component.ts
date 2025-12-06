@@ -5,37 +5,32 @@ import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 @Component({
-  selector: 'app-tree-select',
-  templateUrl: './tree-select.component.html',
-  styleUrl: './tree-select.component.scss',
-  imports: [FormsModule, NzTreeSelectModule]
+  selector: 'app-tree-select-v1',
+  imports: [FormsModule, NzTreeSelectModule],
+  templateUrl: './tree-select-v1.component.html',
+  styleUrl: './tree-select-v1.component.scss'
 })
-export class TreeSelectComponent {
-  placeholder = input<string>('Please select');
+export class TreeSelectV1Component{
+ placeholder = input<string>('Please select');
   expandKeys = input<any[]>([]);
   options = input<OptionModel[]>([]);
   selectedValue = input<any>(null);
   isDisabled = input<boolean>(false);
-  onChangeValue = output<any>();
+  onChangeValue = output<any[]>();
   nodes: NzTreeNodeOptions[] = [];
 
-
   onChangeInput(event: any) {
-      if (event) {
+      if (typeof event === 'string' ) {
         const myArray = event.split("_");
-        if (myArray.length > 1) {
-          this.onChangeValue.emit(myArray[1]);
-        }
+        this.onChangeValue.emit(myArray);
       }else{
-        this.onChangeValue.emit(-1);
+        const myArray = [event];
+        this.onChangeValue.emit(myArray);
       }
   }
 
-
   ngOnChanges(): void {
-    // console.log('ngOnChanges', this.expandKeys());
    this.nodes = this.handleData(this.options());
-  //  console.log('nodes', this.nodes);
   }
 
   handleData(options: OptionModel[]): NzTreeNodeOptions[] {
@@ -44,9 +39,7 @@ export class TreeSelectComponent {
       key: option.parentId ? option.parentId + '_' + option.id : option.id,
       isLeaf: !option.children?.length,
       children: option.children ? this.handleData(option.children) : [],
-      selectable: !option.children?.length
-      //selected: !option.children?.length && option.name == this.selectedValue
+      // selectable: !option.children?.length
     }));
   }
-
 }

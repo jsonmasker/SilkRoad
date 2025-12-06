@@ -7,43 +7,24 @@ import { ECategoryPersonalFinanceUrl } from '@common/url-api';
 import { catchError, switchMap } from 'rxjs';
 
 import { CategoryModel } from '@models/personal-finance-models';
+import { OptionModel } from '@models/option.model';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<CategoryModel>>> {
     return this.http.get<APIResponse<Pagination<CategoryModel>>>(`${ECategoryPersonalFinanceUrl.getAllUrl}/${pageIndex}/${pageSize}`);
   }
 
-  // getOptionList(): Observable<APIResponse<OptionModel[]>> {
-  //   const url = EUrl.getOptionListUrlCategoryPF;
-  //   return this.http.get<APIResponse<OptionModel[]>>(url).pipe(
-  //     catchError(error => {
-  //       if (error.status === 401) {
-  //         return this.authenticationService.reNewToken().pipe(
-  //           switchMap(() => this.http.get<APIResponse<OptionModel[]>>(url))
-  //         );
-  //       } else {
-  //         return throwError(() =>error);
-  //       }
-  //     })
-  //   );
-  // }
-  //   getTreeOptionList(): Observable<APIResponse<OptionModel[]>> {
-  //   const url = EUrl.getTreeOptionListUrlCategoryPF;
-  //   return this.http.get<APIResponse<OptionModel[]>>(url).pipe(
-  //     catchError(error => {
-  //       if (error.status === 401) {
-  //         return this.authenticationService.reNewToken().pipe(
-  //           switchMap(() => this.http.get<APIResponse<OptionModel[]>>(url))
-  //         );
-  //       } else {
-  //         return throwError(() =>error);
-  //       }
-  //     })
-  //   );
-  // }
+  getOptionList(): Observable<APIResponse<OptionModel[]>> {
+    const url = ECategoryPersonalFinanceUrl.getOptionListUrl;
+    return this.http.get<APIResponse<OptionModel[]>>(url);
+  }
+  getTreeOptionList(): Observable<APIResponse<OptionModel[]>> {
+    const url = ECategoryPersonalFinanceUrl.getTreeOptionListUrl;
+    return this.http.get<APIResponse<OptionModel[]>>(url);
+  }
 
   getAllDeleted(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<CategoryModel>>> {
     return this.http.get<APIResponse<Pagination<CategoryModel>>>(`${ECategoryPersonalFinanceUrl.getAllDeletedUrl}/${pageIndex}/${pageSize}`);

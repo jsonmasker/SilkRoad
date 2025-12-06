@@ -37,6 +37,8 @@
   //Category
   export enum ECategoryPersonalFinanceUrl{
   getAllUrl = "/api/pf/category/getAll",
+  getOptionListUrl = "/api/pf/category/getOptionList",
+  getTreeOptionListUrl = "/api/pf/category/getTreeOptionList",
   getAllDeletedUrl = "/api/pf/category/getAllDeleted",
   getByIdUrl = "/api/pf/category/getById",
   createUrl = "/api/pf/category/create",

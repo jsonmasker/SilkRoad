@@ -144,7 +144,7 @@ namespace PersonalFinanceBusinessLogic.Helpers
             var data = await _unitOfWork.CategoryRepository.GetEagerLoadingAsync();
 
             return data
-                .Where(x => x.SubCategories != null && x.SubCategories.Any()) // Safe null check
+                //.Where(x => x.SubCategories != null && x.SubCategories.Any()) // Safe null check
                 .Select(x => new OptionModel
                 {
                     Id = x.Id,

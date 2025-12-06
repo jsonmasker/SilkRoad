@@ -1,7 +1,7 @@
 
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonCloseDirective, ButtonDirective, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, TemplateIdDirective } from '@coreui/angular';
+import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective } from '@coreui/angular';
 import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX, cilSearch } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
@@ -11,7 +11,14 @@ import { DataTableComponent } from "@components/generals/data-table/data-table.c
 import { RangeDatetimePickerComponent } from "@components/generals/range-datetime-picker/range-datetime-picker.component";
 import { SelectSearchComponent } from "@components/selects/select-search/select-search.component";
 import { ExpenseService } from '@services/personal-finance-services/expense.service';
-import { ExpenseModel } from '@models/personal-finance-models';
+import { CategoryModel, ExpenseModel } from '@models/personal-finance-models';
+import { CategoryService } from '@services/personal-finance-services';
+import { OptionModel } from '@models/option.model';
+import { TreeSelectComponent } from "@components/selects/tree-select/tree-select.component";
+import { TreeSelectV1Component } from "@components/selects/tree-select-v1/tree-select-v1.component";
+import { InputCurrencyComponent } from "@components/inputs/input-currency/input-currency.component";
+import { AuthService } from '@services/system-services';
+import { cos } from '@amcharts/amcharts5/.internal/core/util/Math';
 
 
 @Component({
@@ -20,7 +27,7 @@ import { ExpenseModel } from '@models/personal-finance-models';
   styleUrl: './expenses.component.scss',
   imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, IconDirective, AccordionButtonDirective, AccordionComponent,
     AccordionItemComponent, ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule, ModalFooterComponent,
-    ModalHeaderComponent, DataTableComponent, TemplateIdDirective, RangeDatetimePickerComponent, SelectSearchComponent]
+    ModalHeaderComponent, DataTableComponent, TemplateIdDirective, RangeDatetimePickerComponent, TreeSelectV1Component, InputCurrencyComponent]
 })
 export class ExpensesComponent implements OnInit {
   //#region Properties
@@ -32,15 +39,19 @@ export class ExpensesComponent implements OnInit {
   visibleTrashModal: boolean = false;
   deleteById: number = 0;
   data: Pagination<ExpenseModel> = new Pagination<ExpenseModel>();
+  // categoryOptions: OptionModel[] = [];
+  categoryTreeOptions: OptionModel[] = [];
   icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX, cilSearch };
+
   createForm: FormGroup = new FormGroup({
-    userId: new FormControl('', Validators.required),
+    userId: new FormControl(-1),
     categoryId: new FormControl('', Validators.required),
     subCategoryId: new FormControl(''),
     amount: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
     note: new FormControl('', Validators.maxLength(500))
   });
+
   updateForm: FormGroup = new FormGroup({
     id: new FormControl(0, Validators.required),
     userId: new FormControl('', Validators.required),
@@ -53,25 +64,54 @@ export class ExpensesComponent implements OnInit {
     updatedAt: new FormControl('')
   });
 
-    filterForm: FormGroup = new FormGroup({
+  filterForm: FormGroup = new FormGroup({
     pageIndex: new FormControl(-1),
     pageSize: new FormControl(-1),
     userId: new FormControl(-1),
     fromDate: new FormControl(null),
     toDate: new FormControl(null),
-    categoryId: new FormControl(-1),
+    categoryId: new FormControl(null),
+    subCategoryId: new FormControl(null),
     searchText: new FormControl(null)
   });
   //#endregion
 
-  constructor(private expenseService: ExpenseService,
+  constructor(private expenseService: ExpenseService, private categoryService: CategoryService, private authService: AuthService,
     private toastService: ToastService) { }
   ngOnInit(): void {
     this.getData();
+    this.categoryService.getTreeOptionList().subscribe((res) => {
+      this.categoryTreeOptions = res.data;
+    });
+    // Set default date to today for create form
+    const today = new Date().toISOString().split('T')[0];
+    // Set userId in create and filter forms
+    const currentUserId = this.authService.getUserId();
+    console.log(currentUserId);
+    this.createForm.patchValue({ date: today, userId: currentUserId });
+    this.filterForm.patchValue({ userId: currentUserId });
   }
   filter() {
     this.filterForm.patchValue({ pageIndex: this.pageInformation.pageIndex, pageSize: this.pageInformation.pageSize });
     this.getData();
+  }
+  onChangeSelect(event: any, formType: string) {
+    console.log(event);
+    if (formType === 'filter') {
+        this.filterForm.patchValue({ 
+          categoryId: event[0]
+         , subCategoryId: event.length > 1 ? event[1] : null });
+    }
+    else if (formType === 'create') {
+        this.createForm.patchValue({ 
+          categoryId: event[0]
+         , subCategoryId: event.length > 1 ? event[1] : null });
+    }
+    else if (formType === 'update') {
+        this.updateForm.patchValue({ 
+          categoryId: event[0]
+         , subCategoryId: event.length > 1 ? event[1] : null });
+    }
   }
   //#region Main Table
   getData() {
@@ -97,20 +137,22 @@ export class ExpensesComponent implements OnInit {
 
   //#region Create Form
   onSubmitCreateForm() {
-    if (this.createForm.valid) {
-      this.expenseService.create(this.createForm.value).subscribe({
-        next: (res) => {
-          this.toggleLiveCreateModel();
-          this.getData();
-          this.toastService.showToast(EColors.success, res.message);
-          this.createForm.reset();
-          this.createForm.patchValue({ isActive: true, priority: 1 });
-        },
-        error: (failure) => {
-          this.toastService.showToast(EColors.danger, failure.error.message);
-        }
-      });
-    }
+    console.log(this.createForm.value);
+    // if (this.createForm.valid) {
+    //   this.expenseService.create(this.createForm.value).subscribe({
+    //     next: (res) => {
+    //       this.toggleLiveCreateModel();
+    //       this.getData();
+    //       this.toastService.showToast(EColors.success, res.message);
+    //       this.createForm.reset();
+    //       this.createForm.patchValue({ isActive: true, priority: 1 });
+    //     },
+    //     error: (failure) => {
+    //       this.toastService.showToast(EColors.danger, failure.error.message);
+    //     }
+    //   });
+    // }
+
   }
 
   toggleLiveCreateModel() {

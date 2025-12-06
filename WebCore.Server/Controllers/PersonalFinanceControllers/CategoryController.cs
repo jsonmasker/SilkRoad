@@ -13,7 +13,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
 
     [Route("api/pf/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class CategoryController : BaseApiController
     {
         private readonly ICategoryHelper _helper;
@@ -38,19 +38,19 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
-        //[HttpGet("GetOptionList")]
-        //public async Task<IActionResult> GetOptionList()
-        //{
-        //    var data = await _helper.GetOptionListAsync();
-        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
-        //}
+        [HttpGet("GetOptionList")]
+        public async Task<IActionResult> GetOptionList()
+        {
+            var data = await _helper.GetOptionListAsync();
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
 
-        //[HttpGet("GetTreeOptionList")]
-        //public async Task<IActionResult> GetTreeOptionList()
-        //{
-        //    var data = await _helper.GetTreeOptionListAsync();
-        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
-        //}
+        [HttpGet("GetTreeOptionList")]
+        public async Task<IActionResult> GetTreeOptionList()
+        {
+            var data = await _helper.GetTreeOptionListAsync();
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
 
         [HttpGet("getAllDeleted/{pageIndex}/{pageSize}")]
         public async Task<IActionResult> GetAllDeleted(int pageIndex, int pageSize)
