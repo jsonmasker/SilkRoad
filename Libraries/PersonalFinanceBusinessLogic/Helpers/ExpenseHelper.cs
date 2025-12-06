@@ -1,4 +1,5 @@
 ﻿using Common.Models;
+using Microsoft.EntityFrameworkCore;
 using PersonalFinanceBusinessLogic.IHelpers;
 using PersonalFinanceDataAccess;
 using PersonalFinanceDataAccess.DTOs;
@@ -12,44 +13,56 @@ namespace PersonalFinanceBusinessLogic.Helpers
         {
             _unitOfWork = unitOfWork;
         }
-        public Task<bool> CreateAsync(ExpenseDTO model, string? userName = null)
+        public async Task<Pagination<ExpenseDTO>> GetAllAsync(ExpenseFilterModel filter)
         {
-            throw new NotImplementedException();
+            var query = _unitOfWork.ExpenseRepository.Query(x => x.UserId == filter.UserId);
+            int totalItems = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)filter.PageSize);
+            if (filter.PageIndex > totalPages)
+                filter.PageIndex = totalPages > 0 ? totalPages : 1;
+            var items = await query.Skip((filter.PageIndex - 1) * filter.PageSize).Take(filter.PageSize).ToListAsync();
+            return new Pagination<ExpenseDTO>
+            {
+                PageIndex = filter.PageIndex,
+                PageSize = filter.PageSize,
+                CurrentPage = filter.PageIndex,
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                Items = items
+            };
+        }
+        public async Task<bool> CreateAsync(ExpenseDTO model)
+        {
+            try
+            {
+                await _unitOfWork.ExpenseRepository.CreateAsync(model);
+                await _unitOfWork.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<ExpenseDTO?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.ExpenseRepository.GetByIdAsync(id);
         }
 
-        public Task<Pagination<ExpenseDTO>> GetAllAsync(int pageIndex, int pageSize)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.ExpenseRepository.DeleteAsync(id);
+            await _unitOfWork.SaveChangesAsync();
+            return true;
         }
 
-        public Task<Pagination<ExpenseDTO>> GetAllDeletedAsync(int pageIndex, int pageSize)
+        public async Task<bool> UpdateAsync(ExpenseDTO model)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<ExpenseDTO?> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> RestoreAsync(int id, string? userName = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> SoftDeleteAsync(int id, string? userName = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UpdateAsync(ExpenseDTO model, string? userName = null)
-        {
-            throw new NotImplementedException();
+            model.ModifiedAt = DateTime.UtcNow;
+            await _unitOfWork.ExpenseRepository.UpdateAsync(model, model.Id);
+            await _unitOfWork.SaveChangesAsync();
+            return true;
         }
     }
 }

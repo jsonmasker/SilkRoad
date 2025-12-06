@@ -1,1 +1,219 @@
-<p>expenses works!</p>
+<h3 class="fw-bold">Expenses</h3>
+<c-accordion class="mb-4">
+    <c-accordion-item #item0="cAccordionItem" [visible]="true">
+        <ng-template cTemplateId="accordionHeaderTemplate">
+            <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+                Filter:
+            </button>
+        </ng-template>
+        <ng-template cTemplateId="accordionBodyTemplate">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-8">
+                        <form cForm [formGroup]="filterForm" (ngSubmit)="filter()">
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <app-range-datetime-picker [showTime]="false"></app-range-datetime-picker>
+                                </div>
+                                <div class="col-4">
+                                    <app-select-search></app-select-search>
+                                </div>
+                                 <div class="col-4">
+                                    <input formControlName="searchText" type="text" class="form-control"
+                                        placeholder="Search by name...">
+                                </div>
+                            </div>
+                            <div class="row">
+                               
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        <svg [cIcon]="icons.cilSearch" width="20" class="text-white"
+                                            title="Search Icon"></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-4">
+                        <div class="justify-content-end d-flex">
+                            <a routerLink="./create" class="btn btn-success">
+                                <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </c-accordion-item>
+</c-accordion>
+
+<app-data-table [data]="pageInformation" (changePageIndex)="onPageIndexChange($event)"
+    (changePageSize)="onPageSizeChange($event)">
+    <thead class="text-nowrap text-truncate">
+        <tr>
+            <th scope="col">NO</th>
+            <th scope="col">NameEN</th>
+            <th scope="col">NameVN</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Is Active</th>
+            <th scope="col">Created By</th>
+            <th scope="col">Modified By</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of data.items; track item.id) {
+        <tr>
+            <!-- <td>{{ $index+1 }}</td>
+            <td>{{ item.nameEN }}</td>
+            <td>{{ item.nameVN }}</td>
+            <td>{{ item.priority }}</td>
+            <td>
+                <input type="checkbox" [checked]="item.isActive" disabled>
+            </td>
+            <td>{{ item.createdBy }}</td>
+            <td>{{ item.modifiedBy }}</td> -->
+            <td>
+                <div class="d-flex justify-content-end">
+                    <!-- @if((item?.questionLibraries?.length ?? 0) > 0) {
+                        <button (click)="toggleNode(item)" class="btn btn-info me-2">
+                            <app-book-icon [open]="item.expanded"></app-book-icon>
+                        </button>
+                    } -->
+                    <button (click)="updateData(item.id)" class="btn btn-primary me-2">
+                        <svg [cIcon]="icons.cilPen" width="25" class="text-white" title="Edit Icon"></svg>
+                    </button>
+                    <button (click)="deleteData(item.id)" class="btn btn-danger">
+                        <svg [cIcon]="icons.cilTrash" width="25" class="text-white" title="Delete Icon"></svg>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        <!-- <ng-container [ngTemplateOutlet]="nodeTemplate"
+            [ngTemplateOutletContext]="{ node: item, level: 1 }"></ng-container> -->
+        }
+    </tbody>
+</app-data-table>
+
+<!-- Create Modal -->
+<c-modal backdrop="static" [visible]="visibleCreateModal" (visibleChange)="handleLiveCreateModelChange($event)"
+    id="verticallyCenteredCreateModal" size="lg">
+    <c-modal-header class="bg-success d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="fw-bold text-white">Add Question Group Library</h5>
+        <button (click)="toggleLiveCreateModel()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
+    </c-modal-header>
+    <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
+        <c-modal-body>
+            
+            <div class="mb-2">
+                <label cLabel for="categoryId">Category: <span class="text-danger">(*)</span></label>
+                <app-select-search formControlName="categoryId" 
+                    placeholder="Select Category"></app-select-search>           
+            </div>
+            
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="amount">Amount: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="amount">
+                </div>
+                <div class="col-6">
+                    <label cLabel for="date">Date: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="date" type="date">           
+                </div>
+            </div>
+            <div class="mb-2">
+                <label cLabel for="note">Note: </label>
+                <textarea cFormControl formControlName="note" rows="3"></textarea>
+                @if (noteCreateForm?.invalid && (noteCreateForm?.dirty || noteCreateForm?.touched)) {
+                <div class="text-danger">
+                    @if (noteCreateForm?.hasError('maxlength')) {
+                    Maximum 500 characters.
+                    }
+                </div>
+                }
+            </div>
+        </c-modal-body>
+        <c-modal-footer>
+            <button (click)="toggleLiveCreateModel()" cButton color="secondary">
+                <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+            </button>
+            <button cButton type="submit" [disabled]="!createForm.valid" color="primary">
+                <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+            </button>
+        </c-modal-footer>
+    </form>
+</c-modal>
+<!--Update Model-->
+<c-modal backdrop="static" [visible]="visibleUpdateModal" (visibleChange)="handleLiveUpdateModelChange($event)"
+    id="verticallyCenteredUpdateModal" size="lg">
+    <c-modal-header class="bg-primary d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="text-white fw-bold">Update Question Group Library</h5>
+        <button (click)="toggleLiveUpdateModel()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
+    </c-modal-header>
+    <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
+        <c-modal-body>
+           
+               <div class="mb-2">
+                <label cLabel for="categoryId">Category: <span class="text-danger">(*)</span></label>
+                <app-select-search formControlName="categoryId" 
+                    placeholder="Select Category"></app-select-search>           
+            </div>
+            
+            <div class="mb-2 row">
+                <div class="col-6">
+                    <label cLabel for="amount">Amount: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="amount">
+                </div>
+                <div class="col-6">
+                    <label cLabel for="date">Date: <span class="text-danger">(*)</span></label>
+                    <input cFormControl formControlName="date" type="date">           
+                </div>
+            </div>
+            <div class="mb-2">
+                <label cLabel for="note">Note: </label>
+                <textarea cFormControl formControlName="note" rows="3"></textarea>
+                @if (noteUpdateForm?.invalid && (noteUpdateForm?.dirty || noteUpdateForm?.touched)) {
+                <div class="text-danger">
+                    @if (noteUpdateForm?.hasError('maxlength')) {
+                    Maximum 500 characters.
+                    }
+                </div>
+                }
+            </div>
+
+        </c-modal-body>
+        <c-modal-footer>
+            <button (click)="toggleLiveUpdateModel()" cButton color="secondary">
+                <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+            </button>
+            <button cButton type="submit" [disabled]="!updateForm.valid" color="primary">
+                <svg [cIcon]="icons.cilSave" width="22" class="text-white" title="Save Icon"></svg>
+            </button>
+        </c-modal-footer>
+    </form>
+</c-modal>
+<!--Delete Model-->
+<c-modal backdrop="static" [visible]="visibleDelete" (visibleChange)="handleLiveDeleteChange($event)"
+    id="verticallyCenteredDelete">
+    <c-modal-header class="bg-danger d-flex justify-content-between align-items-center">
+        <h5 cModalTitle class="fw-bold text-white">Delete Question Group Library</h5>
+        <button (click)="toggleLiveDelete()" class="btn btn-sm btnClose">
+            <svg [cIcon]="icons.cilX" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
+    </c-modal-header>
+    <c-modal-body>
+        <p>Are you sure you want to delete this question group library?</p>
+    </c-modal-body>
+    <c-modal-footer>
+        <button (click)="toggleLiveDelete()" cButton color="secondary">
+            <svg [cIcon]="icons.cilExitToApp" width="22" class="text-white" title="Close Icon"></svg>
+        </button>
+        <button (click)="onConfirmDelete()" cButton color="danger">
+            <svg [cIcon]="icons.cilTrash" width="22" class="text-white" title="Delete Icon"></svg>
+        </button>
+    </c-modal-footer>
+</c-modal>

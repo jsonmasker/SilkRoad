@@ -288,4 +288,59 @@ export class CategoriesComponent implements OnInit {
       });
   }
   //#endregion
+
+  //#region Sub Category Update Form
+  updateSubCategoryData(id: number) {
+    this.subCategoryService.getById(id).subscribe((res) => {
+      this.updateSubCategoryForm.patchValue(res.data);
+      //this.defaultTags = res.data.tags ? JSON.parse(res.data.tags) : [];
+      this.toggleLiveUpdateSubCategoryModel();
+    });
+  }
+  onSubmitUpdateSubCategoryForm() {
+    if (this.updateSubCategoryForm.invalid) {
+      return;
+    }
+    this.subCategoryService.update(this.updateSubCategoryForm.value).subscribe({
+      next: (res) => {
+        this.toggleLiveUpdateSubCategoryModel();
+        this.getData();
+        this.toastService.showToast(EColors.success, res.message);
+      },
+      error: (failure) => {
+        this.toastService.showToast(EColors.danger, failure.error.message);
+      }
+    });
+
+
+  }  
+  toggleLiveUpdateSubCategoryModel() {
+    this.visibleUpdateSubCategoryModal = !this.visibleUpdateSubCategoryModal;
+  }
+  handleLiveUpdateSubCategoryModelChange(event: any) {
+    this.visibleUpdateSubCategoryModal = event;
+  }
+  get nameVNUpdateSubCategoryForm() { return this.updateSubCategoryForm.get('nameVN'); }
+  get nameENUpdateSubCategoryForm() { return this.updateSubCategoryForm.get('nameEN'); }
+  get priorityUpdateSubCategoryForm() { return this.updateSubCategoryForm.get('priority'); }
+  get noteUpdateSubCategoryForm() { return this.updateSubCategoryForm.get('note'); }
+  //#endregion
+  //#region Sub Category Delete
+  softDeleteSubCategory(id: number) {
+    this.deleteSubCategoryById = id;
+    this.toggleLiveDeleteSubCategory();
+  }
+  onConfirmDeleteSubCategory() {
+    this.subCategoryService.softDelete(this.deleteSubCategoryById).subscribe(() => {
+      this.toggleLiveDeleteSubCategory();
+      this.getData();
+    });
+  }
+  toggleLiveDeleteSubCategory() {
+    this.visibleDeleteSubCategory = !this.visibleDeleteSubCategory;
+  }
+  handleLiveDeleteSubCategoryChange(event: any) {
+    this.visibleDeleteSubCategory = event;
+  }
+  //#endregion
 }

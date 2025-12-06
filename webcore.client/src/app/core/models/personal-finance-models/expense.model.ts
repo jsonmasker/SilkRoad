@@ -1,13 +1,11 @@
 export interface ExpenseModel {
-    id: number;
+    id: any;
+    userId: number;
     categoryId: number;
-    subCategoryId: number;
+    subCategoryId?: number;
     amount: number;
     date: Date;
     note?: string;
-    createdAt: Date;
-    updatedAt: Date;
-    isDeleted: boolean;
-    createdBy: string;
-    modifiedBy: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }

@@ -4,6 +4,7 @@ using Common.Services.ActionLoggingServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using PersonalFinanceBusinessLogic.Helpers;
 using PersonalFinanceBusinessLogic.IHelpers;
 using PersonalFinanceDataAccess.DTOs;
 using WebCore.Server.Controllers.BaseApiControllers;
@@ -12,37 +13,25 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
 {
     [Route("api/pf/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ExpenseController : BaseApiController
     {
         private readonly IExpenseHelper _helper;
-        private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
-        public ExpenseController(IExpenseHelper helper,
-        IActionLoggingService actionLog, IStringLocalizer<SharedResource> localizer)
+        public ExpenseController(IExpenseHelper helper, IStringLocalizer<SharedResource> localizer)
         {
             _helper = helper;
-            _actionLog = actionLog;
             _localizer = localizer;
         }
 
-        [HttpGet("getAll/{pageIndex}/{pageSize}")]
-        public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
+        [HttpPost("getByFilter")]
+        public async Task<IActionResult> GetAll([FromBody] ExpenseFilterModel filter)
         {
-            if (pageIndex < 1 || pageSize < 1)
+            if (filter.PageIndex < 1 || filter.PageSize < 1)
             {
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
             }
-            Pagination<ExpenseDTO> data = await _helper.GetAllAsync(pageIndex, pageSize);
-            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
-        }
-
-        [HttpGet("getAllDeleted/{pageIndex}/{pageSize}")]
-        public async Task<IActionResult> GetAllDeleted(int pageIndex, int pageSize)
-        {
-            if (pageIndex < 1 || pageSize < 1)
-                return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
-            var data = await _helper.GetAllDeletedAsync(pageIndex, pageSize);
+            Pagination<ExpenseDTO> data = await _helper.GetAllAsync(filter);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
@@ -60,8 +49,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
         {
             if (model == null || !ModelState.IsValid)
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
-            var userName = User.Identity?.Name;
-            var result = await _helper.CreateAsync(model, userName);
+            var result = await _helper.CreateAsync(model);
             if (!result)
                 return Failed(EStatusCodes.InternalServerError, _localizer["createFailed"]);
             return Succeeded(_localizer["createSuccess"]);
@@ -72,8 +60,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
         {
             if (model == null || !ModelState.IsValid)
                 return Failed(EStatusCodes.BadRequest, _localizer["invalidData"]);
-            var userName = User.Identity?.Name;
-            var result = await _helper.UpdateAsync(model, userName);
+            var result = await _helper.UpdateAsync(model);
             if (!result)
                 return Failed(EStatusCodes.InternalServerError, _localizer["updateFailed"]);
             return Succeeded(_localizer["updateSuccess"]);

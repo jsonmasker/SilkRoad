@@ -56,6 +56,15 @@
   restoreUrl = "/api/pf/subCategory/restore",
   deleteUrl = "/api/pf/subCategory/delete",
   }
+  //Expense
+  export enum EExpensePersonalFinanceUrl{
+  getByFilter = "/api/pf/expense/getByFilter",
+  getByIdUrl = "/api/pf/expense/getById",
+  createUrl = "/api/pf/expense/create",
+  updateUrl = "/api/pf/expense/update",
+  deleteUrl = "/api/pf/expense/delete",
+  }
+
   //#endregion
 
   //#region Hubs

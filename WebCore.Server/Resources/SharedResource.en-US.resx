@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="createFailed" xml:space="preserve">
+    <value>Create failed!</value>
+  </data>
+  <data name="createSuccess" xml:space="preserve">
+    <value>Create success!</value>
+  </data>
   <data name="dataCreatedSuccessfully" xml:space="preserve">
     <value>Data has been created successfully!</value>
   </data>
@@ -147,25 +153,31 @@
   <data name="dataUpdateFailed" xml:space="preserve">
     <value>Failed to update the data!</value>
   </data>
+  <data name="deleteSuccess" xml:space="preserve">
+    <value>Delete success!</value>
+  </data>
   <data name="forbidden" xml:space="preserve">
     <value>Error 403! Forbidden.</value>
   </data>
   <data name="invalidPageIndex" xml:space="preserve">
     <value>The provided page index is invalid!</value>
   </data>
+  <data name="notFound" xml:space="preserve">
+    <value>Not found!</value>
+  </data>
+  <data name="restoreSuccess" xml:space="preserve">
+    <value>Restore success!</value>
+  </data>
+  <data name="softDeleteSuccess" xml:space="preserve">
+    <value>Delete success!</value>
+  </data>
   <data name="unauthorized" xml:space="preserve">
     <value>Error 401! Unauthorized.</value>
   </data>
-  <data name="contact" xml:space="preserve">
-    <value>Contact</value>
+  <data name="updateFailed" xml:space="preserve">
+    <value>Update failed!</value>
   </data>
-  <data name="privacyPolicy" xml:space="preserve">
-    <value>Privacy policy</value>
-  </data>
-  <data name="returnPolicy" xml:space="preserve">
-    <value>Return policy</value>
-  </data>
-  <data name="termsandConditions" xml:space="preserve">
-    <value>Terms and conditions</value>
+  <data name="updateSuccess" xml:space="preserve">
+    <value>Update success!</value>
   </data>
 </root>

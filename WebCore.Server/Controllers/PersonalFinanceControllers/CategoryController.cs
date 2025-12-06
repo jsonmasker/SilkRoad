@@ -13,7 +13,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
 
     [Route("api/pf/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class CategoryController : BaseApiController
     {
         private readonly ICategoryHelper _helper;
@@ -69,14 +69,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
                 return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
-        //[HttpGet("getEargerById/{id}")]
-        //public async Task<IActionResult> GetEargerById(int id)
-        //{
-        //    var data = await _helper.GetEagerByIdAsync(id);
-        //    if (data == null)
-        //        return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
-        //    return Succeeded<CategoryDTO>(data, _localizer["dataFetchedSuccessfully"]);
-        //}
+
 
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CategoryDTO model)
