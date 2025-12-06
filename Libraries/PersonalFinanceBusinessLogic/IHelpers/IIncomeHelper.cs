@@ -2,7 +2,7 @@
 
 namespace PersonalFinanceBusinessLogic.IHelpers
 {
-    internal interface IIncomeHelper : IBaseAsyncHelper<IncomeDTO>
+    public interface IIncomeHelper : IBaseAsyncHelper<IncomeDTO>
     {
     }
 }
