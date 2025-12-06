@@ -5,7 +5,7 @@ import { EActionSystemUrl } from '@common/url-api';
 
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 import { Pagination } from '@models/pagination.model';
-import { ActionModel } from '@models/system-management-models/module.model';
+import { ActionModel } from '@models/system-models/module.model';
 @Injectable({
   providedIn: 'root'
 })

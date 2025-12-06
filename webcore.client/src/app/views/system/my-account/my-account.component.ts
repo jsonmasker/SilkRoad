@@ -4,11 +4,11 @@ import { EyeIconComponent } from '@components/icons/eye-icon.component';
 import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.component';
 import { RoleService } from '@services/system-services/role.service'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RoleModel } from '@models/system-management-models/role.model';
+import { RoleModel } from '@models/system-models/role.model';
 import { MyAccountService } from '@services/system-services/my-account.service';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, ToastBodyComponent, ToastComponent, ToasterComponent, ToastHeaderComponent } from '@coreui/angular';
 import { Router } from '@angular/router';
-import { AccountErrorModel, AccountModel } from '@models/system-management-models/account.model';
+import { AccountErrorModel, AccountModel } from '@models/system-models/account.model';
 import { AccountService } from '@services/system-services/account.service'
 @Component({
   selector: 'app-my-account',

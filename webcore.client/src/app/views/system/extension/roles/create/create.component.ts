@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ButtonDirective, CardBodyComponent, CardComponent, CollapseDirective, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective } from '@coreui/angular';
-import {ModuleModel} from '@models/system-management-models/role.model';
+import {ModuleModel} from '@models/system-models/role.model';
 import {cilArrowThickBottom,cilArrowThickRight} from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { RoleService } from '@services/system-services/role.service';

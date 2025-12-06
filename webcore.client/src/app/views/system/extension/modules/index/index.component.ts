@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TableDirective, CardComponent, CardBodyComponent, CardHeaderComponent } from '@coreui/angular';
-import {ModuleModel} from '@models/system-management-models/module.model';
+import {ModuleModel} from '@models/system-models/module.model';
 import {ModuleService} from '@services/system-services/module.service';
 @Component({
   selector: 'app-index',

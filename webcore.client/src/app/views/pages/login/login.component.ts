@@ -9,6 +9,7 @@ import { LoadingService } from '@services/helper-services/loading.service';
 import { ParticleCanvasComponent } from '@components/generals/particle-canvas/particle-canvas.component';
 import { AuthService } from '@services/system-services/auth.service';
 import { SocialAuthService, GoogleSigninButtonDirective } from '@abacritt/angularx-social-login';
+import { ExternalAuthModel } from '@models/external-auth.model';
 
 @Component({
   selector: 'app-login',
@@ -45,8 +46,23 @@ export class LoginComponent implements OnInit {
 
     this.socialAuthService.authState.subscribe((user) => {
       if (user) {
-        console.log('Google user authenticated:', user);
-        // this.handleGoogleLogin(user);
+        this.loadingService.showLoadingComponent(true);
+        const authModel : ExternalAuthModel = {
+          provider: user.provider,
+          idToken: user.idToken
+        };
+        this.authenticationService.externalLogin(authModel).subscribe({
+          next: (response) => {
+            if (response.success) {
+              this.loadingService.showLoadingComponent(false);
+              this.router.navigate(['/introduction']);
+            }
+          },
+          error: (exception: any) => {
+            this.loadingService.showLoadingComponent(false);
+            this.errorMessage = exception.error.message;
+          }
+        });
       }
     });
   }

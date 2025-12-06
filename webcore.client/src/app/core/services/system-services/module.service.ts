@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ModuleModel } from '@models/system-management-models/module.model';
+import { ModuleModel } from '@models/system-models/module.model';
 import { EModuleSystemUrl } from '@common/url-api';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 

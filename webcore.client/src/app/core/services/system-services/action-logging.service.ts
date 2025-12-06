@@ -5,7 +5,7 @@ import { EActionLoggingSystemUrl } from '@common/url-api';
 import { Observable } from 'rxjs';
 import { APIResponse } from '@models/api-response.model';
 import { Pagination } from '@models/pagination.model';
-import { ActionLoggingModel } from '@models/system-management-models/action-logging.model';
+import { ActionLoggingModel } from '@models/system-models/action-logging.model';
 
 
 @Injectable({

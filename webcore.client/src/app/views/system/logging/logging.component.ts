@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Params } from '@angular/router';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TableDirective, TemplateIdDirective } from '@coreui/angular';
-import { ActionLoggingModel } from '@models/system-management-models/action-logging.model';
+import { ActionLoggingModel } from '@models/system-models/action-logging.model';
 import { ActionLoggingService } from '@services/system-services/action-logging.service';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { EActions, EControllers, stringEnumToArray } from '@common/global';

@@ -7,7 +7,7 @@ import { CardBodyComponent, CardComponent, CardHeaderComponent, TableDirective }
 
 import { APIResponse } from '@models/api-response.model';
 import { PageInformation, Pagination } from '@models/pagination.model';
-import { RoleModel } from '@models/system-management-models/role.model';
+import { RoleModel } from '@models/system-models/role.model';
 import { RoleService } from '@services/system-services/role.service';
 
 @Component({

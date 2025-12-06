@@ -1,6 +1,6 @@
 import { Component, input, OnInit } from '@angular/core';
 import { AccountService, AuthService } from '@services/system-services';
-import { LoginModel } from '@models/system-management-models';
+import { LoginModel } from '@models/system-models';
 import { CategoryService } from '@services/personal-finance-services';
 import { OptionModel } from '@models/option.model';
 import { NzTreeSelectComponent } from "ng-zorro-antd/tree-select";

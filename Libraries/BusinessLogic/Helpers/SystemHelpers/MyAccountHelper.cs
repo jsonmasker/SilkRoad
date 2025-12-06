@@ -108,7 +108,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
             }
         }
         
-        public async Task<string?> ExternalLoginAsync(ExternalAuthModel externalAuth)
+        public async Task<JwtViewModel?> ExternalLoginAsync(ExternalAuthModel externalAuth)
         {
             var payload = await VerifyGoogleTokenAsync(externalAuth);
             if (payload == null)
@@ -116,10 +116,10 @@ namespace BusinessLogic.Helpers.SystemHelpers
 
             var info = new UserLoginInfo(externalAuth.Provider, payload.Subject, externalAuth.Provider);
 
-            var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
-            if (user == null)
-            {
-                user = await _userManager.FindByEmailAsync(payload.Email);
+            //var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+            //if (user == null)
+            //{
+                var user = await _userManager.FindByEmailAsync(payload.Email);
 
                 if (user == null)
                 {
@@ -129,21 +129,14 @@ namespace BusinessLogic.Helpers.SystemHelpers
                     //prepare and send an email for the email confirmation
 
                     await _userManager.AddToRoleAsync(user, ERoles.User.ToString());
-                    await _userManager.AddLoginAsync(user, info);
                 }
-                else
-                {
-                    await _userManager.AddLoginAsync(user, info);
-                }
-            }
+            //}
 
             if (user == null)
                 return null;
 
-            //check for the Locked out account
-            UserViewModel userViewModel = _mapper.Map<UserViewModel>(user);
-            string token =  _jwtService.GenerateAccessToken(userViewModel);
-            return token;
+            
+            return await AuthenticateAsync(user, false);
         }
         
         public async Task<bool> ValidateRefreshTokenAsync(string refreshToken)

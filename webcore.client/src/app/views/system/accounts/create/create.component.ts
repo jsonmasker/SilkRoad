@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ButtonDirective, CardBodyComponent, CardComponent, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective } from '@coreui/angular';
-import {AccountErrorModel, AccountModel } from '@models/system-management-models/account.model';
-import { RoleModel } from '@models/system-management-models/role.model';
+import {AccountErrorModel, AccountModel } from '@models/system-models/account.model';
+import { RoleModel } from '@models/system-models/role.model';
 import { AccountService } from '@services/system-services/account.service'
 import { RoleService } from '@services/system-services/role.service'
 import { userNameValidator } from '@common/validations/username.validator';

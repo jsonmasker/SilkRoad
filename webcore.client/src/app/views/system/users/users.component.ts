@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, FormCheckComponent, FormControlDirective, FormLabelDirective, FormSelectDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective } from '@coreui/angular';
 import { AccountService } from '@services/system-services/account.service';
-import { AccountModel } from '@models/system-management-models/account.model';
+import { AccountModel } from '@models/system-models/account.model';
 import { PageInformation, Pagination } from '@models/pagination.model';
 import { DataTableComponent } from '@components/generals/data-table/data-table.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
