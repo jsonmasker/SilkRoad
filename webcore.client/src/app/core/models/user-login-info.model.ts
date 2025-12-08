@@ -1,6 +1,7 @@
 export interface UserLoginInfoModel {
     userId: number;
-    username: string;
+    userName: string;
+    provider: string;
     email: string;
     roles: string[];
     avatarUrl?: string;

@@ -127,6 +127,7 @@ export class AuthService {
     this.http.get(EAuthSystemUrl.logoutUrl, { withCredentials: true }).subscribe({
       next: () => {
         this.accessTokenSignal.set(null);
+        this.currentUserSignal.set(null);
         this.router.navigateByUrl('/login');
       }
     });

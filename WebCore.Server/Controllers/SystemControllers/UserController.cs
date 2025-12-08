@@ -107,45 +107,45 @@ namespace WebCore.Server.Controllers.SystemControllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPatch("SoftDelete/{id}")]
-        [AuthorizeEnumPolicy(ERoles.Admin)]
-        public async Task<IActionResult> SoftDelete(int id)
-        {
-            var result = await _userSystemHelper.SoftDeleteAsync(id);
-            if (!result)
-                return Failed(EStatusCodes.BadRequest, _localizer["dataSoftDeleteFailed"]);
-            return Succeeded(_localizer["dataSoftDeletedSuccessfully"]);
-        }
+        //[HttpPatch("SoftDelete/{id}")]
+        //[AuthorizeEnumPolicy(ERoles.Admin)]
+        //public async Task<IActionResult> SoftDelete(int id)
+        //{
+        //    var result = await _userSystemHelper.SoftDeleteAsync(id);
+        //    if (!result)
+        //        return Failed(EStatusCodes.BadRequest, _localizer["dataSoftDeleteFailed"]);
+        //    return Succeeded(_localizer["dataSoftDeletedSuccessfully"]);
+        //}
 
         /// <summary>
         /// Restore data
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPatch("Restore/{id}")]
-        [AuthorizeEnumPolicy(ERoles.Admin)]
-        public async Task<IActionResult> Restore(int id)
-        {
-            bool result = await _userSystemHelper.RestoreAsync(id);
-            if (!result)
-                return Failed(EStatusCodes.BadRequest, _localizer["dataRestoreFailed"]);
-            return Succeeded(_localizer["dataRestoredSuccessfully"]);
-        }
+        //[HttpPatch("Restore/{id}")]
+        //[AuthorizeEnumPolicy(ERoles.Admin)]
+        //public async Task<IActionResult> Restore(int id)
+        //{
+        //    bool result = await _userSystemHelper.RestoreAsync(id);
+        //    if (!result)
+        //        return Failed(EStatusCodes.BadRequest, _localizer["dataRestoreFailed"]);
+        //    return Succeeded(_localizer["dataRestoredSuccessfully"]);
+        //}
 
         /// <summary>
         /// Delete data
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("Delete/{id}")]
-        [AuthorizeEnumPolicy(ERoles.Admin)]
-        public async Task<IActionResult> Delete(int id)
-        {
-            bool result = await _userSystemHelper.DeleteAsync(id);
-            if (!result)
-                return Failed(EStatusCodes.BadRequest, _localizer["dataDeleteFailed"]);
-            return Succeeded(_localizer["dataDeletedSuccessfully"]);
-        }
+        //[HttpDelete("Delete/{id}")]
+        //[AuthorizeEnumPolicy(ERoles.Admin)]
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    bool result = await _userSystemHelper.DeleteAsync(id);
+        //    if (!result)
+        //        return Failed(EStatusCodes.BadRequest, _localizer["dataDeleteFailed"]);
+        //    return Succeeded(_localizer["dataDeletedSuccessfully"]);
+        //}
 
         [HttpPut("deactivateUser/{Id}")]
         [AuthorizeEnumPolicy(ERoles.Admin)]

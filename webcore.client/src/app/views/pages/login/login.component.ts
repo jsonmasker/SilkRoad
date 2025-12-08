@@ -78,9 +78,7 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         if (response.success) {
           this.loadingService.showLoadingComponent(false);
-          this.authenticationService.getCurrentUserInfor().subscribe(() => {
-            this.router.navigate(['/introduction']);
-          });
+          this.router.navigate(['/introduction']);
         }
       },
       error: (exception: any) => {

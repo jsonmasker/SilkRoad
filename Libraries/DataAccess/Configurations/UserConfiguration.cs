@@ -29,7 +29,8 @@ namespace DataAccess.Configurations
                 CreatedBy = "System",
                 ModifiedBy = "System",
                 IsActive = true,
-                IsDeleted = false,
+                Provider = "Internal",
+                //IsDeleted = false,
                 CreatedOn = DateTime.Now,
                 ModifiedOn = DateTime.Now
             },
@@ -47,7 +48,8 @@ namespace DataAccess.Configurations
                 CreatedBy = "System",
                 ModifiedBy = "System",
                 IsActive = true,
-                IsDeleted = false,
+                Provider = "Internal",
+                //IsDeleted = false,
                 CreatedOn = DateTime.Now,
                 ModifiedOn = DateTime.Now
             }]);

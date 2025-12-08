@@ -23,6 +23,7 @@ import {
 } from '@coreui/angular';
 
 import { IconDirective } from '@coreui/icons-angular';
+import { UserLoginInfoModel } from '@models/user-login-info.model';
 import { AuthService } from '@services/system-services';
 
 @Component({
@@ -37,6 +38,7 @@ import { AuthService } from '@services/system-services';
 export class DefaultHeaderComponent extends HeaderComponent {
   clickChangePasswordButton = output<void>();
   logout = output<void>();
+  currentUser = input<UserLoginInfoModel | null>(null);
   readonly #colorModeService = inject(ColorModeService);
   readonly colorMode = this.#colorModeService.colorMode;
 

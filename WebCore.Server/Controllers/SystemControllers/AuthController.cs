@@ -3,6 +3,7 @@ using Common;
 using Common.Models;
 using Common.ViewModels.SystemViewModels;
 using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using WebCore.Server.Controllers.BaseApiControllers;
@@ -163,6 +164,7 @@ namespace WebCore.Server.Controllers.SystemControllers
         }
 
         [HttpGet("GetCurrentUser")]
+        [Authorize]
         public async Task<IActionResult> GetCurrentUser()
         {
             var user = User;

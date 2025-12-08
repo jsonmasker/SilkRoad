@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20251204042500_InitDB")]
+    [Migration("20251208102040_InitDB")]
     partial class InitDB
     {
         /// <inheritdoc />
@@ -291,30 +291,30 @@ namespace DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "5cf93310-3d15-4f29-911d-ffdb5c7efbc9",
+                            ConcurrencyStamp = "5fa67a25-4326-48af-a5a1-4d9908bb7b44",
                             CreatedBy = "System",
-                            CreatedOn = new DateTime(2025, 12, 4, 11, 24, 59, 775, DateTimeKind.Local).AddTicks(7191),
+                            CreatedOn = new DateTime(2025, 12, 8, 17, 20, 40, 57, DateTimeKind.Local).AddTicks(1366),
                             Description = "System Admin Role",
                             IsActive = true,
                             IsDeleted = false,
                             IsSystemRole = true,
                             ModifiedBy = "System",
-                            ModifiedOn = new DateTime(2025, 12, 4, 11, 24, 59, 775, DateTimeKind.Local).AddTicks(7558),
+                            ModifiedOn = new DateTime(2025, 12, 8, 17, 20, 40, 57, DateTimeKind.Local).AddTicks(1718),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "43867968-3397-4b7f-816a-dd56baa081b9",
+                            ConcurrencyStamp = "d62f59eb-77d6-44fc-b30d-50cb43fd912b",
                             CreatedBy = "System",
-                            CreatedOn = new DateTime(2025, 12, 4, 11, 24, 59, 785, DateTimeKind.Local).AddTicks(2898),
+                            CreatedOn = new DateTime(2025, 12, 8, 17, 20, 40, 66, DateTimeKind.Local).AddTicks(8536),
                             Description = "System Admin Role",
                             IsActive = true,
                             IsDeleted = false,
                             IsSystemRole = true,
                             ModifiedBy = "System",
-                            ModifiedOn = new DateTime(2025, 12, 4, 11, 24, 59, 785, DateTimeKind.Local).AddTicks(2906),
+                            ModifiedOn = new DateTime(2025, 12, 8, 17, 20, 40, 66, DateTimeKind.Local).AddTicks(8540),
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -355,6 +355,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("AvatarUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -374,9 +377,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -407,6 +407,9 @@ namespace DataAccess.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Provider")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -440,18 +443,18 @@ namespace DataAccess.Migrations
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "d80acb9d-e6d1-433f-ae6d-d9be0aa87643",
                             CreatedBy = "System",
-                            CreatedOn = new DateTime(2025, 12, 4, 11, 24, 59, 787, DateTimeKind.Local).AddTicks(8924),
+                            CreatedOn = new DateTime(2025, 12, 8, 17, 20, 40, 69, DateTimeKind.Local).AddTicks(3097),
                             Email = "jsonmasker@gmail.com",
                             EmailConfirmed = false,
                             IsActive = true,
-                            IsDeleted = false,
                             LockoutEnabled = false,
                             ModifiedBy = "System",
-                            ModifiedOn = new DateTime(2025, 12, 4, 11, 24, 59, 787, DateTimeKind.Local).AddTicks(8927),
+                            ModifiedOn = new DateTime(2025, 12, 8, 17, 20, 40, 69, DateTimeKind.Local).AddTicks(3100),
                             NormalizedEmail = "JSONMASKER@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
                             PasswordHash = "AQAAAAIAAYagAAAAEBqYupXb3q2vZNJOJJ3n/06IR+gi06F0PPpKg7FYW28k0S9DLN0Ct2nKc95H8ZaWzQ==",
                             PhoneNumberConfirmed = false,
+                            Provider = "Internal",
                             SecurityStamp = "MCPIPS6ZUHZPKFMTGP23N4HC65V3DD5U",
                             TwoFactorEnabled = false,
                             UserName = "admin"
@@ -462,18 +465,18 @@ namespace DataAccess.Migrations
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "3d8f3fdf-c482-4b8b-879e-66ed6e6ba863",
                             CreatedBy = "System",
-                            CreatedOn = new DateTime(2025, 12, 4, 11, 24, 59, 787, DateTimeKind.Local).AddTicks(8947),
+                            CreatedOn = new DateTime(2025, 12, 8, 17, 20, 40, 69, DateTimeKind.Local).AddTicks(3119),
                             Email = "tranthibaongoc779152@gmail.com",
                             EmailConfirmed = false,
                             IsActive = true,
-                            IsDeleted = false,
                             LockoutEnabled = false,
                             ModifiedBy = "System",
-                            ModifiedOn = new DateTime(2025, 12, 4, 11, 24, 59, 787, DateTimeKind.Local).AddTicks(8948),
+                            ModifiedOn = new DateTime(2025, 12, 8, 17, 20, 40, 69, DateTimeKind.Local).AddTicks(3120),
                             NormalizedEmail = "TRANTHIBAONGOC779152@GMAIL.COM",
                             NormalizedUserName = "BAONGOC",
                             PasswordHash = "AQAAAAIAAYagAAAAEJQIa+hJeFzLkVaHpmxKMrO4mfQ9867u0fyjan1pdVP5hQMvQd9VcJC0zP0De/FH2w==",
                             PhoneNumberConfirmed = false,
+                            Provider = "Internal",
                             SecurityStamp = "WPN32OCCQQ27WSIHMJDYFU3MXZDKYM4K",
                             TwoFactorEnabled = false,
                             UserName = "baongoc"

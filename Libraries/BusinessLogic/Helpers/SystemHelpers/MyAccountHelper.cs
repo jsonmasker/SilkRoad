@@ -124,7 +124,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
 
                 if (user == null)
                 {
-                    user = new UserDTO { Email = payload.Email, UserName = payload.Email, IsActive = true };
+                    user = new UserDTO { Email = payload.Email, UserName = payload.Email, IsActive = true, Provider = "External", AvatarUrl = payload.Picture };
                     await _userManager.CreateAsync(user);
 
                     //prepare and send an email for the email confirmation
@@ -293,6 +293,8 @@ namespace BusinessLogic.Helpers.SystemHelpers
                 UserId = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
+                AvatarUrl = user.AvatarUrl,
+                Provider = user.Provider,
                 Roles = userRoles.ToList()
             };
         }

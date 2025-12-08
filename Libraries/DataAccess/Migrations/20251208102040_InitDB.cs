@@ -82,9 +82,10 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Provider = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AvatarUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -298,17 +299,17 @@ namespace DataAccess.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "CreatedBy", "CreatedOn", "Description", "IsActive", "IsDeleted", "IsSystemRole", "ModifiedBy", "ModifiedOn", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "5cf93310-3d15-4f29-911d-ffdb5c7efbc9", "System", new DateTime(2025, 12, 4, 11, 24, 59, 775, DateTimeKind.Local).AddTicks(7191), "System Admin Role", true, false, true, "System", new DateTime(2025, 12, 4, 11, 24, 59, 775, DateTimeKind.Local).AddTicks(7558), "Admin", "ADMIN" },
-                    { 2, "43867968-3397-4b7f-816a-dd56baa081b9", "System", new DateTime(2025, 12, 4, 11, 24, 59, 785, DateTimeKind.Local).AddTicks(2898), "System Admin Role", true, false, true, "System", new DateTime(2025, 12, 4, 11, 24, 59, 785, DateTimeKind.Local).AddTicks(2906), "User", "USER" }
+                    { 1, "5fa67a25-4326-48af-a5a1-4d9908bb7b44", "System", new DateTime(2025, 12, 8, 17, 20, 40, 57, DateTimeKind.Local).AddTicks(1366), "System Admin Role", true, false, true, "System", new DateTime(2025, 12, 8, 17, 20, 40, 57, DateTimeKind.Local).AddTicks(1718), "Admin", "ADMIN" },
+                    { 2, "d62f59eb-77d6-44fc-b30d-50cb43fd912b", "System", new DateTime(2025, 12, 8, 17, 20, 40, 66, DateTimeKind.Local).AddTicks(8536), "System Admin Role", true, false, true, "System", new DateTime(2025, 12, 8, 17, 20, 40, 66, DateTimeKind.Local).AddTicks(8540), "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedBy", "CreatedOn", "Email", "EmailConfirmed", "IsActive", "IsDeleted", "LockoutEnabled", "LockoutEnd", "ModifiedBy", "ModifiedOn", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "AvatarUrl", "ConcurrencyStamp", "CreatedBy", "CreatedOn", "Email", "EmailConfirmed", "IsActive", "LockoutEnabled", "LockoutEnd", "ModifiedBy", "ModifiedOn", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Provider", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, "d80acb9d-e6d1-433f-ae6d-d9be0aa87643", "System", new DateTime(2025, 12, 4, 11, 24, 59, 787, DateTimeKind.Local).AddTicks(8924), "jsonmasker@gmail.com", false, true, false, false, null, "System", new DateTime(2025, 12, 4, 11, 24, 59, 787, DateTimeKind.Local).AddTicks(8927), "JSONMASKER@GMAIL.COM", "ADMIN", "AQAAAAIAAYagAAAAEBqYupXb3q2vZNJOJJ3n/06IR+gi06F0PPpKg7FYW28k0S9DLN0Ct2nKc95H8ZaWzQ==", null, false, "MCPIPS6ZUHZPKFMTGP23N4HC65V3DD5U", false, "admin" },
-                    { 2, 0, "3d8f3fdf-c482-4b8b-879e-66ed6e6ba863", "System", new DateTime(2025, 12, 4, 11, 24, 59, 787, DateTimeKind.Local).AddTicks(8947), "tranthibaongoc779152@gmail.com", false, true, false, false, null, "System", new DateTime(2025, 12, 4, 11, 24, 59, 787, DateTimeKind.Local).AddTicks(8948), "TRANTHIBAONGOC779152@GMAIL.COM", "BAONGOC", "AQAAAAIAAYagAAAAEJQIa+hJeFzLkVaHpmxKMrO4mfQ9867u0fyjan1pdVP5hQMvQd9VcJC0zP0De/FH2w==", null, false, "WPN32OCCQQ27WSIHMJDYFU3MXZDKYM4K", false, "baongoc" }
+                    { 1, 0, null, "d80acb9d-e6d1-433f-ae6d-d9be0aa87643", "System", new DateTime(2025, 12, 8, 17, 20, 40, 69, DateTimeKind.Local).AddTicks(3097), "jsonmasker@gmail.com", false, true, false, null, "System", new DateTime(2025, 12, 8, 17, 20, 40, 69, DateTimeKind.Local).AddTicks(3100), "JSONMASKER@GMAIL.COM", "ADMIN", "AQAAAAIAAYagAAAAEBqYupXb3q2vZNJOJJ3n/06IR+gi06F0PPpKg7FYW28k0S9DLN0Ct2nKc95H8ZaWzQ==", null, false, "Internal", "MCPIPS6ZUHZPKFMTGP23N4HC65V3DD5U", false, "admin" },
+                    { 2, 0, null, "3d8f3fdf-c482-4b8b-879e-66ed6e6ba863", "System", new DateTime(2025, 12, 8, 17, 20, 40, 69, DateTimeKind.Local).AddTicks(3119), "tranthibaongoc779152@gmail.com", false, true, false, null, "System", new DateTime(2025, 12, 8, 17, 20, 40, 69, DateTimeKind.Local).AddTicks(3120), "TRANTHIBAONGOC779152@GMAIL.COM", "BAONGOC", "AQAAAAIAAYagAAAAEJQIa+hJeFzLkVaHpmxKMrO4mfQ9867u0fyjan1pdVP5hQMvQd9VcJC0zP0De/FH2w==", null, false, "Internal", "WPN32OCCQQ27WSIHMJDYFU3MXZDKYM4K", false, "baongoc" }
                 });
 
             migrationBuilder.InsertData(
