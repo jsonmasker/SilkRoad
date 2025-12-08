@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AccountModel } from '@models/system-management-models/account.model';
+import { AccountModel } from '@models/system-models/account.model';
 import { EAccountSystemUrl } from '@common/url-api';
 
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';

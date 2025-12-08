@@ -4,11 +4,11 @@ import { EyeIconComponent } from '@components/icons/eye-icon.component';
 import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.component';
 import { RoleService } from '@services/system-services/role.service'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RoleModel } from '@models/system-management-models/role.model';
+import { RoleModel } from '@models/system-models/role.model';
 import { MyAccountService } from '@services/system-services/my-account.service';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormControlDirective, FormDirective, FormLabelDirective, FormSelectDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, ToastBodyComponent, ToastComponent, ToasterComponent, ToastHeaderComponent } from '@coreui/angular';
 import { Router } from '@angular/router';
-import { AccountErrorModel, AccountModel } from '@models/system-management-models/account.model';
+import { AccountErrorModel, AccountModel } from '@models/system-models/account.model';
 import { AccountService } from '@services/system-services/account.service'
 @Component({
   selector: 'app-my-account',
@@ -51,13 +51,29 @@ export class MyAccountComponent implements OnInit {
      private myAccountService: MyAccountService, private router: Router) {
   }
   ngOnInit(): void {
-    const id:any =this.authentication.getUserId();
+    // Get current user information and load account data
+    this.authentication.getCurrentUserInfor().subscribe({
+      next: (currentUser) => {
+        if (currentUser && currentUser.userId) {
+          this.accountService.getById(currentUser.userId).subscribe({
+            next: (res) => {
+              this.formData.patchValue(res.data);
+            },
+            error: (error) => {
+              console.error('Failed to load account data:', error);
+            }
+          });
+        }
+      },
+      error: (error) => {
+        console.error('Failed to get current user:', error);
+      }
+    });
+    
+    // Uncomment if roles are needed
     // this.roleService.getRoles().subscribe((res: RoleModel[]) => {
     //   this.roles = res;
     // });
-    this.accountService.getById(id).subscribe((res) => {
-      this.formData.patchValue(res.data);
-    });
   }
   toggleToast() {
     this.visibleToast = !this.visibleToast;
@@ -73,20 +89,53 @@ export class MyAccountComponent implements OnInit {
     this.visibleChangePassword = event;
   }
   onSubmitChangePassword() {
-    let userId = this.authentication.getUserId();
-    this.changePasswordForm.value.userId = userId;
-    if (this.changePasswordForm.value.newPassword != this.changePasswordForm.value.confirmPassword) {
-      this.changePasswordFormError = `Password does not match`;
+    // Clear any previous errors
+    this.changePasswordFormError = '';
+    
+    // Validate form before proceeding
+    if (this.changePasswordForm.invalid) {
+      this.changePasswordFormError = 'Please fill in all required fields';
       return;
     }
-    this.myAccountService.changePassword(this.changePasswordForm.value).subscribe(() => {
-      this.changePasswordForm.reset();
-      //this model staticBackdropModal will be used to close the modal
-      this.toggleChangePassword();
-      this.toggleToast();
-    }, (error: any) => {
-      console.log(error);
-      this.changePasswordFormError = `Old password is incorrect`;
+    
+    // Check if passwords match
+    if (this.changePasswordForm.value.newPassword !== this.changePasswordForm.value.confirmPassword) {
+      this.changePasswordFormError = 'New password and confirm password do not match';
+      return;
+    }
+    
+    // Get current user information
+    this.authentication.getCurrentUserInfor().subscribe({
+      next: (currentUser) => {
+        if (!currentUser || !currentUser.userId) {
+          this.changePasswordFormError = 'User not found. Please log in again.';
+          return;
+        }
+        
+        // Set userId in form data
+        const changePasswordData = {
+          ...this.changePasswordForm.value,
+          userId: currentUser.userId
+        };
+        
+        // Submit password change request
+        this.myAccountService.changePassword(changePasswordData).subscribe({
+          next: () => {
+            this.changePasswordForm.reset();
+            this.changePasswordFormError = '';
+            this.toggleChangePassword();
+            this.toggleToast();
+          },
+          error: (error: any) => {
+            console.error('Password change error:', error);
+            this.changePasswordFormError = error?.error?.message || 'Failed to change password. Please check your old password.';
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Failed to get current user:', error);
+        this.changePasswordFormError = 'Failed to get user information. Please log in again.';
+      }
     });
   }
 

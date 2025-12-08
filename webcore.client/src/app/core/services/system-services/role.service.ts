@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RoleModel } from '@models/system-management-models/role.model';
+import { RoleModel } from '@models/system-models/role.model';
 import { ERoleSystemUrl } from '@common/url-api';
 
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';

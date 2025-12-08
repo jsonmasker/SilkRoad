@@ -23,6 +23,8 @@ import {
 } from '@coreui/angular';
 
 import { IconDirective } from '@coreui/icons-angular';
+import { UserLoginInfoModel } from '@models/user-login-info.model';
+import { AuthService } from '@services/system-services';
 
 @Component({
     selector: 'app-default-header',
@@ -35,6 +37,8 @@ import { IconDirective } from '@coreui/icons-angular';
 })
 export class DefaultHeaderComponent extends HeaderComponent {
   clickChangePasswordButton = output<void>();
+  logout = output<void>();
+  currentUser = input<UserLoginInfoModel | null>(null);
   readonly #colorModeService = inject(ColorModeService);
   readonly colorMode = this.#colorModeService.colorMode;
 
@@ -49,7 +53,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
     return this.colorModes.find(mode => mode.name === currentMode)?.icon ?? 'cilSun';
   });
 
-  constructor(private router: Router) {
+  constructor() {
     super();
   }
 
@@ -129,8 +133,4 @@ export class DefaultHeaderComponent extends HeaderComponent {
   //   { id: 3, title: 'Add new layouts', value: 75, color: 'info' },
   //   { id: 4, title: 'Angular Version', value: 100, color: 'success' }
   // ];
-  logout() {
-    localStorage.clear();
-    this.router.navigateByUrl('/login');
-  }
 }

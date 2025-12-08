@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, switchMap, throwError } from 'rxjs';
-import { JwtModel } from '@models/system-management-models/jwt.model';
+import { JwtModel } from '@models/system-models/jwt.model';
 import { EMyAccountSystemUrl } from '@common/url-api';
-import { ChangePasswordModel } from '@models/system-management-models/change-password.model';
+import { ChangePasswordModel } from '@models/system-models/change-password.model';
 
-import { LoginModel } from '@models/system-management-models/login.model';
+import { LoginModel } from '@models/system-models/login.model';
 import { APIResponse, BaseAPIResponse } from '@models/api-response.model';
 
 @Injectable({

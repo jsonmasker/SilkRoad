@@ -5,7 +5,7 @@ import { EColors } from '@common/global';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective } from '@coreui/angular';
 import { cilCloudUpload } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
-import { SettingModel } from '@models/system-management-models/setting.model';
+import { SettingModel } from '@models/system-models/setting.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { SettingService } from '@services/system-services/setting.service';
 import { cilPen, cilSave, cilX, cilExitToApp } from '@coreui/icons';

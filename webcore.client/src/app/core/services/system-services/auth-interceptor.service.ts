@@ -26,7 +26,7 @@ export const authInterceptorService: HttpInterceptorFn = (
   const auth = inject(AuthService);
 
   let modified = req;
- debugger;
+//  debugger;
   /** Thêm Bearer token nếu có */
   if (auth.accessToken()) {
     modified = req.clone({
@@ -35,7 +35,6 @@ export const authInterceptorService: HttpInterceptorFn = (
       },
     });
   }
-  console.log('Request with auth:', auth.accessToken());
 
   return next(modified).pipe(
     catchError((error: HttpErrorResponse) => {
@@ -82,7 +81,7 @@ export const authInterceptorService: HttpInterceptorFn = (
             return next(retryReq);
           } else {
             // Refresh thất bại - logout và clear queue
-            auth.logOut();
+            // auth.logOut();
             refreshQueue.forEach((resume) => resume(null));
             refreshQueue.length = 0;
             return throwError(() => new Error('Token refresh failed'));
@@ -91,7 +90,7 @@ export const authInterceptorService: HttpInterceptorFn = (
 
         catchError((refreshErr) => {
           isRefreshing.set(false);
-          auth.logOut();
+          // auth.logOut();
           refreshQueue.forEach((resume) => resume(null));
           refreshQueue.length = 0;
           return throwError(() => refreshErr);

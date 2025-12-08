@@ -10,10 +10,10 @@ namespace BusinessLogic.IHelpers.ISystemHelpers
     {
         public Task<SignInResult> CheckPasswordSignInAsync(UserDTO user, string password);
         public Task<UserDTO?> FindByNameAsync(string userName);
+        public Task<UserLoginInfoModel?> GetCurrentUserAsync(string userId);
         public Task<JwtViewModel> AuthenticateAsync(UserDTO user, bool rememberMe);
-        //public Task<JwtViewModel> LoginAsync(LoginViewModel model);
         public Task<GoogleJsonWebSignature.Payload> VerifyGoogleTokenAsync(ExternalAuthModel externalAuth);
-        public Task<string> ExternalLoginAsync(ExternalAuthModel externalAuth);
+        public Task<JwtViewModel?> ExternalLoginAsync(ExternalAuthModel externalAuth);
         public Task<string?> ReNewTokenAsync(string refreshToken, string token);
         public Task<string?> RefreshTokenAsync(string refreshToken);
         public Task<bool> ValidateRefreshTokenAsync(string refreshToken);

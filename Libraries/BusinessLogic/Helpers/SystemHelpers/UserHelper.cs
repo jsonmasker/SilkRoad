@@ -35,7 +35,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
 
         public async Task<IEnumerable<UserViewModel>> GetAllAsync()
         {
-            IEnumerable<UserDTO> data = await _unitOfWork.UserSystemRepository.GetAllAsync(s => !s.IsDeleted);
+            IEnumerable<UserDTO> data = await _unitOfWork.UserSystemRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<UserViewModel>>(data);
         }
         public async Task<Pagination<UserViewModel>> GetAllAsync(int pageIndex, int pageSize, int roleId, string textSearch)
@@ -44,7 +44,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
             if (pageSize < 0)
                 pageSize = result.PageSize;
             // Query only necessary data with pagination at the database level
-            var query = _unitOfWork.UserSystemRepository.Query(s => !s.IsDeleted, includeProperties: "UserRoles");
+            var query = _unitOfWork.UserSystemRepository.Query( includeProperties: "UserRoles");
             if (roleId != -1)
             {
                 query = query.Where(s => s.UserRoles.Any(r => r.RoleId == roleId));
@@ -86,7 +86,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
             if (pageSize < 0)
                 pageSize = result.PageSize;
             // Query only necessary data with pagination at the database level
-            var query = _unitOfWork.UserSystemRepository.Query(s => s.IsActive && !s.IsDeleted);
+            var query = _unitOfWork.UserSystemRepository.Query(s => s.IsActive );
             result.PageIndex = pageIndex;
             result.TotalItems = await query.CountAsync();
             result.TotalPages = (int)Math.Ceiling(result.TotalPages / (double)pageSize);
@@ -116,6 +116,7 @@ namespace BusinessLogic.Helpers.SystemHelpers
             UserDTO account = _mapper.Map<UserDTO>(model);
             //account.CreatedBy = _userInformation.GetUserName();
             account.CreatedOn = DateTime.Now;
+            account.Provider = "Internal";
             var result = await _userManager.CreateAsync(account, model.Password);
             if (result.Succeeded)
             {
@@ -159,28 +160,28 @@ namespace BusinessLogic.Helpers.SystemHelpers
             _unitOfWork.SaveChanges();
             return true;
         }
-        public async Task<bool> SoftDeleteAsync(int ID)
-        {
+        //public async Task<bool> SoftDeleteAsync(int ID)
+        //{
 
-            var account = await _unitOfWork.UserSystemRepository.GetByIdAsync(ID);
-            if (account != null)
-            {
-                account.IsDeleted = true;
-                account.ModifiedOn = DateTime.Now;
-                //account.ModifiedBy = _userInformation.GetUserName();
-                _unitOfWork.SaveChanges();
-            }
-            return true;
-        }
-        public Task<bool> DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //    //var account = await _unitOfWork.UserSystemRepository.GetByIdAsync(ID);
+        //    //if (account != null)
+        //    //{
+        //    //    account.ModifiedOn = DateTime.Now;
+        //    //    //account.ModifiedBy = _userInformation.GetUserName();
+        //    //    _unitOfWork.SaveChanges();
+        //    //}
+        //    //return true;
 
-        public Task<bool> RestoreAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //}
+        //public Task<bool> DeleteAsync(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task<bool> RestoreAsync(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public async Task<bool> DeactivateUserAsync(int Id, string? userName)
         {

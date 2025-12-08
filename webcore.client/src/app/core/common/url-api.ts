@@ -37,6 +37,8 @@
   //Category
   export enum ECategoryPersonalFinanceUrl{
   getAllUrl = "/api/pf/category/getAll",
+  getOptionListUrl = "/api/pf/category/getOptionList",
+  getTreeOptionListUrl = "/api/pf/category/getTreeOptionList",
   getAllDeletedUrl = "/api/pf/category/getAllDeleted",
   getByIdUrl = "/api/pf/category/getById",
   createUrl = "/api/pf/category/create",
@@ -56,6 +58,15 @@
   restoreUrl = "/api/pf/subCategory/restore",
   deleteUrl = "/api/pf/subCategory/delete",
   }
+  //Expense
+  export enum EExpensePersonalFinanceUrl{
+  getByFilter = "/api/pf/expense/getByFilter",
+  getByIdUrl = "/api/pf/expense/getById",
+  createUrl = "/api/pf/expense/create",
+  updateUrl = "/api/pf/expense/update",
+  deleteUrl = "/api/pf/expense/delete",
+  }
+
   //#endregion
 
   //#region Hubs
@@ -270,6 +281,7 @@
     externalLoginUrl = "/api/auth/externalLogin",
     validateRefreshTokenUrl = "/api/auth/validateRefreshToken",
     refreshTokenUrl = "/api/auth/refreshToken",
+    getCurrentUserUrl = "/api/auth/getCurrentUser",
     logoutUrl = "/api/auth/logout",
   }
 

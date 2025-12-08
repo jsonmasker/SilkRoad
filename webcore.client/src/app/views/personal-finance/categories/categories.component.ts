@@ -9,7 +9,7 @@ import { DataTableComponent } from "@components/generals/data-table/data-table.c
 import { BookIconComponent } from "@components/icons/book-icon.component";
 import { CategoryService, SubCategoryService } from '@services/personal-finance-services';
 import { CategoryModel } from '@models/personal-finance-models';
-import { ButtonCloseDirective, ButtonDirective, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent} from '@coreui/angular';
+import { ButtonCloseDirective, ButtonDirective, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent } from '@coreui/angular';
 import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX } from '@coreui/icons';
 
 @Component({
@@ -76,7 +76,7 @@ export class CategoriesComponent implements OnInit {
   //#endregion
 
   //#region Constructor & ngOnInit
-  constructor(private categoryService: CategoryService, private subCategoryService : SubCategoryService,
+  constructor(private categoryService: CategoryService, private subCategoryService: SubCategoryService,
     private toastService: ToastService) { }
   ngOnInit(): void {
     this.getData();
@@ -103,13 +103,13 @@ export class CategoriesComponent implements OnInit {
     this.pageInformation.pageIndex = index;
     this.getData();
   }
-  
+
   onPageSizeChange(size: any) {
     this.pageInformation.pageSize = size;
     this.pageInformation.pageIndex = 1;
     this.getData();
   }
-  
+
   onChangeMultipleOptions(event: string[], type: string) {
     if (type === 'create') {
       this.createForm.patchValue({ tags: JSON.stringify(event) });
@@ -117,7 +117,7 @@ export class CategoriesComponent implements OnInit {
       this.updateForm.patchValue({ tags: JSON.stringify(event) });
     }
   }
-  
+
   //table tree
   toggleNode(node: CategoryModel): void {
     node.expanded = !node.expanded;
@@ -257,7 +257,7 @@ export class CategoriesComponent implements OnInit {
   //#endregion
 
   //#region Sub Category Create Form
-  toggleLiveCreateSubCategoryModel(categoryId: number| null = null) {
+  toggleLiveCreateSubCategoryModel(categoryId: number | null = null) {
     this.createSubCategoryForm.patchValue({ categoryId: categoryId });
     this.visibleCreateSubCategoryModal = !this.visibleCreateSubCategoryModal;
   }
@@ -269,18 +269,78 @@ export class CategoriesComponent implements OnInit {
   get priorityCreateSubCategoryForm() { return this.createSubCategoryForm.get('priority'); }
   get noteCreateSubCategoryForm() { return this.createSubCategoryForm.get('note'); }
   onSubmitCreateSubCategoryForm() {
-    if (this.createSubCategoryForm.valid) {
-      this.subCategoryService.create(this.createSubCategoryForm.value).subscribe((res) => {
-        this.toggleLiveCreateSubCategoryModel(0);
+    if (this.createSubCategoryForm.invalid) {
+      return;
+    }
+    this.subCategoryService.create(this.createSubCategoryForm.value).subscribe(
+      {
+        next: (res) => {
+          this.toggleLiveCreateSubCategoryModel();
+          this.getData();
+          this.toastService.showToast(EColors.success, res.message);
+          this.createSubCategoryForm.reset();
+          this.createSubCategoryForm.patchValue({ isActive: true, priority: 1 });
+        }, 
+        error: (failure) => {
+          console.error(failure);
+          this.toastService.showToast(EColors.danger, failure.error.message);
+        }
+      });
+  }
+  //#endregion
+
+  //#region Sub Category Update Form
+  updateSubCategoryData(id: number) {
+    this.subCategoryService.getById(id).subscribe((res) => {
+      this.updateSubCategoryForm.patchValue(res.data);
+      //this.defaultTags = res.data.tags ? JSON.parse(res.data.tags) : [];
+      this.toggleLiveUpdateSubCategoryModel();
+    });
+  }
+  onSubmitUpdateSubCategoryForm() {
+    if (this.updateSubCategoryForm.invalid) {
+      return;
+    }
+    this.subCategoryService.update(this.updateSubCategoryForm.value).subscribe({
+      next: (res) => {
+        this.toggleLiveUpdateSubCategoryModel();
         this.getData();
         this.toastService.showToast(EColors.success, res.message);
-        this.createSubCategoryForm.reset();
-        this.createSubCategoryForm.patchValue({ isActive: true, priority: 1 });
-      }, (failure) => {
-        console.error(failure);
+      },
+      error: (failure) => {
         this.toastService.showToast(EColors.danger, failure.error.message);
-      });
-    }
+      }
+    });
+
+
+  }  
+  toggleLiveUpdateSubCategoryModel() {
+    this.visibleUpdateSubCategoryModal = !this.visibleUpdateSubCategoryModal;
+  }
+  handleLiveUpdateSubCategoryModelChange(event: any) {
+    this.visibleUpdateSubCategoryModal = event;
+  }
+  get nameVNUpdateSubCategoryForm() { return this.updateSubCategoryForm.get('nameVN'); }
+  get nameENUpdateSubCategoryForm() { return this.updateSubCategoryForm.get('nameEN'); }
+  get priorityUpdateSubCategoryForm() { return this.updateSubCategoryForm.get('priority'); }
+  get noteUpdateSubCategoryForm() { return this.updateSubCategoryForm.get('note'); }
+  //#endregion
+  //#region Sub Category Delete
+  softDeleteSubCategory(id: number) {
+    this.deleteSubCategoryById = id;
+    this.toggleLiveDeleteSubCategory();
+  }
+  onConfirmDeleteSubCategory() {
+    this.subCategoryService.softDelete(this.deleteSubCategoryById).subscribe(() => {
+      this.toggleLiveDeleteSubCategory();
+      this.getData();
+    });
+  }
+  toggleLiveDeleteSubCategory() {
+    this.visibleDeleteSubCategory = !this.visibleDeleteSubCategory;
+  }
+  handleLiveDeleteSubCategoryChange(event: any) {
+    this.visibleDeleteSubCategory = event;
   }
   //#endregion
 }

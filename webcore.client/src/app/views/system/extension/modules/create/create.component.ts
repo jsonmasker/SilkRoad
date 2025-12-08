@@ -16,14 +16,14 @@ import { ButtonDirective, CardBodyComponent, CardComponent, FormCheckComponent,
    ModalTitleDirective,
    ThemeDirective,
    TableDirective} from '@coreui/angular';
-import {AccountErrorModel, AccountModel } from '@models/system-management-models/account.model';
-import { RoleModel } from '@models/system-management-models/role.model';
+import {AccountErrorModel, AccountModel } from '@models/system-models/account.model';
+import { RoleModel } from '@models/system-models/role.model';
 import { AccountService } from '@services/system-services/account.service'
 import { RoleService } from '@services/system-services/role.service'
 import { userNameValidator } from '@common/validations/username.validator';
 import { phoneNumberValidator } from '@common/validations/phonenumber.validator';
 import { ActionService } from '@services/system-services/action.service';
-import { ActionModel } from '@models/system-management-models/module.model';
+import { ActionModel } from '@models/system-models/module.model';
 @Component({
   selector: 'app-create',
   imports: [ FormDirective, FormLabelDirective, TableDirective,

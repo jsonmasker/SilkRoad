@@ -1,11 +1,4 @@
 <!-- [(ngModel)]="selectedValue" -->
-    <nz-tree-select
-      [nzPlaceHolder]="placeholder()"
-      [nzExpandedKeys]="expandKeys()"
-      [nzNodes]="nodes"
-      [ngModel]="selectedValue()"
-      [nzDisabled]="isDisabled()"
-      nzShowSearch
-      (ngModelChange)="onChangeInput($event)"
-      class="treeSelect"
-    ></nz-tree-select>
+<nz-tree-select [nzPlaceHolder]="placeholder()" [nzExpandedKeys]="expandKeys()" [nzNodes]="nodes"
+  [ngModel]="selectedValue()" [nzDisabled]="isDisabled()" nzShowSearch (ngModelChange)="onChangeInput($event)"
+  class="treeSelect"></nz-tree-select>

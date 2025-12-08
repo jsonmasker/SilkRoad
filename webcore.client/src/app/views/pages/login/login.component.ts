@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IconDirective } from '@coreui/icons-angular';
 import { InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective, FormCheckComponent } from '@coreui/angular';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,7 +8,8 @@ import { EyeCloseIconComponent } from '@components/icons/eye-close-icon.componen
 import { LoadingService } from '@services/helper-services/loading.service';
 import { ParticleCanvasComponent } from '@components/generals/particle-canvas/particle-canvas.component';
 import { AuthService } from '@services/system-services/auth.service';
-import { SocialAuthService, GoogleSigninButtonDirective } from '@abacritt/angularx-social-login';
+import { SocialAuthService, GoogleSigninButtonDirective, SocialUser, GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { ExternalAuthModel } from '@models/external-auth.model';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,8 @@ import { SocialAuthService, GoogleSigninButtonDirective } from '@abacritt/angula
 })
 export class LoginComponent implements OnInit {
   //#region Variables
+    user: SocialUser | undefined;
+      GoogleLoginProvider = GoogleLoginProvider;
   showPassword: boolean = false;
   errorMessage: string = '';
   loginForm: FormGroup = new FormGroup({
@@ -34,7 +37,7 @@ export class LoginComponent implements OnInit {
   constructor(private authenticationService: AuthService,
     private router: Router, 
     private loadingService: LoadingService,
-    // private socialAuthService: SocialAuthService
+    private socialAuthService: SocialAuthService
   ) {
   }
   ngOnInit(): void {
@@ -43,24 +46,28 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/introduction']);
     }
 
-    // this.socialAuthService.authState.subscribe((user) => {
-    //   if (user) {
-    //     console.log('Google user authenticated:', user);
-    //     // this.handleGoogleLogin(user);
-    //   }
-    // });
-    // // Listen for Google authentication state changes
-    // this.authSubscription = this.socialAuthService.authState.subscribe((user: SocialUser) => {
-    //   if (user) {
-    //     console.log('Google user authenticated:', user);
-    //     this.handleGoogleLogin(user);
-    //   }
-    // });
+    this.socialAuthService.authState.subscribe((user) => {
+      if (user) {
+        this.loadingService.showLoadingComponent(true);
+        const authModel : ExternalAuthModel = {
+          provider: user.provider,
+          idToken: user.idToken
+        };
+        this.authenticationService.externalLogin(authModel).subscribe({
+          next: (response) => {
+            if (response.success) {
+              this.loadingService.showLoadingComponent(false);
+              this.router.navigate(['/introduction']);
+            }
+          },
+          error: (exception: any) => {
+            this.loadingService.showLoadingComponent(false);
+            this.errorMessage = exception.error.message;
+          }
+        });
+      }
+    });
   }
-
-  // ngOnDestroy(): void {
-  //   this.authSubscription.unsubscribe();
-  // }
 
   onSubmit() {
     if (this.loginForm.invalid)
@@ -101,48 +108,5 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  // signInWithGoogle(): void {
-  //   // this.loadingService.showLoadingComponent(true);
-  //   this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
-  //     .then((user: SocialUser) => {
-  //       console.log('Google sign-in successful:', user);
-  //       this.loadingService.showLoadingComponent(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Google sign-in error:', error);
-  //       this.loadingService.showLoadingComponent(false);
-  //       this.errorMessage = 'Google sign-in failed. Please try again.';
-  //     });
-  // }
-
-  // private handleGoogleLogin(user: SocialUser): void {
-  //   // Process Google user data
-  //   const googleUserData = {
-  //     id: user.id,
-  //     name: user.name,
-  //     email: user.email,
-  //     photoUrl: user.photoUrl,
-  //     firstName: user.firstName,
-  //     lastName: user.lastName,
-  //     idToken: user.idToken, // Use this for backend verification
-  //     authToken: user.authToken
-  //   };
-
-  //   console.log('Processing Google user:', googleUserData);
-    
-  //   // You can send this to your backend for authentication
-  //   // Example: this.authenticationService.googleLogin(googleUserData.idToken)
-    
-  //   // Clear any existing error messages
-  //   this.errorMessage = '';
-    
-  //   // For now, navigate to introduction page
-  //   this.router.navigate(['/introduction']);
-  // }
-
-  // // Optional: Sign out method
-  // signOut(): void {
-  //   this.socialAuthService.signOut();
-  // }
   //#endregion
 }

@@ -8,7 +8,7 @@ namespace DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<UserDTO> builder)
         {
-            builder.ToTable("TBSystem_Users");
+            builder.ToTable("Users");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
             builder.Property(s => s.CreatedOn).IsRequired();
@@ -29,7 +29,8 @@ namespace DataAccess.Configurations
                 CreatedBy = "System",
                 ModifiedBy = "System",
                 IsActive = true,
-                IsDeleted = false,
+                Provider = "Internal",
+                //IsDeleted = false,
                 CreatedOn = DateTime.Now,
                 ModifiedOn = DateTime.Now
             },
@@ -47,7 +48,8 @@ namespace DataAccess.Configurations
                 CreatedBy = "System",
                 ModifiedBy = "System",
                 IsActive = true,
-                IsDeleted = false,
+                Provider = "Internal",
+                //IsDeleted = false,
                 CreatedOn = DateTime.Now,
                 ModifiedOn = DateTime.Now
             }]);

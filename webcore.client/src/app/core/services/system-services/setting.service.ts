@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SettingModel } from '@models/system-management-models/setting.model';
+import { SettingModel } from '@models/system-models/setting.model';
 import { ESettingSystemUrl } from '../../common/url-api';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';

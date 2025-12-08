@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, FormCheckComponent, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective } from '@coreui/angular';
 import { cilCloudUpload } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
-import { ActionModel } from '@models/system-management-models/module.model';
+import { ActionModel } from '@models/system-models/module.model';
 import { ActionService } from '@services/system-services/action.service';
 
 @Component({

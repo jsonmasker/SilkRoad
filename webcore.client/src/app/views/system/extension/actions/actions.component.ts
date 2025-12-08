@@ -6,7 +6,7 @@ import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent
 import { cilCloudUpload } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
-import { ActionModel } from '@models/system-management-models/module.model';
+import { ActionModel } from '@models/system-models/module.model';
 import { ToastService } from '@services/helper-services/toast.service';
 import { ActionService } from '@services/system-services/action.service';
 import { ActivatedRoute } from '@angular/router';

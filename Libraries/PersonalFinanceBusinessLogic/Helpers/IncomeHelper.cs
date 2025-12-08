@@ -5,7 +5,7 @@ using PersonalFinanceDataAccess.DTOs;
 
 namespace PersonalFinanceBusinessLogic.Helpers
 {
-    internal class IncomeHelper : IIncomeHelper
+    public class IncomeHelper : IIncomeHelper
     {
         private readonly IUnitOfWork _unitOfWork;
         public IncomeHelper(IUnitOfWork unitOfWork)

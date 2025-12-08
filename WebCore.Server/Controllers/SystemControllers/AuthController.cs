@@ -2,6 +2,8 @@
 using Common;
 using Common.Models;
 using Common.ViewModels.SystemViewModels;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using WebCore.Server.Controllers.BaseApiControllers;
@@ -78,12 +80,21 @@ namespace WebCore.Server.Controllers.SystemControllers
         [HttpPost("ExternalLogin")]
         public async Task<IActionResult> ExternalLogin([FromBody] ExternalAuthModel externalAuth)
         {
-            var token = await _myAccountHelper.ExternalLoginAsync(externalAuth);
-            if (token == null)
+            JwtViewModel? jwt = await _myAccountHelper.ExternalLoginAsync(externalAuth);
+            if (jwt == null)
             {
-                return Failed(EStatusCodes.Unauthorized, _localizer["externalLoginFailed"]);
+                return Failed(EStatusCodes.BadRequest, _localizer["externalLoginFailed"]);
             }
-            return Succeeded(token, _localizer["externalLoginSuccess"]);
+            // Set refresh token in HttpOnly cookie
+            Response.Cookies.Append("refresh_token", jwt.RefreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Path = "api/Auth/*"
+            });
+
+            return Succeeded(jwt.Token, _localizer["loginSuccess"]);
         }
 
         [HttpGet("ValidateRefreshToken")]
@@ -150,6 +161,24 @@ namespace WebCore.Server.Controllers.SystemControllers
             {
                 return Failed(EStatusCodes.BadRequest, _localizer["refreshTokenInvalid"]);
             }
+        }
+
+        [HttpGet("GetCurrentUser")]
+        [Authorize]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            var user = User;
+            //get userid
+            string? userId = user.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
+            if(!string.IsNullOrEmpty(userId))
+            {
+                var userData = await _myAccountHelper.GetCurrentUserAsync(userId);
+                if(userData != null)
+                {
+                    return Succeeded(userData, _localizer["currentUserFetchedSuccessfully"]);
+                }
+            }       
+            return Failed(EStatusCodes.BadRequest, _localizer["refreshTokenInvalid"]);
         }
 
         [HttpGet("Logout")]

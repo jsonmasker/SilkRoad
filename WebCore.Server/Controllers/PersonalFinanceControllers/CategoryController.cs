@@ -38,19 +38,19 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
-        //[HttpGet("GetOptionList")]
-        //public async Task<IActionResult> GetOptionList()
-        //{
-        //    var data = await _helper.GetOptionListAsync();
-        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
-        //}
+        [HttpGet("GetOptionList")]
+        public async Task<IActionResult> GetOptionList()
+        {
+            var data = await _helper.GetOptionListAsync();
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
 
-        //[HttpGet("GetTreeOptionList")]
-        //public async Task<IActionResult> GetTreeOptionList()
-        //{
-        //    var data = await _helper.GetTreeOptionListAsync();
-        //    return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
-        //}
+        [HttpGet("GetTreeOptionList")]
+        public async Task<IActionResult> GetTreeOptionList()
+        {
+            var data = await _helper.GetTreeOptionListAsync();
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
 
         [HttpGet("getAllDeleted/{pageIndex}/{pageSize}")]
         public async Task<IActionResult> GetAllDeleted(int pageIndex, int pageSize)
@@ -69,14 +69,7 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
                 return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
-        //[HttpGet("getEargerById/{id}")]
-        //public async Task<IActionResult> GetEargerById(int id)
-        //{
-        //    var data = await _helper.GetEagerByIdAsync(id);
-        //    if (data == null)
-        //        return Failed(EStatusCodes.NotFound, _localizer["notFound"]);
-        //    return Succeeded<CategoryDTO>(data, _localizer["dataFetchedSuccessfully"]);
-        //}
+
 
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CategoryDTO model)
