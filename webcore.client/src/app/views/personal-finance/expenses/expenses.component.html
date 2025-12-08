@@ -9,25 +9,24 @@
         <ng-template cTemplateId="accordionBodyTemplate">
             <div class="accordion-body">
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-10 col-md-8">
                         <form cForm [formGroup]="filterForm" (ngSubmit)="filter()">
                             <div class="row mb-3">
-                                <div class="col-4">
+                                <div class="col-12 col-md-6 mb-2 mb-md-0">
                                     <app-range-datetime-picker [showTime]="false"></app-range-datetime-picker>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-12 col-md-6">
                                     <app-tree-select-v1 [options]="categoryTreeOptions"
                                         (onChangeValue)="onChangeSelectOption($event,'filter')"></app-tree-select-v1>
                                 </div>
-  
                             </div>
-                            <div class="row">
-                              <div class="col-4">
+                             <div class="row mb-3">
+                                <div class="col-12 col-md-6 mb-2 mb-md-0">
                                     <input formControlName="searchText" type="text" class="form-control"
                                         placeholder="Search by name...">
                                 </div>
-                                <div class="col-4">
-                                    <button type="submit" class="btn btn-primary">
+                                <div class="col-12 col-md-6">
+                                    <button type="submit" class="btn btn-primary w-100">
                                         <svg [cIcon]="icons.cilSearch" width="20" class="text-white"
                                             title="Search Icon"></svg>
                                     </button>
@@ -35,7 +34,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-4">
+                    <div class="col-2 col-md-4">
                         <div class="justify-content-end d-flex">
                             <button class="btn btn-success" (click)="toggleLiveCreateModel()">
                                 <svg [cIcon]="icons.cilPlus" width="25" class="text-white" title="Plus Icon"></svg>
@@ -54,10 +53,10 @@
         <tr>
             <th scope="col">No.</th>
             <th scope="col">Category</th>
-            <th scope="col">SubCategory</th>
+            <th scope="col" class="d-none d-md-table-cell">SubCategory</th>
             <th scope="col">Amount</th>
-            <th scope="col">Date</th>
-            <th scope="col">Created At</th>
+            <th scope="col">Expense Date</th>
+            <th scope="col" class="d-none d-md-table-cell">Created At</th>
             <th></th>
         </tr>
     </thead>
@@ -66,10 +65,10 @@
         <tr>
             <td>{{ $index+1 }}</td>
             <td>{{getCategoryNameById(item.categoryId)}}</td>
-            <td>{{getSubCategoryNameById(item.categoryId, item.subCategoryId)}}</td>
+            <td  class="d-none d-md-table-cell">{{getSubCategoryNameById(item.categoryId, item.subCategoryId)}}</td>
             <td>{{ item.amount | number}}</td>
             <td>{{ item.date | date:'MM/dd/yyyy' }}</td>
-            <td>{{ item.createdAt | date:'MM/dd/yyyy' }}</td>
+            <td class="d-none d-md-table-cell">{{ item.createdAt | date:'MM/dd/yyyy' }}</td>
             <!-- <td> 
                 {{item.note | slice:0:40}}
                 @if (item.note && item.note.length > 40) {

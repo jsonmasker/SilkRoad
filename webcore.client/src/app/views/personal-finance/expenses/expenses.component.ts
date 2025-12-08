@@ -117,7 +117,7 @@ export class ExpensesComponent implements OnInit {
   //#region Main Table
   getData() {
     this.filterForm.patchValue({ pageIndex: this.pageInformation.pageIndex, pageSize: this.pageInformation.pageSize });
-    console.log(this.filterForm.value);
+    // console.log(this.filterForm.value);
     this.expenseService.getByFilter(this.filterForm.value).subscribe((res) => {
       this.data = res.data;
       this.pageInformation.currentPage = this.data.currentPage;
@@ -154,15 +154,14 @@ export class ExpensesComponent implements OnInit {
 
   //#region Create Form
   onSubmitCreateForm() {
-    console.log(this.createForm.value);
+    // console.log(this.createForm.value);
     if (this.createForm.valid) {
       this.expenseService.create(this.createForm.value).subscribe({
         next: (res) => {
           this.toggleLiveCreateModel();
           this.getData();
           this.toastService.showToast(EColors.success, res.message);
-          this.createForm.reset();
-          this.createForm.patchValue({ isActive: true, priority: 1 });
+          this.createForm.patchValue({ amount: 0, note: '' });
         },
         error: (failure) => {
           this.toastService.showToast(EColors.danger, failure.error.message);
