@@ -19,11 +19,10 @@ import { SelectSearchComponent } from "@components/selects/select-search/select-
 
 @Component({
   selector: 'app-company',
-  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective,
-    FormSelectDirective, AccordionButtonDirective, AccordionComponent,
-    AccordionItemComponent, TemplateIdDirective,
-    ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule, FormCheckComponent,
-    ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent, DataTableComponent, IconDirective, TreeSelectV1Component, SelectSearchComponent],
+  imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, FormSelectDirective, AccordionButtonDirective,
+    AccordionComponent, AccordionItemComponent, TemplateIdDirective, ModalComponent, ButtonDirective, FormDirective,
+    ReactiveFormsModule, FormCheckComponent, ModalFooterComponent, ButtonCloseDirective, ModalHeaderComponent,
+    DataTableComponent, IconDirective, SelectSearchComponent],
   templateUrl: './company.component.html',
   styleUrl: './company.component.scss'
 })
@@ -82,7 +81,7 @@ export class CompanyComponent implements OnInit {
     if ($event) {
       this.getData($event);
     }
-}
+  }
   getData(industryId: any = -1) {
     this.companyService.getAll(this.pageInformation.pageIndex, this.pageInformation.pageSize, industryId).subscribe((res) => {
       this.data = res.data;
