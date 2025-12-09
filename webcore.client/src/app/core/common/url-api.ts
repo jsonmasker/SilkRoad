@@ -60,11 +60,19 @@
   }
   //Expense
   export enum EExpensePersonalFinanceUrl{
-  getByFilter = "/api/pf/expense/getByFilter",
+  getByFilterUrl = "/api/pf/expense/getByFilter",
   getByIdUrl = "/api/pf/expense/getById",
   createUrl = "/api/pf/expense/create",
   updateUrl = "/api/pf/expense/update",
   deleteUrl = "/api/pf/expense/delete",
+  }
+  //Income
+  export enum EIncomePersonalFinanceUrl{
+  getAllUrl = "/api/pf/income/getAll",
+  getByIdUrl = "/api/pf/income/getById",
+  createUrl = "/api/pf/income/create",
+  updateUrl = "/api/pf/income/update",
+  deleteUrl = "/api/pf/income/delete",
   }
 
   //#endregion

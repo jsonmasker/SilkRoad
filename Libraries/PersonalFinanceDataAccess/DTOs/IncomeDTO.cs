@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
         public int UserId { get; set; }
-        public required string Source { get; set; }
+        public int SourceId { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
         public string? Note { get; set; }

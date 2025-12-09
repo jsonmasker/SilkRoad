@@ -10,6 +10,8 @@
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
         public string? Note { get; set; }
+        public bool HasRefund { get; set; }
+        public decimal? RefundAmount { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
         public ExpenseDTO()

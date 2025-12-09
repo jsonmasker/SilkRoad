@@ -35,7 +35,6 @@ export class ExpensesComponent implements OnInit {
   visibleCreateModal: boolean = false;
   visibleUpdateModal: boolean = false;
   visibleDelete: boolean = false;
-  visibleTrashModal: boolean = false;
   deleteById: number = 0;
   data: Pagination<ExpenseModel> = new Pagination<ExpenseModel>();
   categoryTreeOptions: OptionModel[] = [];
