@@ -158,6 +158,29 @@ namespace StockBusinessLogic.Helpers
                 return false;
             }
         }
+
+        public async Task<Pagination<CompanyDTO>> GetAllAsync(int pageIndex, int pageSize, int industryId)
+        {
+            var query =  _unitOfWork.CompanyRepository.Query(x => !x.IsDeleted).AsNoTracking();
+            if (industryId > 0)
+            {
+                query = query.Where(x => x.IndustryId == industryId);
+            }
+            int totalItems = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+            if (pageIndex > totalPages)
+                pageIndex = totalPages > 0 ? totalPages : 1;
+            var items = await query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+            return new Pagination<CompanyDTO>
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                CurrentPage = pageIndex,
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                Items = items
+            };
+        }
     }
 
 }

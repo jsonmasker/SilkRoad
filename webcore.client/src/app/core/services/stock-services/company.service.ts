@@ -10,8 +10,9 @@ import { CompanyModel } from '@models/stock-models/company.model';
 export class CompanyService {
   constructor(private http: HttpClient) {}
 
-  getAll(pageIndex: number, pageSize: number): Observable<APIResponse<Pagination<CompanyModel>>> {
-    return this.http.get<APIResponse<Pagination<CompanyModel>>>(`${ECompanyStockMarketUrl.getAllUrl}/${pageIndex}/${pageSize}`);
+  getAll(pageIndex: number, pageSize: number, industryId: number = -1): Observable<APIResponse<Pagination<CompanyModel>>> {
+    const url = `${ECompanyStockMarketUrl.getAllUrl}/${pageIndex}/${pageSize}/${industryId}`;
+    return this.http.get<APIResponse<Pagination<CompanyModel>>>(url);
   }
 
   getAllActive(): Observable<APIResponse<CompanyModel[]>> {

@@ -20,12 +20,12 @@ namespace WebCore.Server.Controllers.StockControllers
             _localizer = localizer;
         }
 
-        [HttpGet("GetAll/{pageIndex}/{pageSize}")]
-        public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
+        [HttpGet("GetAll/{pageIndex}/{pageSize}/{industryId}")]
+        public async Task<IActionResult> GetAll(int pageIndex, int pageSize, int industryId)
         {
             if (pageIndex < 1 || pageSize < 1)
                 return Failed(Common.EStatusCodes.BadRequest, _localizer["invalidPageIndex"]);
-            var data = await _companyHelper.GetAllAsync(pageIndex, pageSize);
+            var data = await _companyHelper.GetAllAsync(pageIndex, pageSize, industryId);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 

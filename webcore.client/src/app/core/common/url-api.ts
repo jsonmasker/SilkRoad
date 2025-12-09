@@ -17,6 +17,7 @@
   export enum EIndustryStockMarketUrl{
   getAllUrl = "/api/industry/getAll",
   getAllActiveUrl = "/api/industry/getAllActive",
+  getOptionListUrl = "/api/industry/getOptionList",
   getAllDeletedUrl = "/api/industry/getAllDeleted",
   getByIdUrl = "/api/industry/getById",
   createUrl = "/api/industry/create",
