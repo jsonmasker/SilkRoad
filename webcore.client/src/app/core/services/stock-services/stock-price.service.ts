@@ -16,6 +16,6 @@ export class StockPriceService {
   }
 
   getNewData(symbol: string): Observable<BaseAPIResponse> {
-    return this.http.post<BaseAPIResponse>(`${EChartStockMarketUrl.getNewDataUrl}/${symbol}`, {});
+    return this.http.get<BaseAPIResponse>(`${EChartStockMarketUrl.getNewDataUrl}/${symbol}`, {});
   }
 }

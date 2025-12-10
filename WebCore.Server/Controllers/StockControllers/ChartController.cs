@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StockBusinessLogic.IHelpers;
 using WebCore.Server.Controllers.BaseApiControllers;
 
@@ -6,6 +7,7 @@ namespace WebCore.Server.Controllers.StockControllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ChartController : BaseApiController
     {
         private readonly IStockPriceHelper _stockPriceHelper;
@@ -20,6 +22,7 @@ namespace WebCore.Server.Controllers.StockControllers
             var data = await _stockPriceHelper.GetAllAsync(symbol);
             return Ok(data);
         }
+
         [HttpGet("getNewData/{symbol}")]
         public async Task<IActionResult> GetNewData(string symbol)
         {

@@ -63,7 +63,7 @@ const stockMarketNavItems: INavData[] = [
   },
   {
     name: 'Trade Histories',
-    url: '/stock/chart',
+    url: '/stock/trade-histories',
     iconComponent: { name: 'cil-notes' }
   },
   //#endregion
