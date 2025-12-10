@@ -13,6 +13,15 @@
   restoreUrl = "/api/company/restore",
   deleteUrl = "/api/company/delete",
   }
+  //TradeHistory
+  export enum ETradeHistoryStockMarketUrl{
+  getAllUrl = "/api/tradeHistory/getAll",
+  getByIdUrl = "/api/tradeHistory/getById",
+  createUrl = "/api/tradeHistory/create",
+  updateUrl = "/api/tradeHistory/update",
+  deleteUrl = "/api/tradeHistory/delete",
+  }
+
   //Industry
   export enum EIndustryStockMarketUrl{
   getAllUrl = "/api/industry/getAll",
