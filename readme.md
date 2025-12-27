@@ -40,7 +40,7 @@ The platform follows a clean, modular architecture with distinct layers:
 ## 🛠️ Technology Stack
 
 ### Backend
-- **.NET 9**: Modern cross-platform framework
+- **.NET 10**: Modern cross-platform framework
 - **ASP.NET Core**: Web API and MVC
 - **Entity Framework Core**: Object-relational mapping
 - **SignalR**: Real-time web functionality
@@ -133,10 +133,10 @@ SilkRoad/
 ## 🚀 Getting Started
 
 ### Prerequisites
-- .NET 9 SDK
+- .NET 10 SDK
 - Node.js 20+
 - SQL Server
-- Visual Studio 2022 or VS Code
+- Visual Studio 2026 or VS Code
 
 ### Installation
 
