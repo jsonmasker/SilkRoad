@@ -1,8 +1,8 @@
-# Lulusia Kingdom - Enterprise Business Management Platform
+# SilkRoad - Enterprise Business Management Platform
 
 ## 🌟 Overview
 
-**Lulusia Kingdom** is a comprehensive enterprise-grade business management platform built with .NET Core and Angular. This multi-domain solution serves as a unified ecosystem for various business operations, combining e-commerce, customer management, financial services, and business intelligence capabilities.
+**SilkRoad** is a comprehensive enterprise-grade business management platform built with .NET Core and Angular. This multi-domain solution serves as a unified ecosystem for various business operations, combining e-commerce, customer management, financial services, and business intelligence capabilities.
 
 ## 🏗️ Architecture
 
@@ -25,10 +25,12 @@ The platform follows a clean, modular architecture with distinct layers:
 - **Stock Market System**: Real-time stock tracking, industry analysis, and financial reporting
 - **Survey Platform**: Comprehensive survey creation, distribution, and analytics
 - **VOC (Voice of Customer)**: Customer feedback management and analysis
+- **MindMap**: Visual thinking and planning tools for business strategy
 
 ### 💳 Financial Services
 - **Payment Service**: Multi-gateway payment processing (ZaloPay, MoMo, VNPay, PayPal, Stripe)
 - **Member Service**: Customer relationship management and loyalty programs
+- **Personal Finance**: Individual financial management and tracking tools
 
 ### 📱 Communication & Engagement
 - **SMS Service**: Automated messaging and notifications
@@ -94,19 +96,38 @@ The platform follows a clean, modular architecture with distinct layers:
 ## 📂 Project Structure
 
 ```
-LulusiaKingdom/
-├── WebCore.Server/           # Main API server
-├── webcore.client/           # Angular frontend
-├── Common/                   # Shared libraries
-├── BusinessLogic/            # Core business logic
-├── DataAccess/              # Data layer
-├── Lipstick/                # Cosmetics e-commerce
-├── Restaurant/              # Restaurant management
-├── CaffeeShop/              # Café system
-├── MemberService/           # Customer management
-├── PaymentService/          # Payment processing
-├── SMSService/              # Messaging service
-└── [Domain]BusinessLogic/   # Domain-specific logic layers
+SilkRoad/
+├── WebCore.Server/                    # Main API server
+├── webcore.client/                    # Angular frontend
+├── Libraries/                         # Shared libraries
+│   ├── Common/                        # Shared utilities and models
+│   ├── BusinessLogic/                 # Core business logic
+│   ├── DataAccess/                    # Core data layer
+│   ├── LipstickBusinessLogic/         # Lipstick business logic
+│   ├── LipstickDataAccess/           # Lipstick data access
+│   ├── MemberBusinessLogic/          # Member management logic
+│   ├── MemberDataAccess/             # Member data access
+│   ├── PersonalFinanceBusinessLogic/ # Personal finance logic
+│   ├── PersonalFinanceDataAccess/    # Personal finance data
+│   ├── RestaurantBusinessLogic/      # Restaurant logic
+│   ├── RestaurantDataAccess/         # Restaurant data access
+│   ├── SlideshowBusinessLogic/       # Slideshow logic
+│   ├── SlideshowDataAccess/          # Slideshow data access
+│   ├── StockBusinessLogic/           # Stock market logic
+│   ├── StockDataAccess/              # Stock data access
+│   ├── SurveyBusinessLogic/          # Survey logic
+│   ├── SurveyDataAccess/             # Survey data access
+│   ├── VOCBusinessLogic/             # Voice of Customer logic
+│   ├── VOCDataAccess/                # VOC data access
+│   └── MindMap/                      # Mind mapping tools
+├── Services/                         # Application services
+│   ├── MemberService/               # Customer management
+│   ├── PaymentService/              # Payment processing
+│   └── SMSService/                  # Messaging service
+└── Websites/                        # Website implementations
+    ├── CaffeeShop/                  # Café website
+    ├── Lipstick/                    # Lipstick e-commerce site
+    └── Restaurant/                  # Restaurant website
 ```
 
 ## 🚀 Getting Started
@@ -121,8 +142,8 @@ LulusiaKingdom/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/jsonmasker/LulusiaKingdom.git
-   cd LulusiaKingdom
+   git clone <your-repository-url>
+   cd SilkRoad
    ```
 
 2. **Setup Database**
@@ -179,4 +200,4 @@ For support and questions:
 
 ---
 
-**Lulusia Kingdom** - Empowering businesses with integrated digital solutions 🏰✨
+**SilkRoad** - Empowering businesses with integrated digital solutions 🚀✨
