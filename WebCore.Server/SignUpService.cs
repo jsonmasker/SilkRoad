@@ -65,6 +65,7 @@ namespace WebCore.Server
             #endregion
 
             #region BOM Helpers
+            services.AddScoped<BOMDataAccess.IUnitOfWork, BOMDataAccess.UnitOfWork>();
             //BOM
             services.AddScoped<IBOMConfigurationHelper, BOMConfigurationHelper>();
             //services.AddScoped<IEmployeeHelper, EmployeeHelper>();
