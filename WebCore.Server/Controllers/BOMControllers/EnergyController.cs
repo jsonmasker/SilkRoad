@@ -1,7 +1,7 @@
-﻿using BusinessLogic.IBOMHelpers;
+﻿using BOMBusinessLogic.IBOMHelpers;
+using BOMDataAccess.DTOs;
 using Common;
 using Common.Models;
-using DataAccess.BOMDTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -9,7 +9,7 @@ using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.BOMControllers
 {
-    [Route("api/[controller]")]
+    [Route("api/bom/[controller]")]
     [ApiController]
     [Authorize]
     public class EnergyController : BaseApiController
@@ -130,7 +130,7 @@ namespace WebCore.Server.Controllers.BOMControllers
         {
             try
             {
-                string path  = _helper.ExportExcelAsync();
+                string path = _helper.ExportExcelAsync();
                 var fileBytes = System.IO.File.ReadAllBytes(path);
                 var fileName = Path.GetFileName(path);
 

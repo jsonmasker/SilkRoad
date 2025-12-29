@@ -1,7 +1,7 @@
-﻿using BusinessLogic.IBOMHelpers;
+﻿using BOMBusinessLogic.IBOMHelpers;
+using BOMDataAccess.DTOs;
 using Common;
 using Common.Models;
-using DataAccess.BOMDTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -10,7 +10,7 @@ using WebCore.Server.Controllers.BaseApiControllers;
 namespace WebCore.Server.Controllers.BOMControllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/bom/[controller]")]
     [Authorize]
     public class DishGroupController : BaseApiController
     {

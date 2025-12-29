@@ -147,7 +147,8 @@
         NotFound = 404,
         MethodNotAllowed = 405,
         Locked = 423,
-        InternalServerError = 500
+        InternalServerError = 500,
+        Conflict = 409
     }
     public enum EBanners
     {

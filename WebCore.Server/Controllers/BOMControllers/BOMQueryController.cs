@@ -1,4 +1,4 @@
-using BusinessLogic.IBOMHelpers;
+using BOMBusinessLogic.IBOMHelpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -7,7 +7,7 @@ using WebCore.Server.Controllers.BaseApiControllers;
 namespace WebCore.Server.Controllers.BOMControllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/bom/[controller]")]
     [Authorize]
     public class BOMQueryController : BaseApiController
     {
@@ -46,6 +46,6 @@ namespace WebCore.Server.Controllers.BOMControllers
                 return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
-        
+
     }
 }

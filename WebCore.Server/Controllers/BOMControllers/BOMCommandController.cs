@@ -1,15 +1,14 @@
-using BusinessLogic.IBOMHelpers;
-using DataAccess.BOMDTOs;
+using BOMBusinessLogic.IBOMHelpers;
+using BOMDataAccess.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using Org.BouncyCastle.Bcpg.OpenPgp;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.BOMControllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/bom/[controller]")]
     [Authorize]
     public class BOMCommandController : BaseApiController
     {
@@ -80,6 +79,6 @@ namespace WebCore.Server.Controllers.BOMControllers
             if (!result)
                 return Failed(Common.EStatusCodes.NotFound, _localizer["notFound"]);
             return Succeeded(_localizer["deleteSuccess"]);
-        }    
+        }
     }
 }

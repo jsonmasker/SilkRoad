@@ -1,15 +1,12 @@
-﻿using BusinessLogic.IBOMHelpers;
-using DataAccess.BOMDTOs;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using BOMBusinessLogic.IBOMHelpers;
+using BOMDataAccess.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Localization;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.BOMControllers
 {
-    [Route("api/[controller]")]
+    [Route("api/bom/[controller]")]
     [ApiController]
     public class BOMCategoryLinkController : BaseApiController
     {
