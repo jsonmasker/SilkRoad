@@ -14,13 +14,14 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
     public class ReportController : BaseApiController
     {
         private readonly IReportHelper _helper;
-        private readonly IActionLoggingService _actionLog;
+        //private readonly IActionLoggingService _actionLog;
         private readonly IStringLocalizer<SharedResource> _localizer;
         public ReportController(IReportHelper helper,
-        IActionLoggingService actionLog, IStringLocalizer<SharedResource> localizer)
+        //IActionLoggingService actionLog, 
+        IStringLocalizer<SharedResource> localizer)
         {
             _helper = helper;
-            _actionLog = actionLog;
+            //_actionLog = actionLog;
             _localizer = localizer;
         }
 

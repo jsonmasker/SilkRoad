@@ -372,7 +372,7 @@ const bomNavItems: INavData[] = [
 const systemNavItems: INavData[] = [
   //#region System Management
   {
-    name: 'System Management',
+    name: 'System',
     title: true
   },
   {
@@ -385,11 +385,11 @@ const systemNavItems: INavData[] = [
   //   url: '/logs',
   //   iconComponent: { name: 'cil-book' }
   // },
-  // {
-  //   name: 'Settings',
-  //   url: '/settings',
-  //   iconComponent: { name: 'cil-settings' }
-  // },
+  {
+    name: 'Settings',
+    url: '/settings',
+    iconComponent: { name: 'cil-settings' }
+  },
   // {
   //   name: 'Extend',
   //   url: '/system-management/extension',
@@ -447,7 +447,6 @@ const mindMapNavItems: INavData[] = [
 ];
 
 export const navItems: INavData[] = [
-  ...testNavItems,
   ...mindMapNavItems,
   ...featureNavItems,
   ...stockMarketNavItems,
