@@ -50,8 +50,8 @@ interface IUser {
   selector: 'app-reports',
   imports: [ColoumnChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent, FormsModule,
     WidgetsDropdownComponent, TextColorDirective, RowComponent, ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule,
-     ButtonGroupComponent, FormCheckLabelDirective, ChartjsComponent, NgStyle, CardFooterComponent, GutterDirective, 
-     ProgressBarDirective, ProgressComponent, WidgetsBrandComponent, TableDirective, AvatarComponent
+    ButtonGroupComponent, FormCheckLabelDirective, ChartjsComponent, NgStyle, CardFooterComponent, GutterDirective,
+    ProgressBarDirective, ProgressComponent, WidgetsBrandComponent, TableDirective, AvatarComponent
   ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss'
@@ -59,18 +59,20 @@ interface IUser {
 export class ReportsComponent implements OnInit {
   data: any[] = [];
   selectedDate: string = '2025-11';
-  
-  constructor(private reportService: ReportService, private auth: AuthService) {}
-  
+
+  constructor(private reportService: ReportService, private auth: AuthService) { }
+
   ngOnInit(): void {
     this.loadData();
-        this.initCharts();
+    this.initCharts();
     this.updateChartOnColorModeChange();
+    
   }
 
   onDateChange(event: any): void {
     this.selectedDate = event.target.value;
-    this.loadData();
+    console.log('Selected date:', this.selectedDate);
+    // this.loadData();
   }
 
   private loadData(): void {
@@ -79,15 +81,14 @@ export class ReportsComponent implements OnInit {
       if (userId) {
         this.reportService.getColoumnChartByMonth(userId, this.selectedDate).subscribe(response => {
           this.data = response.data;
-          console.log('Column Chart Data:', this.data);
         });
       }
     });
   }
 
-// Additional methods for handling chart options and data can be added here
+  // Additional methods for handling chart options and data can be added here
 
- readonly #destroyRef: DestroyRef = inject(DestroyRef);
+  readonly #destroyRef: DestroyRef = inject(DestroyRef);
   readonly #document: Document = inject(DOCUMENT);
   readonly #renderer: Renderer2 = inject(Renderer2);
   readonly #chartsData: DashboardChartsData = inject(DashboardChartsData);
