@@ -456,11 +456,36 @@ const mindMapNavItems: INavData[] = [
   //#endregion
 ];
 
+const chatbotNavItems: INavData[] = [
+  //#region Chat Bot
+    {
+    name: 'Chat Bot',
+    title: true
+  },
+  // {
+  //   name: 'Beebot',
+  //   url: '/beebot',
+  //   iconComponent: { name: 'cil-speedometer' }
+  // },
+    {
+    name: 'prompts',
+    url: '/prompts',
+    iconComponent: { name: 'cil-speedometer' }
+  },
+  {
+    name: 'Conversations',
+    url: '/conversations',
+    iconComponent: { name: 'cil-chat-bubble' }
+  },
+  //#endregion
+];
+
 export const navItems: INavData[] = [
   ...mindMapNavItems,
   ...featureNavItems,
   ...stockMarketNavItems,
   ...personalFinanceNavItems,
+  ...chatbotNavItems,
   ...restuarantNavItems,
   ...lipstickShopNavItems,
   ...surveyNavItems,

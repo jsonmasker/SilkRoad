@@ -263,6 +263,21 @@ const systemChildrenRoutes: Routes = [
   // },
 ];
 
+const chatbotChildrenRoutes: Routes = [
+        {
+        path: 'prompts',
+        loadChildren: () => import('./views/chatbots/prompts/routes').then((m) => m.routes)
+      },
+      {
+        path: 'conversations',
+        loadChildren: () => import('./views/chatbots/conversations/routes').then((m) => m.routes)
+      },
+      {
+        path: 'messages/:id',
+        loadChildren: () => import('./views/chatbots/messages/routes').then((m) => m.routes)
+      },
+];
+
 
 export const routes: Routes = [
   ...pageRoutes,
@@ -289,6 +304,10 @@ export const routes: Routes = [
       ...personalFinanceChildrenRoutes,
       //#endregion
 
+            //#region Chat Bot
+     ...chatbotChildrenRoutes,
+      //#endregion
+
       //#region Features
       ...featureChildrenRoutes,
       //#endregion
@@ -313,6 +332,46 @@ export const routes: Routes = [
       ...systemChildrenRoutes,
       //#endregion
     ]
+  },
+    {
+    path: 'three1',
+    loadChildren: () => import('./views/chatbots/three1/routes').then(m => m.routes)
+  },
+  {
+    path: 'three2',
+    loadChildren: () => import('./views/chatbots/three2/routes').then(m => m.routes)
+  },
+  {
+    path: 'three3',
+    loadChildren: () => import('./views/chatbots/three3/routes').then(m => m.routes)
+  },
+  {
+    path: 'three4',
+    loadChildren: () => import('./views/chatbots/three4/routes').then(m => m.routes)
+  },
+  {
+    path: 'three5',
+    loadChildren: () => import('./views/chatbots/three5/routes').then(m => m.routes)
+  },
+    {
+    path: 'beebot',
+    loadChildren: () => import('./views/chatbots/beebot/routes').then(m => m.routes)
+  },
+  {
+    path: 'beebot1',
+    loadChildren: () => import('./views/chatbots/beebot-v1/routes').then(m => m.routes)
+  },
+  {
+    path: 'beebot2',
+    loadChildren: () => import('./views/chatbots/beebot-v2/routes').then(m => m.routes)
+  },
+  {
+    path: 'chatgpt',
+    loadChildren: () => import('./views/chatbots/chatgpt/routes').then(m => m.routes)
+  },
+  {
+    path: 'ollama',
+    loadChildren: () => import('./views/chatbots/ollama/routes').then(m => m.routes)
   },
   { path: '**', redirectTo: 'dashboard' }
 ];

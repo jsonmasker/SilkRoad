@@ -1,3 +1,46 @@
+//#region BeeBot
+//BeeBot
+export const enum EBeeBotUrl {
+  sendMessageUrl = "/api/chatbot/beeBot/sendMessage",
+  getVoidUrl = "/api/chatbot/beeBot/getVoid",
+  getMusicUrl = "/api/chatbot/beeBot/getMusic",
+}
+
+//Ollama
+export const enum EOllamaUrl {
+  completeChatUrl = "/api/chatbot/ollama/completeChat",
+  completeChatStreamingUrl = "/api/chatbot/ollama/completeChatStreaming",
+  getModelsUrl = "/api/chatbot/ollama/getModels",
+}
+//ChatGPT
+export const enum EChatGPTUrl {
+  completeChatUrl = "/api/chatbot/chatgpt/completeChat",
+  getModelsUrl = "/api/chatbot/chatgpt/getModels",
+}
+//Prompt
+export const enum EPromptUrl {
+  getAllUrl = "/api/chatbot/prompt/getall",
+  getOptionListUrl = "/api/chatbot/prompt/getOptionList",
+  getByIdUrl = "/api/chatbot/prompt/getById",
+  createUrl = "/api/chatbot/prompt/create",
+  updateUrl = "/api/chatbot/prompt/update",
+  softDeleteUrl = "/api/chatbot/prompt/softDelete",
+  getAllActiveUrl = "/api/chatbot/prompt/getAllActive",
+  getAllDeletedUrl = "/api/chatbot/prompt/getAllDeleted",
+  restoreUrl = "/api/chatbot/prompt/restore",
+  deleteUrl = "/api/chatbot/prompt/delete",
+}
+//Conversation
+export const enum EConversationUrl {
+  getByFilterUrl = "/api/chatbot/conversation/getByFilter",
+}
+//Voice
+export const enum EVoiceUrl {
+  getVoiceFromChatGPTUrl = "/api/chatbot/voice/getVoiceFromChatGPT",
+  getVoiceFromElevenlabsUrl = "/api/chatbot/voice/getVoiceFromElevenlabs",
+}
+//#endregion
+
 //#region StockMarket
 //Handbook
 export enum EHandbookStockMarketUrl {
