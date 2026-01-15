@@ -17,6 +17,8 @@ namespace StockBusinessLogic.Helpers
         {
             try
             {
+                model.Title = model.Title.Trim();
+                model.Content = model.Content.Trim();
                 model.Create(userName);
                 await _unitOfWork.HandbookRepository.CreateAsync(model);
                 await _unitOfWork.SaveChangesAsync();
@@ -133,11 +135,14 @@ namespace StockBusinessLogic.Helpers
         {
             try
             {
-                model.Update(userName);
-                bool updateResult = await _unitOfWork.HandbookRepository.UpdateAsync(model, model.Id);
-                if (updateResult)
-                    await _unitOfWork.SaveChangesAsync();
-                return updateResult;
+                var data = await _unitOfWork.HandbookRepository.GetByIdAsync(model.Id);
+                if (data == null)
+                    return false;
+                data.Title = model.Title.Trim();
+                data.Content = model.Content.Trim();
+                data.Update(userName);
+                await _unitOfWork.SaveChangesAsync();
+                return true;
             }
             catch
             {
