@@ -14,7 +14,9 @@ namespace PersonalFinanceDataAccess
 
         public ISubCategoryRepository SubCategoryRepository { get; private set; }
 
-        public IIncomeRepository IncomeRepository { get; private set; }
+        public IResourceRepository ResourceRepository { get; private set; }
+
+        public IResourceTypeRepository ResourceTypeRepository { get; private set; }
 
         public IExpenseRepository ExpenseRepository { get; private set; }
 
@@ -23,7 +25,8 @@ namespace PersonalFinanceDataAccess
             context = databaseContext;
             CategoryRepository = new CategoryRepository(context);
             SubCategoryRepository = new SubCategoryRepository(context);
-            IncomeRepository = new IncomeRepository(context);
+            ResourceRepository = new ResourceRepository(context);
+            ResourceTypeRepository = new ResourceTypeRepository(context);
             ExpenseRepository = new ExpenseRepository(context);
         }
         public void SaveChanges()
