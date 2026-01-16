@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective } from '@coreui/angular';
+import { AccordionButtonDirective, AccordionComponent, AccordionItemComponent, ButtonDirective, FormCheckComponent, FormCheckInputDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, TemplateIdDirective } from '@coreui/angular';
 import { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX, cilSearch } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { PageInformation, Pagination } from '@models/pagination.model';
@@ -17,6 +17,7 @@ import { SelectSearchComponent } from "@components/selects/select-search/select-
 import { ResourceService } from '@services/personal-finance-services/resource.service';
 import { AuthService } from '@services/system-services';
 import { EyeClosedIconComponent, EyeIconComponent } from "@components/icons";
+import { ResourceTypeService } from '@services/personal-finance-services';
 
 
 @Component({
@@ -24,7 +25,7 @@ import { EyeClosedIconComponent, EyeIconComponent } from "@components/icons";
   templateUrl: './resources.component.html',
   styleUrl: './resources.component.scss',
   imports: [ModalBodyComponent, FormControlDirective, FormLabelDirective, IconDirective, ModalComponent, ButtonDirective, FormDirective, ReactiveFormsModule, ModalFooterComponent, CommonModule,
-    ModalHeaderComponent, DataTableComponent, InputCurrencyComponent, SelectSearchComponent, EyeClosedIconComponent, EyeIconComponent]
+    ModalHeaderComponent, DataTableComponent, InputCurrencyComponent, SelectSearchComponent, EyeClosedIconComponent, EyeIconComponent, FormCheckComponent]
 })
 export class ResourcesComponent implements OnInit {
   //#region Properties
@@ -40,18 +41,13 @@ export class ResourcesComponent implements OnInit {
   categoryTreeOptions: OptionModel[] = [];
   userId: number = -1;
   showNumber: boolean = false;
-  sourceOptions: OptionModel[] = [
-    { id: 1, name: 'Salary' },
-    { id: 2, name: 'Freelance' },
-    { id: 3, name: 'Investment' },
-    {id: 4, name: 'Refund' },
-    { id: 5, name: 'Others' }
-  ];
+  resourceTypes: OptionModel[] = [];
   icons: any = { cilPlus, cilTrash, cilPen, cilSave, cilExitToApp, cilLoopCircular, cilCloudUpload, cilCloudDownload, cilX, cilSearch };
 
   createForm: FormGroup = new FormGroup({
     userId: new FormControl(-1),
-    sourceId: new FormControl(1, Validators.required),
+    inflow: new FormControl(true, Validators.required),
+    typeId: new FormControl(1, Validators.required),
     amount: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
     note: new FormControl('', Validators.maxLength(500))
@@ -60,7 +56,8 @@ export class ResourcesComponent implements OnInit {
   updateForm: FormGroup = new FormGroup({
     id: new FormControl(0, Validators.required),
     userId: new FormControl(-1),
-    sourceId: new FormControl(1, Validators.required),
+    inflow: new FormControl(true, Validators.required),
+    typeId: new FormControl(1, Validators.required),
     amount: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
     note: new FormControl('', Validators.maxLength(500)),
@@ -70,7 +67,8 @@ export class ResourcesComponent implements OnInit {
   //#endregion
 
   //#region Lifecycle Hooks
-  constructor(private resourceService: ResourceService, private toastService: ToastService, private authService: AuthService) { }
+  constructor(private resourceService: ResourceService, private resourceTypeService: ResourceTypeService,
+     private toastService: ToastService, private authService: AuthService) { }
   ngOnInit(): void {
     const today = new Date().toISOString().split('T')[0];
     this.authService.getCurrentUserInfor().subscribe((currentUser) => {
@@ -80,21 +78,24 @@ export class ResourcesComponent implements OnInit {
         this.getData();
       }
     });
+    this.resourceTypeService.getOptionList().subscribe((res) => {
+      this.resourceTypes = res.data;
+    });
   }
   onChangeSourceId(event: any, formType: string) {
     if (formType === 'create') {
       this.createForm.patchValue({
-        sourceId: event
+        typeId: event
       });
     }
     else if (formType === 'update') {
       this.updateForm.patchValue({
-        sourceId: event
+        typeId: event
       });
     }
   }
   getSourceNameById(id: number): string {
-      const source = this.sourceOptions.find(option => option.id === id);
+      const source = this.resourceTypes.find(option => option.id === id);
       return source ? source.name : 'Unknown';
     }
   getData() {
@@ -146,7 +147,7 @@ export class ResourcesComponent implements OnInit {
     this.visibleCreateModal = event;
   }
 
-  get sourceIdCreateForm() { return this.createForm.get('sourceId'); }
+  get typeIdCreateForm() { return this.createForm.get('typeId'); }
   get amountCreateForm() { return this.createForm.get('amount'); }
   get dateCreateForm() { return this.createForm.get('date'); }
   get noteCreateForm() { return this.createForm.get('note'); }
@@ -184,7 +185,7 @@ export class ResourcesComponent implements OnInit {
     this.visibleUpdateModal = event;
   }
 
-  get sourceIdUpdateForm() { return this.updateForm.get('sourceId'); }
+  get typeIdUpdateForm() { return this.updateForm.get('typeId'); }
   get amountUpdateForm() { return this.updateForm.get('amount'); }
   get dateUpdateForm() { return this.updateForm.get('date'); }
   get noteUpdateForm() { return this.updateForm.get('note'); }

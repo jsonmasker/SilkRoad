@@ -39,7 +39,9 @@
     <td>{{ node.nameEN }}</td>
     <td>{{ node.nameVN }}</td>
     <td>{{ node.priority }}</td>
-    <td>{{ node.isActive }}</td>
+    <td>
+      <input type="checkbox" [checked]="node.isActive" disabled>
+    </td>
     <td class="d-none d-md-table-cell">{{ node.createdBy }}</td>
     <td class="d-none d-md-table-cell">{{ node.modifiedBy }}</td>
     <td>

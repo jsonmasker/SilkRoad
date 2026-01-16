@@ -21,7 +21,7 @@
     <thead class="text-nowrap text-truncate">
         <tr>
             <th scope="col">No.</th>
-            <th scope="col">Source</th>
+            <th scope="col">Type</th>
             <th scope="col">Amount</th>
             <th scope="col">Income Date</th>
             <th></th>
@@ -60,10 +60,17 @@
     </c-modal-header>
     <form cForm [formGroup]="createForm" (ngSubmit)="onSubmitCreateForm()">
         <c-modal-body>
+            <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="inflow" id="inflow1" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="inflow1" class="me-2">Inflow </label>
+        </c-form-check>
+
+      </div>
             <div class="mb-2 row">
                 <div class="col-12 col-md-6 mb-2 mb-md-0">
-                    <label cLabel>Source: <span class="text-danger">(*)</span></label>
-                    <app-select-search [options]="sourceOptions" [selectedValue]="1"
+                    <label cLabel>Type: <span class="text-danger">(*)</span></label>
+                    <app-select-search [options]="resourceTypes" [selectedValue]="1"
                         (onChangeValue)="onChangeSourceId($event, 'create')"></app-select-search>
                 </div>
                 <div class="col-12 col-md-6">
@@ -109,10 +116,17 @@
     </c-modal-header>
     <form cForm [formGroup]="updateForm" (ngSubmit)="onSubmitUpdateForm()">
         <c-modal-body>
+               <div class="mb-2 d-flex flex-row">
+        <c-form-check class="me-2 d-flex align-items-center">
+          <input cFormCheckInput formControlName="inflow" id="inflow1" class="me-2" type="checkbox" />
+          <label cFormCheckLabel for="inflow1" class="me-2">Inflow </label>
+        </c-form-check>
+
+      </div>
                   <div class="mb-2 row">
                 <div class="col-12 col-md-6 mb-2 mb-md-0">
-                    <label cLabel>Source: <span class="text-danger">(*)</span></label>
-                    <app-select-search [options]="sourceOptions" [selectedValue]="initSourceIdUpdateForm()"
+                    <label cLabel>Type: <span class="text-danger">(*)</span></label>
+                    <app-select-search [options]="resourceTypes" [selectedValue]="initSourceIdUpdateForm()"
                         (onChangeValue)="onChangeSourceId($event, 'update')"></app-select-search>
                 </div>
                 <div class="col-12 col-md-6">

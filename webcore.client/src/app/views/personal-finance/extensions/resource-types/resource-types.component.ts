@@ -34,12 +34,14 @@ export class ResourceTypesComponent implements OnInit {
 
   createForm: FormGroup = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
+    isActive: new FormControl(true),
     priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(100)])
   });
 
   updateForm: FormGroup = new FormGroup({
     id: new FormControl(0, Validators.required),
     name: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
+    isActive: new FormControl(true),
     priority: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(100)])
   });
 

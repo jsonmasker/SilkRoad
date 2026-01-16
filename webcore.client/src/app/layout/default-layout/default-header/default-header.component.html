@@ -53,8 +53,8 @@
 <ng-template #userDropdown>
   <c-dropdown [popperOptions]="{ placement: 'bottom-start' }" variant="nav-item">
     <button [caret]="false" cDropdownToggle class="py-0 pe-0" aria-label="Open user menu">
-      <c-avatar shape="rounded-1" [size]="'md'" [src]="currentUser()?.avatarUrl || './assets/images/avatars/beebot.jpg'" status="success"
-        textColor="primary" alt="User avatar" />
+      <c-avatar shape="rounded-1" [size]="'md'" [src]="currentUser()?.avatarUrl || './assets/images/avatars/beebot.jpg'"
+        status="success" textColor="primary" alt="User avatar" />
     </button>
     <ul cDropdownMenu class="pt-0 w-auto">
       <!-- <li>
@@ -159,7 +159,13 @@
           Change Password
         </button>
       </li>
-    }
+      }
+      <li>
+        <a cDropdownItem routerLink="">
+          <svg cIcon class="me-2" name="cilSettings"></svg>
+          Settings
+        </a>
+      </li>
       <li>
         <button cDropdownItem (click)="logout.emit()">
           <svg cIcon class="me-2" name="cilAccountLogout"></svg>

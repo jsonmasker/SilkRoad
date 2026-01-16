@@ -12,8 +12,8 @@ using PersonalFinanceDataAccess;
 namespace PersonalFinanceDataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20260116041758_UpdateResourceTypeDTO")]
-    partial class UpdateResourceTypeDTO
+    [Migration("20260116043454_InitDB")]
+    partial class InitDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

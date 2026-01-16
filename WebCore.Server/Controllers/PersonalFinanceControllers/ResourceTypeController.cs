@@ -37,7 +37,12 @@ namespace WebCore.Server.Controllers.PersonalFinanceControllers
             return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
         }
 
-
+        [HttpGet("GetOptionList")]
+        public async Task<IActionResult> GetOptionList()
+        {
+            var data = await _helper.GetOptionListAsync();
+            return Succeeded(data, _localizer["dataFetchedSuccessfully"]);
+        }
 
         [HttpGet("getById/{id}")]
         public async Task<IActionResult> GetById(int id)
