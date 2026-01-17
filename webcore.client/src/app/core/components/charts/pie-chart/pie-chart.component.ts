@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, input, effect } from '@angular/core';
+import { Component, OnInit, OnDestroy, input, effect, AfterViewInit } from '@angular/core';
 import * as am5 from '@amcharts/amcharts5';
 import * as am5percent from '@amcharts/amcharts5/percent';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
@@ -9,14 +9,14 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
   templateUrl: './pie-chart.component.html',
   styleUrl: './pie-chart.component.scss',
 })
-export class PieChartComponent implements OnInit, OnDestroy {
+export class PieChartComponent implements AfterViewInit, OnDestroy {
   private root!: am5.Root;
   private chart!: am5percent.PieChart;
   private series!: am5percent.PieSeries;
   private legend!: am5.Legend;
   
   data = input<any[]>([]);
-  // id = input<string>('pieChartDiv');
+  id = input<number>(0);
   showLegend = input<boolean>(true);
   valueField = input<string>('value');
   categoryField = input<string>('category');
@@ -30,8 +30,7 @@ export class PieChartComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-  ngOnInit() {
+  ngAfterViewInit() {
     this.initializeChart();
   }
 
@@ -43,7 +42,8 @@ export class PieChartComponent implements OnInit, OnDestroy {
 
   private initializeChart(): void {
     // Create root element
-    this.root = am5.Root.new("pieChartDiv");
+    const name = "pieChartDiv_" + this.id();
+    this.root = am5.Root.new(name);
 
     // Set themes
     this.root.setThemes([

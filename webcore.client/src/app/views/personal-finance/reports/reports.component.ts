@@ -7,7 +7,7 @@ import { AuthService } from '@services/system-services';
 
 
 import { DOCUMENT, NgStyle } from '@angular/common';
-import { Component, DestroyRef, effect, inject, OnInit, Renderer2, signal, WritableSignal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, OnInit, Renderer2, signal, ViewEncapsulation, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ChartOptions } from 'chart.js';
 import {
@@ -40,7 +40,8 @@ import { PieChartComponent } from "@components/charts";
     //RowComponent, ColComponent, , ,
     ReactiveFormsModule, FormCheckLabelDirective, FormSelectDirective, PieChartComponent],
   templateUrl: './reports.component.html',
-  styleUrl: './reports.component.scss'
+  styleUrl: './reports.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class ReportsComponent implements OnInit {
   userInfor!: any;

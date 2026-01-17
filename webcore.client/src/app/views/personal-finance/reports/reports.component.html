@@ -31,7 +31,7 @@
   </c-card-header>
   <c-card-body>
     @if(expenseReportColoums && expenseReportColoums.length > 0){
-    <app-coloumn-chart [data]="expenseReportColoums" id="expenseReport"></app-coloumn-chart>
+    <app-coloumn-chart [data]="expenseReportColoums" [id]="0"></app-coloumn-chart>
     }
   </c-card-body>
 </c-card>
@@ -46,7 +46,7 @@
       </c-card-header>
       <c-card-body>
         @if(assetReportColoums && assetReportColoums.length > 0){
-        <app-coloumn-chart [data]="assetReportColoums" id="assetReport"></app-coloumn-chart>
+        <app-coloumn-chart [data]="assetReportColoums" [id]="1"></app-coloumn-chart>
         }
       </c-card-body>
     </c-card>
@@ -60,7 +60,7 @@
       </c-card-header>
       <c-card-body>
         @if(assetReportPie && assetReportPie.length > 0){
-        <app-pie-chart [data]="assetReportPie" id="assetReportPie"></app-pie-chart>
+        <app-pie-chart [data]="assetReportPie" [id]="0"></app-pie-chart>
         }
       </c-card-body>
     </c-card>

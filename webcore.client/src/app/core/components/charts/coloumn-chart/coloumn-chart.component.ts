@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, input, effect } from '@angular/core';
+import { Component, OnInit, OnDestroy, input, effect, AfterViewInit } from '@angular/core';
 import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
@@ -9,14 +9,14 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
   templateUrl: './coloumn-chart.component.html',
   styleUrl: './coloumn-chart.component.scss',
 })
-export class ColoumnChartComponent implements OnInit, OnDestroy {
+export class ColoumnChartComponent implements AfterViewInit, OnDestroy {
   private root!: am5.Root;
   private chart!: am5xy.XYChart;
   private series!: am5xy.ColumnSeries;
   private xAxis!: am5xy.CategoryAxis<am5xy.AxisRendererX>;
   
   data = input<any[]>([]);
-  // id = input<string>('0');
+  id = input<number>(0);
 
   constructor() {
     // Watch for data changes
@@ -27,9 +27,8 @@ export class ColoumnChartComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-  ngOnInit() {
-    this.initializeChart();
+  ngAfterViewInit(): void {
+     this.initializeChart();
   }
 
   ngOnDestroy() {
@@ -40,8 +39,8 @@ export class ColoumnChartComponent implements OnInit, OnDestroy {
 
   private initializeChart(): void {
     // Create root element
-    // const name = "columnChartDiv" ;
-    this.root = am5.Root.new("columnChartDiv");
+    const name = "columnChartDiv_" + this.id();
+    this.root = am5.Root.new(name);
 
     // Set themes
     this.root.setThemes([
