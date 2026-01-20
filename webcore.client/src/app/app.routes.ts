@@ -4,7 +4,9 @@ import { LoginComponent } from './views/pages/login/login.component';
 import { authGuard } from './core/guards/auth.guard';
 import { authenticationGuard } from './core/guards/authentication.guard';
 import { pageRoutes } from './views/pages/routes';
-
+import { LoginThreejsComponent } from './views/pages/login-threejs/login-threejs.component';
+import { LoginGalaxyAnimationComponent } from './views/pages/login-galaxy-animation/login-galaxy-animation.component';
+//Children Routes
 const childrenRoutes: Routes = [
   {
     path: 'test',
@@ -19,7 +21,7 @@ const childrenRoutes: Routes = [
     loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
   },
 ];
-
+//Stock Market Routes
 const stockMarketChildrenRoutes: Routes = [
   {
     path: 'stock/industries',
@@ -46,7 +48,7 @@ const stockMarketChildrenRoutes: Routes = [
     loadChildren: () => import('./views/stocks/trading-bot/routes').then((m) => m.routes)
   }
 ];
-
+//Personal Finance Routes
 const personalFinanceChildrenRoutes: Routes = [
   // {
   //   path: 'personal-finance/categories',
@@ -73,7 +75,7 @@ const personalFinanceChildrenRoutes: Routes = [
     loadChildren: () => import('./views/personal-finance/extensions/routes').then((m) => m.routes)
   },
 ];
-
+//Feature Routes
 const featureChildrenRoutes: Routes = [
   // {
   //   path: 'features/chatgpt',
@@ -100,7 +102,7 @@ const featureChildrenRoutes: Routes = [
   //   loadChildren: () => import('./views/features/email-service/routes').then((m) => m.routes)
   // },
 ];
-
+//Lipstick Shop Routes
 const lipstickChildrenRoutes: Routes = [
   // Report
   {
@@ -161,7 +163,7 @@ const lipstickChildrenRoutes: Routes = [
     loadChildren: () => import('./views/lipstick-shop/members/routes').then((m) => m.routes)
   }
 ];
-
+//Survey Routes
 const surveyChildrenRoutes: Routes = [
   {
     path: 'surveys/reports',
@@ -192,14 +194,14 @@ const surveyChildrenRoutes: Routes = [
     loadChildren: () => import('./views/surveys/extension/routes').then((m) => m.routes)
   },
 ];
-
+//Mind Map Routes
 const mindMapChildrenRoutes: Routes = [
   {
     path: 'mind-maps',
     loadChildren: () => import('./views/mind-maps/index/routes').then((m) => m.routes)
   }
 ];
-
+//BOM Routes
 const bomChildrenRoutes: Routes = [
   {
     path: 'boms',
@@ -238,7 +240,7 @@ const bomChildrenRoutes: Routes = [
     loadChildren: () => import('./views/boms/extensions/routes').then((m) => m.routes)
   },
 ];
-
+//System Management Routes
 const systemChildrenRoutes: Routes = [
   //account management
   {
@@ -270,7 +272,7 @@ const systemChildrenRoutes: Routes = [
   //   loadChildren: () => import('./views/system/extension/routes').then((m) => m.routes)
   // },
 ];
-
+//Chat Bot Routes
 const chatbotChildrenRoutes: Routes = [
   {
     path: 'prompts',
@@ -291,7 +293,7 @@ export const routes: Routes = [
   ...pageRoutes,
   {
     path: '',
-    component: LoginComponent,
+    component: LoginThreejsComponent,
     canActivate: [authGuard],
   },
   {
