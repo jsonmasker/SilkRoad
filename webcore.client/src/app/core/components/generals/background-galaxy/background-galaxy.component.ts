@@ -1,20 +1,14 @@
-import { Component, ElementRef, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { Component, ElementRef, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import * as THREE from 'three';
 
 @Component({
-  selector: 'app-login-threejs',
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './login-threejs.component.html',
-  styleUrl: './login-threejs.component.scss',
+  selector: 'app-background-galaxy',
+  templateUrl: './background-galaxy.component.html',
+  styleUrl: './background-galaxy.component.scss',
+  imports: []
 })
-export class LoginThreejsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class BackgroundGalaxyComponent implements AfterViewInit, OnDestroy {
   @ViewChild('galaxyContainer', { static: true }) galaxyContainer!: ElementRef;
-
-  loginForm: FormGroup;
-  isLoading = false;
-
   // Three.js properties
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
@@ -23,15 +17,7 @@ export class LoginThreejsComponent implements OnInit, AfterViewInit, OnDestroy {
   private animationId!: number;
   private circleTexture!: THREE.Texture;
 
-  constructor(private formBuilder: FormBuilder) {
-    this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
-  }
-
-  ngOnInit(): void {
-    // Form is already initialized in constructor
+  constructor() {
   }
 
   ngAfterViewInit(): void {
@@ -393,25 +379,5 @@ export class LoginThreejsComponent implements OnInit, AfterViewInit, OnDestroy {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
-  }
-  onSubmit(): void {
-    if (this.loginForm.valid && !this.isLoading) {
-      this.isLoading = true;
-      
-      // Simulate login process
-      setTimeout(() => {
-        console.log('Login attempt:', this.loginForm.value);
-        // Here you would typically call your authentication service
-        // this.authService.login(this.loginForm.value).subscribe(...);
-        
-        this.isLoading = false;
-        // Add success animation or redirect logic here
-      }, 2000);
-    } else {
-      // Mark all fields as touched to show validation errors
-      Object.keys(this.loginForm.controls).forEach(key => {
-        this.loginForm.get(key)?.markAsTouched();
-      });
-    }
   }
 }
