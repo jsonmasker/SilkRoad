@@ -1,28 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { BackgroundGalaxyComponent } from "@components/generals/background-galaxy/background-galaxy.component";
+import { Component, OnInit, signal } from '@angular/core';
 import { IconDirective } from '@coreui/icons-angular';
-import { InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective, FormCheckComponent } from '@coreui/angular';
+import { InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective, FormCheckComponent, SpinnerComponent } from '@coreui/angular';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { EyeIconComponent, EyeClosedIconComponent } from '@components/icons';
-import { LoadingService } from '@services/helper-services/loading.service';
-import { ParticleCanvasComponent } from '@components/generals/particle-canvas/particle-canvas.component';
 import { AuthService } from '@services/system-services/auth.service';
 import { SocialAuthService, GoogleSigninButtonDirective, SocialUser, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { ExternalAuthModel } from '@models/external-auth.model';
+import { ParticleCanvasComponent } from "@components/generals/particle-canvas/particle-canvas.component";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-login-threejs',
+  templateUrl: './login-threejs.component.html',
+  styleUrl: './login-threejs.component.scss',
   imports: [InputGroupComponent, InputGroupTextDirective, IconDirective, FormCheckComponent, FormControlDirective, ButtonDirective,
-    ParticleCanvasComponent, ReactiveFormsModule, RouterLink, EyeIconComponent, EyeClosedIconComponent, GoogleSigninButtonDirective]
+    ReactiveFormsModule, RouterLink, EyeIconComponent, EyeClosedIconComponent, GoogleSigninButtonDirective,
+    BackgroundGalaxyComponent, SpinnerComponent]
 })
-export class LoginComponent implements OnInit {
+export class LoginThreejsComponent implements OnInit {
   //#region Variables
   user: SocialUser | undefined;
   GoogleLoginProvider = GoogleLoginProvider;
   showPassword: boolean = false;
   errorMessage: string = '';
+  isLoading = signal(false);
   loginForm: FormGroup = new FormGroup({
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
@@ -35,7 +37,6 @@ export class LoginComponent implements OnInit {
   //#region Lifecycle Hooks
   constructor(private authenticationService: AuthService,
     private router: Router,
-    private loadingService: LoadingService,
     private socialAuthService: SocialAuthService
   ) {}
   
@@ -47,7 +48,7 @@ export class LoginComponent implements OnInit {
 
     this.socialAuthService.authState.subscribe((user) => {
       if (user) {
-        this.loadingService.showLoadingComponent(true);
+        this.isLoading.set(true);
         const authModel: ExternalAuthModel = {
           provider: user.provider,
           idToken: user.idToken
@@ -55,12 +56,12 @@ export class LoginComponent implements OnInit {
         this.authenticationService.externalLogin(authModel).subscribe({
           next: (response) => {
             if (response.success) {
-              this.loadingService.showLoadingComponent(false);
+              this.isLoading.set(false);
               this.router.navigate(['/introduction']);
             }
           },
           error: (exception: any) => {
-            this.loadingService.showLoadingComponent(false);
+            this.isLoading.set(false);
             this.errorMessage = exception.error.message;
           }
         });
@@ -72,16 +73,16 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid)
       return;
 
-    this.loadingService.showLoadingComponent(true);
+    this.isLoading.set(true);
     this.authenticationService.login(this.loginForm.value).subscribe({
       next: (response) => {
         if (response.success) {
-          this.loadingService.showLoadingComponent(false);
+          this.isLoading.set(false);
           this.router.navigate(['/introduction']);
         }
       },
       error: (exception: any) => {
-        this.loadingService.showLoadingComponent(false);
+        this.isLoading.set(false);
         if (exception.status == 423) {
           this.router.navigate(['/423']);
         }
