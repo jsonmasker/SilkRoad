@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PersonalFinanceBusinessLogic.IHelpers;
-using PersonalFinanceBusinessLogic.Models;
-using PersonalFinanceDataAccess;
+using PersonalFinance.BLL.IHelpers;
+using PersonalFinance.BLL.Models;
+using PersonalFinance.DAL;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PersonalFinanceBusinessLogic.Helpers
+namespace PersonalFinance.BLL.Helpers
 {
     public class AssetReportHelper : IAssetReportHelper
     {

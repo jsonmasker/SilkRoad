@@ -1,8 +1,9 @@
-﻿using BOMDataAccess.IRepositories;
+﻿using BOM.DAL;
+using BOM.DAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace BOMDataAccess.Repositories
+namespace BOM.DAL.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {

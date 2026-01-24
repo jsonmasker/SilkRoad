@@ -1,6 +1,6 @@
-﻿using Common;
-using Common.Models;
+﻿using Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Share;
 namespace WebCore.Server.Controllers.BaseApiControllers
 {
     [ApiController]

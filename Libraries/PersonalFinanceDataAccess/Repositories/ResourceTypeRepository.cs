@@ -1,10 +1,10 @@
-﻿using PersonalFinanceDataAccess.DTOs;
-using PersonalFinanceDataAccess.IRepositories;
+﻿using PersonalFinance.DAL.DTOs;
+using PersonalFinance.DAL.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PersonalFinanceDataAccess.Repositories
+namespace PersonalFinance.DAL.Repositories
 {
     public class ResourceTypeRepository : GenericRepository<ResourceTypeDTO>, IResourceTypeRepository
     {

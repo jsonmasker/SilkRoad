@@ -1,13 +1,13 @@
-﻿using Common.Models;
-using Microsoft.EntityFrameworkCore;
-using StockBusinessLogic.IHelpers;
-using StockDataAccess;
-using StockDataAccess.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using Stock.BLL.IHelpers;
+using Stock.DAL;
+using Stock.DAL.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Share.Models;
 using System.Text;
 
-namespace StockBusinessLogic.Helpers
+namespace Stock.BLL.Helpers
 {
     public class TradeHistoryHelper : ITradeHistoryHelper
     {

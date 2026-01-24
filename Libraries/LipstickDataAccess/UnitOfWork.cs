@@ -1,6 +1,6 @@
-﻿using LipstickDataAccess.IRepositories;
+﻿using Lipstick.DAL.IRepositories;
 using LipstickDataAccess.Repositories;
-namespace LipstickDataAccess
+namespace Lipstick.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {

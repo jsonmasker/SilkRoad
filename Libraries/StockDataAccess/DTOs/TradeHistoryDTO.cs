@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StockDataAccess.DTOs
+namespace Stock.DAL.DTOs
 {
     public class TradeHistoryDTO
     {

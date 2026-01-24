@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PersonalFinanceBusinessLogic.Models
+namespace PersonalFinance.BLL.Models
 {
     public class ColoumnModel
     {

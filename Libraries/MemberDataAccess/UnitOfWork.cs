@@ -1,6 +1,6 @@
-﻿using MemberDataAccess.IRepositories;
+﻿using Member.DAL.IRepositories;
 using MemberDataAccess.Repositories;
-namespace MemberDataAccess
+namespace Member.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {

@@ -1,8 +1,9 @@
-﻿using LipstickDataAccess.DTOs;
-using LipstickDataAccess.IRepositories;
+﻿using Lipstick.DAL;
+using Lipstick.DAL.DTOs;
+using Lipstick.DAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace LipstickDataAccess.Repositories
+namespace Lipstick.DAL.Repositories
 {
     public class PageIntroRepository : GenericRepository<PageIntroDTO>, IPageIntroRepository
     {

@@ -1,7 +1,8 @@
-﻿using Common.Models;
-using Common.ViewModels.LipstickViewModels;
+﻿using Lipstick.BLL;
+using System.Share.Models;
+using System.Share.ViewModels.LipstickViewModels;
 
-namespace LipstickBusinessLogic.ILipstickHelpers
+namespace Lipstick.BLL.ILipstickHelpers
 {
     public interface IColorHelper : IBaseHelper<ColorViewModel>
     {

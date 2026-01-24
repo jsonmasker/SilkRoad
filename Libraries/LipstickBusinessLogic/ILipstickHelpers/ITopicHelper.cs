@@ -1,6 +1,7 @@
-﻿using Common.Models;
-using Common.ViewModels.LipstickViewModels;
-namespace LipstickBusinessLogic.ILipstickHelpers
+﻿using Lipstick.BLL;
+using System.Share.Models;
+using System.Share.ViewModels.LipstickViewModels;
+namespace Lipstick.BLL.ILipstickHelpers
 {
     public interface ITopicHelper : IBaseHelper<TopicViewModel>
     {

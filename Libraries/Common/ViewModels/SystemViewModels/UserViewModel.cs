@@ -1,7 +1,7 @@
 ﻿using Common.Custom.CustomDataAnnotations;
 using System.ComponentModel.DataAnnotations;
 
-namespace Common.ViewModels.SystemViewModels
+namespace System.Share.ViewModels.SystemViewModels
 {
     public class UserViewModel
     {

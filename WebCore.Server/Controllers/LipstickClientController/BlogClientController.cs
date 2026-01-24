@@ -1,7 +1,7 @@
-﻿using Common;
-using Common.Custom.ApiKey;
-using LipstickBusinessLogic.ILipstickClientHelpers;
+﻿using Common.Custom.ApiKey;
+using Lipstick.BLL.ILipstickClientHelpers;
 using Microsoft.AspNetCore.Mvc;
+using System.Share;
 
 namespace WebCore.Server.Controllers.LipstickClientController
 {

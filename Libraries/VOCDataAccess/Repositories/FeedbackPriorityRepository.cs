@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using VOCDataAccess.DTOs;
-using VOCDataAccess.IRepositories;
+using VOC.DAL;
+using VOC.DAL.DTOs;
+using VOC.DAL.IRepositories;
 
-namespace VOCDataAccess.Repositories
+namespace VOC.DAL.Repositories
 {
     public class FeedbackPriorityRepository : GenericRepository<FeedbackPriorityDTO, ApplicationContext>, IFeedbackPriorityRepository
     {

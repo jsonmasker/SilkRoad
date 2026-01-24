@@ -1,7 +1,7 @@
 ﻿using ChatBot.IHelpers;
 using ChatBot.Models;
-using Common;
 using Microsoft.AspNetCore.Mvc;
+using System.Share;
 using WebCore.Server.Controllers.BaseApiControllers;
 
 namespace WebCore.Server.Controllers.ChatbotControllers

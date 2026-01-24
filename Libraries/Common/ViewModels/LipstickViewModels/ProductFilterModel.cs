@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common.ViewModels.LipstickViewModels
+namespace System.Share.ViewModels.LipstickViewModels
 {
     public class ProductFilterModel
     {

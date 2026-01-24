@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SurveyDataAccess.DTOs;
-using SurveyDataAccess.IRepositories;
+using Survey.DAL;
+using Survey.DAL.DTOs;
+using Survey.DAL.IRepositories;
 
-namespace SurveyDataAccess.Repositories
+namespace Survey.DAL.Repositories
 {
     public class PredefinedAnswerLibraryRepository : GenericRepository<PredefinedAnswerLibraryDTO>, IPredefinedAnswerLibraryRepository
     {

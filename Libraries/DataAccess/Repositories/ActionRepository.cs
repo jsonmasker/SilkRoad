@@ -1,7 +1,8 @@
-﻿using DataAccess.DTOs;
-using DataAccess.IRepositories;
+﻿using System.DAL;
+using System.DAL.DTOs;
+using System.DAL.IRepositories;
 
-namespace DataAccess.Repositories
+namespace System.DAL.Repositories
 {
     public class ActionRepository : GenericRepository<ActionDTO>, IActionRepository
     {

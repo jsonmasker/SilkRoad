@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PersonalFinanceDataAccess.DTOs;
+using PersonalFinance.DAL.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PersonalFinanceDataAccess.Configurations
+namespace PersonalFinance.DAL.Configurations
 {
     public class AssetConfiguration : IEntityTypeConfiguration<AssetDTO>
     {

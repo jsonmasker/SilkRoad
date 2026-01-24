@@ -1,10 +1,10 @@
-﻿using StockDataAccess.DTOs;
-using StockDataAccess.IRepositories;
+﻿using Stock.DAL.DTOs;
+using Stock.DAL.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace StockDataAccess.Repositories
+namespace Stock.DAL.Repositories
 {
     public class HandbookRepository : GenericRepository<HandbookDTO>, IHandbookRepository
     {

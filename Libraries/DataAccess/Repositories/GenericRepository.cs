@@ -1,8 +1,9 @@
-﻿using DataAccess.IRepositories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System.DAL;
+using System.DAL.IRepositories;
 using System.Linq.Expressions;
 
-namespace DataAccess.Repositories
+namespace System.DAL.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {

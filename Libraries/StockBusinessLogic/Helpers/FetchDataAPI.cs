@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Org.BouncyCastle.Ocsp;
-using StockBusinessLogic.Models;
+using Stock.BLL.Models;
 
-namespace StockBusinessLogic.Helpers
+namespace Stock.BLL.Helpers
 {
     public class FetchDataAPI
     {

@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using BusinessLogic.IHelpers.ISystemHelpers;
-using Common.Models;
-using Common.Services.JwtServices;
-using Common.ViewModels.SystemViewModels;
-using DataAccess;
-using DataAccess.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.BLL.IHelpers.ISystemHelpers;
+using System.DAL;
+using System.DAL.DTOs;
+using System.Share.Models;
+using System.Share.Services.JwtServices;
+using System.Share.ViewModels.SystemViewModels;
 
-namespace BusinessLogic.Helpers.SystemHelpers
+namespace System.BLL.Helpers.SystemHelpers
 {
     public class UserHelper : IUserHelper
     {

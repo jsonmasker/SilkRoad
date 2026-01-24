@@ -1,6 +1,6 @@
 using System;
+using System.Share.Models;
 using ChatBot.Models;
-using Common.Models;
 
 namespace ChatBot.IHelpers;
 

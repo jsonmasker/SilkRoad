@@ -1,10 +1,10 @@
-﻿using Common.Models;
-using StockDataAccess.DTOs;
+﻿using Stock.DAL.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Share.Models;
 using System.Text;
 
-namespace StockBusinessLogic.IHelpers
+namespace Stock.BLL.IHelpers
 {
     public interface ITradeHistoryHelper
     {

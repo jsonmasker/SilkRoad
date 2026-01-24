@@ -1,9 +1,9 @@
-﻿using PersonalFinanceDataAccess.DTOs;
+﻿using PersonalFinance.DAL.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PersonalFinanceDataAccess.IRepositories
+namespace PersonalFinance.DAL.IRepositories
 {
     public interface IResourceTypeRepository : IGenericRepository<ResourceTypeDTO>
     {

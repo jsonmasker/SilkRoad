@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using SurveyDataAccess.IRepositories;
+using Survey.DAL.IRepositories;
 using SurveyDataAccess.Repositories;
 
-namespace SurveyDataAccess
+namespace Survey.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {

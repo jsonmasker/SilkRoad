@@ -1,7 +1,8 @@
-﻿using SurveyDataAccess.DTOs;
-using SurveyDataAccess.IRepositories;
+﻿using Survey.DAL;
+using Survey.DAL.DTOs;
+using Survey.DAL.IRepositories;
 
-namespace SurveyDataAccess.Repositories
+namespace Survey.DAL.Repositories
 {
     public class ParticipantInfoConfigRepository : GenericRepository<ParticipantInfoConfigDTO>, IParticipantInfoConfigRepository
     {

@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using StockDataAccess.DTOs;
+using Stock.DAL.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace StockDataAccess.Configurations
+namespace Stock.DAL.Configurations
 {
     public class HandbookConfiguration : IEntityTypeConfiguration<HandbookDTO>
     {

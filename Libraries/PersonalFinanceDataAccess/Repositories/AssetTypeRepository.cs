@@ -1,10 +1,11 @@
-﻿using System;
+﻿using PersonalFinance.DAL.IRepositories;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PersonalFinanceDataAccess.Repositories
+namespace PersonalFinance.DAL.Repositories
 {
-    public class AssetTypeRepository : GenericRepository<DTOs.AssetTypeDTO>, IRepositories.IAssetTypeRepository
+    public class AssetTypeRepository : GenericRepository<DTOs.AssetTypeDTO>, IAssetTypeRepository
     {
         public AssetTypeRepository(ApplicationContext context) : base(context)
         {

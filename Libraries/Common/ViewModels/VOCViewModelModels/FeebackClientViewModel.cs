@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace Common.ViewModels.VOCViewModelModels
+namespace System.Share.ViewModels.VOCViewModelModels
 {
     public class FeebackClientViewModel
     {

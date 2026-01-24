@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StockBusinessLogic.IHelpers;
-using StockDataAccess;
-using StockDataAccess.DTOs;
+using Stock.BLL.IHelpers;
+using Stock.DAL;
+using Stock.DAL.DTOs;
 using System.Data;
 
-namespace StockBusinessLogic.Helpers
+namespace Stock.BLL.Helpers
 {
     public class StockPriceHelper : IStockPriceHelper
     {
