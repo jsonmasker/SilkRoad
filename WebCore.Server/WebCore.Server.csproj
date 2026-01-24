@@ -28,7 +28,6 @@
     <ProjectReference Include="..\Libraries\BOMBusinessLogic\BOMBusinessLogic.csproj" />
     <ProjectReference Include="..\Libraries\BusinessLogic\BusinessLogic.csproj" />
     <ProjectReference Include="..\Libraries\ChatBot\ChatBot.csproj" />
-    <ProjectReference Include="..\Libraries\Common\Common.csproj" />
     <ProjectReference Include="..\Libraries\LipstickBusinessLogic\LipstickBusinessLogic.csproj" />
     <ProjectReference Include="..\Libraries\MemberBusinessLogic\MemberBusinessLogic.csproj" />
     <ProjectReference Include="..\Libraries\PersonalFinanceBusinessLogic\PersonalFinanceBusinessLogic.csproj" />
