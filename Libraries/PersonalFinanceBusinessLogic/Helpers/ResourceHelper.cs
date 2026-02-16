@@ -15,7 +15,7 @@ namespace PersonalFinance.BLL.Helpers
         }
         public async Task<Pagination<ResourceDTO>> GetAllAsync(int pageIndex, int pageSize, int userId)
         {
-            var query = _unitOfWork.ResourceRepository.Query(x => x.UserId == userId);
+            var query = _unitOfWork.ResourceRepository.Query(x => x.UserId == userId).OrderByDescending(s => s.Date).AsNoTracking();
 
             int totalItems = await query.CountAsync();
             int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
