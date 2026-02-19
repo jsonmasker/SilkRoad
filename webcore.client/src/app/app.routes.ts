@@ -87,6 +87,10 @@ const featureChildrenRoutes: Routes = [
     path: 'features/convert-word-to-pdf',
     loadChildren: () => import('./views/features/convert-word-to-pdf/routes').then((m) => m.routes)
   },
+  {
+    path: 'features/test',
+    loadChildren: () => import('./views/features/test/routes').then((m) => m.routes)
+  }
   // {
   //   path: 'features/email-service',
   //   loadChildren: () => import('./views/features/email-service/routes').then((m) => m.routes)

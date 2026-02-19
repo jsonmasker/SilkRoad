@@ -66,6 +66,8 @@ namespace PersonalFinance.BLL.Helpers
                 data.Amount = model.Amount;
                 data.Date = model.Date;
                 data.Note = model.Note?.Trim();
+                data.HasLoan = model.HasLoan;
+                data.LoanAmount = model.LoanAmount;
                 await _unitOfWork.SaveChangesAsync();
                 return true;
             }
